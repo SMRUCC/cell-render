@@ -23,7 +23,7 @@ let request_uniprot as function(taxid as string, save as string) {
 let makePtf as function(uniprot as string, save as string) {
 	uniprot
 	:> open.uniprot
-	:> uniprot.ptf
+	:> uniprot.ptf(keys = ["KEGG","KO","GO","Pfam","RefSeq","EC","InterPro","BioCyc","eggNOG","EMBL","STRING","EnsemblPlants","Proteomes"])
 	:> save.ptf(file = save)
 	;
 }
