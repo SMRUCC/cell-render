@@ -1,6 +1,7 @@
 imports "http" from "webKit";
 imports "ptfKit" from "proteomics_toolkit";
 imports "uniprot" from "seqtoolkit";
+imports "geneExpression" from "phenotype_kit";
 
 # script for create background annotation data files
 # the annotation data is request from the uniprot database
@@ -34,6 +35,9 @@ let makePtf as function(uniprot as string, save as string) {
 #'
 #' @returns a raw matrix with all protein id unify as the uniprot id.
 #'
-let unifyId as function(raw) {
-
+let unifyId as function(raw, ptf) {
+	let genes = raw :> load.expr :> as.generic;
+	let mapping = ptf :> load.ptf :> as.uniprot_id(genes);
+	
+	mapping;
 }
