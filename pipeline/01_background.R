@@ -1,5 +1,6 @@
 imports "http" from "webKit";
 imports "ptfKit" from "proteomics_toolkit";
+imports "uniprot" from "seqtoolkit";
 
 # script for create background annotation data files
 # the annotation data is request from the uniprot database
@@ -19,6 +20,20 @@ let request_uniprot as function(taxid as string, save as string) {
 #'
 #' @param uniprot the file path of the uniprot xml database file
 #'
-let makePtf as function(uniprot as string) {
+let makePtf as function(uniprot as string, save as string) {
+	uniprot
+	:> open.uniprot
+	:> uniprot.ptf
+	:> save.ptf(file = save)
+	;
+}
+
+#' unify the various annotation id into the uniprot id
+#'
+#' @param raw the matrix of the labelfree result data.
+#'
+#' @returns a raw matrix with all protein id unify as the uniprot id.
+#'
+let unifyId as function(raw) {
 
 }
