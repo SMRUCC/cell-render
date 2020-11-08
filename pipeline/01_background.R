@@ -1,0 +1,24 @@
+imports "http" from "webKit";
+imports "ptfKit" from "proteomics_toolkit";
+
+# script for create background annotation data files
+# the annotation data is request from the uniprot database
+# via web api
+const url_template as string = "https://www.uniprot.org/uniprot/?query=taxonomy:%s&format=xml&force=true&compress=yes";
+
+let request_uniprot as function(taxid as string, save as string) {
+	let url as string = sprintf(url_template, taxid);
+	
+	print("will downloads annotation background dataset from uniprot:");
+	print(url);
+	
+	wget(url, save);
+}
+
+#' Make annotation from uniprot xml database files
+#'
+#' @param uniprot the file path of the uniprot xml database file
+#'
+let makePtf as function(uniprot as string) {
+
+}
