@@ -1,3 +1,6 @@
+# run init of the workspace
+imports "../package/init.R";
+# data analysis and pre-processing components
 imports "../package/01_background.R";
 
 setwd(dirname(!script$dir));
@@ -20,3 +23,5 @@ if (overrides || !file.exists(background_ptf)) {
 :> unifyId(background_ptf) 
 :> write.csv(file = HTS)
 ;
+
+init_workspace(output_dir);
