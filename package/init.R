@@ -7,19 +7,34 @@ annotations.
 ";
 
 const stat_info as string = "
+statistical analysis
 
+this folder contains the statistical analysis of your
+data samples, mainly includes the PCA analysis, etc.
 ";
 
 const dep_info as string = "
+different expression proteins
 
+this folder contains the different expression proteins 
+analysis result between your sample groups.
 ";
 
 const biological_info as string = "
+biological function analysis
 
+this folder contains the biological function analysis of
+your different expression proteins, mainly contains of the
+GO and KEGG enrichment analysis result.
 ";
 
 const ppi_info as string = "
+Protein-Protein interaction analysis
 
+this folder contains the result of the PPI analysis, mainly
+includes of the different expression protein correlation 
+calculation analysis result of PCC and SPCC. And also includes
+a correlation network visualization in this analysis.
 ";
 
 const folders = list(
