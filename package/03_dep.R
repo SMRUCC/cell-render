@@ -12,7 +12,11 @@ let run_dep as function(matrix, sampleInfo, compares, output_dir) {
 		let compare_out = `${output_dir}/analysis/03.dep_analysis/${as_label(compare_dir)}`;
 		
 		write.csv(dep, file = `${compare_out}/pvalue.csv`);
-		volcano.plot(dep) :> save.graphics(file = `${compare_out}/volcano.png`);
+		volcano.plot(dep, 
+			size = "1400,1600", 
+			title = `Volcano plot of ${as_label(compare_dir)}`) 
+		:> save.graphics(file = `${compare_out}/volcano.png`)
+		;
 		
 		print("done!");
 	}

@@ -352,3 +352,9 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 demo/annotation/uniprot-taxonomy_3702.xml
+demo/analysis/03.dep_analysis/C6 vs C9/pvalue.csv
+demo/analysis/03.dep_analysis/C6 vs I56/pvalue.csv
+demo/analysis/03.dep_analysis/C6 vs I59/pvalue.csv
+demo/analysis/03.dep_analysis/C6 vs I86/pvalue.csv
+demo/analysis/03.dep_analysis/C6 vs I89/pvalue.csv
+demo/raw/uniprot.csv
