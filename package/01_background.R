@@ -1,5 +1,5 @@
 imports "http" from "webKit";
-imports "ptfKit" from "proteomics_toolkit";
+imports ["ptfKit", "labelfree"] from "proteomics_toolkit";
 imports "uniprot" from "seqtoolkit";
 imports "geneExpression" from "phenotype_kit";
 
@@ -36,8 +36,16 @@ let makePtf as function(uniprot as string, save as string) {
 #' @returns a raw matrix with all protein id unify as the uniprot id.
 #'
 let unifyId as function(raw, ptf) {
-	let genes = raw :> load.expr :> as.generic;
-	let mapping = ptf :> load.ptf :> as.uniprot_id(genes);
+	let genes = raw 
+	:> load.expr(rm_ZERO = TRUE) 
+	:> as.generic 
+	# apply of the total sum normalization 
+	# for the label free samples data
+	:> sample.normalize
+	;
 	
-	mapping;
+	ptf 
+	:> load.ptf 
+	:> as.uniprot_id(genes)
+	;
 }
