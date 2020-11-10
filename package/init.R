@@ -46,8 +46,13 @@ const folders = list(
 );
 
 let init_workspace as function(output_dir as string) {
+	let workspace = list();
+
 	for(name in names(folders)) {
 		let dir as string = `${output_dir}/analysis/${name}`;
+		let workspace_name = strsplit(name, ".", fixed = TRUE)[2];
+		
+		workspace[[workspace_name]] = dir;
 		
 		dir.create(dir);
 		
@@ -57,4 +62,6 @@ let init_workspace as function(output_dir as string) {
 		:> writeLines(con = `${dir}/readme.txt`)
 		;
 	}
+	
+	list(dirs = workspace);
 }

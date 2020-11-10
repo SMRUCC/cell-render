@@ -1,17 +1,19 @@
 imports "visualPlot" from "visualkit";
 imports ["geneExpression", "sampleInfo"] from "phenotype_kit";
 
-let run_dep as function(matrix, sampleInfo, compares, output_dir) {
-	let as_label = compare_dir -> `${compare_dir$treatment} vs ${compare_dir$control}`;
-	let	sampleinfo = read.sampleinfo(sampleInfo); 
+let as_label = compare_dir -> `${compare_dir$treatment} vs ${compare_dir$control}`;
 
-	for(compare_dir in compares) {
+let run_dep as function(workspace, matrix) {
+	let	sampleinfo = workspace$sample_info; 
+
+	for(compare_dir in workspace$analysis) {
 		print(`run dep analysis of '${as_label(compare_dir)}'...`);
 	
 		let dep = deg.t.test(matrix, sampleinfo, compare_dir$treatment, compare_dir$control);
-		let compare_out = `${output_dir}/analysis/03.dep_analysis/${as_label(compare_dir)}`;
+		let compare_out = `${workspace$dirs$dep_analysis}/${as_label(compare_dir)}`;
 		
 		write.csv(dep, file = `${compare_out}/pvalue.csv`);
+		write.csv(dep[sapply(dep, prot -> as.object(prot)$isDEP)], file = `${compare_out}/pvalue_cut.csv`);
 		volcano.plot(dep, 
 			size = "1400,1600", 
 			title = `Volcano plot of ${as_label(compare_dir)}`) 

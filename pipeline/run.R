@@ -9,13 +9,19 @@ setwd(dirname(!script$dir));
 let output_dir as string = "demo";
 let overrides as boolean = ?"--overrides" || FALSE;
 let sample_info as string = `${output_dir}/sampleInfo.csv`;
-let analysis = list(
+let workspace = init_workspace(output_dir);
+
+workspace$analysis = list(
 	a = list(treatment = "C6", control = "C9"),
 	b = list(treatment = "C6", control = "I56"),
 	c = list(treatment = "C6", control = "I59"),
 	d = list(treatment = "C6", control = "I86"),
 	e = list(treatment = "C6", control = "I89")
 );
+workspace$sample_info = read.sampleinfo(sample_info); 
+
+print("view of the analysis workspace object in current pipeline:");
+str(workspace);
 
 let background_ptf as string = `${output_dir}/annotation/background.ptf`;
 let HTS as string = `${output_dir}/raw/uniprot.csv`;
@@ -33,11 +39,5 @@ if (overrides || !file.exists(background_ptf)) {
 :> write.csv(file = HTS)
 ;
 
-init_workspace(output_dir);
-
-run_dep(
-	matrix     = load.expr(HTS), 
-	sampleInfo = sample_info, 
-	compares   = analysis, 
-	output_dir = output_dir
-);
+workspace :> run_dep(matrix = load.expr(HTS));
+workspace :> patterns_plot;
