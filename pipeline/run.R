@@ -43,7 +43,7 @@ if (overrides || !file.exists(background_ptf)) {
 :> write.csv(file = HTS)
 ;
 
-workspace :> run_dep(matrix = load.expr(HTS));
+workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 workspace :> patterns_plot;
 
 print("Workflow finished!");

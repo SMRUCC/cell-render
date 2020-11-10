@@ -11,8 +11,8 @@ let patterns_plot as function(workspace) {
 		pvalue_cut[, "p.value"] = NULL;
 		pvalue_cut[, "is.DEP"]  = NULL;
 		pvalue_cut[, "log2FC"]  = NULL;
-		pvalue_cut[, "FDR"]     = NULL;
-		
+		pvalue_cut[, "FDR"]     = NULL;	
+				
 		print(`[${as_label(compare_dir)}] previews of the different expression proteins:`);
 		print(head(pvalue_cut));
 		
@@ -23,7 +23,7 @@ let patterns_plot as function(workspace) {
 		;
 		
 		patterns 
-		:> plot.expression_patterns()
+		:> plot.expression_patterns(size = [6000, 4500])
 		:> save.graphics(`${cluster_out}/patterns.png`)
 		;
 		
