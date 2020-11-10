@@ -2,7 +2,7 @@ imports ["geneExpression", "sampleInfo"] from "phenotype_kit";
 imports "visualPlot" from "visualkit";
 
 let patterns_plot as function(workspace) {
-	for(compare_dir in compares) {
+	for(compare_dir in workspace$analysis) {
 		let pvalue_cut  = `${workspace$dirs$dep_analysis}/${as_label(compare_dir)}/pvalue_cut.csv`;
 		let cluster_out = `${workspace$dirs$biological_analysis}/${as_label(compare_dir)}`;
 		

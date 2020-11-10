@@ -3,12 +3,16 @@ imports "../package/init.R";
 # data analysis and pre-processing components
 imports "../package/01_background.R";
 imports "../package/03_dep.R";
+imports "../package/04_biological.R";
 
 setwd(dirname(!script$dir));
 
 let output_dir as string = "demo";
 let overrides as boolean = ?"--overrides" || FALSE;
 let sample_info as string = `${output_dir}/sampleInfo.csv`;
+
+sink(file = `${output_dir}/analysis/pipeline.log`);
+
 let workspace = init_workspace(output_dir);
 
 workspace$analysis = list(
@@ -41,3 +45,7 @@ if (overrides || !file.exists(background_ptf)) {
 
 workspace :> run_dep(matrix = load.expr(HTS));
 workspace :> patterns_plot;
+
+print("Workflow finished!");
+
+sink();
