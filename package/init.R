@@ -45,6 +45,11 @@ const folders = list(
 	"05.ppi_analysis"        = ppi_info
 );
 
+#' create workspace folders
+#' 
+#' @param output_dir the folder file path for output the label-free 
+#'      analysis result 
+#' 
 let init_workspace as function(output_dir as string) {
 	let workspace = list();
 
