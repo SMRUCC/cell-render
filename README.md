@@ -19,6 +19,7 @@
 
 + t.test
 + volcano
+   ![](demo/analysis/03.dep_analysis/C6 vs C9/volcano.png)
 + z_score
 + kmeans plot
 
@@ -26,6 +27,7 @@
 
 + heatmap of DEP
 + Cmeans patterns
+   ![](demo/analysis/04.biological_analysis/C6 vs C9/patterns.png)
 + enrichment
 
 ### 5. PPI analysis
