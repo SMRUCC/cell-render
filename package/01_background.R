@@ -24,7 +24,11 @@ let request_uniprot as function(taxid as string, save as string) {
 let makePtf as function(uniprot as string, save as string) {
 	uniprot
 	:> open.uniprot
-	:> uniprot.ptf(keys = ["KEGG","KO","GO","Pfam","RefSeq","EC","InterPro","BioCyc","eggNOG","EMBL","STRING","EnsemblPlants","Proteomes", "Araport"])
+	:> uniprot.ptf(
+		keys = ["KEGG","KO","GO","Pfam","RefSeq","EC","InterPro","BioCyc","eggNOG","EMBL","STRING","EnsemblPlants","Proteomes", "Araport"], 
+		includesNCBITaxonomy = TRUE,
+		scientificName = TRUE
+	)
 	:> save.ptf(file = save)
 	;
 }
@@ -47,5 +51,17 @@ let unifyId as function(raw, ptf) {
 	ptf 
 	:> load.ptf 
 	:> as.uniprot_id(genes)
+	;
+}
+
+let protein_annotations as function(raw, ptf) {
+	let geneIDs as string = names(raw);
+
+	print("previews part of the unify protein ids:");
+	print(head(geneIDs));
+
+	ptf 
+	:> load.ptf 
+	:> protein.annotations(geneIDs)
 	;
 }

@@ -46,6 +46,11 @@ if (overrides || !file.exists(background_ptf)) {
 :> write.csv(file = HTS)
 ;
 
+read.csv(HTS, row_names = 1)
+:> protein_annotations(ptf = background_ptf)
+:> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
+;
+
 # run dep analysis and data visualization of the dep
 workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
