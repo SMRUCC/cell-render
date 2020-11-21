@@ -55,7 +55,7 @@ let unifyId as function(raw, ptf) {
 }
 
 let protein_annotations as function(raw, ptf) {
-	let geneIDs as string = names(raw);
+	let geneIDs as string = rownames(raw);
 
 	print("previews part of the unify protein ids:");
 	print(head(geneIDs));
