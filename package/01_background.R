@@ -1,8 +1,7 @@
 imports "http" from "webKit";
-imports ["ptfKit", "labelfree", "summary"] from "proteomics_toolkit";
+imports ["ptfKit", "labelfree"] from "proteomics_toolkit";
 imports "uniprot" from "seqtoolkit";
 imports "geneExpression" from "phenotype_kit";
-imports "file" from "gokit";
 
 # script for create background annotation data files
 # the annotation data is request from the uniprot database
@@ -25,11 +24,7 @@ let request_uniprot as function(taxid as string, save as string) {
 let makePtf as function(uniprot as string, save as string) {
 	uniprot
 	:> open.uniprot
-	:> uniprot.ptf(
-		keys = ["KEGG","KO","GO","Pfam","RefSeq","EC","InterPro","BioCyc","eggNOG","EMBL","STRING","EnsemblPlants","Proteomes", "Araport"], 
-		includesNCBITaxonomy = TRUE,
-		scientificName = TRUE
-	)
+	:> uniprot.ptf(keys = ["KEGG","KO","GO","Pfam","RefSeq","EC","InterPro","BioCyc","eggNOG","EMBL","STRING","EnsemblPlants","Proteomes", "Araport"])
 	:> save.ptf(file = save)
 	;
 }
@@ -52,44 +47,5 @@ let unifyId as function(raw, ptf) {
 	ptf 
 	:> load.ptf 
 	:> as.uniprot_id(genes)
-	;
-}
-
-let protein_annotations as function(raw, ptf) {
-	let geneIDs as string = rownames(raw);
-
-	print("previews part of the unify protein ids:");
-	print(head(geneIDs));
-
-	ptf 
-	:> load.ptf 
-	:> protein.annotations(geneIDs)
-	;
-}
-
-#' GO annotation summary of the proteins in current sample data
-#'
-#' @param annotations a protein annotation table data that created by \code{protein_annotations}
-#' @param goDb the file path of the GO obo database file
-#' @param outputdir the directory for save the count table and the bar plot image file.
-#'
-let go_summary as function(annotations, goDb, outputdir) {
-	let profiles = annotations 
-	:> proteins.GO(goDb = read.go_obo(goDb))
-	;
-
-	as.data.frame(profiles, type = "go") 
-	:> write.csv(file = `${outputdir}/counts.csv`, row_names = FALSE)
-	;
-
-	profiles
-	:> profileSelector(selects = "desc:13")
-	:> category_profiles.plot(
-		title = "GO profiles", 
-		axis_title = "Number Of Proteins",
-		dpi = 150,
-		size = [2300, 2200]
-	)
-	:> save.graphics(file = `${outputdir}/plot.png`)
 	;
 }
