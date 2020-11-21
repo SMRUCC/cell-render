@@ -79,7 +79,7 @@ let go_summary as function(annotations, goDb, outputdir) {
 	;
 
 	as.data.frame(profiles, type = "go") 
-	:> write.csv(file = `${outputdir}/counts.csv`)
+	:> write.csv(file = `${outputdir}/counts.csv`, row_names = FALSE)
 	;
 
 	profiles
