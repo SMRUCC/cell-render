@@ -67,6 +67,12 @@ let protein_annotations as function(raw, ptf) {
 	;
 }
 
+#' GO annotation summary of the proteins in current sample data
+#'
+#' @param annotations a protein annotation table data that created by \code{protein_annotations}
+#' @param goDb the file path of the GO obo database file
+#' @param outputdir the directory for save the count table and the bar plot image file.
+#'
 let go_summary as function(annotations, goDb, outputdir) {
 	let profiles = annotations 
 	:> proteins.GO(goDb = read.go_obo(goDb))

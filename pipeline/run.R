@@ -55,7 +55,7 @@ annotations
 :> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
 ;
 annotations
-:> go_summary(`${workspace$dirs$summary}/GO`)
+:> go_summary(goDb, `${workspace$dirs$summary}/GO`)
 ;
 
 # run dep analysis and data visualization of the dep
