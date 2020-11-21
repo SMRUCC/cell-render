@@ -55,6 +55,13 @@ let unifyId as function(raw, ptf) {
 	;
 }
 
+#' exports of the protein annotation table data
+#' 
+#' @param raw the expression sample data, the protein id will be used for 
+#'     pick of the protein annotation data in the unify annotation model
+#' 
+#' @param ptf the GCModeller unify annotation data model
+#' 
 let protein_annotations as function(raw, ptf) {
 	let geneIDs as string = rownames(raw);
 
@@ -69,15 +76,18 @@ let protein_annotations as function(raw, ptf) {
 
 #' GO annotation summary of the proteins in current sample data
 #'
-#' @param annotations a protein annotation table data that created by \code{protein_annotations}
+#' @param annotations a protein annotation table data that created by 
+#'                    \code{protein_annotations}
 #' @param goDb the file path of the GO obo database file
-#' @param outputdir the directory for save the count table and the bar plot image file.
+#' @param outputdir the directory for save the count table and the bar 
+#'                  plot image file.
 #'
 let go_summary as function(annotations, goDb, outputdir) {
 	let profiles = annotations 
 	:> proteins.GO(goDb = read.go_obo(goDb))
 	;
 
+	# namespace go_term description counts
 	as.data.frame(profiles, type = "go") 
 	:> write.csv(file = `${outputdir}/counts.csv`, row_names = FALSE)
 	;

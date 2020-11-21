@@ -31,6 +31,7 @@ str(workspace);
 
 let background_ptf as string = `${output_dir}/annotation/background.ptf`;
 let HTS as string = `${output_dir}/raw/uniprot.csv`;
+let uniprot_src = `${output_dir}/annotation/uniprot-taxonomy_3702.xml`;
 
 if (overrides) {
 	print(`annotation background '${background_ptf}' will be overrides!`);
@@ -38,7 +39,7 @@ if (overrides) {
 
 # save background annotation data
 if (overrides || !file.exists(background_ptf)) {
-	makePtf(`${output_dir}/annotation/uniprot-taxonomy_3702.xml`, background_ptf);
+	makePtf(uniprot_src, background_ptf);
 }
 
 # unify the gene id to uniprot protein id.
@@ -51,6 +52,8 @@ let annotations = read.csv(HTS, row_names = 1)
 :> protein_annotations(ptf = background_ptf)
 ;
 
+# stage 01, raw sample data analysis
+# includes protein function annotations in current expression samples
 annotations
 :> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
 ;
