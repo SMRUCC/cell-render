@@ -1,7 +1,8 @@
 imports "http" from "webKit";
-imports ["ptfKit", "labelfree"] from "proteomics_toolkit";
+imports ["ptfKit", "labelfree", "summary"] from "proteomics_toolkit";
 imports "uniprot" from "seqtoolkit";
 imports "geneExpression" from "phenotype_kit";
+imports "file" from "gokit";
 
 # script for create background annotation data files
 # the annotation data is request from the uniprot database
@@ -63,5 +64,23 @@ let protein_annotations as function(raw, ptf) {
 	ptf 
 	:> load.ptf 
 	:> protein.annotations(geneIDs)
+	;
+}
+
+let go_summary as function(annotations, goDb, outputdir) {
+	let profiles = annotations 
+	:> proteins.GO(goDb = read.go_obo(goDb))
+	;
+
+	as.data.frame(profiles, type = "go") 
+	:> write.csv(file = `${outputdir}/counts.csv`)
+	;
+
+	profiles
+	:> category_profiles.plot(
+		title = "GO profiles", 
+		axis_title = "Number Of Proteins"
+	)
+	:> save.graphics(file = `${outputdir}/plot.png`)
 	;
 }

@@ -10,6 +10,7 @@ setwd(dirname(!script$dir));
 let output_dir as string = "demo";
 let overrides as boolean = ?"--overrides" || FALSE;
 let sample_info as string = `${output_dir}/sampleInfo.csv`;
+let goDb as string = ?"--go" || "P:/go.obo";
 
 sink(file = `${output_dir}/analysis/pipeline.log`);
 
@@ -46,9 +47,15 @@ if (overrides || !file.exists(background_ptf)) {
 :> write.csv(file = HTS)
 ;
 
-read.csv(HTS, row_names = 1)
+let annotations = read.csv(HTS, row_names = 1)
 :> protein_annotations(ptf = background_ptf)
+;
+
+annotations
 :> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
+;
+annotations
+:> go_summary(`${workspace$dirs$summary}/GO`)
 ;
 
 # run dep analysis and data visualization of the dep
