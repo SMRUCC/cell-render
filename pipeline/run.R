@@ -10,9 +10,11 @@ setwd(dirname(!script$dir));
 let output_dir as string = "demo";
 let overrides as boolean = ?"--overrides" || FALSE;
 let sample_info as string = `${output_dir}/sampleInfo.csv`;
+let goDb as string = ?"--go" || "P:/go.obo";
 
 sink(file = `${output_dir}/analysis/pipeline.log`);
 
+# create workspace folders
 let workspace = init_workspace(output_dir);
 
 workspace$analysis = list(
@@ -34,16 +36,31 @@ if (overrides) {
 	print(`annotation background '${background_ptf}' will be overrides!`);
 }
 
+# save background annotation data
 if (overrides || !file.exists(background_ptf)) {
 	makePtf(`${output_dir}/annotation/uniprot-taxonomy_3702.xml`, background_ptf);
 }
 
+# unify the gene id to uniprot protein id.
 `${output_dir}/raw/all_counts.csv`
 :> unifyId(background_ptf) 
 :> write.csv(file = HTS)
 ;
 
+let annotations = read.csv(HTS, row_names = 1)
+:> protein_annotations(ptf = background_ptf)
+;
+
+annotations
+:> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
+;
+annotations
+:> go_summary(goDb, `${workspace$dirs$summary}/GO`)
+;
+
+# run dep analysis and data visualization of the dep
 workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
+# create cluster for biological function analysis
 workspace :> patterns_plot;
 
 print("Workflow finished!");
