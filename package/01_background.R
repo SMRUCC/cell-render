@@ -83,9 +83,12 @@ let go_summary as function(annotations, goDb, outputdir) {
 	;
 
 	profiles
+	:> profileSelector(selects = "desc:13")
 	:> category_profiles.plot(
 		title = "GO profiles", 
-		axis_title = "Number Of Proteins"
+		axis_title = "Number Of Proteins",
+		dpi = 150,
+		size = [2300, 2200]
 	)
 	:> save.graphics(file = `${outputdir}/plot.png`)
 	;
