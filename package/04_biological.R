@@ -30,21 +30,6 @@ let create_pattern as function(workspace, compare_dir) {
 				
 	print(`[${as_label(compare_dir)}] previews of the different expression proteins:`);
 	print(head(pvalue_cut));
-	
-	pvalue_cut 
-	:> dist 
-    :> btree(hclust = TRUE)
-    :> plot(       
-        size        = [3300, 23000], 
-        padding     = "padding: 200px 400px 200px 200px;", 
-        axis.format = "G2",
-        links       = "stroke: darkblue; stroke-width: 8px; stroke-dash: dash;",
-        pt.color    = "gray",
-        label       = "font-style: normal; font-size: 10; font-family: Bookman Old Style;",
-        ticks       = "font-style: normal; font-size: 12; font-family: Bookman Old Style;"
-    )
-    :> save.graphics(`${cluster_out}/deps.png`)
-    ;
 
 	# run cmeans clustering
 	let patterns = pvalue_cut 
@@ -60,8 +45,35 @@ let create_pattern as function(workspace, compare_dir) {
 	;
 	
 	# and then save the cluster result matrix
-	patterns
-	:> cmeans_matrix(kmeans_n = 3)
-	:> write.csv(file = `${cluster_out}/clusters.csv`)
+	let matrix = patterns
+	:> cmeans_matrix(kmeans_n = 5)
 	;
+	
+	write.csv(matrix, file = `${cluster_out}/clusters.csv`);
+
+	patterns = cluster.groups(matrix);
+
+	str(patterns);
+
+	for(groupKey in names(patterns)) {
+		let members = patterns[[groupKey]];
+		let group_out = `${cluster_out}/cluster_${groupKey}`;
+
+		pvalue_cut[members, ]
+		:> dist 
+		:> btree(hclust = TRUE)
+		:> plot(       
+			size        = [3300, 30000], 
+			padding     = "padding: 200px 400px 200px 200px;", 
+			axis.format = "G2",
+			links       = "stroke: darkblue; stroke-width: 8px; stroke-dash: dash;",
+			pt.color    = "gray",
+			label       = "font-style: normal; font-size: 10; font-family: Bookman Old Style;",
+			ticks       = "font-style: normal; font-size: 12; font-family: Bookman Old Style;"
+		)
+		:> save.graphics(`${group_out}/deps.png`)
+		;
+
+		writeLines(members, con = `${group_out}/deps.txt`);
+	}
 }

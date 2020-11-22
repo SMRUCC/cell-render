@@ -49,22 +49,22 @@ if (overrides || !file.exists(background_ptf)) {
 	;
 }
 
-let annotations = read.csv(HTS, row_names = 1)
-:> protein_annotations(ptf = background_ptf)
-;
+# let annotations = read.csv(HTS, row_names = 1)
+# :> protein_annotations(ptf = background_ptf)
+# ;
 
 # stage 01, raw sample data analysis
 # includes protein function annotations in current expression samples
-annotations
-:> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
-;
-annotations
-:> go_summary(goDb, `${workspace$dirs$summary}/GO`)
-;
+# annotations
+# :> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
+# ;
+# annotations
+# :> go_summary(goDb, `${workspace$dirs$summary}/GO`)
+# ;
 
-workspace :> hist_samples(matrix = read.csv(HTS, row_names = 1));
+# workspace :> hist_samples(matrix = read.csv(HTS, row_names = 1));
 # run dep analysis and data visualization of the dep
-workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
+# workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
 workspace :> patterns_plot;
 

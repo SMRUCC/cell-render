@@ -31,190 +31,6 @@ List of 3
 
  $ sample_info : any [1:24]  (C6) C61  (C6) C62  (C6) C63  (C6) C64  (C9) C91  (C9) C92 ...
 
-[1] "previews part of the unify protein ids:"
-[1]	"Q0WV96"    "Q5MK24"    "Q9MAN1"    "Q9SP32"    "AT1G03993" "Q93V56"    
-[1] "previews of your raw sample information:"
-     ID     sample_name  sample_info  injectionOrder  batch  color     shapetype
-C61  "C61"  "C61"        "C6"         0               0      "984ea3"  NULL
-C62  "C62"  "C62"        "C6"         0               0      "984ea3"  NULL
-C63  "C63"  "C63"        "C6"         0               0      "984ea3"  NULL
-C64  "C64"  "C64"        "C6"         0               0      "984ea3"  NULL
-C91  "C91"  "C91"        "C9"         0               0      "984ea3"  NULL
-C92  "C92"  "C92"        "C9"         0               0      "984ea3"  NULL
-
-clstr#23  distance : 0.02, weight : 24.00
-  I861 (leaf)  distance : 0.00, weight : 1.00
-  clstr#22  distance : 0.01, weight : 23.00
-    clstr#19  distance : 0.01, weight : 4.00
-      C63 (leaf)  distance : 0.00, weight : 1.00
-      clstr#18  distance : 0.01, weight : 3.00
-        I864 (leaf)  distance : 0.00, weight : 1.00
-        clstr#8  distance : 0.00, weight : 2.00
-          I563 (leaf)  distance : 0.00, weight : 1.00
-          I564 (leaf)  distance : 0.00, weight : 1.00
-    clstr#21  distance : 0.01, weight : 19.00
-      clstr#17  distance : 0.01, weight : 7.00
-        clstr#9  distance : 0.00, weight : 2.00
-          I562 (leaf)  distance : 0.00, weight : 1.00
-          I862 (leaf)  distance : 0.00, weight : 1.00
-        clstr#16  distance : 0.01, weight : 5.00
-          clstr#7  distance : 0.00, weight : 2.00
-            I561 (leaf)  distance : 0.00, weight : 1.00
-            I863 (leaf)  distance : 0.00, weight : 1.00
-          clstr#12  distance : 0.00, weight : 3.00
-            C62 (leaf)  distance : 0.00, weight : 1.00
-            clstr#6  distance : 0.00, weight : 2.00
-              C61 (leaf)  distance : 0.00, weight : 1.00
-              C64 (leaf)  distance : 0.00, weight : 1.00
-      clstr#20  distance : 0.01, weight : 12.00
-        clstr#14  distance : 0.00, weight : 3.00
-          C94 (leaf)  distance : 0.00, weight : 1.00
-          clstr#10  distance : 0.00, weight : 2.00
-            C92 (leaf)  distance : 0.00, weight : 1.00
-            C93 (leaf)  distance : 0.00, weight : 1.00
-        clstr#15  distance : 0.00, weight : 9.00
-          C91 (leaf)  distance : 0.00, weight : 1.00
-          clstr#13  distance : 0.00, weight : 8.00
-            I594 (leaf)  distance : 0.00, weight : 1.00
-            clstr#11  distance : 0.00, weight : 7.00
-              I892 (leaf)  distance : 0.00, weight : 1.00
-              clstr#5  distance : 0.00, weight : 6.00
-                clstr#3  distance : 0.00, weight : 3.00
-                  I893 (leaf)  distance : 0.00, weight : 1.00
-                  clstr#2  distance : 0.00, weight : 2.00
-                    I591 (leaf)  distance : 0.00, weight : 1.00
-                    I593 (leaf)  distance : 0.00, weight : 1.00
-                clstr#4  distance : 0.00, weight : 3.00
-                  I894 (leaf)  distance : 0.00, weight : 1.00
-                  clstr#1  distance : 0.00, weight : 2.00
-                    I592 (leaf)  distance : 0.00, weight : 1.00
-                    I891 (leaf)  distance : 0.00, weight : 1.00
-
-List of 24
- $ C61  : chr "#984ea3"
- $ C62  : chr "#984ea3"
- $ C63  : chr "#984ea3"
- $ C64  : chr "#984ea3"
- $ C91  : chr "#984ea3"
- $ C92  : chr "#984ea3"
- $ C93  : chr "#984ea3"
- $ C94  : chr "#984ea3"
- $ I561 : chr "#4daf4a"
- $ I562 : chr "#4daf4a"
- $ I563 : chr "#4daf4a"
- $ I564 : chr "#4daf4a"
- $ I591 : chr "#4daf4a"
- $ I592 : chr "#4daf4a"
- $ I593 : chr "#4daf4a"
- $ I594 : chr "#4daf4a"
- $ I861 : chr "#70DB93"
- $ I862 : chr "#70DB93"
- $ I863 : chr "#70DB93"
- $ I864 : chr "#70DB93"
- $ I891 : chr "#70DB93"
- $ I892 : chr "#70DB93"
- $ I893 : chr "#70DB93"
- $ I894 : chr "#70DB93"
-
-[1] "previews of your raw sample information:"
-     ID     sample_name  sample_info  injectionOrder  batch  color     shapetype
-C61  "C61"  "C61"        "C6"         0               0      "984ea3"  NULL
-C62  "C62"  "C62"        "C6"         0               0      "984ea3"  NULL
-C63  "C63"  "C63"        "C6"         0               0      "984ea3"  NULL
-C64  "C64"  "C64"        "C6"         0               0      "984ea3"  NULL
-C91  "C91"  "C91"        "C9"         0               0      "984ea3"  NULL
-C92  "C92"  "C92"        "C9"         0               0      "984ea3"  NULL
-
-[1] "run dep analysis of 'C6 vs C9'..."
-clstr#30  distance : 0.00, weight : 8.00
-  clstr#28  distance : 0.00, weight : 4.00
-    C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#26  distance : 0.00, weight : 3.00
-      C64 (leaf)  distance : 0.00, weight : 1.00
-      clstr#25  distance : 0.00, weight : 2.00
-        C61 (leaf)  distance : 0.00, weight : 1.00
-        C62 (leaf)  distance : 0.00, weight : 1.00
-  clstr#29  distance : 0.00, weight : 4.00
-    C91 (leaf)  distance : 0.00, weight : 1.00
-    clstr#27  distance : 0.00, weight : 3.00
-      C93 (leaf)  distance : 0.00, weight : 1.00
-      clstr#24  distance : 0.00, weight : 2.00
-        C92 (leaf)  distance : 0.00, weight : 1.00
-        C94 (leaf)  distance : 0.00, weight : 1.00
-
-[1] "done!"
-[1] "run dep analysis of 'C6 vs I56'..."
-clstr#37  distance : 0.00, weight : 8.00
-  clstr#35  distance : 0.00, weight : 4.00
-    I562 (leaf)  distance : 0.00, weight : 1.00
-    clstr#33  distance : 0.00, weight : 3.00
-      I563 (leaf)  distance : 0.00, weight : 1.00
-      clstr#31  distance : 0.00, weight : 2.00
-        I561 (leaf)  distance : 0.00, weight : 1.00
-        I564 (leaf)  distance : 0.00, weight : 1.00
-  clstr#36  distance : 0.00, weight : 4.00
-    clstr#32  distance : 0.00, weight : 2.00
-      C62 (leaf)  distance : 0.00, weight : 1.00
-      C64 (leaf)  distance : 0.00, weight : 1.00
-    clstr#34  distance : 0.00, weight : 2.00
-      C61 (leaf)  distance : 0.00, weight : 1.00
-      C63 (leaf)  distance : 0.00, weight : 1.00
-
-[1] "done!"
-[1] "run dep analysis of 'C6 vs I59'..."
-clstr#44  distance : 0.00, weight : 8.00
-  clstr#42  distance : 0.00, weight : 4.00
-    I592 (leaf)  distance : 0.00, weight : 1.00
-    clstr#41  distance : 0.00, weight : 3.00
-      I594 (leaf)  distance : 0.00, weight : 1.00
-      clstr#38  distance : 0.00, weight : 2.00
-        I591 (leaf)  distance : 0.00, weight : 1.00
-        I593 (leaf)  distance : 0.00, weight : 1.00
-  clstr#43  distance : 0.00, weight : 4.00
-    C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#40  distance : 0.00, weight : 3.00
-      C62 (leaf)  distance : 0.00, weight : 1.00
-      clstr#39  distance : 0.00, weight : 2.00
-        C61 (leaf)  distance : 0.00, weight : 1.00
-        C64 (leaf)  distance : 0.00, weight : 1.00
-
-[1] "done!"
-[1] "run dep analysis of 'C6 vs I86'..."
-clstr#51  distance : 0.00, weight : 8.00
-  clstr#48  distance : 0.00, weight : 4.00
-    C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#47  distance : 0.00, weight : 3.00
-      C61 (leaf)  distance : 0.00, weight : 1.00
-      clstr#45  distance : 0.00, weight : 2.00
-        C62 (leaf)  distance : 0.00, weight : 1.00
-        C64 (leaf)  distance : 0.00, weight : 1.00
-  clstr#50  distance : 0.00, weight : 4.00
-    clstr#46  distance : 0.00, weight : 2.00
-      I861 (leaf)  distance : 0.00, weight : 1.00
-      I864 (leaf)  distance : 0.00, weight : 1.00
-    clstr#49  distance : 0.00, weight : 2.00
-      I862 (leaf)  distance : 0.00, weight : 1.00
-      I863 (leaf)  distance : 0.00, weight : 1.00
-
-[1] "done!"
-[1] "run dep analysis of 'C6 vs I89'..."
-clstr#58  distance : 0.00, weight : 8.00
-  clstr#56  distance : 0.00, weight : 4.00
-    I892 (leaf)  distance : 0.00, weight : 1.00
-    clstr#54  distance : 0.00, weight : 3.00
-      I893 (leaf)  distance : 0.00, weight : 1.00
-      clstr#52  distance : 0.00, weight : 2.00
-        I891 (leaf)  distance : 0.00, weight : 1.00
-        I894 (leaf)  distance : 0.00, weight : 1.00
-  clstr#57  distance : 0.00, weight : 4.00
-    C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#55  distance : 0.00, weight : 3.00
-      C62 (leaf)  distance : 0.00, weight : 1.00
-      clstr#53  distance : 0.00, weight : 2.00
-        C61 (leaf)  distance : 0.00, weight : 1.00
-        C64 (leaf)  distance : 0.00, weight : 1.00
-
-[1] "done!"
 [1] "[C6 vs C9] previews of the different expression proteins:"
         C61                     C62                     C63                     C64                     C91                     C92                     C93                     C94
 Q9SP32  "5.76031326963855E-05"  "4.40376941438887E-05"  "5.36180813733858E-05"  "5.42461276425785E-05"  "7.49324575348323E-05"  "7.47381408336121E-05"  "6.53455413634794E-05"  "8.49169939203718E-05"
@@ -223,4 +39,36 @@ Q5XEZ0  "2.50407006597511E-05"  "2.16474448321766E-05"  "3.0941659606776E-05"   
 Q9MAM3  "0.000149101662483537"  "0.000241623685700324"  "0.000159052846129352"  "0.000191733658234034"  "8.58478155221897E-05"  "0.000113244911286527"  "0.00013516000272902"   "0.000133183226852535"
 Q1PFZ6  "1.42817684371204E-06"  "1.48560895907094E-06"  "1.27157505233326E-06"  "1.24814099000623E-06"  "1.2783752597806E-06"   "4.37576936964942E-07"  "6.95165333654036E-07"  "9.0217257817128E-07"
 F4HQJ2  "0"                     "0"                     "1.05964587694438E-07"  "0"                     "1.96673116889324E-07"  "1.75030774785977E-07"  "1.98618666758296E-07"  "3.3831471681423E-07"
+
+List of 5
+ $ [1] : chr [1:860] "Q9LNJ7" "Q9LQ95" "Q8GXQ7" "F4HVZ1" "Q9FWX7" "Q8GZ26" ...
+ $ [2] : chr [1:728] "Q9LNK1" "Q9LNI1" "F4I456" "Q941F1" "Q84TH4" "Q93ZW0" ...
+ $ [3] : chr [1:886] "Q9SP32" "F4HU58" "A0A384KQY8" "A0A178WD37" "F4IAD5" "Q9LML2" ...
+ $ [4] : chr [1:732] "Q9LMU5" "Q9FXJ1" "Q6NQG7" "Q9XIB4" "Q9SYF0" "A0A1P8ASI5" ...
+ $ [5] : chr [1:1108] "Q9MAM3" "Q8GUH2" "Q9LMM0" "Q9FZ21" "Q9ZVS4" "A0A178WAU2" ...
+
+[1] "[C6 vs I56] previews of the different expression proteins:"
+            C61                     C62                     C63                     C64                     I561                    I562                    I563                    I564
+Q0WV96      "2.75162071888519E-05"  "3.36384314303921E-05"  "2.38420322312486E-05"  "3.29317199670875E-05"  "5.08119441823122E-05"  "4.11907783815748E-05"  "3.58268405827217E-05"  "3.91351158625394E-05"
+Q6R0H1      "0.000210513266763154"  "0.000227192055812206"  "0.000263639894183763"  "0.000217752597333395"  "0.000178338191304172"  "0.000148869867986377"  "0.000187996631899861"  "0.00019375247779611"
+Q9MAM4      "1.11397793809539E-05"  "8.70142390312981E-06"  "1.17620692340827E-05"  "1.00811387654349E-05"  "4.15159757084611E-06"  "7.80555846043541E-06"  "3.58268405827217E-06"  "7.01932053554146E-06"
+Q1PFZ6      "1.42817684371204E-06"  "1.48560895907094E-06"  "1.27157505233326E-06"  "1.24814099000623E-06"  "4.51260605526751E-07"  "8.46385857155647E-07"  "4.71405797141075E-07"  "1.05770583412269E-06"
+O23702      "5.78887680651279E-05"  "4.60538777311992E-05"  "5.35121167856914E-05"  "5.33820300341127E-05"  "3.71838738954043E-05"  "4.72095222546816E-05"  "3.69582144958603E-05"  "4.13466826066141E-05"
+A0A178WFK6  "3.05629844554376E-05"  "1.99496060218098E-05"  "2.96700845544428E-05"  "2.77471343162924E-05"  "1.51623563456988E-05"  "2.41690183654446E-05"  "1.98933246393534E-05"  "1.7211758573451E-05"
+
+List of 5
+ $ [1] : chr [1:131] "Q0WV96" "Q5XF24" "A0A178W6Z0" "F4HW02" "F4I0Z0" "A0A1P8AR16" ...
+ $ [2] : chr [1:253] "O81913" "Q9LR44" "Q3EDG6" "AT1G04677" "AT1G04803" "A0A178W1Y6" ...
+ $ [3] : chr [1:178] "O23702" "Q9ZVS5" "Q9MA40" "A0A1P8APT0" "Q8GTY0" "Q8GTY01" ...
+ $ [4] : chr [1:223] "Q1PFZ6" "A8MS78" "P26568" "AT1G04513" "Q9LNX4" "A0A178W6B2" ...
+ $ [5] : chr [1:255] "Q9FWX8" "Q9ZWB4" "A0A1P8AUV9" "AT1G04743" "Q9LE79" "AT1G05017" ...
+
+[1] "[C6 vs I59] previews of the different expression proteins:"
+        C61                     C62                     C63                     C64                     I591                    I592                    I593                    I594
+Q0WV96  "2.75162071888519E-05"  "3.36384314303921E-05"  "2.38420322312486E-05"  "3.29317199670875E-05"  "6.2945901618341E-05"   "3.91900015544014E-05"  "5.15968825654953E-05"  "3.97801452476097E-05"
+Q6R0H1  "0.000210513266763154"  "0.000227192055812206"  "0.000263639894183763"  "0.000217752597333395"  "0.000370248164681333"  "0.0002751422388923"    "0.000340976223938114"  "0.000298587313497498"
+Q9MAM3  "0.000149101662483537"  "0.000241623685700324"  "0.000159052846129352"  "0.000191733658234034"  "0.000121064093968019"  "9.32031643184986E-05"  "0.00012739971003826"   "0.000129261849640689"
+Q9MAL7  "2.57071831868167E-05"  "3.48056956125192E-05"  "2.1510811301971E-05"   "2.88032536155284E-05"  "2.34886624033042E-05"  "1.79705447542203E-05"  "1.93829558843924E-05"  "1.69136484544469E-05"
+Q9LNJ3  "9.16889533663128E-05"  "7.06725404815177E-05"  "7.71422198415511E-05"  "7.06639822034297E-05"  "0.000107138009539182"  "0.000106097284000905"  "0.000106469757674832"  "0.000123970428895164"
+Q8RVQ9  "6.85524884981778E-06"  "3.71402239767736E-06"  "9.1129545417217E-06"   "7.58485678542248E-06"  "9.84109966304446E-06"  "1.06604926508087E-05"  "9.00897949556267E-06"  "1.2000186333602E-05"
 
