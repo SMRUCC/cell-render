@@ -26,16 +26,26 @@ let create_pattern as function(workspace, compare_dir) {
 	# create a expression matrix that contains
 	# only of the protein expression normalization
 	# data
-	pvalue_cut = read.csv(pvalue_cut, row_names = 1);
-	pvalue_cut[, "FC.avg"]  = NULL;
-	pvalue_cut[, "p.value"] = NULL;
-	pvalue_cut[, "is.DEP"]  = NULL;
-	pvalue_cut[, "log2FC"]  = NULL;
-	pvalue_cut[, "FDR"]     = NULL;	
-			
+	pvalue_cut = stripPvalue_cut(read.csv(pvalue_cut, row_names = 1));
+				
 	print(`[${as_label(compare_dir)}] previews of the different expression proteins:`);
 	print(head(pvalue_cut));
 	
+	pvalue_cut 
+	:> dist 
+    :> btree(hclust = TRUE)
+    :> plot(       
+        size        = [3300, 23000], 
+        padding     = "padding: 200px 400px 200px 200px;", 
+        axis.format = "G2",
+        links       = "stroke: darkblue; stroke-width: 8px; stroke-dash: dash;",
+        pt.color    = "gray",
+        label       = "font-style: normal; font-size: 10; font-family: Bookman Old Style;",
+        ticks       = "font-style: normal; font-size: 12; font-family: Bookman Old Style;"
+    )
+    :> save.graphics(`${cluster_out}/deps.png`)
+    ;
+
 	# run cmeans clustering
 	let patterns = pvalue_cut 
 	:> load.expr

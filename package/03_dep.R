@@ -21,10 +21,11 @@ let as_label = compare_dir -> `${compare_dir$treatment} vs ${compare_dir$control
 #'    values, sample information and compare analaysis designs. 
 #' 
 let run_dep as function(workspace, matrix) {
-	let	sampleinfo = workspace$sample_info; 
+	let	sampleinfo  = workspace$sample_info; 
+	let sample_class = sampleclass(as.data.frame(sampleinfo));
 
 	for(compare_dir in workspace$analysis) {
-		workspace :> dep_calc(matrix, compare_dir, sampleinfo);
+		workspace :> dep_calc(matrix, compare_dir, sampleinfo, sample_class);
 	}
 }
 
@@ -37,7 +38,7 @@ let run_dep as function(workspace, matrix) {
 #' @param sampleinfo the sample information of the sample columns in the protein 
 #'    expression \code{matrix} data.
 #' 
-let dep_calc as function(workspace, matrix, compare_dir, sampleinfo) {
+let dep_calc as function(workspace, matrix, compare_dir, sampleinfo, sampleclass) {
 	let log2FC_level as double = workspace$args$log2FC_level || 1.25;
 	let FDR_threshold as double = workspace$args$FDR || 1;
 
@@ -62,7 +63,37 @@ let dep_calc as function(workspace, matrix, compare_dir, sampleinfo) {
 		size = "1400,1600", 
 		title = `Volcano plot of ${as_label(compare_dir)}`) 
 	:> save.graphics(file = `${compare_out}/volcano.png`)
-	;
-	
+	;	
+
+	let d = stripPvalue_cut(pvalue_cut)
+    :> t 
+    :> dist 
+    :> hclust
+    ;
+
+    print(d);
+
+    d :> plot(
+        class       = sampleclass, 
+        size        = [3600, 2700], 
+        padding     = "padding: 200px 400px 200px 200px;", 
+        axis.format = "G2",
+        links       = "stroke: darkblue; stroke-width: 8px; stroke-dash: dash;",
+        pt.color    = "gray",
+        label       = "font-style: normal; font-size: 13; font-family: Bookman Old Style;",
+        ticks       = "font-style: normal; font-size: 10; font-family: Bookman Old Style;"
+    )
+    :> save.graphics(`${compare_out}/samples.png`)
+    ;
+
 	print("done!");
+}
+
+let stripPvalue_cut as function(pvalue_cut) {
+	pvalue_cut[, "FC.avg"]  = NULL;
+	pvalue_cut[, "p.value"] = NULL;
+	pvalue_cut[, "is.DEP"]  = NULL;
+	pvalue_cut[, "log2FC"]  = NULL;
+	pvalue_cut[, "FDR"]     = NULL;	
+	pvalue_cut;
 }
