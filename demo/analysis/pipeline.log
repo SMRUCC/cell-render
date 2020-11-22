@@ -31,9 +31,91 @@ List of 3
 
  $ sample_info : any [1:24]  (C6) C61  (C6) C62  (C6) C63  (C6) C64  (C9) C91  (C9) C92 ...
 
-[1] "annotation background 'demo/annotation/background.ptf' will be overrides!"
 [1] "previews part of the unify protein ids:"
 [1]	"Q0WV96"    "Q5MK24"    "Q9MAN1"    "Q9SP32"    "AT1G03993" "Q93V56"    
+[1] "previews of your raw sample information:"
+     ID     sample_name  sample_info  injectionOrder  batch  color     shapetype
+C61  "C61"  "C61"        "C6"         0               0      "984ea3"  NULL
+C62  "C62"  "C62"        "C6"         0               0      "984ea3"  NULL
+C63  "C63"  "C63"        "C6"         0               0      "984ea3"  NULL
+C64  "C64"  "C64"        "C6"         0               0      "984ea3"  NULL
+C91  "C91"  "C91"        "C9"         0               0      "984ea3"  NULL
+C92  "C92"  "C92"        "C9"         0               0      "984ea3"  NULL
+
+clstr#23  distance : 0.02, weight : 24.00
+  I861 (leaf)  distance : 0.00, weight : 1.00
+  clstr#22  distance : 0.01, weight : 23.00
+    clstr#19  distance : 0.01, weight : 4.00
+      C63 (leaf)  distance : 0.00, weight : 1.00
+      clstr#18  distance : 0.01, weight : 3.00
+        I864 (leaf)  distance : 0.00, weight : 1.00
+        clstr#8  distance : 0.00, weight : 2.00
+          I563 (leaf)  distance : 0.00, weight : 1.00
+          I564 (leaf)  distance : 0.00, weight : 1.00
+    clstr#21  distance : 0.01, weight : 19.00
+      clstr#17  distance : 0.01, weight : 7.00
+        clstr#9  distance : 0.00, weight : 2.00
+          I562 (leaf)  distance : 0.00, weight : 1.00
+          I862 (leaf)  distance : 0.00, weight : 1.00
+        clstr#16  distance : 0.01, weight : 5.00
+          clstr#7  distance : 0.00, weight : 2.00
+            I561 (leaf)  distance : 0.00, weight : 1.00
+            I863 (leaf)  distance : 0.00, weight : 1.00
+          clstr#12  distance : 0.00, weight : 3.00
+            C62 (leaf)  distance : 0.00, weight : 1.00
+            clstr#6  distance : 0.00, weight : 2.00
+              C61 (leaf)  distance : 0.00, weight : 1.00
+              C64 (leaf)  distance : 0.00, weight : 1.00
+      clstr#20  distance : 0.01, weight : 12.00
+        clstr#14  distance : 0.00, weight : 3.00
+          C94 (leaf)  distance : 0.00, weight : 1.00
+          clstr#10  distance : 0.00, weight : 2.00
+            C92 (leaf)  distance : 0.00, weight : 1.00
+            C93 (leaf)  distance : 0.00, weight : 1.00
+        clstr#15  distance : 0.00, weight : 9.00
+          C91 (leaf)  distance : 0.00, weight : 1.00
+          clstr#13  distance : 0.00, weight : 8.00
+            I594 (leaf)  distance : 0.00, weight : 1.00
+            clstr#11  distance : 0.00, weight : 7.00
+              I892 (leaf)  distance : 0.00, weight : 1.00
+              clstr#5  distance : 0.00, weight : 6.00
+                clstr#3  distance : 0.00, weight : 3.00
+                  I893 (leaf)  distance : 0.00, weight : 1.00
+                  clstr#2  distance : 0.00, weight : 2.00
+                    I591 (leaf)  distance : 0.00, weight : 1.00
+                    I593 (leaf)  distance : 0.00, weight : 1.00
+                clstr#4  distance : 0.00, weight : 3.00
+                  I894 (leaf)  distance : 0.00, weight : 1.00
+                  clstr#1  distance : 0.00, weight : 2.00
+                    I592 (leaf)  distance : 0.00, weight : 1.00
+                    I891 (leaf)  distance : 0.00, weight : 1.00
+
+List of 24
+ $ C61  : chr "#984ea3"
+ $ C62  : chr "#984ea3"
+ $ C63  : chr "#984ea3"
+ $ C64  : chr "#984ea3"
+ $ C91  : chr "#984ea3"
+ $ C92  : chr "#984ea3"
+ $ C93  : chr "#984ea3"
+ $ C94  : chr "#984ea3"
+ $ I561 : chr "#4daf4a"
+ $ I562 : chr "#4daf4a"
+ $ I563 : chr "#4daf4a"
+ $ I564 : chr "#4daf4a"
+ $ I591 : chr "#4daf4a"
+ $ I592 : chr "#4daf4a"
+ $ I593 : chr "#4daf4a"
+ $ I594 : chr "#4daf4a"
+ $ I861 : chr "#70DB93"
+ $ I862 : chr "#70DB93"
+ $ I863 : chr "#70DB93"
+ $ I864 : chr "#70DB93"
+ $ I891 : chr "#70DB93"
+ $ I892 : chr "#70DB93"
+ $ I893 : chr "#70DB93"
+ $ I894 : chr "#70DB93"
+
 [1] "run dep analysis of 'C6 vs C9'..."
 [1] "done!"
 [1] "run dep analysis of 'C6 vs I56'..."

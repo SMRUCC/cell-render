@@ -2,6 +2,7 @@
 imports "../package/init.R";
 # data analysis and pre-processing components
 imports "../package/01_background.R";
+imports "../package/01_raw.R";
 imports "../package/03_dep.R";
 imports "../package/04_biological.R";
 
@@ -40,13 +41,13 @@ if (overrides) {
 # save background annotation data
 if (overrides || !file.exists(background_ptf)) {
 	makePtf(uniprot_src, background_ptf);
-}
 
-# unify the gene id to uniprot protein id.
-`${output_dir}/raw/all_counts.csv`
-:> unifyId(background_ptf) 
-:> write.csv(file = HTS)
-;
+	# unify the gene id to uniprot protein id.
+	`${output_dir}/raw/all_counts.csv`
+	:> unifyId(background_ptf) 
+	:> write.csv(file = HTS)
+	;
+}
 
 let annotations = read.csv(HTS, row_names = 1)
 :> protein_annotations(ptf = background_ptf)
@@ -61,6 +62,7 @@ annotations
 :> go_summary(goDb, `${workspace$dirs$summary}/GO`)
 ;
 
+workspace :> hist_samples(matrix = read.csv(HTS, row_names = 1));
 # run dep analysis and data visualization of the dep
 workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
