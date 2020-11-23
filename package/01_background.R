@@ -108,7 +108,7 @@ let go_summary as function(annotations, goDb, outputdir) {
 }
 
 let GSEAbackground as function(ptf, outputdir) {
-	let annotations = ptf :> load.ptf; 
+	let annotations = ptf :> load.ptf(lazy = FALSE); 
 	let kegg_maps = load.maps(keggMaps, rawMaps = FALSE);
 	let kegg_xml as string = `${outputdir}/kegg.Xml`;
 
