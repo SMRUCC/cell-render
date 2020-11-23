@@ -1,5 +1,6 @@
 imports ["geneExpression", "sampleInfo"] from "phenotype_kit";
 imports "visualPlot" from "visualkit";
+imports ["GSEA", "profiles"] from "gseakit";
 
 #' create clusters for biological function analysis
 #' 
@@ -7,8 +8,8 @@ imports "visualPlot" from "visualkit";
 #'     directory path list which can be used for read dep pvalue_cut 
 #'     result.
 #' 
-let patterns_plot as function(workspace) {
-	lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir));
+let patterns_plot as function(workspace, outputdir) {
+	lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir, outputdir));
 }
 
 #' create cluster for a specific analysis compare groups
@@ -18,10 +19,11 @@ let patterns_plot as function(workspace) {
 #' @param compare_dir the analsysis design groups, is a list object that should contains
 #'     a slot name \code{treatment} and a slot name \code{control}
 #' 
-let create_pattern as function(workspace, compare_dir) {
+let create_pattern as function(workspace, compare_dir, outputdir) {
 	let pvalue_cut  = `${workspace$dirs$dep_analysis}/${as_label(compare_dir)}/pvalue_cut.csv`;
 	let cluster_out = `${workspace$dirs$biological_analysis}/${as_label(compare_dir)}`;
-	
+	let kegg_background = read.background(`${outputdir}/annotation/kegg.Xml`);
+
 	# removes all of the unnecessary information
 	# create a expression matrix that contains
 	# only of the protein expression normalization
@@ -59,19 +61,43 @@ let create_pattern as function(workspace, compare_dir) {
 		let members = patterns[[groupKey]];
 		let group_out = `${cluster_out}/cluster_${groupKey}`;
 
-		pvalue_cut[members, ]
-		:> dist 
-		:> btree(hclust = TRUE)
-		:> plot(       
-			size        = [3300, 30000], 
-			padding     = "padding: 200px 400px 200px 200px;", 
-			axis.format = "G2",
-			links       = "stroke: darkblue; stroke-width: 8px; stroke-dash: dash;",
-			pt.color    = "gray",
-			label       = "font-style: normal; font-size: 10; font-family: Bookman Old Style;",
-			ticks       = "font-style: normal; font-size: 12; font-family: Bookman Old Style;"
+		print(head(members));
+
+		# pvalue_cut[members, ]
+		# :> dist 
+		# :> btree(hclust = TRUE)
+		# :> plot(       
+		# 	size        = [3300, 30000], 
+		# 	padding     = "padding: 200px 400px 200px 200px;", 
+		# 	axis.format = "G2",
+		# 	links       = "stroke: darkblue; stroke-width: 8px; stroke-dash: dash;",
+		# 	pt.color    = "gray",
+		# 	label       = "font-style: normal; font-size: 10; font-family: Bookman Old Style;",
+		# 	ticks       = "font-style: normal; font-size: 12; font-family: Bookman Old Style;"
+		# )
+		# :> save.graphics(`${group_out}/deps.png`)
+		# ;
+
+		# run GSEA
+		let enrich = kegg_background 
+		:> enrichment(members, showProgress = FALSE) 
+		:> enrichment.FDR;
+
+		enrich :> write.enrichment(
+			file   = `${group_out}/kegg.csv`, 
+			format = "KOBAS"
+		);
+
+		enrich 
+		:> as.KOBAS_terms 
+		:> KEGG.enrichment.profile(top = 13)
+		:> category_profiles.plot(
+			size       = [2700,2300], 
+			dpi        = 200, 
+			title      = "KEGG enrichment", 
+			axis_title = "-log10(pvalue)"
 		)
-		:> save.graphics(`${group_out}/deps.png`)
+		:> save.graphics(file = `${group_out}/kegg.png`)
 		;
 
 		writeLines(members, con = `${group_out}/deps.txt`);
