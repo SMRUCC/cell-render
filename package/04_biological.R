@@ -33,6 +33,8 @@ let create_pattern as function(workspace, compare_dir, outputdir) {
 	print(`[${as_label(compare_dir)}] previews of the different expression proteins:`);
 	print(head(pvalue_cut));
 
+	kegg_enrich(kegg_background, rownames(pvalue_cut), cluster_out);
+
 	# run cmeans clustering
 	let patterns = pvalue_cut 
 	:> load.expr
@@ -58,7 +60,7 @@ let create_pattern as function(workspace, compare_dir, outputdir) {
 	str(patterns);
 
 	for(groupKey in names(patterns)) {
-		let members = patterns[[groupKey]];
+		let members   = patterns[[groupKey]];
 		let group_out = `${cluster_out}/cluster_${groupKey}`;
 
 		print(head(members));
@@ -78,28 +80,31 @@ let create_pattern as function(workspace, compare_dir, outputdir) {
 		# :> save.graphics(`${group_out}/deps.png`)
 		# ;
 
-		# run GSEA
-		let enrich = kegg_background 
-		:> enrichment(members, showProgress = FALSE) 
-		:> enrichment.FDR;
-
-		enrich :> write.enrichment(
-			file   = `${group_out}/kegg.csv`, 
-			format = "KOBAS"
-		);
-
-		enrich 
-		:> as.KOBAS_terms 
-		:> KEGG.enrichment.profile(top = 13)
-		:> category_profiles.plot(
-			size       = [2700,2300], 
-			dpi        = 200, 
-			title      = "KEGG enrichment", 
-			axis_title = "-log10(pvalue)"
-		)
-		:> save.graphics(file = `${group_out}/kegg.png`)
-		;
-
+		kegg_enrich(kegg_background, members, group_out);
 		writeLines(members, con = `${group_out}/deps.txt`);
 	}
+}
+
+let kegg_enrich as function(kegg_background, members, group_out) {
+	# run GSEA
+	let enrich = kegg_background 
+	:> enrichment(members, showProgress = FALSE) 
+	:> enrichment.FDR;
+
+	enrich :> write.enrichment(
+		file   = `${group_out}/kegg.csv`, 
+		format = "KOBAS"
+	);
+
+	enrich 
+	:> as.KOBAS_terms 
+	:> KEGG.enrichment.profile(top = 10)
+	:> category_profiles.plot(
+		size       = [2700,2400], 
+		dpi        = 100, 
+		title      = "KEGG enrichment", 
+		axis_title = "-log10(pvalue)"
+	)
+	:> save.graphics(file = `${group_out}/kegg.png`)
+	;
 }
