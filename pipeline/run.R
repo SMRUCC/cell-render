@@ -40,13 +40,15 @@ if (overrides) {
 
 # save background annotation data
 if (overrides || !file.exists(background_ptf)) {
-	makePtf(uniprot_src, background_ptf);
+	# makePtf(uniprot_src, background_ptf);
 
 	# unify the gene id to uniprot protein id.
-	`${output_dir}/raw/all_counts.csv`
-	:> unifyId(background_ptf) 
-	:> write.csv(file = HTS)
-	;
+	# `${output_dir}/raw/all_counts.csv`
+	# :> unifyId(background_ptf) 
+	# :> write.csv(file = HTS)
+	# ;
+
+	GSEAbackground(background_ptf, `${output_dir}/annotation`); 
 }
 
 # let annotations = read.csv(HTS, row_names = 1)
@@ -66,7 +68,7 @@ if (overrides || !file.exists(background_ptf)) {
 # run dep analysis and data visualization of the dep
 # workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
-workspace :> patterns_plot;
+# workspace :> patterns_plot;
 
 print("Workflow finished!");
 

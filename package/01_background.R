@@ -3,11 +3,14 @@ imports ["ptfKit", "labelfree", "summary"] from "proteomics_toolkit";
 imports "uniprot" from "seqtoolkit";
 imports "geneExpression" from "phenotype_kit";
 imports "file" from "gokit";
+imports "background" from "gseakit";
+imports "repository" from "kegg_kit";
 
 # script for create background annotation data files
 # the annotation data is request from the uniprot database
 # via web api
 const url_template as string = "https://www.uniprot.org/uniprot/?query=taxonomy:%s&format=xml&force=true&compress=yes";
+const keggMaps as string = "E:\biodeep\biodeepdb_v3\KEGG\br08901_pathwayMaps";
 
 let request_uniprot as function(taxid as string, save as string) {
 	let url as string = sprintf(url_template, taxid);
@@ -101,5 +104,19 @@ let go_summary as function(annotations, goDb, outputdir) {
 		size = [2300, 2200]
 	)
 	:> save.graphics(file = `${outputdir}/plot.png`)
+	;
+}
+
+let GSEAbackground as function(ptf, outputdir) {
+	let annotations = ptf :> load.ptf; 
+	let kegg_maps = load.maps(keggMaps, rawMaps = FALSE);
+	let kegg_xml as string = `${outputdir}/kegg.Xml`;
+
+	print("kegg background model will be saved at location:");
+	print(kegg_xml);
+
+	annotations 
+	:> KO.background(kegg_maps, size = length(as.object(annotations)$proteins))
+	:> write.background(file = kegg_xml)
 	;
 }
