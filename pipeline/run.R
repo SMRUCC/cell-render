@@ -19,6 +19,7 @@ sink(file = `${output_dir}/analysis/pipeline.log`);
 # create workspace folders
 let workspace = init_workspace(output_dir);
 
+workspace$args = list(log2FC_level = 2);
 workspace$analysis = list(
 	a = list(treatment = "C6", control = "C9"),
 	b = list(treatment = "C6", control = "I56"),
@@ -67,9 +68,9 @@ if (overrides || !file.exists(background_ptf)) {
 
 # workspace :> hist_samples(matrix = read.csv(HTS, row_names = 1));
 # run dep analysis and data visualization of the dep
-# workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
+workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
-# workspace :> patterns_plot(output_dir);
+workspace :> patterns_plot(output_dir);
 workspace :> dep_correlations(matrix = load.expr(HTS, rm_ZERO = TRUE), output_dir = output_dir);
 
 print("Workflow finished!");
