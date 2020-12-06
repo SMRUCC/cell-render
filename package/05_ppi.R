@@ -20,7 +20,25 @@ let dep_correlations as function(workspace, matrix) {
     # evaluate pearson correlations
     matrix = corr(matrix);
 
-    let graph = matrix :> correlation.graph(threshold = workspace$args$cor_cutoff);
+    let graph = matrix 
+    :> correlation.graph(threshold = workspace$args$cor_cutoff) 
+    :> trim.edges(directedGraph = FALSE, removesTuples = TRUE)
+    :> connected_graph
+    # :> compute.network
+    :> layout.random
+    :> layout.force_directed(showProgress = FALSE, iterations = 500)
+    ;
+
+    print(graph);
+
+    graph
+    :> render.Plot(
+        canvasSize        = [2440, 1920],
+        padding           = "padding:100px 100px 100px 100px;",
+        labelerIterations = -1
+    )
+    :> save.graphics(file = `${output_dir}/network.png`)
+    ;
 
     save.network(graph, file = `${output_dir}/cor/`);
 }

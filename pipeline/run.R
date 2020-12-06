@@ -22,7 +22,7 @@ let workspace = init_workspace(output_dir);
 # analysis parameters 
 workspace$args = list(
 	log2FC_level = 2,
-	cor_cutoff   = 0.85
+	cor_cutoff   = 0.95
 );
 
 # analysis designs
