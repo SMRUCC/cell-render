@@ -1,5 +1,7 @@
 # label-free
  
+label-free proteomics data analysis pipeline in R# scripting language.
+ 
 ## Analysis Contents
 
 ### 1. raw data summary
