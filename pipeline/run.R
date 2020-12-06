@@ -19,7 +19,13 @@ sink(file = `${output_dir}/analysis/pipeline.log`);
 # create workspace folders
 let workspace = init_workspace(output_dir);
 
-workspace$args = list(log2FC_level = 2);
+# analysis parameters 
+workspace$args = list(
+	log2FC_level = 2,
+	cor_cutoff   = 0.85
+);
+
+# analysis designs
 workspace$analysis = list(
 	a = list(treatment = "C6", control = "C9"),
 	b = list(treatment = "C6", control = "I56"),
@@ -53,24 +59,24 @@ if (overrides || !file.exists(background_ptf)) {
 	GSEAbackground(background_ptf, `${output_dir}/annotation`); 
 }
 
-let annotations = read.csv(HTS, row_names = 1)
-:> protein_annotations(ptf = background_ptf)
-;
+# let annotations = read.csv(HTS, row_names = 1)
+# :> protein_annotations(ptf = background_ptf)
+# ;
 
 # stage 01, raw sample data analysis
 # includes protein function annotations in current expression samples
-annotations
-:> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
-;
-annotations
-:> go_summary(goDb, `${workspace$dirs$summary}/GO`)
-;
+# annotations
+# :> write.csv(file = `${workspace$dirs$summary}/protein.annotations.csv`)
+# ;
+# annotations
+# :> go_summary(goDb, `${workspace$dirs$summary}/GO`)
+# ;
 
-workspace :> hist_samples(matrix = read.csv(HTS, row_names = 1));
+# workspace :> hist_samples(matrix = read.csv(HTS, row_names = 1));
 # run dep analysis and data visualization of the dep
-workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
+# workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
-workspace :> patterns_plot(output_dir);
+# workspace :> patterns_plot(output_dir);
 workspace :> dep_correlations(matrix = load.expr(HTS, rm_ZERO = TRUE), output_dir = output_dir);
 
 print("Workflow finished!");
