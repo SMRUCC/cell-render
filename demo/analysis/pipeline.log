@@ -34,6 +34,94 @@ List of 4
 
  $ sample_info : any [1:24]  (C6) C61  (C6) C62  (C6) C63  (C6) C64  (C9) C91  (C9) C92 ...
 
+[1] "annotation background 'demo/annotation/background.ptf' will be overrides!"
+[1] "kegg background model will be saved at location:"
+[1]	"demo/annotation/kegg.Xml" 
+[1] "previews part of the unify protein ids:"
+[1]	"Q0WV96"    "Q5MK24"    "Q9MAN1"    "Q9SP32"    "AT1G03993" "Q93V56"    
+[1] "previews of your raw sample information:"
+     ID     sample_name  sample_info  injectionOrder  batch  color     shapetype
+C61  "C61"  "C61"        "C6"         0               0      "984ea3"  NULL
+C62  "C62"  "C62"        "C6"         0               0      "984ea3"  NULL
+C63  "C63"  "C63"        "C6"         0               0      "984ea3"  NULL
+C64  "C64"  "C64"        "C6"         0               0      "984ea3"  NULL
+C91  "C91"  "C91"        "C9"         0               0      "984ea3"  NULL
+C92  "C92"  "C92"        "C9"         0               0      "984ea3"  NULL
+
+clstr#23  distance : 0.02, weight : 24.00
+  I861 (leaf)  distance : 0.00, weight : 1.00
+  clstr#22  distance : 0.01, weight : 23.00
+    clstr#19  distance : 0.01, weight : 4.00
+      C63 (leaf)  distance : 0.00, weight : 1.00
+      clstr#18  distance : 0.01, weight : 3.00
+        I864 (leaf)  distance : 0.00, weight : 1.00
+        clstr#8  distance : 0.00, weight : 2.00
+          I563 (leaf)  distance : 0.00, weight : 1.00
+          I564 (leaf)  distance : 0.00, weight : 1.00
+    clstr#21  distance : 0.01, weight : 19.00
+      clstr#17  distance : 0.01, weight : 7.00
+        clstr#9  distance : 0.00, weight : 2.00
+          I562 (leaf)  distance : 0.00, weight : 1.00
+          I862 (leaf)  distance : 0.00, weight : 1.00
+        clstr#16  distance : 0.01, weight : 5.00
+          clstr#7  distance : 0.00, weight : 2.00
+            I561 (leaf)  distance : 0.00, weight : 1.00
+            I863 (leaf)  distance : 0.00, weight : 1.00
+          clstr#12  distance : 0.00, weight : 3.00
+            C62 (leaf)  distance : 0.00, weight : 1.00
+            clstr#6  distance : 0.00, weight : 2.00
+              C61 (leaf)  distance : 0.00, weight : 1.00
+              C64 (leaf)  distance : 0.00, weight : 1.00
+      clstr#20  distance : 0.01, weight : 12.00
+        clstr#14  distance : 0.00, weight : 3.00
+          C94 (leaf)  distance : 0.00, weight : 1.00
+          clstr#10  distance : 0.00, weight : 2.00
+            C92 (leaf)  distance : 0.00, weight : 1.00
+            C93 (leaf)  distance : 0.00, weight : 1.00
+        clstr#15  distance : 0.00, weight : 9.00
+          C91 (leaf)  distance : 0.00, weight : 1.00
+          clstr#13  distance : 0.00, weight : 8.00
+            I594 (leaf)  distance : 0.00, weight : 1.00
+            clstr#11  distance : 0.00, weight : 7.00
+              I892 (leaf)  distance : 0.00, weight : 1.00
+              clstr#5  distance : 0.00, weight : 6.00
+                clstr#3  distance : 0.00, weight : 3.00
+                  I893 (leaf)  distance : 0.00, weight : 1.00
+                  clstr#2  distance : 0.00, weight : 2.00
+                    I591 (leaf)  distance : 0.00, weight : 1.00
+                    I593 (leaf)  distance : 0.00, weight : 1.00
+                clstr#4  distance : 0.00, weight : 3.00
+                  I894 (leaf)  distance : 0.00, weight : 1.00
+                  clstr#1  distance : 0.00, weight : 2.00
+                    I592 (leaf)  distance : 0.00, weight : 1.00
+                    I891 (leaf)  distance : 0.00, weight : 1.00
+
+List of 24
+ $ C61  : chr "#984ea3"
+ $ C62  : chr "#984ea3"
+ $ C63  : chr "#984ea3"
+ $ C64  : chr "#984ea3"
+ $ C91  : chr "#984ea3"
+ $ C92  : chr "#984ea3"
+ $ C93  : chr "#984ea3"
+ $ C94  : chr "#984ea3"
+ $ I561 : chr "#4daf4a"
+ $ I562 : chr "#4daf4a"
+ $ I563 : chr "#4daf4a"
+ $ I564 : chr "#4daf4a"
+ $ I591 : chr "#4daf4a"
+ $ I592 : chr "#4daf4a"
+ $ I593 : chr "#4daf4a"
+ $ I594 : chr "#4daf4a"
+ $ I861 : chr "#70DB93"
+ $ I862 : chr "#70DB93"
+ $ I863 : chr "#70DB93"
+ $ I864 : chr "#70DB93"
+ $ I891 : chr "#70DB93"
+ $ I892 : chr "#70DB93"
+ $ I893 : chr "#70DB93"
+ $ I894 : chr "#70DB93"
+
 [1] "previews of your raw sample information:"
      ID     sample_name  sample_info  injectionOrder  batch  color     shapetype
 C61  "C61"  "C61"        "C6"         0               0      "984ea3"  NULL
@@ -44,91 +132,91 @@ C91  "C91"  "C91"        "C9"         0               0      "984ea3"  NULL
 C92  "C92"  "C92"        "C9"         0               0      "984ea3"  NULL
 
 [1] "run dep analysis of 'C6 vs C9'..."
-clstr#7  distance : 0.00, weight : 8.00
-  clstr#5  distance : 0.00, weight : 4.00
-    clstr#2  distance : 0.00, weight : 2.00
+clstr#30  distance : 0.00, weight : 8.00
+  clstr#28  distance : 0.00, weight : 4.00
+    clstr#25  distance : 0.00, weight : 2.00
       C92 (leaf)  distance : 0.00, weight : 1.00
       C94 (leaf)  distance : 0.00, weight : 1.00
-    clstr#4  distance : 0.00, weight : 2.00
+    clstr#27  distance : 0.00, weight : 2.00
       C91 (leaf)  distance : 0.00, weight : 1.00
       C93 (leaf)  distance : 0.00, weight : 1.00
-  clstr#6  distance : 0.00, weight : 4.00
+  clstr#29  distance : 0.00, weight : 4.00
     C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#3  distance : 0.00, weight : 3.00
+    clstr#26  distance : 0.00, weight : 3.00
       C64 (leaf)  distance : 0.00, weight : 1.00
-      clstr#1  distance : 0.00, weight : 2.00
+      clstr#24  distance : 0.00, weight : 2.00
         C61 (leaf)  distance : 0.00, weight : 1.00
         C62 (leaf)  distance : 0.00, weight : 1.00
 
 [1] "done!"
 [1] "run dep analysis of 'C6 vs I56'..."
-clstr#14  distance : 0.00, weight : 8.00
-  clstr#12  distance : 0.00, weight : 4.00
-    clstr#8  distance : 0.00, weight : 2.00
+clstr#37  distance : 0.00, weight : 8.00
+  clstr#35  distance : 0.00, weight : 4.00
+    clstr#31  distance : 0.00, weight : 2.00
       C61 (leaf)  distance : 0.00, weight : 1.00
       C62 (leaf)  distance : 0.00, weight : 1.00
-    clstr#9  distance : 0.00, weight : 2.00
+    clstr#32  distance : 0.00, weight : 2.00
       C63 (leaf)  distance : 0.00, weight : 1.00
       C64 (leaf)  distance : 0.00, weight : 1.00
-  clstr#13  distance : 0.00, weight : 4.00
+  clstr#36  distance : 0.00, weight : 4.00
     I564 (leaf)  distance : 0.00, weight : 1.00
-    clstr#11  distance : 0.00, weight : 3.00
+    clstr#34  distance : 0.00, weight : 3.00
       I562 (leaf)  distance : 0.00, weight : 1.00
-      clstr#10  distance : 0.00, weight : 2.00
+      clstr#33  distance : 0.00, weight : 2.00
         I561 (leaf)  distance : 0.00, weight : 1.00
         I563 (leaf)  distance : 0.00, weight : 1.00
 
 [1] "done!"
 [1] "run dep analysis of 'C6 vs I59'..."
-clstr#21  distance : 0.00, weight : 8.00
-  clstr#18  distance : 0.00, weight : 4.00
+clstr#44  distance : 0.00, weight : 8.00
+  clstr#41  distance : 0.00, weight : 4.00
     I594 (leaf)  distance : 0.00, weight : 1.00
-    clstr#16  distance : 0.00, weight : 3.00
+    clstr#39  distance : 0.00, weight : 3.00
       I592 (leaf)  distance : 0.00, weight : 1.00
-      clstr#15  distance : 0.00, weight : 2.00
+      clstr#38  distance : 0.00, weight : 2.00
         I591 (leaf)  distance : 0.00, weight : 1.00
         I593 (leaf)  distance : 0.00, weight : 1.00
-  clstr#20  distance : 0.00, weight : 4.00
+  clstr#43  distance : 0.00, weight : 4.00
     C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#19  distance : 0.00, weight : 3.00
+    clstr#42  distance : 0.00, weight : 3.00
       C61 (leaf)  distance : 0.00, weight : 1.00
-      clstr#17  distance : 0.00, weight : 2.00
+      clstr#40  distance : 0.00, weight : 2.00
         C62 (leaf)  distance : 0.00, weight : 1.00
         C64 (leaf)  distance : 0.00, weight : 1.00
 
 [1] "done!"
 [1] "run dep analysis of 'C6 vs I86'..."
-clstr#28  distance : 0.00, weight : 8.00
-  clstr#26  distance : 0.00, weight : 4.00
-    clstr#22  distance : 0.00, weight : 2.00
+clstr#51  distance : 0.00, weight : 8.00
+  clstr#49  distance : 0.00, weight : 4.00
+    clstr#45  distance : 0.00, weight : 2.00
       C61 (leaf)  distance : 0.00, weight : 1.00
       C62 (leaf)  distance : 0.00, weight : 1.00
-    clstr#23  distance : 0.00, weight : 2.00
+    clstr#46  distance : 0.00, weight : 2.00
       C63 (leaf)  distance : 0.00, weight : 1.00
       C64 (leaf)  distance : 0.00, weight : 1.00
-  clstr#27  distance : 0.00, weight : 4.00
+  clstr#50  distance : 0.00, weight : 4.00
     I862 (leaf)  distance : 0.00, weight : 1.00
-    clstr#25  distance : 0.00, weight : 3.00
+    clstr#48  distance : 0.00, weight : 3.00
       I863 (leaf)  distance : 0.00, weight : 1.00
-      clstr#24  distance : 0.00, weight : 2.00
+      clstr#47  distance : 0.00, weight : 2.00
         I861 (leaf)  distance : 0.00, weight : 1.00
         I864 (leaf)  distance : 0.00, weight : 1.00
 
 [1] "done!"
 [1] "run dep analysis of 'C6 vs I89'..."
-clstr#35  distance : 0.00, weight : 8.00
-  clstr#32  distance : 0.00, weight : 4.00
+clstr#58  distance : 0.00, weight : 8.00
+  clstr#55  distance : 0.00, weight : 4.00
     I892 (leaf)  distance : 0.00, weight : 1.00
-    clstr#31  distance : 0.00, weight : 3.00
+    clstr#54  distance : 0.00, weight : 3.00
       I893 (leaf)  distance : 0.00, weight : 1.00
-      clstr#29  distance : 0.00, weight : 2.00
+      clstr#52  distance : 0.00, weight : 2.00
         I891 (leaf)  distance : 0.00, weight : 1.00
         I894 (leaf)  distance : 0.00, weight : 1.00
-  clstr#34  distance : 0.00, weight : 4.00
+  clstr#57  distance : 0.00, weight : 4.00
     C63 (leaf)  distance : 0.00, weight : 1.00
-    clstr#33  distance : 0.00, weight : 3.00
+    clstr#56  distance : 0.00, weight : 3.00
       C61 (leaf)  distance : 0.00, weight : 1.00
-      clstr#30  distance : 0.00, weight : 2.00
+      clstr#53  distance : 0.00, weight : 2.00
         C62 (leaf)  distance : 0.00, weight : 1.00
         C64 (leaf)  distance : 0.00, weight : 1.00
 
@@ -143,17 +231,17 @@ P92949  "5.91265213296783E-05"  "8.20268375258456E-05"  "5.04391437425527E-05"  
 Q0WMJ8  "4.40830585759115E-05"  "4.18092807052822E-05"  "3.78293578069145E-05"  "3.89804032263484E-05"  "8.26027090935159E-05"  "0.000100555180114544"  "7.63688773685648E-05"  "0.000106005277935125"
 
 List of 5
- $ [1] : chr [1:173] "O80518" "Q93Z38" "A0A1P8ARP7" "F4IB95" "Q9SRZ4" "Q9FRM1" ...
- $ [2] : chr [1:211] "Q6R0H1" "Q9LNJ0" "Q0WMJ8" "F4HVZ1" "Q94KD8" "Q9SRZ0" ...
- $ [3] : chr [1:265] "Q9FI55" "Q0WLQ9" "F4IN73" "O82615" "Q3EDK2" "Q9LNW0" ...
- $ [4] : chr [1:487] "F4HQJ2" "P92949" "Q9SYK6" "Q9LMJ1" "O82811" "Q9LMZ9" ...
- $ [5] : chr [1:186] "A0A1P8AX35" "Q9FZ21" "Q9SRX4" "Q5XEP9" "Q8L730" "Q9ZVN4" ...
+ $ [1] : chr [1:140] "Q6R0H1" "Q9LNJ0" "Q0WMJ8" "F4HVZ1" "Q94KD8" "Q42523" ...
+ $ [2] : chr [1:218] "A0A1P8AX35" "Q9FZ21" "Q9SRX4" "Q5XEP9" "Q8L730" "Q9ZVN4" ...
+ $ [3] : chr [1:176] "Q9SRZ0" "A0A384KX04" "A0A1P8AWD1" "Q9SHJ5" "Q9FR37" "F4I2R3" ...
+ $ [4] : chr [1:382] "A0A178WGQ1" "Q9FZC8" "Q9C7I9" "A0A1P8AP20" "AT1G69572" "B3H7H0" ...
+ $ [5] : chr [1:406] "Q3EDK2" "Q9LNE3" "Q9LNW0" "O04515" "Q3EDD5" "A0A1P8AR40" ...
 
-[1]	"O80518"     "Q93Z38"     "A0A1P8ARP7" "F4IB95"     "Q9SRZ4"     "Q9FRM1"     
-[1]	"Q6R0H1" "Q9LNJ0" "Q0WMJ8" "F4HVZ1" "Q94KD8" "Q9SRZ0" 
-[1]	"Q9FI55" "Q0WLQ9" "F4IN73" "O82615" "Q3EDK2" "Q9LNW0" 
-[1]	"F4HQJ2" "P92949" "Q9SYK6" "Q9LMJ1" "O82811" "Q9LMZ9" 
+[1]	"Q6R0H1" "Q9LNJ0" "Q0WMJ8" "F4HVZ1" "Q94KD8" "Q42523" 
 [1]	"A0A1P8AX35" "Q9FZ21"     "Q9SRX4"     "Q5XEP9"     "Q8L730"     "Q9ZVN4"     
+[1]	"Q9SRZ0"     "A0A384KX04" "A0A1P8AWD1" "Q9SHJ5"     "Q9FR37"     "F4I2R3"     
+[1]	"A0A178WGQ1" "Q9FZC8"     "Q9C7I9"     "A0A1P8AP20" "AT1G69572"  "B3H7H0"     
+[1]	"Q3EDK2"     "Q9LNE3"     "Q9LNW0"     "O04515"     "Q3EDD5"     "A0A1P8AR40" 
 [1] "[C6 vs I56] previews of the different expression proteins:"
            C61                     C62                     C63                     C64                     I561                    I562                    I563                    I564
 O81913     "3.8084715832321E-07"   "6.36689553887547E-07"  "3.17893763083315E-07"  "1.53617352616152E-06"  "2.88806787537121E-06"  "9.40428730172941E-07"  "2.07418550742073E-06"  "1.9231015165867E-06"
@@ -164,17 +252,17 @@ AT1G04223  "4.76058947904012E-07"  "5.30574628239622E-07"  "7.41752113861069E-07
 Q9ZWB4     "0"                     "2.12229851295849E-07"  "2.11929175388877E-07"  "1.92021690770189E-07"  "0"                     "0"                     "0"                     "0"
 
 List of 5
- $ [1] : chr [1:80] "Q93WK6" "Q7PC84" "Q9FT64" "Q9LY94" "Q9LFR3" "A0A1P8BF78" ...
- $ [2] : chr [1:49] "O64492" "Q9SYF3" "AT1G08697" "Q1G324" "Q42431" "AT3G05955" ...
- $ [3] : chr [1:59] "Q9C6B9" "Q9LZV9" "Q9FLI4" "Q9S702" "AT4G16355" "Q9SRY5" ...
- $ [4] : chr [1:99] "B3H5Q1" "AT1G04273" "Q9SXA7" "Q3E7S2" "Q9MAQ3" "F4HPH2" ...
- $ [5] : chr [1:67] "Q9LMC8" "A0A178WE54" "Q9FYG6" "Q9S7T7" "Q9FY65" "Q94CK4" ...
+ $ [1] : chr [1:121] "Q9FWX8" "AT1G04223" "Q9ZWB4" "A0A1P8AUV9" "Q9LE79" "AT1G05017" ...
+ $ [2] : chr [1:69] "O81913" "Q3E6X9" "Q9C8J4" "Q84UV0" "F4HQ05" "AT1G09907" ...
+ $ [3] : chr [1:70] "Q9LR44" "A0A178W1Y6" "Q9SHH7" "P92995" "Q9LNS5" "Q9SGP6" ...
+ $ [4] : chr [1:27] "AT1G05837" "Q9FZE4" "AT1G09327" "Q94CK4" "Q56YG6" "AT3G08975" ...
+ $ [5] : chr [1:67] "AT1G08697" "Q9SU32" "AT1G04743" "Q3E8R5" "AT3G05955" "Q9SRY5" ...
 
-[1]	"Q93WK6"     "Q7PC84"     "Q9FT64"     "Q9LY94"     "Q9LFR3"     "A0A1P8BF78" 
-[1]	"O64492"    "Q9SYF3"    "AT1G08697" "Q1G324"    "Q42431"    "AT3G05955" 
-[1]	"Q9C6B9"    "Q9LZV9"    "Q9FLI4"    "Q9S702"    "AT4G16355" "Q9SRY5"    
-[1]	"B3H5Q1"    "AT1G04273" "Q9SXA7"    "Q3E7S2"    "Q9MAQ3"    "F4HPH2"    
-[1]	"Q9LMC8"     "A0A178WE54" "Q9FYG6"     "Q9S7T7"     "Q9FY65"     "Q94CK4"     
+[1]	"Q9FWX8"     "AT1G04223"  "Q9ZWB4"     "A0A1P8AUV9" "Q9LE79"     "AT1G05017"  
+[1]	"O81913"    "Q3E6X9"    "Q9C8J4"    "Q84UV0"    "F4HQ05"    "AT1G09907" 
+[1]	"Q9LR44"     "A0A178W1Y6" "Q9SHH7"     "P92995"     "Q9LNS5"     "Q9SGP6"     
+[1]	"AT1G05837" "Q9FZE4"    "AT1G09327" "Q94CK4"    "Q56YG6"    "AT3G08975" 
+[1]	"AT1G08697" "Q9SU32"    "AT1G04743" "Q3E8R5"    "AT3G05955" "Q9SRY5"    
 [1] "[C6 vs I59] previews of the different expression proteins:"
             C61                     C62                     C63                     C64                     I591                    I592                    I593                    I594
 Q9LNI5      "2.85635368742407E-07"  "8.48919405183396E-07"  "7.41752113861069E-07"  "8.64097608465852E-07"  "2.04249238289602E-06"  "1.82751302585291E-06"  "1.72899606480496E-06"  "2.17326209191217E-06"
@@ -185,17 +273,17 @@ A0A178WAP9  "9.52117895808025E-08"  "4.24459702591698E-07"  "1.05964587694438E-0
 Q9LQ89      "4.76058947904012E-07"  "3.18344776943773E-07"  "9.53681289249946E-07"  "1.05611929923604E-06"  "1.8568112571782E-06"   "1.72598452441664E-06"  "1.2739971003826E-06"   "2.92917934127292E-06"
 
 List of 5
- $ [1] : chr [1:324] "A0A178WAU2" "Q9ZWA1" "Q9LNW0" "AT1G04743" "Q9SAA8" "O65368" ...
- $ [2] : chr [1:420] "A0A178WAP9" "Q9SHJ3" "Q3EDC6" "Q39224" "Q9LN65" "A2RVM1" ...
- $ [3] : chr [1:150] "Q9FG67" "Q9ZQ25" "F4IGZ2" "Q38914" "Q9LNI5" "Q9SRZ0" ...
- $ [4] : chr [1:88] "Q9SRW9" "Q9LQQ9" "Q9SGD1" "Q9SA32" "Q9FZ66" "Q8S905" ...
- $ [5] : chr [1:201] "Q6DSU0" "AT1G06963" "Q058G8" "Q1PER6" "Q5BPS0" "A0A1P8AXS6" ...
+ $ [1] : chr [1:125] "Q9FUY7" "Q2NND9" "A0A178WEM2" "Q9LNI5" "Q9SRZ0" "A0A384KX04" ...
+ $ [2] : chr [1:301] "Q9LQ89" "Q9ZWA4" "F4I8Q8" "Q3EDG6" "O04510" "Q9XI76" ...
+ $ [3] : chr [1:525] "AT1G04223" "Q9FUS9" "Q9FUS8" "O04090" "Q9M9T4" "Q8W4D6" ...
+ $ [4] : chr [1:143] "A0A384L6K0" "Q9SHJ3" "F4I2R3" "Q3EDC6" "Q39224" "Q9LN65" ...
+ $ [5] : chr [1:89] "Q9SRW9" "Q9LQQ9" "Q9SGD1" "Q9SA32" "Q9FZ66" "Q8S905" ...
 
-[1]	"A0A178WAU2" "Q9ZWA1"     "Q9LNW0"     "AT1G04743"  "Q9SAA8"     "O65368"     
-[1]	"A0A178WAP9" "Q9SHJ3"     "Q3EDC6"     "Q39224"     "Q9LN65"     "A2RVM1"     
-[1]	"Q9FG67" "Q9ZQ25" "F4IGZ2" "Q38914" "Q9LNI5" "Q9SRZ0" 
+[1]	"Q9FUY7"     "Q2NND9"     "A0A178WEM2" "Q9LNI5"     "Q9SRZ0"     "A0A384KX04" 
+[1]	"Q9LQ89" "Q9ZWA4" "F4I8Q8" "Q3EDG6" "O04510" "Q9XI76" 
+[1]	"AT1G04223" "Q9FUS9"    "Q9FUS8"    "O04090"    "Q9M9T4"    "Q8W4D6"    
+[1]	"A0A384L6K0" "Q9SHJ3"     "F4I2R3"     "Q3EDC6"     "Q39224"     "Q9LN65"     
 [1]	"Q9SRW9" "Q9LQQ9" "Q9SGD1" "Q9SA32" "Q9FZ66" "Q8S905" 
-[1]	"Q6DSU0"     "AT1G06963"  "Q058G8"     "Q1PER6"     "Q5BPS0"     "A0A1P8AXS6" 
 [1] "[C6 vs I86] previews of the different expression proteins:"
            C61                     C62                     C63                     C64                     I861                    I862                    I863                    I864
 Q6ID87     "2.85635368742407E-07"  "2.12229851295849E-07"  "1.05964587694438E-07"  "2.88032536155284E-07"  "0"                     "9.3755402655078E-08"   "1.0508276949422E-07"   "0"
@@ -206,17 +294,17 @@ Q84TF4     "4.49399646821388E-05"  "6.70646330094883E-05"  "3.94188266223311E-05
 AT1G04223  "4.76058947904012E-07"  "5.30574628239622E-07"  "7.41752113861069E-07"  "4.80054226925474E-07"  "1.64862956019179E-07"  "9.3755402655078E-08"   "2.1016553898844E-07"   "0"
 
 List of 5
- $ [1] : chr [1:158] "Q2Q493" "AT1G20691" "Q9C673" "A0A1P8AQ87" "AT1G07937" "Q93ZF5" ...
- $ [2] : chr [1:87] "Q9FL02" "A0A1P8B8B4" "Q9C9H5" "Q8RXK7" "Q3EDG6" "AT1G04927" ...
- $ [3] : chr [1:71] "Q0WL44" "Q9SD98" "B2GVM7" "Q1PER6" "Q9LR44" "Q9SXB8" ...
- $ [4] : chr [1:29] "Q1PFY7" "Q8H0Z4" "Q9SH66" "Q9FXC7" "Q9FKP1" "Q9FG46" ...
- $ [5] : chr [1:131] "AT1G04743" "Q6ID87" "Q8L730" "Q9LQN6" "O80518" "AT1G05043" ...
+ $ [1] : chr [1:113] "Q8GXQ7" "P93821" "O04027" "F4I177" "Q9C673" "A0A1P8AU14" ...
+ $ [2] : chr [1:71] "Q84TF4" "F4HSD5" "A0A178W1Y6" "A0A178WJH0" "Q9M9V6" "P92995" ...
+ $ [3] : chr [1:87] "B3H5Q1" "Q9LND1" "Q39224" "Q9SHH7" "Q9LNS5" "Q9SGP6" ...
+ $ [4] : chr [1:29] "Q58G55" "AT1G04677" "Q4PT07" "O04474" "Q9SHY6" "B3H6G1" ...
+ $ [5] : chr [1:176] "Q1PFE5" "AT5G03235" "AT3G05955" "AT2G04785" "AT4G03895" "A0A178UXQ0" ...
 
-[1]	"Q2Q493"     "AT1G20691"  "Q9C673"     "A0A1P8AQ87" "AT1G07937"  "Q93ZF5"     
-[1]	"Q9FL02"     "A0A1P8B8B4" "Q9C9H5"     "Q8RXK7"     "Q3EDG6"     "AT1G04927"  
-[1]	"Q0WL44" "Q9SD98" "B2GVM7" "Q1PER6" "Q9LR44" "Q9SXB8" 
-[1]	"Q1PFY7" "Q8H0Z4" "Q9SH66" "Q9FXC7" "Q9FKP1" "Q9FG46" 
-[1]	"AT1G04743" "Q6ID87"    "Q8L730"    "Q9LQN6"    "O80518"    "AT1G05043" 
+[1]	"Q8GXQ7"     "P93821"     "O04027"     "F4I177"     "Q9C673"     "A0A1P8AU14" 
+[1]	"Q84TF4"     "F4HSD5"     "A0A178W1Y6" "A0A178WJH0" "Q9M9V6"     "P92995"     
+[1]	"B3H5Q1" "Q9LND1" "Q39224" "Q9SHH7" "Q9LNS5" "Q9SGP6" 
+[1]	"Q58G55"    "AT1G04677" "Q4PT07"    "O04474"    "Q9SHY6"    "B3H6G1"    
+[1]	"Q1PFE5"     "AT5G03235"  "AT3G05955"  "AT2G04785"  "AT4G03895"  "A0A178UXQ0" 
 [1] "[C6 vs I89] previews of the different expression proteins:"
             C61                     C62                     C63                     C64                     I891                    I892                    I893                    I894
 Q9LNI5      "2.85635368742407E-07"  "8.48919405183396E-07"  "7.41752113861069E-07"  "8.64097608465852E-07"  "1.6382766967427E-06"   "2.22816437477108E-06"  "2.20411795357266E-06"  "2.86754399010242E-06"
@@ -227,16 +315,26 @@ A0A178WJA3  "8.56906106227222E-07"  "1.37949403342302E-06"  "2.22525634158321E-0
 A0A178WAU2  "4.47495411029772E-06"  "4.13848210026905E-06"  "4.02665433238866E-06"  "6.04868325926097E-06"  "2.36639967307278E-06"  "2.0567671151733E-06"   "2.10393077386481E-06"  "2.37313985387787E-06"
 
 List of 5
- $ [1] : chr [1:146] "Q84VV7" "AT1G04425" "P0DI10" "Q9LR44" "Q3EDG6" "Q8H0Z4" ...
- $ [2] : chr [1:167] "Q9LMM5" "F4HSD5" "F4IDV3" "A0A178WJZ2" "Q9C7Y3" "Q4PT07" ...
- $ [3] : chr [1:107] "Q9XI67" "Q3E7S2" "AT1G09083" "B6EXY6" "Q94CL4" "Q9FFQ7" ...
- $ [4] : chr [1:60] "Q9ZWA4" "Q9LQQ9" "Q45GQ7" "Q3EDC6" "A0A1P8AQK1" "Q9SA51" ...
- $ [5] : chr [1:390] "Q9LNW0" "F4IAL1" "Q9LQW3" "F4I1A6" "AT1G05753" "Q9S7P4" ...
+ $ [1] : chr [1:150] "Q9LMM0" "A0A178WAU2" "Q5XEP9" "Q9LNE7" "Q9LNE3" "Q9LQN6" ...
+ $ [2] : chr [1:128] "AT1G04463" "Q8LCI3" "AT1G05017" "Q9FZ62" "Q9LPU8" "Q9LMP5" ...
+ $ [3] : chr [1:112] "A0A178WJA3" "AT1G04223" "Q9FUS8" "O04090" "AT1G13448" "F4I177" ...
+ $ [4] : chr [1:237] "Q8H0Z4" "F4HZT2" "Q8LCE4" "A0A178W2S0" "Q9C8K5" "Q9C8T8" ...
+ $ [5] : chr [1:243] "F4HSD5" "Q9XI67" "Q4PT07" "Q8L7S1" "Q9C7Z5" "A0A1P8ATQ1" ...
 
-[1]	"Q84VV7"    "AT1G04425" "P0DI10"    "Q9LR44"    "Q3EDG6"    "Q8H0Z4"    
-[1]	"Q9LMM5"     "F4HSD5"     "F4IDV3"     "A0A178WJZ2" "Q9C7Y3"     "Q4PT07"     
-[1]	"Q9XI67"    "Q3E7S2"    "AT1G09083" "B6EXY6"    "Q94CL4"    "Q9FFQ7"    
-[1]	"Q9ZWA4"     "Q9LQQ9"     "Q45GQ7"     "Q3EDC6"     "A0A1P8AQK1" "Q9SA51"     
-[1]	"Q9LNW0"    "F4IAL1"    "Q9LQW3"    "F4I1A6"    "AT1G05753" "Q9S7P4"    
-[1] "there are 2819 union dep from all of your analysis groups:"
+[1]	"Q9LMM0"     "A0A178WAU2" "Q5XEP9"     "Q9LNE7"     "Q9LNE3"     "Q9LQN6"     
+[1]	"AT1G04463" "Q8LCI3"    "AT1G05017" "Q9FZ62"    "Q9LPU8"    "Q9LMP5"    
+[1]	"A0A178WJA3" "AT1G04223"  "Q9FUS8"     "O04090"     "AT1G13448"  "F4I177"     
+[1]	"Q8H0Z4"     "F4HZT2"     "Q8LCE4"     "A0A178W2S0" "Q9C8K5"     "Q9C8T8"     
+[1]	"F4HSD5"     "Q9XI67"     "Q4PT07"     "Q8L7S1"     "Q9C7Z5"     "A0A1P8ATQ1" 
+[1] "there are 2820 union dep from all of your analysis groups:"
 [1]	"Q6R0H1" "F4HQJ2" "Q9LNJ0" "Q9LNI5" "P92949" "Q0WMJ8" 
+[1] "previews of your union dep raw expression data matrix:"
+        C61         C62         C63         C64         C91         C92         C93         C94         I561        I562        I563        I564        I591        I592        I593        I594        I861        I862        I863        I864        I891        I892        I893        I894
+Q6R0H1   0.0002105   0.0002272   0.0002636   0.0002178   0.000419    0.0004537   0.000575    0.0006367   0.0001783   0.0001489   0.000188    0.0001938   0.0003702   0.0002751   0.000341    0.0002986   0.0002061   0.0001254   0.000131    0.0001665   0.0003006   0.000339    0.000398    0.0003079
+F4HQJ2  0           0            0.0000001  0            0.0000002   0.0000002   0.0000002   0.0000003  0            0.0000003  0           0           0            0.0000003   0.0000003   0.0000008   0.0000002  0            0.0000002  0           0           0            0.0000003   0.0000004
+Q9LNJ0   0.0000275   0.0000301   0.0000193   0.0000301   0.0000419   0.0000675   0.0000485   0.0000572   0.0000264   0.0000202   0.000026    0.0000279   0.0000329   0.0000314   0.0000312   0.0000265   0.0000185   0.0000189   0.0000367   0.0000256   0.0000259   0.0000266   0.0000302   0.0000336
+Q9LNI5   0.0000003   0.0000008   0.0000007   0.0000009   0.0000017   0.0000011   0.0000024   0.0000018   0.0000008   0.0000015   0.0000006   0.0000004   0.000002    0.0000018   0.0000017   0.0000022   0.0000005   0.0000013   0.0000006   0.0000003   0.0000016   0.0000022   0.0000022   0.0000029
+P92949   0.0000591   0.000082    0.0000504   0.0000926   0.0001902   0.0003384   0.0005452   0.0002576   0.0002118   0.0000358   0.0001269   0.0001488   0.0001424   0.0000885   0.0002135   0.0000597   0.0000224   0.0000766   0.0001949   0.0000826   0.0000705   0.0000857   0.0001623   0.0002071
+Q0WMJ8   0.0000441   0.0000418   0.0000378   0.000039    0.0000826   0.0001006   0.0000764   0.000106    0.0000407   0.0000394   0.0000399   0.0000417   0.0000385   0.0000543   0.000036    0.0000352   0.0000275   0.0000376   0.0000447   0.0000412   0.0000385   0.0000414   0.0000433   0.0000464
+
+[1] "Workflow finished!"
