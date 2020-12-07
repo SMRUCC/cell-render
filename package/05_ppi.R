@@ -3,7 +3,7 @@ require(igraph.layouts);
 require(igraph.render);
 require(igraph);
 
-let dep_correlations as function(workspace, matrix) {  
+let getUnionDep as function(workspace, matrix) {
     let union_dep = lapply(workspace$analysis, compare_dir -> getDepGeneId(workspace, compare_dir));
     let output_dir = workspace$dirs$ppi_analysis;
 
@@ -17,6 +17,11 @@ let dep_correlations as function(workspace, matrix) {
     print("previews of your union dep raw expression data matrix:");
     print(head(matrix));
 
+    matrix;
+}
+
+let dep_correlations as function(workspace, matrix) {  
+    matrix = getUnionDep(workspace, matrix);
     # evaluate pearson correlations
     matrix = corr(matrix);
 

@@ -1,6 +1,14 @@
 imports ["geneExpression", "sampleInfo"] from "phenotype_kit";
 imports "visualPlot" from "visualkit";
 imports ["GSEA", "profiles"] from "gseakit";
+imports ["dataset", "umap"] from "MLkit";
+
+require(igraph);
+require(igraph.render);
+
+let umap_cluster_visual as function(matrix, outputdir) {
+
+}
 
 #' create clusters for biological function analysis
 #' 
@@ -8,7 +16,11 @@ imports ["GSEA", "profiles"] from "gseakit";
 #'     directory path list which can be used for read dep pvalue_cut 
 #'     result.
 #' 
-let patterns_plot as function(workspace, outputdir) {
+let patterns_plot as function(workspace, matrix, outputdir) {
+	matrix = getUnionDep(workspace, matrix); 
+
+
+
 	lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir, outputdir));
 }
 
@@ -21,7 +33,7 @@ let patterns_plot as function(workspace, outputdir) {
 #' 
 let create_pattern as function(workspace, compare_dir, outputdir) {
 	let pvalue_cut  = `${workspace$dirs$dep_analysis}/${as_label(compare_dir)}/pvalue_cut.csv`;
-	let cluster_out = `${workspace$dirs$biological_analysis}/${as_label(compare_dir)}`;
+	let cluster_out = `${workspace$dirs$biological_analysis}/patterns/${as_label(compare_dir)}`;
 	let kegg_background = read.background(`${outputdir}/annotation/kegg.Xml`);
 
 	# removes all of the unnecessary information

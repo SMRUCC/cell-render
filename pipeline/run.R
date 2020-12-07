@@ -76,8 +76,8 @@ if (overrides || !file.exists(background_ptf)) {
 # run dep analysis and data visualization of the dep
 # workspace :> run_dep(matrix = load.expr(HTS, rm_ZERO = TRUE));
 # create cluster for biological function analysis
-# workspace :> patterns_plot(output_dir);
-workspace :> dep_correlations(matrix = load.expr(HTS, rm_ZERO = TRUE), output_dir = output_dir);
+workspace :> patterns_plot(load.expr(HTS, rm_ZERO = TRUE), output_dir);
+# workspace :> dep_correlations(matrix = load.expr(HTS, rm_ZERO = TRUE), output_dir = output_dir);
 
 print("Workflow finished!");
 

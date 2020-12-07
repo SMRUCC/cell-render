@@ -1,7 +1,0 @@
-﻿#Term,Database,ID,Input number,Background number,P-Value,Corrected P-Value,Input,Hyperlink,ORF
-Metabolic pathways,n/a,map01100,2,3837,0.23225875818984,0.23225875818984,"O04474, Q9LIB9",,O04474; Q9LIB9
-Biosynthesis of secondary metabolites,n/a,map01110,2,2085,0.0879777161811426,0.105573259417371,"Q9FI37, Q9LIB9",,Q9FI37; Q9LIB9
-Starch and sucrose metabolism,n/a,map00500,1,276,0.0639284179889126,0.095892626983369,Q9LIB9,,Q9LIB9
-Pentose and glucuronate interconversions,n/a,map00040,1,152,0.0358141822619996,0.0716283645239993,O04474,,O04474
-Galactose metabolism,n/a,map00052,1,96,0.022851820806567,0.0685554624197011,Q9LIB9,,Q9LIB9
-Sesquiterpenoid and triterpenoid biosynthesis,n/a,map00909,1,30,0.00735868588577598,0.0441521153146559,Q9FI37,,Q9FI37
