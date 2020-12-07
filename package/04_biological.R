@@ -7,7 +7,18 @@ require(igraph);
 require(igraph.render);
 
 let umap_cluster_visual as function(matrix, outputdir) {
+	let manifold = matrix
+	:> umap(
+		dimension         = 2, 
+		numberOfNeighbors = 10,
+		localConnectivity = 1,
+		KnnIter           = 64,
+		bandwidth         = 1
+	)
+	;
+	let result = as.data.frame(manifold$umap, labels = manifold$labels, dimension = ["x", "y"]);
 
+	write.csv(result, file = `${outputdir}/manifold/umap.csv`);
 }
 
 #' create clusters for biological function analysis
@@ -17,11 +28,12 @@ let umap_cluster_visual as function(matrix, outputdir) {
 #'     result.
 #' 
 let patterns_plot as function(workspace, matrix, outputdir) {
-	matrix = getUnionDep(workspace, matrix); 
+	umap_cluster_visual(
+		matrix    = getUnionDep(workspace, matrix),
+		outputdir = outputdir
+	); 
 
-
-
-	lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir, outputdir));
+	# lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir, outputdir));
 }
 
 #' create cluster for a specific analysis compare groups
