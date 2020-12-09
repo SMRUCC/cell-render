@@ -10,15 +10,50 @@ let umap_cluster_visual as function(matrix, outputdir) {
 	let manifold = matrix
 	:> umap(
 		dimension         = 2, 
-		numberOfNeighbors = 10,
+		numberOfNeighbors = 30,
 		localConnectivity = 1,
 		KnnIter           = 64,
-		bandwidth         = 1
+		bandwidth         = 2
 	)
 	;
 	let result = as.data.frame(manifold$umap, labels = manifold$labels, dimension = ["x", "y"]);
+	let graph_visual = `${outputdir}/umap_graph.png`
 
-	write.csv(result, file = `${outputdir}/manifold/umap.csv`);
+	write.csv(result, file = `${outputdir}/umap.csv`);
+
+	# data visualization
+	manifold$umap 
+	:> as.graph(labels = manifold$labels)
+	# :> compute.network
+
+	# set node cluster colors
+	# :> setColors(type = 0, color = clusters[1])
+	# :> setColors(type = 1, color = clusters[2])
+	# :> setColors(type = 2, color = clusters[3])
+	# :> setColors(type = 3, color = clusters[4])
+	# :> setColors(type = 4, color = clusters[5])
+	# :> setColors(type = 5, color = clusters[6])
+	# :> setColors(type = 6, color = clusters[7])
+	# :> setColors(type = 7, color = clusters[8])
+	# :> setColors(type = 8, color = clusters[9])
+	# :> setColors(type = 9, color = clusters[10])
+
+	# run network graph rendering
+	:> render.Plot(
+		canvasSize        = [3840, 2160],
+		padding           = "padding:100px 100px 100px 100px;",
+		labelerIterations = -1,
+		minNodeSize       = 30,
+		minLinkWidth      = 0.5,
+		nodeStroke        = "stroke: white; stroke-width: 1px; stroke-dash: dash;",
+		showLabel         = FALSE,
+		defaultEdgeColor  = "#F6F6F6",
+		defaultEdgeDash   = "Dash"
+	)
+	:> save.graphics(file = graph_visual)
+	;
+
+	save.network(graph, file = `${outputdir}/umap/`);
 }
 
 #' create clusters for biological function analysis
@@ -28,10 +63,23 @@ let umap_cluster_visual as function(matrix, outputdir) {
 #'     result.
 #' 
 let patterns_plot as function(workspace, matrix, outputdir) {
-	umap_cluster_visual(
-		matrix    = getUnionDep(workspace, matrix),
-		outputdir = outputdir
-	); 
+	# umap_cluster_visual(
+	# 	matrix    = getUnionDep(workspace, matrix),
+	# 	outputdir = workspace$dirs$biological_analysis
+	# ); 
+	print(`run manifold clustering for ${length(workspace$analysis)} data analysis:`);
+
+	lapply(workspace$analysis, function(compare_dir) {
+		let group_matrix = as.data.frame(matrix)[getDepGeneId(workspace, compare_dir), ];
+		let group_out = `${workspace$dirs$biological_analysis}/manifold/${as_label(compare_dir)}`;
+		let labels as string = workspace$sample_info :> sampleId(unlist(compare_dir));
+
+		str( compare_dir );
+		print( labels );
+
+		group_matrix = group_matrix[, labels];
+		umap_cluster_visual(group_matrix, group_out);
+	});
 
 	# lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir, outputdir));
 }

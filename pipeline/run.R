@@ -16,6 +16,8 @@ let goDb as string = ?"--go" || "P:/go.obo";
 
 sink(file = `${output_dir}/analysis/pipeline.log`);
 
+print("[info] start run label-free workflow!");
+
 # create workspace folders
 let workspace = init_workspace(output_dir);
 
