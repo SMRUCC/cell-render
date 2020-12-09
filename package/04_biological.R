@@ -2,41 +2,62 @@ imports ["geneExpression", "sampleInfo"] from "phenotype_kit";
 imports "visualPlot" from "visualkit";
 imports ["GSEA", "profiles"] from "gseakit";
 imports ["dataset", "umap"] from "MLkit";
+imports "clustering" from "MLkit";
 
 require(igraph);
 require(igraph.render);
 
-let umap_cluster_visual as function(matrix, outputdir) {
+# cluster colors for rendering the nodes
+const clusters = alpha([
+	"#006400","#00008b","#b03060",
+	"#ff4500","#ffd700","#7fff00",
+	"#00ffff","#ff00ff","#6495ed",
+	"#ffdab9"
+], alpha = 0.9);
+
+let umap_cluster_visual as function(matrix, kegg_background, outputdir) {
 	let manifold = matrix
 	:> umap(
-		dimension         = 2, 
-		numberOfNeighbors = 30,
-		localConnectivity = 1,
-		KnnIter           = 64,
-		bandwidth         = 2
+		dimension            = 2, 
+		numberOfNeighbors    = 30,
+		localConnectivity    = 1,
+		KnnIter              = 64,
+		bandwidth            = 2,
+		customNumberOfEpochs = NULL,
+		customMapCutoff      = 0.9
 	)
 	;
-	let result = as.data.frame(manifold$umap, labels = manifold$labels, dimension = ["x", "y"]);
-	let graph_visual = `${outputdir}/umap_graph.png`
+	let result = as.data.frame(manifold$umap, labels = manifold$labels, dimension = ["x", "y"]) :> kmeans(centers = 5);
+	let graph_visual = `${outputdir}/umap_graph.png`;
 
 	write.csv(result, file = `${outputdir}/umap.csv`);
 
 	# data visualization
-	manifold$umap 
-	:> as.graph(labels = manifold$labels)
+	let graph = manifold$umap 
+	:> as.graph(
+		labels    = manifold$labels, 
+		threshold = 1, 
+		groups    = result :> cluster.groups(labels = manifold$labels)
+	)
 	# :> compute.network
+	;
+	
+	kegg_background :> enrich_groups(cluster.groups(result), outputdir);
 
-	# set node cluster colors
-	# :> setColors(type = 0, color = clusters[1])
-	# :> setColors(type = 1, color = clusters[2])
-	# :> setColors(type = 2, color = clusters[3])
-	# :> setColors(type = 3, color = clusters[4])
-	# :> setColors(type = 4, color = clusters[5])
-	# :> setColors(type = 5, color = clusters[6])
-	# :> setColors(type = 6, color = clusters[7])
-	# :> setColors(type = 7, color = clusters[8])
-	# :> setColors(type = 8, color = clusters[9])
-	# :> setColors(type = 9, color = clusters[10])
+	graph 
+	# :> connected_graph   
+    # :> layout.force_directed(showProgress = FALSE, iterations = 10)
+    # set node cluster colors
+	:> setColors(type = 1, color = clusters[1])
+	:> setColors(type = 2, color = clusters[2])
+	:> setColors(type = 3, color = clusters[3])
+	:> setColors(type = 4, color = clusters[4])
+	:> setColors(type = 5, color = clusters[5])
+	# :> setColors(type = 6, color = clusters[6])
+	# :> setColors(type = 7, color = clusters[7])
+	# :> setColors(type = 8, color = clusters[8])
+	# :> setColors(type = 9, color = clusters[9])
+	# :> setColors(type = 10, color = clusters[10])
 
 	# run network graph rendering
 	:> render.Plot(
@@ -63,6 +84,8 @@ let umap_cluster_visual as function(matrix, outputdir) {
 #'     result.
 #' 
 let patterns_plot as function(workspace, matrix, outputdir) {
+	let kegg_background = read.background(`${outputdir}/annotation/kegg.Xml`);
+
 	# umap_cluster_visual(
 	# 	matrix    = getUnionDep(workspace, matrix),
 	# 	outputdir = workspace$dirs$biological_analysis
@@ -78,7 +101,7 @@ let patterns_plot as function(workspace, matrix, outputdir) {
 		print( labels );
 
 		group_matrix = group_matrix[, labels];
-		umap_cluster_visual(group_matrix, group_out);
+		umap_cluster_visual(group_matrix, kegg_background, group_out);
 	});
 
 	# lapply(workspace$analysis, compare_dir -> workspace :> create_pattern(compare_dir, outputdir));
@@ -127,8 +150,11 @@ let create_pattern as function(workspace, compare_dir, outputdir) {
 	
 	write.csv(matrix, file = `${cluster_out}/clusters.csv`);
 
-	patterns = cluster.groups(matrix);
+	kegg_background :> enrich_groups(cluster.groups(matrix), cluster_out);
+}
 
+let enrich_groups as function(kegg_background, patterns, cluster_out) {
+	print("run kegg pathway enrichment for cluster groups:");
 	str(patterns);
 
 	for(groupKey in names(patterns)) {

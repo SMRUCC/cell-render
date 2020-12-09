@@ -42,23 +42,116 @@ List of 2
  $ control   : chr "C9"
 
 [1]	"C61" "C62" "C63" "C64" "C91" "C92" "C93" "C94" 
+[1] "cluster groups that you defined for the nodes:"
+[1]	"1" "2" "3" "4" "5" 
+[1] "run kegg pathway enrichment for cluster groups:"
+List of 5
+ $ [1] : chr [1:247] "Q9LNI5" "F4HVZ1" "Q42523" "A0A1P8AWD1" "Q9SHJ5" "Q9SCW7" ...
+ $ [2] : chr [1:270] "Q6R0H1" "F4HQJ2" "Q9LNJ0" "Q0WMJ8" "A0A1P8ASB1" "Q8L730" ...
+ $ [3] : chr [1:284] "P92949" "Q94KD8" "Q9SRZ0" "A0A384KX04" "Q9SYK6" "O82811" ...
+ $ [4] : chr [1:301] "A0A1P8AX35" "Q3EDK2" "Q9SRX4" "Q9ZWA1" "Q5XEP9" "Q9ZVN4" ...
+ $ [5] : chr [1:220] "Q9FZ21" "A0A178W3E5" "A0A178WJA3" "O64489" "A0A1P8AUV9" "P24704" ...
+
+[1]	"Q9LNI5"     "F4HVZ1"     "Q42523"     "A0A1P8AWD1" "Q9SHJ5"     
+[6]	"Q9SCW7"     
+[1]	"Q6R0H1"     "F4HQJ2"     "Q9LNJ0"     "Q0WMJ8"     "A0A1P8ASB1" 
+[6]	"Q8L730"     
+[1]	"P92949"     "Q94KD8"     "Q9SRZ0"     "A0A384KX04" "Q9SYK6"     
+[6]	"O82811"     
+[1]	"A0A1P8AX35" "Q3EDK2"     "Q9SRX4"     "Q9ZWA1"     "Q5XEP9"     
+[6]	"Q9ZVN4"     
+[1]	"Q9FZ21"     "A0A178W3E5" "A0A178WJA3" "O64489"     "A0A1P8AUV9" 
+[6]	"P24704"     
 List of 2
  $ treatment : chr "C6"
  $ control   : chr "I56"
 
 [1]	"C61"  "C62"  "C63"  "C64"  "I561" "I562" "I563" "I564" 
+[1] "cluster groups that you defined for the nodes:"
+[1]	"1" "2" "3" "4" "5" 
+[1] "run kegg pathway enrichment for cluster groups:"
+List of 5
+ $ [1] : chr [1:75] "Q9SRY5" "AT1G04223" "O04089" "Q9LE79" "Q93WK6" "Q9LM21" ...
+ $ [2] : chr [1:71] "B3H5Q1" "AT1G04677" "AT1G04803" "A0A178W1Y6" "Q56YI8" "AT1G04973" ...
+ $ [3] : chr [1:65] "Q9FWX8" "Q9ZWB4" "O64492" "AT1G05017" "F4I177" "F4I1A6" ...
+ $ [4] : chr [1:79] "A0A1P8AUV9" "AT1G04743" "Q9SXA7" "AT1G06463" "Q6ICW9" "Q9C8J6" ...
+ $ [5] : chr [1:64] "O81913" "AT1G04273" "Q9LR44" "Q3EDG6" "P92995" "Q9LMC8" ...
+
+[1]	"Q9SRY5"    "AT1G04223" "O04089"    "Q9LE79"    "Q93WK6"    "Q9LM21"    
+[1]	"B3H5Q1"     "AT1G04677"  "AT1G04803"  "A0A178W1Y6" "Q56YI8"     
+[6]	"AT1G04973"  
+[1]	"Q9FWX8"    "Q9ZWB4"    "O64492"    "AT1G05017" "F4I177"    "F4I1A6"    
+[1]	"A0A1P8AUV9" "AT1G04743"  "Q9SXA7"     "AT1G06463"  "Q6ICW9"     
+[6]	"Q9C8J6"     
+[1]	"O81913"    "AT1G04273" "Q9LR44"    "Q3EDG6"    "P92995"    "Q9LMC8"    
 List of 2
  $ treatment : chr "C6"
  $ control   : chr "I59"
 
 [1]	"C61"  "C62"  "C63"  "C64"  "I591" "I592" "I593" "I594" 
+[1] "cluster groups that you defined for the nodes:"
+[1]	"1" "2" "3" "4" "5" 
+[1] "run kegg pathway enrichment for cluster groups:"
+List of 5
+ $ [1] : chr [1:256] "A0A384KX04" "Q9ZWA4" "F4I8Q8" "Q9SYL5" "Q9XI76" "Q9M9R6" ...
+ $ [2] : chr [1:200] "A0A178WIR0" "F4I2G0" "P93824" "O23039" "Q9LNE3" "Q9FRR8" ...
+ $ [3] : chr [1:286] "O81914" "Q9FZ21" "Q1PFZ3" "Q9SRZ0" "A0A178WAU2" "Q43383" ...
+ $ [4] : chr [1:217] "Q9LNI5" "A0A178WAP9" "Q9LQ89" "Q9SRW9" "Q9LMI4" "Q9LMJ1" ...
+ $ [5] : chr [1:224] "Q06402" "Q9LMM0" "Q9ZWA1" "AT1G04223" "Q5XEP9" "O23035" ...
+
+[1]	"A0A384KX04" "Q9ZWA4"     "F4I8Q8"     "Q9SYL5"     "Q9XI76"     
+[6]	"Q9M9R6"     
+[1]	"A0A178WIR0" "F4I2G0"     "P93824"     "O23039"     "Q9LNE3"     
+[6]	"Q9FRR8"     
+[1]	"O81914"     "Q9FZ21"     "Q1PFZ3"     "Q9SRZ0"     "A0A178WAU2" 
+[6]	"Q43383"     
+[1]	"Q9LNI5"     "A0A178WAP9" "Q9LQ89"     "Q9SRW9"     "Q9LMI4"     
+[6]	"Q9LMJ1"     
+[1]	"Q06402"    "Q9LMM0"    "Q9ZWA1"    "AT1G04223" "Q5XEP9"    "O23035"    
 List of 2
  $ treatment : chr "C6"
  $ control   : chr "I86"
 
 [1]	"C61"  "C62"  "C63"  "C64"  "I861" "I862" "I863" "I864" 
+[1] "cluster groups that you defined for the nodes:"
+[1]	"1" "2" "3" "4" "5" 
+[1] "run kegg pathway enrichment for cluster groups:"
+List of 5
+ $ [1] : chr [1:93] "Q6ID87" "AT1G04223" "P93821" "AT1G05043" "F4I177" "A0A1P8AS82" ...
+ $ [2] : chr [1:87] "Q8L730" "Q9LND1" "Q3EDG6" "O80518" "F4I8W6" "A0A178W6B2" ...
+ $ [3] : chr [1:87] "Q1PFY7" "Q9LR44" "Q58G55" "F4HSD5" "AT1G04677" "A0A178W1Y6" ...
+ $ [4] : chr [1:118] "B3H5Q1" "Q9SA57" "Q84TF4" "O64492" "Q9LMJ2" "AT1G04743" ...
+ $ [5] : chr [1:91] "Q8GXQ7" "A0A1P8AUV9" "Q9LQN6" "O04027" "AT1G13448" "Q8VYL8" ...
+
+[1]	"Q6ID87"     "AT1G04223"  "P93821"     "AT1G05043"  "F4I177"     
+[6]	"A0A1P8AS82" 
+[1]	"Q8L730"     "Q9LND1"     "Q3EDG6"     "O80518"     "F4I8W6"     
+[6]	"A0A178W6B2" 
+[1]	"Q1PFY7"     "Q9LR44"     "Q58G55"     "F4HSD5"     "AT1G04677"  
+[6]	"A0A178W1Y6" 
+[1]	"B3H5Q1"    "Q9SA57"    "Q84TF4"    "O64492"    "Q9LMJ2"    "AT1G04743" 
+[1]	"Q8GXQ7"     "A0A1P8AUV9" "Q9LQN6"     "O04027"     "AT1G13448"  
+[6]	"Q8VYL8"     
 List of 2
  $ treatment : chr "C6"
  $ control   : chr "I89"
 
 [1]	"C61"  "C62"  "C63"  "C64"  "I891" "I892" "I893" "I894" 
+[1] "cluster groups that you defined for the nodes:"
+[1]	"1" "2" "3" "4" "5" 
+[1] "run kegg pathway enrichment for cluster groups:"
+List of 5
+ $ [1] : chr [1:188] "AT1G04223" "P93824" "Q9LNW0" "Q8LC45" "O04090" "F4I8W6" ...
+ $ [2] : chr [1:188] "Q84VV7" "Q9ZWA4" "AT1G04273" "Q9SYK9" "AT1G04927" "Q3EDC6" ...
+ $ [3] : chr [1:194] "Q9LMM0" "A0A178WAU2" "AT1G04425" "P0DI10_1" "Q9LNE3" "Q9LQQ9" ...
+ $ [4] : chr [1:156] "Q9LNI5" "Q9LMM5" "Q9LR44" "Q9LNW3" "F4HSD5" "Q3EDG6" ...
+ $ [5] : chr [1:144] "A0A178WJA3" "Q43383" "Q5XEP9" "Q9LNE7" "AT1G04463" "Q9LQN6" ...
+
+[1]	"AT1G04223" "P93824"    "Q9LNW0"    "Q8LC45"    "O04090"    "F4I8W6"    
+[1]	"Q84VV7"    "Q9ZWA4"    "AT1G04273" "Q9SYK9"    "AT1G04927" "Q3EDC6"    
+[1]	"Q9LMM0"     "A0A178WAU2" "AT1G04425"  "P0DI10_1"   "Q9LNE3"     
+[6]	"Q9LQQ9"     
+[1]	"Q9LNI5" "Q9LMM5" "Q9LR44" "Q9LNW3" "F4HSD5" "Q3EDG6" 
+[1]	"A0A178WJA3" "Q43383"     "Q5XEP9"     "Q9LNE7"     "AT1G04463"  
+[6]	"Q9LQN6"     
+[1] "Workflow finished!"
