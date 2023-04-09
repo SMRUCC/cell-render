@@ -1,3 +1,5 @@
+imports "GenBank" from "seqtoolkit";
+
 #' Extract the genbank source
 #' 
 #' @param app the current workflow app object
@@ -5,6 +7,7 @@
 #' 
 const extract_gene_table = function(app, context) {
     const src = context$configs$src;
+    const gbk = read.genbank(src);
 
     str(app);
     str(src);
