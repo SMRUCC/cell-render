@@ -7,6 +7,9 @@
 #' 
 const run_workflow = function(src, outputdir = NULL) {
     WorkflowRender::init_context(outputdir || dirname(src));
+    WorkflowRender::set_config(list(
+        src = normalizePath(src)
+    ));
     WorkflowRender::run(registry = CellRender::workflow_registry);
     WorkflowRender::finalize();
 }
