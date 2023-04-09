@@ -4,5 +4,6 @@
 #' @param context the workflow context object
 #' 
 const extract_gene_table = function(app, context) {
-
+    str(app);
+    str(context);
 }
