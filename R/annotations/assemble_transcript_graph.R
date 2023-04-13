@@ -3,5 +3,5 @@
 #' @details The network modelling workflow is based on the regprecise database
 #' 
 const assemble_transcript_graph = function(app, context) {
-
+    const regprecise = context$configs$regprecise;
 }
