@@ -4,8 +4,9 @@
 #' @param outputdir the result outputdir and temp workspace
 #'    location, default value is NULL means use the parent dir of
 #'    the input src
+#' @param biocyc the directory path to the biocyc reference pathway 
 #' 
-const modelling_cellgraph = function(src, outputdir = NULL) {
+const modelling_cellgraph = function(src, outputdir = NULL, biocyc = "./biocyc") {
     WorkflowRender::init_context(outputdir || dirname(src));
     WorkflowRender::set_config(list(
         src = normalizePath(src)
