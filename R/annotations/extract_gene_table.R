@@ -16,8 +16,11 @@ const extract_gene_table = function(app, context) {
     const genomics_seq = origin.fasta(gbk);
     const genes = genome.genes(genome = gbk);
 
+    # extract sequence data and the gene context data for the 
+    # downstream transcript regulation network analysis
     write.fasta(genomics_seq, file = `${workdir}/source.fasta`);
     write.csv(genes, file = `${workdir}/genes.csv`);
+    write.PTT_tabular(gbk, file = `${workdir}/context.txt`);
 
     str(app);
     str(src);
