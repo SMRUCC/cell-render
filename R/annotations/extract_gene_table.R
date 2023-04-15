@@ -15,13 +15,19 @@ const extract_gene_table = function(app, context) {
     # extract the raw genomics fasta sequence
     const genomics_seq = origin.fasta(gbk);
     const genes = genome.genes(genome = gbk);
-
+    const locis = genes 
+    |> upstream(length = context$configs$up_len || 150) 
+    |> lapply(l -> l, names = [genes]::Synonym)
+    |> lapply(loci -> cut_seq.linear(genomics_seq, loci))
+    ;
+    
     # extract sequence data and the gene context data for the 
     # downstream transcript regulation network analysis
     write.fasta(genomics_seq, file = `${workdir}/source.fasta`);
+    write.fasta(locis, file = `${workdir}/upstream_locis.fasta`);
     write.csv(genes, file = `${workdir}/genes.csv`);
     write.PTT_tabular(gbk, file = `${workdir}/context.txt`);
-
+    
     str(app);
     str(src);
     str(context);
