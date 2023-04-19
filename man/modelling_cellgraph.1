@@ -2,11 +2,13 @@
 .SH NAME
 modelling_cellgraph \- modelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue;'>NULL</span>,
+    <i>up.len</i> = 200,
     <i>biocyc</i> = ./biocyc,
     <i>regprecise</i> = ./RegPrecise.Xml)
 .SH SYNOPSIS
 \fImodelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue;'>NULL</span>,
+    <i>up.len</i> = 200,
     <i>biocyc</i> = ./biocyc,
     <i>regprecise</i> = ./RegPrecise.Xml)\fR
 .SH OPTIONS
@@ -15,6 +17,9 @@ modelling_cellgraph \- modelling_cellgraph(src,
 .PP
 .PP
 \fBoutputdir\fB \fR\- NULL. the result outputdir and temp workspace location, default value is NULL means use the parent dir of the input src
+.PP
+.PP
+\fBup.len\fB \fR\- 200. 
 .PP
 .PP
 \fBbiocyc\fB \fR\- ./biocyc. the directory path to the biocyc reference pathway
