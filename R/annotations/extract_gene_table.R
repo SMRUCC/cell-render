@@ -10,6 +10,7 @@ imports "annotation.genomics" from "seqtoolkit";
 const extract_gene_table = function(app, context) {
     const src = context$configs$src;
     const gbk = read.genbank(src);
+    # get workspace dir path of current workflow app module
     const workdir = WorkflowRender::workspace(app);
 
     # extract the raw genomics fasta sequence
@@ -28,7 +29,8 @@ const extract_gene_table = function(app, context) {
     write.csv(genes, file = `${workdir}/genes.csv`);
     write.PTT_tabular(gbk, file = `${workdir}/context.txt`);
     
-    str(app);
-    str(src);
-    str(context);
+    # str(app);
+    # str(src);
+    # str(context);
+    invisible(NULL);
 }
