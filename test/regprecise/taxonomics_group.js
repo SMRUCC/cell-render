@@ -1,6 +1,6 @@
 import {jQuery, Html} from "webKit";
 
-var doc = jQuery.load("./html_demo.html");
+var doc = jQuery.load('https://regprecise.lbl.gov/collections_tax.jsp');
 var tbl = doc[".stattbl"]
 var body = tbl["tbody"]
 var rows = body["tr"]
