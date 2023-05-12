@@ -28,5 +28,6 @@ var taxonomics = lapply(rows, function(r) {
 // })
 
 console.log(taxonomics)
+setwd(@dir);
 
 writeLines(JSON.stringify(taxonomics), con = "./taxonomics_group.json");
