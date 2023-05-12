@@ -1,13 +1,14 @@
-import {jQuery, Html} from "webKit";
+import {jQuery, Html, http} from "webKit";
 
 setwd(@dir);
 
 var groups = JSON.parse(readText('./taxonomics_group.json'));
+var local = http.cache("./cache/");
 
 // console.log(groups);
 
 for(var group in groups) {
-    var html = jQuery.load(sprintf('https://regprecise.lbl.gov/%s', group.id));
+    var html = jQuery.load(sprintf('https://regprecise.lbl.gov/%s', group.id), proxy = local);
     var tbl = html[".stattbl"]
     var body = tbl["tbody"]
     var rows = body["tr"]
