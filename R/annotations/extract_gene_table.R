@@ -12,6 +12,12 @@ const extract_gene_table = function(app, context) {
     const gbk = read.genbank(src);
     # get workspace dir path of current workflow app module
     const workdir = WorkflowRender::workspace(app);
+    const verbose = as.logical(getOption("verbose"));
+
+    if (verbose) {
+        print("app workspace for extract gene table:");
+        print(workdir);
+    }
 
     # extract the raw genomics fasta sequence
     const genomics_seq = origin.fasta(gbk);
