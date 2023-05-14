@@ -3,20 +3,6 @@
 // package_source=CellRender
 
 declare namespace CellRender {
-   /**
-   */
-   function annotation_workflow(): object;
-   /**
-     * @param outputdir default value Is ``NULL``.
-     * @param up_len default value Is ``200``.
-     * @param biocyc default value Is ``"./biocyc"``.
-     * @param regprecise default value Is ``"./RegPrecise.Xml"``.
-   */
-   function modelling_cellgraph(src:any, outputdir:any, up_len:object, biocyc:string, regprecise:string): object;
-   /**
-     * @param outputdir default value Is ``NULL``.
-   */
-   function modelling_kinetics(src:any, outputdir:any): object;
    module _ {
       /**
       */
@@ -24,14 +10,28 @@ declare namespace CellRender {
    }
    /**
    */
-   function assemble_metabolic_graph(app:any, context:any): object;
+   function annotation_workflow(): object;
    /**
    */
-   function assemble_transcript_graph(app:any, context:any): object;
+   function assemble_metabolic_graph(app: any, context: any): object;
    /**
    */
-   function extract_gene_table(app:any, context:any): object;
+   function assemble_transcript_graph(app: any, context: any): object;
    /**
    */
-   function tfbs_motif_scanning(app:any, context:any): object;
+   function extract_gene_table(app: any, context: any): object;
+   /**
+     * @param outputdir default value Is ``null``.
+     * @param up_len default value Is ``200``.
+     * @param biocyc default value Is ``./biocyc``.
+     * @param regprecise default value Is ``./RegPrecise.Xml``.
+   */
+   function modelling_cellgraph(src: any, outputdir?: any, up_len?: object, biocyc?: string, regprecise?: string): object;
+   /**
+     * @param outputdir default value Is ``null``.
+   */
+   function modelling_kinetics(src: any, outputdir?: any): object;
+   /**
+   */
+   function tfbs_motif_scanning(app: any, context: any): object;
 }
