@@ -19,7 +19,7 @@ const extract_gene_table = function(app, context) {
     const locis = genes 
     |> upstream(length = context$configs$up_len || 150) 
     |> lapply(l -> l, names = [genes]::Synonym)
-    |> lapply(loci -> cut_seq.linear(genomics_seq, loci))
+    |> lapply(loci -> cut_seq.linear(genomics_seq, loci, doNtAutoReverse = TRUE))
     ;
     
     # extract sequence data and the gene context data for the 
