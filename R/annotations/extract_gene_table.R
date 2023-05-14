@@ -39,7 +39,7 @@ const extract_gene_table = function(app, context) {
 
         # tag the corresponding gene id to the
         # loci site headers
-        fasta.headers(fa) = append(id, [fasta]::Headers);
+        fasta.headers(fa) = append(id, [fa]::Headers);
         fa;
     })
     ;
