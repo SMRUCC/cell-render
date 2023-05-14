@@ -46,7 +46,7 @@ const extract_gene_table = function(app, context) {
 
     if (verbose) {
         print("view upstream locis:");
-        print(locis);
+        print(fasta.titles(locis));
     }
 
     # export genomics context elements as feature table.
