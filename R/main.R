@@ -14,7 +14,7 @@
 #'    report about the virtual cell modelling result.
 #'
 const modelling_cellgraph = function(src, outputdir = NULL, 
-                                     up_len = 200,
+                                     up_len = 150,
                                      biocyc = "./biocyc", 
                                      regprecise = "./RegPrecise.Xml") {
     WorkflowRender::init_context(outputdir || dirname(src));

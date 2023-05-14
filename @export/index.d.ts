@@ -22,7 +22,7 @@ declare namespace CellRender {
    function extract_gene_table(app: any, context: any): object;
    /**
      * @param outputdir default value Is ``null``.
-     * @param up_len default value Is ``200``.
+     * @param up_len default value Is ``150``.
      * @param biocyc default value Is ``./biocyc``.
      * @param regprecise default value Is ``./RegPrecise.Xml``.
    */
