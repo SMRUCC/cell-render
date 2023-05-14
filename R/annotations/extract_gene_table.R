@@ -23,19 +23,31 @@ const extract_gene_table = function(app, context) {
     # extract the raw genomics fasta sequence
     const genomics_seq = origin.fasta(gbk);
     const genes = genome.genes(genome = gbk);
+    const gene_ids = [genes]::Synonym;
 
     print("get genes table:");
-    print([genes]::Synonym);
+    print(gene_ids);
     print("bp size for parse the gene upstream loci:");
     str(upstream_size);
 
     const locis = genes 
     |> upstream(length = upstream_size) 
-    |> lapply(l -> l, names = [genes]::Synonym)
-    |> lapply(function(loci) {
-        cut_seq.linear(genomics_seq, loci, doNtAutoReverse = TRUE);
+    |> lapply(l -> l, names = gene_ids)
+    |> lapply(function(loci, i) {
+        let fa = cut_seq.linear(genomics_seq, loci, doNtAutoReverse = TRUE);
+        let id = gene_ids[i];
+
+        # tag the corresponding gene id to the
+        # loci site headers
+        fasta.headers(fa) = append(id, [fasta]::Headers);
+        fa;
     })
     ;
+
+    if (verbose) {
+        print("view upstream locis:");
+        print(locis);
+    }
 
     # export genomics context elements as feature table.
     write.csv(genes, file = `${workdir}/genes.csv`);
