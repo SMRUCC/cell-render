@@ -9,3 +9,8 @@ let vcell = "E:\UniProt\BioCyc\tier1\ecoli\25.1"
 |> open.biocyc()
 |> compile.biocyc(genomes = read.genbank(genome_src, repliconTable = TRUE))
 ;
+
+vcell 
+|> xml()
+|> writeLines(con = `${@dir}/ecoli.XML`)
+;
