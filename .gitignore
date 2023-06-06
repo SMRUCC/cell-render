@@ -360,3 +360,4 @@ demo/analysis/03.dep_analysis/C6 vs I89/pvalue.csv
 demo/raw/uniprot.csv
 CellRender.zip
 test/ecoli.XML
+test/result.vcXML
