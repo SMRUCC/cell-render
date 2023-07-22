@@ -24,7 +24,7 @@ dynamics$productInhibitionFactor = 0.00000125;
 print("Using dynamics parameter configuration:");
 print(dynamics);
 
-let rawXml = "result.vcXML";
+let rawXml = "./result.vcellPack";
 
 let engine = vcell
 |> engine.load(	
@@ -36,7 +36,7 @@ let engine = vcell
 |> as.object()
 ;
 
-using xml as open.vcellXml(file  = rawXml, mode  = "write", vcell = engine) {
+using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine) {
 	print(rawXml);
 
 	# run virtual cell simulation and then 

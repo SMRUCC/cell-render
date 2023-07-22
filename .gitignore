@@ -361,3 +361,4 @@ demo/raw/uniprot.csv
 CellRender.zip
 test/ecoli.XML
 test/result.vcXML
+test/result.vcellPack
