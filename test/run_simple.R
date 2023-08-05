@@ -1,6 +1,8 @@
 require(GCModeller);
+require(igraph);
 
 imports ["rawXML", "simulator", "modeller"] from "vcellkit";
+imports "analysis" from "vcellkit";
 
 setwd(@dir);
 
