@@ -26,7 +26,7 @@ declare namespace CellRender {
      * @param biocyc default value Is ``./biocyc``.
      * @param regprecise default value Is ``./RegPrecise.Xml``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, up_len?: object, biocyc?: string, regprecise?: string): object;
+   function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, biocyc?: any, regprecise?: any): object;
    /**
      * @param outputdir default value Is ``null``.
    */
