@@ -1,16 +1,16 @@
-﻿.TH MODELLING_CELLGRAPH 1 2024-Apr "" "Run the cell graph structure modelling workflow"
+﻿.TH MODELLING_CELLGRAPH 1 2024-Oct "" "Run the cell graph structure modelling workflow"
 .SH NAME
 modelling_cellgraph \- modelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
     <i>up.len</i> = <span style='color: green;'>150</span>,
-    <i>biocyc</i> = ./biocyc,
-    <i>regprecise</i> = ./RegPrecise.Xml)
+    <i>biocyc</i> = <span style='color: brown;'><strong>'./biocyc'</strong></span>,
+    <i>regprecise</i> = <span style='color: brown;'><strong>'./RegPrecise.Xml'</strong></span>)
 .SH SYNOPSIS
 \fImodelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
     <i>up.len</i> = <span style='color: green;'>150</span>,
-    <i>biocyc</i> = ./biocyc,
-    <i>regprecise</i> = ./RegPrecise.Xml)\fR
+    <i>biocyc</i> = <span style='color: brown;'><strong>'./biocyc'</strong></span>,
+    <i>regprecise</i> = <span style='color: brown;'><strong>'./RegPrecise.Xml'</strong></span>)\fR
 .SH OPTIONS
 .PP
 \fBsrc\fB \fR\- . the ncbi genbank assembly source file its file path
@@ -22,10 +22,10 @@ modelling_cellgraph \- modelling_cellgraph(src,
 \fBup.len\fB \fR\- 150. 
 .PP
 .PP
-\fBbiocyc\fB \fR\- ./biocyc. the directory path to the biocyc reference pathway
+\fBbiocyc\fB \fR\- './biocyc'. the directory path to the biocyc reference pathway
 .PP
 .PP
-\fBregprecise\fB \fR\- ./RegPrecise.Xml. the data repository xml file path to the regprecise motif database.
+\fBregprecise\fB \fR\- './RegPrecise.Xml'. the data repository xml file path to the regprecise motif database.
 .PP
 .SH VALUE
 .PP

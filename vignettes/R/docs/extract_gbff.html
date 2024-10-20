@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Extract the genbank source</title>
+    <title>Helper function for extract the annotation features from genbank file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,12 +13,12 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>extract_gene_table {CellRender}</td>
+                <td>extract_gbff {CellRender}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Extract the genbank source</h2>
+        <h2>Helper function for extract the annotation features from genbank file</h2>
 
         <h3>Description</h3>
 
@@ -27,20 +27,16 @@
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>extract_gene_table</strong>(<i>app</i>, <i>context</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>extract_gbff</strong>(<i>src</i>,
+    <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
+    <i>upstream.size</i> = <span style='color: green;'>150</span>,
+    <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>app</dt>
-<dd><p><p>the current workflow app object</p></p></dd>
-
-
-<dt>context</dt>
-<dd><p><p>the workflow context object</p></p></dd>
-
         </table>
 
 

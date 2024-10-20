@@ -30,8 +30,8 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>modelling_cellgraph</strong>(<i>src</i>,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
     <i>up.len</i> = <span style='color: green;'>150</span>,
-    <i>biocyc</i> = ./biocyc,
-    <i>regprecise</i> = ./RegPrecise.Xml);</code></pre>
+    <i>biocyc</i> = <span style='color: brown;'><strong>'./biocyc'</strong></span>,
+    <i>regprecise</i> = <span style='color: brown;'><strong>'./RegPrecise.Xml'</strong></span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -39,19 +39,19 @@
         <table>
             
 <dt>src</dt>
-<dd><p>the ncbi genbank assembly source file its file path</p></dd>
+<dd><p><p>the ncbi genbank assembly source file its file path</p></p></dd>
 
 
 <dt>outputdir</dt>
-<dd><p>the result outputdir and temp workspace location, default value is NULL means use the parent dir of the input src</p></dd>
+<dd><p><p>the result outputdir and temp workspace location, default value is NULL means use the parent dir of the input src</p></p></dd>
 
 
 <dt>biocyc</dt>
-<dd><p>the directory path to the biocyc reference pathway</p></dd>
+<dd><p><p>the directory path to the biocyc reference pathway</p></p></dd>
 
 
 <dt>regprecise</dt>
-<dd><p>the data repository xml file path to the regprecise motif database.</p></dd>
+<dd><p><p>the data repository xml file path to the regprecise motif database.</p></p></dd>
 
         </table>
 
@@ -66,7 +66,7 @@
 
         <h3>Value</h3>
 
-        this function has no return value, and then generated virtual cell model file will be saved at the <code>outputdir</code> with a fixed file name: <code>model.vcell</code>. and the output dir also contains a html/pdf report about the virtual cell modelling result.
+        <p>this function has no return value, and then generated virtual cell model file will be saved at the <code>outputdir</code> with a fixed file name: <code>model.vcell</code>. and the output dir also contains a html/pdf report about the virtual cell modelling result.</p>
 
         <h3 style="display: none;">Examples</h3>
 
@@ -83,4 +83,4 @@
 <script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
-</html>
+</html>
