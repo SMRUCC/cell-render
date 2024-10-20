@@ -14,9 +14,7 @@ const extract_gbff = function(src, workdir = "./",
     let genomics_seq = origin.fasta(gbk);
     let genes = genome.genes(genome = gbk);
     let gene_ids = [genes]::Synonym;
-    let genbank_id = [gbk]::Accesion;
-
-    genbank_id <- [genbank_id]::AccessionId;
+    let genbank_id = gbk |> GenBank::accession_id();
 
     print(`target genome genbank accession id: ${genbank_id}.`);
     print("get genes table:");
