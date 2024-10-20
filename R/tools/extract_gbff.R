@@ -17,10 +17,10 @@ const extract_gbff = function(src, workdir = "./", upstream_size = 150, verbose 
     str(upstream_size);
 
     const locis = genes 
-    |> upstream(length = upstream_size) 
+    |> upstream(length = upstream_size, is_relative_offset = TRUE) 
     |> lapply(l -> l, names = gene_ids)
     |> lapply(function(loci, i) {
-        let fa = cut_seq.linear(genomics_seq, loci, doNtAutoReverse = TRUE);
+        let fa = cut_seq.linear(genomics_seq, loci, nt_auto_reverse = TRUE);
         let id = gene_ids[i];
 
         # tag the corresponding gene id to the
