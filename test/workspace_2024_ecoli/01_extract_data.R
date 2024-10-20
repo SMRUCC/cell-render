@@ -6,6 +6,7 @@ for(let file in list.files(repo, pattern = "*.gbff", recursive = TRUE)) {
     CellRender::extract_gbff(file, 
         workdir = dirname(file), 
         upstream_size = 150, 
+        tag_genbank_accid = TRUE,
         verbose = TRUE);
 }
 

@@ -20,9 +20,10 @@ declare namespace CellRender {
    /**
      * @param workdir default value Is ``./``.
      * @param upstream_size default value Is ``150``.
+     * @param tag_genbank_accid default value Is ``false``.
      * @param verbose default value Is ``true``.
    */
-   function extract_gbff(src: any, workdir?: any, upstream_size?: any, verbose?: any): object;
+   function extract_gbff(src: any, workdir?: any, upstream_size?: any, tag_genbank_accid?: any, verbose?: any): object;
    /**
    */
    function extract_gene_table(app: any, context: any): object;

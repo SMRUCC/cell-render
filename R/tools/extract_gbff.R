@@ -4,13 +4,21 @@ imports "annotation.genomics" from "seqtoolkit";
 
 #' Helper function for extract the annotation features from genbank file
 #' 
-const extract_gbff = function(src, workdir = "./", upstream_size = 150, verbose = TRUE) {
+const extract_gbff = function(src, workdir = "./", 
+                              upstream_size = 150, 
+                              tag_genbank_accid = FALSE, 
+                              verbose = TRUE) {
+
     let gbk = read.genbank(src);
     # extract the raw genomics fasta sequence
     let genomics_seq = origin.fasta(gbk);
     let genes = genome.genes(genome = gbk);
     let gene_ids = [genes]::Synonym;
+    let genbank_id = [gbk]::Accesion;
 
+    genbank_id <- [genbank_id]::AccessionId;
+
+    print(`target genome genbank accession id: ${genbank_id}.`);
     print("get genes table:");
     print(gene_ids);
     print("bp size for parse the gene upstream loci:");
@@ -22,10 +30,17 @@ const extract_gbff = function(src, workdir = "./", upstream_size = 150, verbose 
     |> lapply(function(loci, i) {
         let fa = cut_seq.linear(genomics_seq, loci, nt_auto_reverse = TRUE);
         let id = gene_ids[i];
+        let source_tag = {
+            if (tag_genbank_accid) {
+                genbank_id;
+            } else {
+                [fa]::Headers;
+            }
+        }
 
         # tag the corresponding gene id to the
         # loci site headers
-        fasta.headers(fa) = append(id, [fa]::Headers);
+        fasta.headers(fa) <- append(id, source_tag);
         fa;
     })
     ;
