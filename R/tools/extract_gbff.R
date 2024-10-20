@@ -27,6 +27,7 @@ const extract_gbff = function(src, workdir = "./",
     const locis = genes 
     |> upstream(length = upstream_size, is_relative_offset = TRUE) 
     |> lapply(l -> l, names = gene_ids)
+    |> tqdm()
     |> lapply(function(loci, i) {
         let fa = cut_seq.linear(genomics_seq, loci, nt_auto_reverse = TRUE);
         let id = gene_ids[i];
