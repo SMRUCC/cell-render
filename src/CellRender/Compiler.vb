@@ -178,14 +178,27 @@ Public Class Compiler
         Return New MetabolismStructure With {
             .compounds = PullCompounds(ec_rxn).ToArray,
             .reactions = New ReactionGroup With {
-                .enzymatic = ec_rxn.Values _
-                    .IteratesALL _
-                    .GroupBy(Function(r) r.ID) _
-                    .Select(Function(r) r.First) _
-                    .ToArray
+                .enzymatic = FillReactions(ec_rxn).ToArray
             },
             .enzymes = enzymes.ToArray
         }
+    End Function
+
+    Private Iterator Function FillReactions(ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Reaction)
+        For Each rxn As Reaction In TqdmWrapper.Wrap(ec_rxn.Values _
+            .IteratesALL _
+            .GroupBy(Function(r) r.ID) _
+            .Select(Function(r) r.First) _
+            .ToArray)
+
+            Dim reaction = cad_registry.reaction _
+                .where(field("id") = rxn.ID) _
+                .find(Of biocad_registryModel.reaction)
+
+            rxn.name = reaction.name
+
+            Yield rxn
+        Next
     End Function
 
     Private Iterator Function PullCompounds(pool As Dictionary(Of String, Reaction())) As IEnumerable(Of Compound)
