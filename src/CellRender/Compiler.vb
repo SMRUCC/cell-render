@@ -1,10 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
-Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
+Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
+Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 Imports SMRUCC.genomics.Metagenomics
 Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
-Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 
 Public Class Compiler
 
@@ -41,15 +42,28 @@ Public Class Compiler
                 Continue For
             End If
 
-            Call genes.Add(New TranscriptUnit With {
-                .id = find.id,
-                .genes = {
-                    New gene(gene_info.Location) With {
-                        .locus_tag = gene_info.locus_id,
-                        .product = find.note
-                    }
-                }
-            })
+            Dim rna = RNAComposition _
+                .FromNtSequence(find.sequence, gene_info.locus_id) _
+                .CreateVector
+            Dim find_prot = cad_registry.molecule _
+                .left_join("sequence_graph") _
+                .on(field("`sequence_graph`.molecule_id") = field("`molecule`.id")) _
+                .where(field("`molecule`.parent") = find.id) _
+                .find(Of gene_molecule)("molecule.xref_id", "sequence")
+            Dim gene As New gene(gene_info.Location) With {
+                .locus_tag = gene_info.locus_id,
+                .product = find.note,
+                .nucleotide_base = rna
+            }
+
+            If Not find_prot Is Nothing Then
+                gene.protein_id = find_prot.xref_id
+                gene.amino_acid = ProteinComposition _
+                    .FromRefSeq(find_prot.sequence, find_prot.xref_id) _
+                    .CreateVector
+            End If
+
+            Call genes.Add(New TranscriptUnit With {.id = find.id, .genes = {gene}})
         Next
 
         Return New replicon With {
