@@ -44,11 +44,8 @@ Public Class Compiler
             Call genes.Add(New TranscriptUnit With {
                 .id = find.id,
                 .genes = {
-                    New gene() With {
+                    New gene(gene_info.Location) With {
                         .locus_tag = gene_info.locus_id,
-                        .left = gene_info.Location.left,
-                        .right = gene_info.Location.right,
-                        .strand = gene_info.Location.Strand.Description.ToLower,
                         .product = find.note
                     }
                 }
