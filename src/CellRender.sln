@@ -5,57 +5,57 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{671542E9-0BC4-4858-BBD7-13F7372C3A1D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "CellRender", "src\CellRender\CellRender.vbproj", "{44709A7A-EA01-4A17-8692-4A6B3C855B80}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "CellRender", "CellRender\CellRender.vbproj", "{44709A7A-EA01-4A17-8692-4A6B3C855B80}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj", "{183DD7AB-CB40-4FE1-8FA1-D3BFF6ECC2B3}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj", "{183DD7AB-CB40-4FE1-8FA1-D3BFF6ECC2B3}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "biocore-netcore5", "..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj", "{A9ADF970-3237-4500-851F-46EE5F69ABCD}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "biocore-netcore5", "..\..\GCModeller\src\GCModeller\core\Bio.Assembly\biocore-netcore5.vbproj", "{A9ADF970-3237-4500-851F-46EE5F69ABCD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "renv", "renv", "{4A787F4B-CF81-4250-B1A1-350B1C9674AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gcmodeller", "gcmodeller", "{40043174-83F7-4619-B1E1-68C1BE24EACB}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rsharp-netcore5", "..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj", "{F47A1519-CBB5-476A-A95E-3CEDCADE2DA7}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Rsharp-netcore5", "..\..\GCModeller\src\R-sharp\R#\Rsharp-netcore5.vbproj", "{F47A1519-CBB5-476A-A95E-3CEDCADE2DA7}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "R-cmd.NET5", "..\GCModeller\src\R-sharp\studio\R-terminal\R-cmd.NET5.vbproj", "{2B724FF8-290B-4C8F-81AD-308D546AE623}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "R-cmd.NET5", "..\..\GCModeller\src\R-sharp\studio\R-terminal\R-cmd.NET5.vbproj", "{2B724FF8-290B-4C8F-81AD-308D546AE623}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cad", "cad", "{90F4AC83-9FA3-4342-BE2E-20E4850C6B51}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "CompilerServices.NET5", "..\GCModeller\src\GCModeller\engine\CompilerServices\CompilerServices.NET5.vbproj", "{30511148-9CB3-4E43-9DAE-5D4A81992629}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "CompilerServices.NET5", "..\..\GCModeller\src\GCModeller\engine\CompilerServices\CompilerServices.NET5.vbproj", "{30511148-9CB3-4E43-9DAE-5D4A81992629}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "BootstrapLoader.NET5", "..\GCModeller\src\GCModeller\engine\BootstrapLoader\BootstrapLoader.NET5.vbproj", "{959534DA-6555-45F2-A9A8-D0DE263236C2}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "BootstrapLoader.NET5", "..\..\GCModeller\src\GCModeller\engine\BootstrapLoader\BootstrapLoader.NET5.vbproj", "{959534DA-6555-45F2-A9A8-D0DE263236C2}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Model.Core.NET5", "..\GCModeller\src\GCModeller\engine\Model\Model.Core.NET5.vbproj", "{80918C4F-7532-438B-8E45-8C17719A6BFD}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Model.Core.NET5", "..\..\GCModeller\src\GCModeller\engine\Model\Model.Core.NET5.vbproj", "{80918C4F-7532-438B-8E45-8C17719A6BFD}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Dynamics.NET5", "..\GCModeller\src\GCModeller\engine\Dynamics\Dynamics.NET5.vbproj", "{A99E2613-D656-456A-9B6C-B52381471AE4}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Dynamics.NET5", "..\..\GCModeller\src\GCModeller\engine\Dynamics\Dynamics.NET5.vbproj", "{A99E2613-D656-456A-9B6C-B52381471AE4}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "GCMarkupXML.NET5", "..\GCModeller\src\GCModeller\engine\IO\GCMarkupLanguage\GCMarkupXML.NET5.vbproj", "{D74B9563-0A65-4C97-9601-005AA220A412}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "GCMarkupXML.NET5", "..\..\GCModeller\src\GCModeller\engine\IO\GCMarkupLanguage\GCMarkupXML.NET5.vbproj", "{D74B9563-0A65-4C97-9601-005AA220A412}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "sbml-netcore5", "..\GCModeller\src\GCModeller\models\SBML\SBML\sbml-netcore5.vbproj", "{E5C40309-54C7-4A96-82D2-CA21E6F1B60A}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "sbml-netcore5", "..\..\GCModeller\src\GCModeller\models\SBML\SBML\sbml-netcore5.vbproj", "{E5C40309-54C7-4A96-82D2-CA21E6F1B60A}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "rdf_xml-netcore5", "..\GCModeller\src\runtime\sciBASIC#\mime\application%rdf+xml\rdf_xml-netcore5.vbproj", "{2149D8E9-6CCB-4DC8-A92A-71EA595844D6}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "rdf_xml-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\mime\application%rdf+xml\rdf_xml-netcore5.vbproj", "{2149D8E9-6CCB-4DC8-A92A-71EA595844D6}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xml-netcore5", "..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\xml-netcore5.vbproj", "{6A4C5C24-0BC6-4C09-A509-43462E22D063}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "xml-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\xml-netcore5.vbproj", "{6A4C5C24-0BC6-4C09-A509-43462E22D063}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj", "{BE0E027D-6682-42BA-8B93-74C250C18720}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj", "{BE0E027D-6682-42BA-8B93-74C250C18720}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{0B009B33-092B-41B1-A4EE-362BDB5E2568}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{0B009B33-092B-41B1-A4EE-362BDB5E2568}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "odes-netcore5", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj", "{CB250D41-5F36-4F41-BF6F-8932B4DDC08C}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "odes-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\ODE\odes-netcore5.vbproj", "{CB250D41-5F36-4F41-BF6F-8932B4DDC08C}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframework-netcore5", "..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj", "{0891E733-BDFE-4B0A-812F-AA937ED53FA2}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframework-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj", "{0891E733-BDFE-4B0A-812F-AA937ED53FA2}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframeUtils-netcore5", "..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj", "{99ABB038-677B-467D-8F0F-D205E3861019}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframeUtils-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj", "{99ABB038-677B-467D-8F0F-D205E3861019}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "binarydata-netcore5", "..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj", "{6F6F5C73-ED80-4D8B-9FE6-419FF20F5409}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "binarydata-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj", "{6F6F5C73-ED80-4D8B-9FE6-419FF20F5409}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FeatherFormat", "..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\Feather\FeatherFormat.vbproj", "{8FE064E3-A24B-4F2C-9A09-523A7D63D2F5}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "FeatherFormat", "..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\Feather\FeatherFormat.vbproj", "{8FE064E3-A24B-4F2C-9A09-523A7D63D2F5}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datastorage-netcore5", "..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj", "{87BDFB32-9B2A-4F96-A451-6C1E27A5F865}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "datastorage-netcore5", "..\..\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj", "{87BDFB32-9B2A-4F96-A451-6C1E27A5F865}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{0E4F2278-0FEE-41EE-8C4F-C43E1A209EF4}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "libmysql", "..\graphQL\src\mysqli\LibMySQL\libmysql.vbproj", "{131C9E21-288F-4A27-8B82-7792A9E46485}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "libmysql", "..\..\graphQL\src\mysqli\LibMySQL\libmysql.vbproj", "{131C9E21-288F-4A27-8B82-7792A9E46485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1849,6 +1849,6 @@ Global
 		SolutionGuid = {F6E120BA-1B38-4DAB-8113-B607B491A206}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{2b724ff8-290b-4c8f-81ad-308d546ae623}*SharedItemsImports = 5
+		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{2b724ff8-290b-4c8f-81ad-308d546ae623}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
