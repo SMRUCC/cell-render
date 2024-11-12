@@ -6,3 +6,9 @@
 
 /**
 */
+declare namespace Builder {
+   /**
+     * @param env default value Is ``null``.
+   */
+   function create_modelfile(register: object, genes: any, env?: object): object;
+}
