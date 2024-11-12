@@ -29,7 +29,7 @@ Public Class Compiler
                 .left_join("sequence_graph") _
                 .on(field("`sequence_graph`.molecule_id") = field("`molecule`.id")) _
                 .where(field("`molecule`.type") = dna_term,
-                       field("xref_id") = gene_info.locus_id Or field("xref").in()) _
+                       field("xref_id") = gene_info.locus_id Or field("xref").in(gene_info.locus_id)) _
                 .find(Of gene_molecule)("`molecule`.id", "xref_id", "name", "note", "sequence")
 
             If find Is Nothing Then
