@@ -88,7 +88,7 @@ Public Class Compiler
             .genome = New Genome With {
                 .replicons = {chromosome}
             },
-            .metabolismStructure =
+            .metabolismStructure = metabolic
         }
     End Function
 End Class
