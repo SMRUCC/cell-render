@@ -96,7 +96,7 @@ Public Class Compiler
                            field("db_key") = ec_number) _
                     .distinct() _
                     .project(Of String)("xref")
-                Dim prot_id = gene.amino_acid.name
+                Dim prot_id = gene.locus_tag
 
                 Call ec_reg.AddRange(ec_numbers)
                 Call ec_link.AddRange(From ec As String
@@ -141,6 +141,29 @@ Public Class Compiler
             Call ec_rxn.Add(ec_number, reactions)
         Next
 
+        Dim enzymes As New List(Of Enzyme)
+
+        For Each gene In ec_link.GroupBy(Function(a) a.Name)
+            Dim ec_str As String() = gene _
+                .Select(Function(e) e.Value) _
+                .Distinct _
+                .ToArray
+            Dim rxns = ec_str _
+                .Where(Function(id) ec_rxn.ContainsKey(id)) _
+                .Select(Function(id) ec_rxn(id)) _
+                .IteratesALL _
+                .GroupBy(Function(r) r.ID) _
+                .ToArray
+
+            Call enzymes.Add(New Enzyme With {
+                .geneID = gene.Key,
+                .ECNumber = ec_str.JoinBy(" / "),
+                .catalysis = rxns _
+                    .Select(Function(r) New Catalysis(r.Key)) _
+                    .ToArray
+            })
+        Next
+
         Return New MetabolismStructure With {
             .compounds = PullCompounds(ec_rxn).ToArray,
             .reactions = New ReactionGroup With {
@@ -150,7 +173,7 @@ Public Class Compiler
                     .Select(Function(r) r.First) _
                     .ToArray
             },
-            .enzymes =
+            .enzymes = enzymes.ToArray
         }
     End Function
 
