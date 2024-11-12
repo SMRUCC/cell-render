@@ -165,7 +165,12 @@ Public Class Compiler
                 .geneID = gene.Key,
                 .ECNumber = ec_str.JoinBy(" / "),
                 .catalysis = rxns _
-                    .Select(Function(r) New Catalysis(r.Key)) _
+                    .Select(Function(r)
+                                Return New Catalysis(r.Key) With {
+                                    .PH = 7.0,
+                                    .temperature = 30
+                                }
+                            End Function) _
                     .ToArray
             })
         Next
