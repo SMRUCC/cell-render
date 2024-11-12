@@ -17,7 +17,7 @@ Public Class Compiler
     ReadOnly ec_number As UInteger
 
     Sub New(registry As biocad_registry, genes As GeneTable())
-        template = genes.Take(100).ToArray
+        template = genes
         cad_registry = registry
         dna_term = cad_registry.GetVocabulary("Nucleic Acid").id
         ec_number = cad_registry.GetVocabulary("EC").id
