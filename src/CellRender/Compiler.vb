@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
@@ -140,7 +141,37 @@ Public Class Compiler
             Call ec_rxn.Add(ec_number, reactions)
         Next
 
+        Return New MetabolismStructure With {
+            .compounds = PullCompounds(ec_rxn).ToArray,
+            .reactions = New ReactionGroup With {
+                .enzymatic = ec_rxn.Values _
+                    .IteratesALL _
+                    .GroupBy(Function(r) r.ID) _
+                    .Select(Function(r) r.First) _
+                    .ToArray
+            },
+            .enzymes =
+        }
+    End Function
 
+    Private Iterator Function PullCompounds(pool As Dictionary(Of String, Reaction())) As IEnumerable(Of Compound)
+        Dim all = pool.Values _
+            .IteratesALL _
+            .Select(Function(rxn) rxn.substrate.JoinIterates(rxn.product)) _
+            .IteratesALL _
+            .GroupBy(Function(c) c.compound) _
+            .ToArray
+
+        For Each ref In TqdmWrapper.Wrap(all)
+            Dim mol = cad_registry.molecule.where(field("id") = ref.Key).find(Of biocad_registryModel.molecule)
+            Dim compound As New Compound With {
+                .ID = mol.id,
+                .name = mol.name,
+                .mass0 = 10
+            }
+
+            Yield compound
+        Next
     End Function
 
     Public Function CreateModel() As VirtualCell
