@@ -11,6 +11,7 @@ Imports SMRUCC.Rsharp.Runtime.Vectorization
 ''' Helper functions for build virtualcell model
 ''' </summary>
 <Package("Builder")>
+<RTypeExport("cad_registry", GetType(biocad_registry))>
 Public Module Builder
 
     <ExportAPI("create_modelfile")>
