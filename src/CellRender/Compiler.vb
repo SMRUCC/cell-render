@@ -17,7 +17,7 @@ Public Class Compiler
     ReadOnly ec_number As UInteger
 
     Sub New(registry As biocad_registry, genes As GeneTable())
-        template = genes
+        template = genes.Take(100).ToArray
         cad_registry = registry
         dna_term = cad_registry.GetVocabulary("Nucleic Acid").id
         ec_number = cad_registry.GetVocabulary("EC").id
@@ -114,6 +114,7 @@ Public Class Compiler
                 .where(field("regulation_graph.term") = ec_number) _
                 .select(Of reaction_view)("reaction_id", "molecule_id", "db_xref", "vocabulary.term AS side", "factor")
             Dim reactions As Reaction() = view _
+                .Where(Function(c) Not c.side Is Nothing) _
                 .GroupBy(Function(a) a.reaction_id) _
                 .Select(Function(rxn)
                             Dim sides = rxn _
@@ -127,6 +128,10 @@ Public Class Compiler
                                                       .ToArray
                                               End Function)
 
+                            If Not (sides.ContainsKey("substrate") AndAlso sides.ContainsKey("product")) Then
+                                Return Nothing
+                            End If
+
                             Return New Reaction With {
                                 .ID = rxn.Key,
                                 .bounds = {1, 1},
@@ -136,6 +141,7 @@ Public Class Compiler
                                 .product = sides!product
                             }
                         End Function) _
+                .Where(Function(r) Not r Is Nothing) _
                 .ToArray
 
             Call ec_rxn.Add(ec_number, reactions)
