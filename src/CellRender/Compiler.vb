@@ -13,8 +13,12 @@ Public Class Compiler
         cad_registry = registry
     End Sub
 
+    Private Function BuildGenome() As replicon
+
+    End Function
+
     Public Function CreateModel() As VirtualCell
-        Dim chromosome As New replicon
+        Dim chromosome As replicon = BuildGenome()
 
         Return New VirtualCell With {
             .properties = New [Property],

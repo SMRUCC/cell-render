@@ -3,13 +3,10 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
-Imports SMRUCC.genomics.GCModeller.CompilerServices
-Imports SMRUCC.genomics.Metagenomics
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports SMRUCC.Rsharp.Runtime.Vectorization
 
 ''' <summary>
 ''' Helper functions for build virtualcell model
