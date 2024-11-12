@@ -15,7 +15,7 @@ Public Module Builder
 
     <ExportAPI("create_modelfile")>
     <RApiReturn(GetType(VirtualCell))>
-    Public Function CreateModelFile(register As biocad_registry.biocad_registry,
+    Public Function CreateModelFile(register As biocad_registry,
                                     <RRawVectorArgument>
                                     genes As Object,
                                     Optional env As Environment = Nothing) As Object
