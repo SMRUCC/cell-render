@@ -18,6 +18,9 @@ declare namespace CellRender {
    */
    function assemble_transcript_graph(app: any, context: any): object;
    /**
+   */
+   function compile_genbank(cad_registry: any, gbff: any): object;
+   /**
      * @param workdir default value Is ``./``.
      * @param upstream_size default value Is ``150``.
      * @param tag_genbank_accid default value Is ``false``.
@@ -38,6 +41,11 @@ declare namespace CellRender {
      * @param outputdir default value Is ``null``.
    */
    function modelling_kinetics(src: any, outputdir?: any): object;
+   /**
+     * @param host default value Is ``localhost``.
+     * @param port default value Is ``3306``.
+   */
+   function open_registry(user: any, passwd: any, host?: any, port?: any): object;
    /**
    */
    function tfbs_motif_scanning(app: any, context: any): object;
