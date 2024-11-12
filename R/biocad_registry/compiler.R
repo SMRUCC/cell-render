@@ -10,5 +10,7 @@ const compile_genbank = function(cad_registry, gbff) {
         gbff <- read.genbank(gbff);
     }
 
-    
+    cad_registry |> Builder::create_modelfile(
+        genes = gbff |> enumerateFeatures(keys = ["CDS","tRNA","ncRNA","rRNA"]) 
+    );
 }
