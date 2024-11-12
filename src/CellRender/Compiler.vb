@@ -114,7 +114,7 @@ Public Class Compiler
                 .where(field("regulation_graph.term") = ec_number) _
                 .select(Of reaction_view)("reaction_id", "molecule_id", "db_xref", "vocabulary.term AS side", "factor")
             Dim reactions As Reaction() = view _
-                .Where(Function(c) Not c.side Is Nothing) _
+                .Where(Function(c) c.molecule_id > 0 AndAlso Not c.side Is Nothing) _
                 .GroupBy(Function(a) a.reaction_id) _
                 .Select(Function(rxn)
                             Dim sides = rxn _
