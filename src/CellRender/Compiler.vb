@@ -196,6 +196,7 @@ Public Class Compiler
                 .find(Of biocad_registryModel.reaction)
 
             rxn.name = reaction.name
+            rxn.note = reaction.note
 
             Yield rxn
         Next
