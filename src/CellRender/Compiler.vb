@@ -34,7 +34,7 @@ Public Class Compiler
                            gene_info.locus_id,
                            gene_info.ProteinId,
                            gene_info.UniprotSwissProt,
-                           gene_info.UniprotTrEMBL})) _
+                           gene_info.UniprotTrEMBL}, nullFilter:=True)) _
                 .find(Of gene_molecule)("`molecule`.id", "xref_id", "name", "note", "sequence")
 
             If find Is Nothing Then
