@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
@@ -77,6 +78,10 @@ Public Class Compiler
     End Function
 
     Private Function BuildMetabolicNetwork(chromosome As replicon) As MetabolismStructure
+        Dim ec_reg As New List(Of String)
+        Dim ec_link As New List(Of NamedValue(Of String))
+        Dim ec_rxn As New Dictionary(Of String, Reaction())
+
         For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
             For Each gene As gene In t_unit.genes
                 If gene.amino_acid Is Nothing Then
@@ -90,10 +95,52 @@ Public Class Compiler
                            field("db_key") = ec_number) _
                     .distinct() _
                     .project(Of String)("xref")
+                Dim prot_id = gene.amino_acid.name
 
-
+                Call ec_reg.AddRange(ec_numbers)
+                Call ec_link.AddRange(From ec As String
+                                      In ec_numbers
+                                      Select New NamedValue(Of String)(prot_id, ec))
             Next
         Next
+
+        For Each ec_number As String In TqdmWrapper.Wrap(ec_reg.Distinct.ToArray)
+            Dim view = cad_registry.regulation_graph _
+                .left_join("reaction_graph") _
+                .on(field("reaction_graph.reaction") = field("reaction_id")) _
+                .left_join("vocabulary") _
+                .on(field("vocabulary.id") = field("reaction_graph.role")) _
+                .where(field("regulation_graph.term") = ec_number) _
+                .select(Of reaction_view)("reaction_id", "molecule_id", "db_xref", "vocabulary.term AS side", "factor")
+            Dim reactions As Reaction() = view _
+                .GroupBy(Function(a) a.reaction_id) _
+                .Select(Function(rxn)
+                            Dim sides = rxn _
+                                .GroupBy(Function(a) a.side) _
+                                .ToDictionary(Function(a) a.Key,
+                                              Function(a)
+                                                  Return a _
+                                                      .Select(Function(c)
+                                                                  Return New CompoundFactor(c.factor, c.molecule_id)
+                                                              End Function) _
+                                                      .ToArray
+                                              End Function)
+
+                            Return New Reaction With {
+                                .ID = rxn.Key,
+                                .bounds = {1, 1},
+                                .is_enzymatic = True,
+                                .name = ec_number,
+                                .substrate = sides!substrate,
+                                .product = sides!product
+                            }
+                        End Function) _
+                .ToArray
+
+            Call ec_rxn.Add(ec_number, reactions)
+        Next
+
+
     End Function
 
     Public Function CreateModel() As VirtualCell

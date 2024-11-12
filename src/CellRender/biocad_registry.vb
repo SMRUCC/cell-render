@@ -10,6 +10,12 @@ Public Class biocad_registry : Inherits biocad_registryModel.db_registry
         End Get
     End Property
 
+    Public ReadOnly Property regulation_graph As Model
+        Get
+            Return m_regulation_graph
+        End Get
+    End Property
+
     Public Sub New(mysqli As ConnectionUri)
         MyBase.New(mysqli)
     End Sub
