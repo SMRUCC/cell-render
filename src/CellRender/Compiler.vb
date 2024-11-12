@@ -74,15 +74,21 @@ Public Class Compiler
         }
     End Function
 
+    Private Function BuildMetabolicNetwork() As MetabolismStructure
+
+    End Function
+
     Public Function CreateModel() As VirtualCell
         Dim chromosome As replicon = BuildGenome()
+        Dim metabolic As MetabolismStructure = BuildMetabolicNetwork()
 
         Return New VirtualCell With {
             .properties = New [property],
             .taxonomy = New Taxonomy,
             .genome = New Genome With {
                 .replicons = {chromosome}
-            }
+            },
+            .metabolismStructure =
         }
     End Function
 End Class
