@@ -12,11 +12,13 @@ Public Class Compiler
     ReadOnly cad_registry As biocad_registry
     ReadOnly template As GeneTable()
     ReadOnly dna_term As UInteger
+    ReadOnly ec_number As UInteger
 
     Sub New(registry As biocad_registry, genes As GeneTable())
         template = genes
         cad_registry = registry
         dna_term = cad_registry.GetVocabulary("Nucleic Acid").id
+        ec_number = cad_registry.GetVocabulary("EC").id
     End Sub
 
     Private Function BuildGenome() As replicon
@@ -49,7 +51,7 @@ Public Class Compiler
                 .left_join("sequence_graph") _
                 .on(field("`sequence_graph`.molecule_id") = field("`molecule`.id")) _
                 .where(field("`molecule`.parent") = find.id) _
-                .find(Of gene_molecule)("molecule.xref_id", "sequence")
+                .find(Of gene_molecule)("`molecule`.id", "molecule.xref_id", "sequence")
             Dim gene As New gene(gene_info.Location) With {
                 .locus_tag = gene_info.locus_id,
                 .product = find.note,
@@ -57,7 +59,7 @@ Public Class Compiler
             }
 
             If Not find_prot Is Nothing Then
-                gene.protein_id = find_prot.xref_id
+                gene.protein_id = find_prot.id
                 gene.amino_acid = ProteinComposition _
                     .FromRefSeq(find_prot.sequence, find_prot.xref_id) _
                     .CreateVector
@@ -74,13 +76,29 @@ Public Class Compiler
         }
     End Function
 
-    Private Function BuildMetabolicNetwork() As MetabolismStructure
+    Private Function BuildMetabolicNetwork(chromosome As replicon) As MetabolismStructure
+        For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
+            For Each gene As gene In t_unit.genes
+                If gene.amino_acid Is Nothing Then
+                    Continue For
+                End If
 
+                Dim ec_numbers As String() = cad_registry.molecule _
+                    .left_join("db_xrefs") _
+                    .on(field("`db_xrefs`.obj_id") = field("`molecule`.id")) _
+                    .where(field("`molecule`.id") = gene.protein_id,
+                           field("db_key") = ec_number) _
+                    .distinct() _
+                    .project(Of String)("xref")
+
+
+            Next
+        Next
     End Function
 
     Public Function CreateModel() As VirtualCell
         Dim chromosome As replicon = BuildGenome()
-        Dim metabolic As MetabolismStructure = BuildMetabolicNetwork()
+        Dim metabolic As MetabolismStructure = BuildMetabolicNetwork(chromosome)
 
         Return New VirtualCell With {
             .properties = New [property],
