@@ -186,9 +186,10 @@ Public Class Compiler
         Next
 
         Return New MetabolismStructure With {
-            .compounds = PullCompounds(ec_rxn).ToArray,
+            .compounds = PullCompounds(ec_rxn, none_enzymatic).ToArray,
             .reactions = New ReactionGroup With {
-                .enzymatic = FillReactions(ec_rxn).ToArray
+                .enzymatic = FillReactions(ec_rxn).ToArray,
+                .etc = none_enzymatic
             },
             .enzymes = enzymes.ToArray
         }
@@ -270,17 +271,20 @@ Public Class Compiler
         Next
     End Function
 
-    Private Iterator Function PullCompounds(pool As Dictionary(Of String, Reaction())) As IEnumerable(Of Compound)
+    Private Iterator Function PullCompounds(pool As Dictionary(Of String, Reaction()), etc As Reaction()) As IEnumerable(Of Compound)
         Dim all = pool.Values _
             .IteratesALL _
             .Select(Function(rxn) rxn.substrate.JoinIterates(rxn.product)) _
             .IteratesALL _
+            .JoinIterates(etc.Select(Function(r) r.substrate.JoinIterates(r.product)).IteratesALL) _
             .GroupBy(Function(c) c.compound) _
             .ToArray
         Dim kegg_id As biocad_registryModel.db_xrefs
 
-        For Each ref In TqdmWrapper.Wrap(all)
-            Dim mol = cad_registry.molecule.where(field("id") = ref.Key).find(Of biocad_registryModel.molecule)
+        For Each ref As IGrouping(Of String, CompoundFactor) In TqdmWrapper.Wrap(all)
+            Dim mol = cad_registry.molecule _
+                .where(field("id") = ref.Key) _
+                .find(Of biocad_registryModel.molecule)
             Dim compound As New Compound With {
                 .ID = mol.id,
                 .name = mol.name,
