@@ -221,7 +221,7 @@ Public Class Compiler
                                               "term AS side",
                                               "factor")
 
-                If compounds.Any(Function(c) c.molecule_id = 0) Then
+                If compounds.IsNullOrEmpty OrElse compounds.Any(Function(c) c.molecule_id = 0) Then
                     Exit For
                 End If
 
