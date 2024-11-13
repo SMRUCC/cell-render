@@ -2,14 +2,14 @@
 <VirtualCell xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:vcellkit="https://bioCAD.gcmodeller.org/vcellkit/" xmlns:GCModeller="https://gcmodeller.org" xmlns="https://bioCAD.gcmodeller.org/XML/schema_revision/GCMarkup_2.0">
    <!--
      model:     SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2.VirtualCell
-     assembly:  SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage, Version=5.33.9082.42696, Culture=neutral, PublicKeyToken=null
-     version:   5.33.9082.42696
-     built:     11/11/2024 11:18:40 AM
-     md5:       c908b6229aa609c715306b6d28850fe2
-     timestamp: 11/12/2024 11:46:10 PM
+     assembly:  SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage, Version=5.33.9083.36881, Culture=neutral, PublicKeyToken=null
+     version:   5.33.9083.36881
+     built:     11/12/2024 8:04:50 AM
+     md5:       3b6d7281ea8815e92665b879b754a918
+     timestamp: 11/13/2024 9:04:31 PM
   -->
-   <vcellkit:properties compiled="2024-11-12T23:46:10" reversion="0">
-      <vcellkit:guid>360cfb80-5e85-426c-bd1d-966fca9e2014</vcellkit:guid>
+   <vcellkit:properties compiled="2024-11-13T21:04:31" reversion="0">
+      <vcellkit:guid>c8373e08-4ae4-4d21-8623-b7d75e346948</vcellkit:guid>
       <vcellkit:authors>WIN-3GE56PL7DC5</vcellkit:authors>
       <vcellkit:URLs>https://gcmodeller.org/</vcellkit:URLs>
       <vcellkit:DBLinks />
@@ -29335,12 +29335,12 @@
    <metabolome>
       <compounds>
          <compound ID="111127" mass0="10">[[[(2R,3S,4R,5R)-5-(6-aminopurin-9-yl)-3,4-dihydroxyoxolan-2-yl]methoxy-oxidophosphoryl]oxy-oxidophosphoryl] phosphate</compound>
-         <compound ID="20507" mass0="10">L-homoserine</compound>
+         <compound ID="20507" kegg_id="C00263" mass0="10">L-homoserine</compound>
          <compound ID="124308" mass0="10">Adenosine-diphosphate</compound>
-         <compound ID="4031" mass0="10">Hydrogen cation</compound>
+         <compound ID="4031" kegg_id="C00080" mass0="10">Hydrogen cation</compound>
          <compound ID="157517" mass0="10">&lt;i&gt;O&lt;/i&gt;-phospho-L-homoserine</compound>
-         <compound ID="150280" mass0="10">Water</compound>
-         <compound ID="73146" mass0="10">DL-Threonine</compound>
+         <compound ID="150280" kegg_id="C00001" mass0="10">Water</compound>
+         <compound ID="73146" kegg_id="C00188" mass0="10">DL-Threonine</compound>
          <compound ID="158752" mass0="10">phosphate</compound>
          <compound ID="158641" mass0="10">D-glyceraldehyde 3-phosphate</compound>
          <compound ID="156171" mass0="10">D-sedoheptulose 7-phosphate</compound>
@@ -29352,9 +29352,9 @@
          <compound ID="158686" mass0="10">riboflavin</compound>
          <compound ID="158543" mass0="10">FMN</compound>
          <compound ID="158589" mass0="10">FAD</compound>
-         <compound ID="118155" mass0="10">l-Isoleucine</compound>
+         <compound ID="118155" kegg_id="C00407" mass0="10">l-Isoleucine</compound>
          <compound ID="55966" mass0="10">Adenosine-5-monophosphate(2-)</compound>
-         <compound ID="13170" mass0="10">DL-Valine</compound>
+         <compound ID="13170" kegg_id="C00183" mass0="10">DL-Valine</compound>
          <compound ID="157875" mass0="10">a [prolipoprotein]-&lt;i&gt;S&lt;/i&gt;-1,2-diacyl-&lt;i&gt;sn&lt;/i&gt;-glyceryl-L-cysteine</compound>
          <compound ID="156040" mass0="10">an (&lt;i&gt;S&lt;/i&gt;-diacyl-&lt;i&gt;sn&lt;/i&gt;-glyceryl)-L-cysteinyl-[apolipoprotein]</compound>
          <compound ID="155019" mass0="10">a lipoprotein signal peptide</compound>
@@ -29371,16 +29371,16 @@
          <compound ID="56204" mass0="10">NADPH(4-)</compound>
          <compound ID="156670" mass0="10">NAD(P)&lt;sup&gt;+&lt;/sup&gt;</compound>
          <compound ID="153838" mass0="10">NAD(P)H</compound>
-         <compound ID="132123" mass0="10">Bicarbonate Ion</compound>
-         <compound ID="45979" mass0="10">D-glutamine</compound>
+         <compound ID="132123" kegg_id="C00288" mass0="10">Bicarbonate Ion</compound>
+         <compound ID="45979" kegg_id="C00064" mass0="10">D-glutamine</compound>
          <compound ID="157674" mass0="10">carbamoyl phosphate</compound>
          <compound ID="158360" mass0="10">L-glutamate</compound>
-         <compound ID="75309" mass0="10">Ammonium</compound>
-         <compound ID="75150" mass0="10">Ammonia</compound>
-         <compound ID="7734" mass0="10">Levocarnitine</compound>
+         <compound ID="75309" kegg_id="C01342" mass0="10">Ammonium</compound>
+         <compound ID="75150" kegg_id="C00014" mass0="10">Ammonia</compound>
+         <compound ID="7734" kegg_id="C00318" mass0="10">Levocarnitine</compound>
          <compound ID="159379" mass0="10">coenzyme A</compound>
          <compound ID="159100" mass0="10">(&lt;i&gt;R&lt;/i&gt;)-carnitinyl-CoA</compound>
-         <compound ID="111151" mass0="10">Crotonic acid betaine</compound>
+         <compound ID="111151" kegg_id="C04114" mass0="10">Crotonic acid betaine</compound>
          <compound ID="157376" mass0="10">crotonobetainyl-CoA</compound>
          <compound ID="128802" mass0="10">4-(Trimethylammonio)butanoate</compound>
          <compound ID="159104" mass0="10">&amp;gamma;-butyrobetainyl-CoA</compound>
@@ -29389,12 +29389,12 @@
          <compound ID="153802" mass0="10">a tetrahydrofolate</compound>
          <compound ID="154989" mass0="10">a 7,8-dihydrofolate</compound>
          <compound ID="78503" mass0="10">S-adenosyl-L-methionine</compound>
-         <compound ID="89350" mass0="10">S-adenosyl-L-homocysteine</compound>
+         <compound ID="89350" kegg_id="C00021" mass0="10">S-adenosyl-L-homocysteine</compound>
          <compound ID="155688" mass0="10">adenine&lt;sup&gt;1518&lt;/sup&gt;/adenine&lt;sup&gt;1519&lt;/sup&gt; in 16S rRNA</compound>
          <compound ID="159536" mass0="10">N&lt;sup&gt;6&lt;/sup&gt;-dimethyladenine&lt;sup&gt;1518&lt;/sup&gt;/N&lt;sup&gt;6&lt;/sup&gt;-dimethyladenine&lt;sup&gt;1519&lt;/sup&gt;in 16S rRNA</compound>
          <compound ID="158140" mass0="10">4-phosphooxy-L-threonine</compound>
          <compound ID="158955" mass0="10">3-amino-1-hydroxyacetone 1-phosphate</compound>
-         <compound ID="82633" mass0="10">Carbon Dioxide</compound>
+         <compound ID="82633" kegg_id="C00011" mass0="10">Carbon Dioxide</compound>
          <compound ID="155936" mass0="10">a uridine&lt;sup&gt;32&lt;/sup&gt; in tRNA</compound>
          <compound ID="154777" mass0="10">a pseudouridine&lt;sup&gt;32&lt;/sup&gt; in tRNA</compound>
          <compound ID="155780" mass0="10">uridine&lt;sup&gt;746&lt;/sup&gt; in 23S rRNA</compound>
@@ -29420,7 +29420,7 @@
          <compound ID="153879" mass0="10">a nascent peptidoglycan with (L-alanyl-&amp;gamma;-D-glutamyl-&lt;i&gt;meso&lt;/i&gt;-2,6-diaminopimeloyl-D-alanyl-D-alanine) pentapeptide</compound>
          <compound ID="155377" mass0="10">a peptidoglycan internal segment with (L-alanyl-&amp;gamma;-D-glutamyl-&lt;I&gt;meso&lt;/I&gt;-2,6-diaminopimeloyl-D-alanine) tetrapeptide</compound>
          <compound ID="158754" mass0="10">a nascent peptidoglycan with D,D cross-links (&lt;i&gt;meso&lt;/i&gt;-diaminopimelate containing)</compound>
-         <compound ID="116736" mass0="10">Alanine</compound>
+         <compound ID="116736" kegg_id="C00041" mass0="10">Alanine</compound>
          <compound ID="158178" mass0="10">N&amp;alpha;,N&amp;epsilon;-diacetyl-lysyl-D-alanyl-D-alanine</compound>
          <compound ID="158629" mass0="10">N&amp;alpha;,N&amp;epsilon;-diacetyl-lysyl-D-alanine</compound>
          <compound ID="155844" mass0="10">a nascent peptidoglycan with (L-alanyl-&amp;gamma;-D-glutamyl-&lt;I&gt;meso&lt;/I&gt;-2,6-diaminopimeloyl-D-alanine) tetrapeptide</compound>
@@ -29428,10 +29428,10 @@
          <compound ID="157679" mass0="10">L-alanyl-&amp;gamma;-D-glutamyl-L-lysyl-D-alanine</compound>
          <compound ID="159426" mass0="10">N-acetyl-muramoyl-(L-alanyl-&amp;gamma;-D-glutamyl-L-lysyl-D-alanyl-D-alanine)</compound>
          <compound ID="159326" mass0="10">N-acetyl-muramoyl-(L-alanyl-&amp;gamma;-D-glutamyl-L-lysyl-D-alanine)</compound>
-         <compound ID="71924" mass0="10">2,2-Diaminoheptanedioic acid</compound>
+         <compound ID="71924" kegg_id="C00680" mass0="10">2,2-Diaminoheptanedioic acid</compound>
          <compound ID="159199" mass0="10">UDP-&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;alpha;-D-muramoyl-L-alanyl-D-glutamate</compound>
          <compound ID="157428" mass0="10">UDP-MurNAc-L-Ala-&amp;gamma;-D-Glu-&lt;i&gt;meso&lt;/i&gt;-DAP</compound>
-         <compound ID="89420" mass0="10">d-Alanyl-l-alanine</compound>
+         <compound ID="89420" kegg_id="C00993" mass0="10">d-Alanyl-l-alanine</compound>
          <compound ID="157551" mass0="10">UDP-&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;alpha;-D-muramoyl-L-alanyl-&amp;gamma;-D-glutamyl-L-lysine</compound>
          <compound ID="158915" mass0="10">UDP-&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;alpha;-D-muramoyl-L-alanyl-&amp;gamma;-D-glutamyl-L-lysyl-D-alanyl-D-alanine</compound>
          <compound ID="157392" mass0="10">UDP-MurNAc-L-Ala-&amp;gamma;-D-Glu-&lt;i&gt;meso&lt;/i&gt;-DAP-D-Ala-D-Ala</compound>
@@ -29462,8 +29462,8 @@
          <compound ID="158027" mass0="10">GlcNAc-1,6-anhMurNAc-L-Ala-&amp;gamma;-D-Glu-&lt;i&gt;meso&lt;/i&gt;-DAP-D-Ala</compound>
          <compound ID="158560" mass0="10">&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;beta;-D-glucosamine-1,6-anhydro-&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;beta;-D-muramate</compound>
          <compound ID="157982" mass0="10">L-alanyl-&amp;gamma;-D-glutamyl-&lt;i&gt;meso&lt;/i&gt;-2,6-diaminopimeloyl-D-alanine</compound>
-         <compound ID="142284" mass0="10">Lipoamide</compound>
-         <compound ID="6636" mass0="10">S-acetyldihydrolipoamide</compound>
+         <compound ID="142284" kegg_id="C00248" mass0="10">Lipoamide</compound>
+         <compound ID="6636" kegg_id="C01136" mass0="10">S-acetyldihydrolipoamide</compound>
          <compound ID="154177" mass0="10">a [pyruvate dehydrogenase E2 protein] &lt;i&gt;N&lt;sup&gt;6&lt;/sup&gt;&lt;/i&gt;-lipoyl-L-lysine</compound>
          <compound ID="159660" mass0="10">a [pyruvate dehydrogenase E2 protein] &lt;i&gt;N&lt;sup&gt;6&lt;/sup&gt;&lt;/i&gt;-&lt;i&gt;S&lt;/i&gt;-acetyldihydrolipoyl-L-lysine</compound>
          <compound ID="95396" mass0="10">6,8-Dimercapto-octanoic acid amide</compound>
@@ -29480,39 +29480,39 @@
          <compound ID="159424" mass0="10">(&lt;i&gt;Z&lt;/i&gt;)-2-methylaconitate</compound>
          <compound ID="159313" mass0="10">&lt;i&gt;S&lt;/i&gt;-adenosyl 3-(methylsulfanyl)propylamine</compound>
          <compound ID="158093" mass0="10">putrescine</compound>
-         <compound ID="89358" mass0="10">5'-Deoxy-5'-methylthioadenosine</compound>
+         <compound ID="89358" kegg_id="C00170" mass0="10">5'-Deoxy-5'-methylthioadenosine</compound>
          <compound ID="157695" mass0="10">spermidine</compound>
          <compound ID="157601" mass0="10">spermine</compound>
          <compound ID="155681" mass0="10">D-glucopyranose</compound>
-         <compound ID="124200" mass0="10">Gluconolactone</compound>
+         <compound ID="124200" kegg_id="C00198" mass0="10">Gluconolactone</compound>
          <compound ID="156044" mass0="10">a ubiquinone</compound>
          <compound ID="155999" mass0="10">a ubiquinol</compound>
-         <compound ID="27183" mass0="10">Hypoxanthine</compound>
-         <compound ID="27180" mass0="10">Guanine</compound>
-         <compound ID="76697" mass0="10">DL-Asparagine</compound>
-         <compound ID="77811" mass0="10">beta-Alanine</compound>
+         <compound ID="27183" kegg_id="C00262" mass0="10">Hypoxanthine</compound>
+         <compound ID="27180" kegg_id="C00242" mass0="10">Guanine</compound>
+         <compound ID="76697" kegg_id="C00049" mass0="10">DL-Asparagine</compound>
+         <compound ID="77811" kegg_id="C00099" mass0="10">beta-Alanine</compound>
          <compound ID="157374" mass0="10">(R)-pantoate</compound>
          <compound ID="159085" mass0="10">(&lt;i&gt;R&lt;/i&gt;)-pantothenate</compound>
          <compound ID="157759" mass0="10">5,10-methylenetetrahydropteroyl mono-L-glutamate</compound>
          <compound ID="159200" mass0="10">2-dehydropantoate</compound>
          <compound ID="156523" mass0="10">a 5,10-methylenetetrahydrofolate</compound>
-         <compound ID="27150" mass0="10">6-Hydroxymethyl-7,8-dihydropterin</compound>
+         <compound ID="27150" kegg_id="C01300" mass0="10">6-Hydroxymethyl-7,8-dihydropterin</compound>
          <compound ID="158755" mass0="10">(7,8-dihydropterin-6-yl)methyl diphosphate</compound>
          <compound ID="156473" mass0="10">a ribonucleic acid</compound>
-         <compound ID="12609" mass0="10">Arabinofuranosyluracil</compound>
-         <compound ID="10405" mass0="10">1-beta-D-Arabinofuranosylcytosine</compound>
+         <compound ID="12609" kegg_id="C00299" mass0="10">Arabinofuranosyluracil</compound>
+         <compound ID="10405" kegg_id="C00475" mass0="10">1-beta-D-Arabinofuranosylcytosine</compound>
          <compound ID="158860" mass0="10">CMP</compound>
          <compound ID="27178" mass0="10">Guanosine 5'-triphosphate</compound>
          <compound ID="157528" mass0="10">GDP</compound>
          <compound ID="157943" mass0="10">(S)-4-amino-5-oxopentanoate</compound>
-         <compound ID="29981" mass0="10">Aminolevulinic Acid</compound>
+         <compound ID="29981" kegg_id="C00430" mass0="10">Aminolevulinic Acid</compound>
          <compound ID="158595" mass0="10">5-(methylsulfanyl)-D-ribose</compound>
-         <compound ID="71491" mass0="10">Adenine</compound>
+         <compound ID="71491" kegg_id="C00147" mass0="10">Adenine</compound>
          <compound ID="157716" mass0="10">&lt;i&gt;S&lt;/i&gt;-ribosyl-L-homocysteine</compound>
-         <compound ID="89361" mass0="10">5'-Deoxyadenosine</compound>
+         <compound ID="89361" kegg_id="C05198" mass0="10">5'-Deoxyadenosine</compound>
          <compound ID="157727" mass0="10">5-deoxy-D-ribose</compound>
          <compound ID="157468" mass0="10">dGTP</compound>
-         <compound ID="27159" mass0="10">2'-Deoxyguanosine</compound>
+         <compound ID="27159" kegg_id="C00330" mass0="10">2'-Deoxyguanosine</compound>
          <compound ID="158375" mass0="10">triphosphate</compound>
          <compound ID="80968" mass0="10">P1,P4-Bis(5'-adenosyl) tetraphosphate</compound>
          <compound ID="159295" mass0="10">P&lt;sup&gt;1&lt;/sup&gt;,P&lt;sup&gt;4&lt;/sup&gt;-&lt;i&gt;bis&lt;/i&gt;(5'-guanosyl) tetraphosphate</compound>
@@ -29520,7 +29520,7 @@
          <compound ID="158794" mass0="10">succinyl-CoA</compound>
          <compound ID="160057" mass0="10">&lt;i&gt;N&lt;/i&gt;-succinyl-2-amino-6-ketopimelate</compound>
          <compound ID="158058" mass0="10">UTP</compound>
-         <compound ID="117671" mass0="10">Methionine</compound>
+         <compound ID="117671" kegg_id="C00073" mass0="10">Methionine</compound>
          <compound ID="160028" mass0="10">2-C-methyl-D-erythritol 4-phosphate</compound>
          <compound ID="159325" mass0="10">1-deoxy-D-xylulose 5-phosphate</compound>
          <compound ID="158557" mass0="10">(2&lt;i&gt;E&lt;/i&gt;,6&lt;i&gt;E&lt;/i&gt;)-farnesyl diphosphate</compound>
@@ -29537,7 +29537,7 @@
          <compound ID="111113" mass0="10">(2S)-2,6-diammoniohexanoate</compound>
          <compound ID="153946" mass0="10">a cytidine&lt;sup&gt;34&lt;/sup&gt; in tRNA&lt;sup&gt;Ile2&lt;/sup&gt;</compound>
          <compound ID="154286" mass0="10">a lysidine&lt;sup&gt;34&lt;/sup&gt; in tRNA&lt;sup&gt;Ile2&lt;/sup&gt;</compound>
-         <compound ID="45963" mass0="10">Proline</compound>
+         <compound ID="45963" kegg_id="C00148" mass0="10">Proline</compound>
          <compound ID="158545" mass0="10">D-&lt;i&gt;glycero&lt;/i&gt;-&amp;beta;-D-&lt;i&gt;manno&lt;/i&gt;-heptose 1,7-bisphosphate</compound>
          <compound ID="158239" mass0="10">D-&lt;i&gt;glycero&lt;/i&gt;-&amp;beta;-D-&lt;i&gt;manno&lt;/i&gt;-heptose 1-phosphate</compound>
          <compound ID="157931" mass0="10">glutathione</compound>
@@ -29571,19 +29571,19 @@
          <compound ID="159740" mass0="10">an N-terminal &lt;i&gt;N&lt;/i&gt;-acetyl-L-alanyl-[bS18 protein of 30S ribosome]</compound>
          <compound ID="19384" mass0="10">l-Alanyl-l-glutamine</compound>
          <compound ID="158425" mass0="10">glycyl-L-glutamate</compound>
-         <compound ID="103648" mass0="10">2-Azaniumylacetate</compound>
+         <compound ID="103648" kegg_id="C00037" mass0="10">2-Azaniumylacetate</compound>
          <compound ID="159197" mass0="10">L-alanyl-L-threonine</compound>
          <compound ID="158797" mass0="10">glycyl-L-methionine</compound>
          <compound ID="158833" mass0="10">glycyl-L-proline</compound>
          <compound ID="159160" mass0="10">L-alanyl-L-aspartate</compound>
          <compound ID="157713" mass0="10">L-alanyl-L-leucine</compound>
-         <compound ID="117552" mass0="10">Leucine</compound>
+         <compound ID="117552" kegg_id="C00123" mass0="10">Leucine</compound>
          <compound ID="158486" mass0="10">L-alanyl-L-histidine</compound>
-         <compound ID="118046" mass0="10">Histidine</compound>
+         <compound ID="118046" kegg_id="C00135" mass0="10">Histidine</compound>
          <compound ID="159422" mass0="10">glycyl-L-glutamine</compound>
          <compound ID="123948" mass0="10">L-alanyl-L-glutamate(1-)</compound>
          <compound ID="158324" mass0="10">L-cysteinylglycine</compound>
-         <compound ID="116365" mass0="10">Cysteine</compound>
+         <compound ID="116365" kegg_id="C00097" mass0="10">Cysteine</compound>
          <compound ID="159331" mass0="10">glycyl-L-aspartate</compound>
          <compound ID="159301" mass0="10">L-alanyl-glycine</compound>
          <compound ID="159410" mass0="10">glycyl-L-asparagine</compound>
@@ -29591,49 +29591,49 @@
          <compound ID="154508" mass0="10">a dipeptide</compound>
          <compound ID="153644" mass0="10">a proteinogenic amino acid</compound>
          <compound ID="158404" mass0="10">XMP</compound>
-         <compound ID="15368" mass0="10">Xanthine</compound>
+         <compound ID="15368" kegg_id="C00385" mass0="10">Xanthine</compound>
          <compound ID="154037" mass0="10">a carboxylic ester</compound>
          <compound ID="157158" mass0="10">a carboxylate</compound>
          <compound ID="154632" mass0="10">an alcohol</compound>
          <compound ID="158622" mass0="10">&amp;gamma;-L-glutamyl 5-phosphate</compound>
          <compound ID="158869" mass0="10">L-glutamate 5-semialdehyde</compound>
-         <compound ID="132396" mass0="10">DL-Homocysteine</compound>
+         <compound ID="132396" kegg_id="C00155" mass0="10">DL-Homocysteine</compound>
          <compound ID="98281" mass0="10">S-methylmethionine</compound>
          <compound ID="158789" mass0="10">2-dehydro-3-deoxy-D-pentonate</compound>
-         <compound ID="130910" mass0="10">Glycolaldehyde</compound>
+         <compound ID="130910" kegg_id="C00266" mass0="10">Glycolaldehyde</compound>
          <compound ID="137727" mass0="10">2-dehydro-3-deoxy-D-gluconate</compound>
-         <compound ID="132749" mass0="10">D-glyceraldehyde</compound>
-         <compound ID="130748" mass0="10">Glyceraldehyde</compound>
+         <compound ID="132749" kegg_id="C00577" mass0="10">D-glyceraldehyde</compound>
+         <compound ID="130748" kegg_id="C02154" mass0="10">Glyceraldehyde</compound>
          <compound ID="158362" mass0="10">L-ornithine</compound>
-         <compound ID="150492" mass0="10">Citrulline</compound>
+         <compound ID="150492" kegg_id="C00327" mass0="10">Citrulline</compound>
          <compound ID="154737" mass0="10">an aldehyde</compound>
          <compound ID="154934" mass0="10">a reduced two electron carrier</compound>
          <compound ID="157286" mass0="10">an oxidized electron carrier</compound>
-         <compound ID="84393" mass0="10">Choline</compound>
-         <compound ID="79282" mass0="10">Betaine aldehyde</compound>
+         <compound ID="84393" kegg_id="C00114" mass0="10">Choline</compound>
+         <compound ID="79282" kegg_id="C00576" mass0="10">Betaine aldehyde</compound>
          <compound ID="156684" mass0="10">an electron-transfer quinone</compound>
          <compound ID="153741" mass0="10">an electron-transfer quinol</compound>
-         <compound ID="78332" mass0="10">Betaine</compound>
+         <compound ID="78332" kegg_id="C00719" mass0="10">Betaine</compound>
          <compound ID="157858" mass0="10">cyclic di-3',5'-guanylate</compound>
          <compound ID="158816" mass0="10">5'-phosphoguanylyl(3'&amp;rarr;5')guanosine</compound>
          <compound ID="157953" mass0="10">dTDP-4-amino-4,6-dideoxy-&amp;alpha;-D-galactose</compound>
          <compound ID="159091" mass0="10">dTDP-4-acetamido-&amp;alpha;-D-fucose</compound>
-         <compound ID="143313" mass0="10">Methanol</compound>
+         <compound ID="143313" kegg_id="C00132" mass0="10">Methanol</compound>
          <compound ID="157085" mass0="10">a secondary alcohol</compound>
          <compound ID="154596" mass0="10">a ketone</compound>
-         <compound ID="8992" mass0="10">3-Methyl-2-buten-1-OL</compound>
-         <compound ID="117534" mass0="10">3-Methyl-2-butenal</compound>
+         <compound ID="8992" kegg_id="C01390" mass0="10">3-Methyl-2-buten-1-OL</compound>
+         <compound ID="117534" kegg_id="C07330" mass0="10">3-Methyl-2-butenal</compound>
          <compound ID="70555" mass0="10">1,2,4-Butanetriol</compound>
          <compound ID="157603" mass0="10">(3&lt;i&gt;R&lt;/i&gt;)-3,4-dihydroxybutanal</compound>
-         <compound ID="69548" mass0="10">Ethylene Glycol</compound>
+         <compound ID="69548" kegg_id="C01380" mass0="10">Ethylene Glycol</compound>
          <compound ID="56517" mass0="10">Succinate</compound>
          <compound ID="159226" mass0="10">propanoyl-CoA</compound>
          <compound ID="157370" mass0="10">(2&lt;i&gt;S&lt;/i&gt;,3&lt;i&gt;S&lt;/i&gt;)-2-methylcitrate</compound>
-         <compound ID="116914" mass0="10">Cytosine</compound>
-         <compound ID="12349" mass0="10">Uracil</compound>
+         <compound ID="116914" kegg_id="C00380" mass0="10">Cytosine</compound>
+         <compound ID="12349" kegg_id="C00106" mass0="10">Uracil</compound>
          <compound ID="5195" mass0="10">Cyanate</compound>
          <compound ID="123489" mass0="10">3-(3-Hydroxyphenyl)propanoate</compound>
-         <compound ID="108070" mass0="10">Superoxide</compound>
+         <compound ID="108070" kegg_id="C00007" mass0="10">Superoxide</compound>
          <compound ID="158611" mass0="10">3-(2,3-dihydroxyphenyl)propanoate</compound>
          <compound ID="158675" mass0="10">3-hydroxycinnamate</compound>
          <compound ID="157378" mass0="10">2,3-dihydroxy-&lt;i&gt;trans&lt;/i&gt;-cinnamate</compound>
@@ -29642,10 +29642,10 @@
          <compound ID="158689" mass0="10">(2Z)-2-hydroxypenta-2,4-dienoate</compound>
          <compound ID="111044" mass0="10">Fumarate</compound>
          <compound ID="158402" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-4-hydroxy-2-oxopentanoate</compound>
-         <compound ID="69841" mass0="10">Acetaldehyde</compound>
+         <compound ID="69841" kegg_id="C00084" mass0="10">Acetaldehyde</compound>
          <compound ID="157643" mass0="10">&lt;i&gt;S&lt;/i&gt;-formylglutathione</compound>
          <compound ID="82801" mass0="10">Formate</compound>
-         <compound ID="9303" mass0="10">Taurine</compound>
+         <compound ID="9303" kegg_id="C00245" mass0="10">Taurine</compound>
          <compound ID="158523" mass0="10">2-aminoacetaldehyde</compound>
          <compound ID="8070" mass0="10">Sulfite</compound>
          <compound ID="157658" mass0="10">porphobilinogen</compound>
@@ -29653,28 +29653,28 @@
          <compound ID="16164" mass0="10">(2S)-3,4-dihydro-2H-pyrrole-2-carboxylate</compound>
          <compound ID="124303" mass0="10">(3R,4S,5R)--3,4,5-trihydroxycyclohex-1-ene-1-carboxylate</compound>
          <compound ID="157814" mass0="10">shikimate 3-phosphate</compound>
-         <compound ID="27181" mass0="10">Guanosine</compound>
+         <compound ID="27181" kegg_id="C00387" mass0="10">Guanosine</compound>
          <compound ID="158949" mass0="10">&amp;alpha;-D-ribose-1-phosphate</compound>
          <compound ID="155003" mass0="10">a purine base</compound>
-         <compound ID="120239" mass0="10">Xanthosine</compound>
-         <compound ID="117493" mass0="10">Adenosine</compound>
-         <compound ID="27185" mass0="10">Inosine</compound>
+         <compound ID="120239" kegg_id="C01762" mass0="10">Xanthosine</compound>
+         <compound ID="117493" kegg_id="C00212" mass0="10">Adenosine</compound>
+         <compound ID="27185" kegg_id="C00294" mass0="10">Inosine</compound>
          <compound ID="76502" mass0="10">2-deoxy-alpha-D-ribose 1-phosphate(2-)</compound>
-         <compound ID="21577" mass0="10">Adenine deoxyribonucleoside</compound>
-         <compound ID="27160" mass0="10">2'-Deoxyinosine</compound>
+         <compound ID="21577" kegg_id="C00559" mass0="10">Adenine deoxyribonucleoside</compound>
+         <compound ID="27160" kegg_id="C05512" mass0="10">2'-Deoxyinosine</compound>
          <compound ID="155086" mass0="10">a purine ribonucleoside</compound>
-         <compound ID="9849" mass0="10">1-[4-Hydroxy-5-(hydroxymethyl)oxolan-2-yl]-5-methylpyrimidine-2,4-dione</compound>
-         <compound ID="9895" mass0="10">Thymine</compound>
-         <compound ID="30030" mass0="10">2'-Deoxyuridine</compound>
-         <compound ID="81963" mass0="10">D-Fructose</compound>
+         <compound ID="9849" kegg_id="C00214" mass0="10">1-[4-Hydroxy-5-(hydroxymethyl)oxolan-2-yl]-5-methylpyrimidine-2,4-dione</compound>
+         <compound ID="9895" kegg_id="C00178" mass0="10">Thymine</compound>
+         <compound ID="30030" kegg_id="C00526" mass0="10">2'-Deoxyuridine</compound>
+         <compound ID="81963" kegg_id="C00095" mass0="10">D-Fructose</compound>
          <compound ID="154815" mass0="10">D-fructofuranose 6-phosphate</compound>
-         <compound ID="89526" mass0="10">beta-D-fructofuranose</compound>
-         <compound ID="24479" mass0="10">L-Glc(a1-4)L-Glc(a1-4)L-Glc(a1-4)L-Glc(a1-4)L-Glc(a1-4)a-L-Glc</compound>
+         <compound ID="89526" kegg_id="C02336" mass0="10">beta-D-fructofuranose</compound>
+         <compound ID="24479" kegg_id="C01936" mass0="10">L-Glc(a1-4)L-Glc(a1-4)L-Glc(a1-4)L-Glc(a1-4)L-Glc(a1-4)a-L-Glc</compound>
          <compound ID="158805" mass0="10">maltopentaose</compound>
          <compound ID="154725" mass0="10">a (1&amp;rarr;4)-&amp;alpha;-D-glucan</compound>
-         <compound ID="8725" mass0="10">Glc(a1-4)Glc(a1-4)Glc(a1-4)b-Glc</compound>
-         <compound ID="71739" mass0="10">Maltotriose</compound>
-         <compound ID="8074" mass0="10">4-O-alpha-D-Glucopyranosyl-D-glucose</compound>
+         <compound ID="8725" kegg_id="C02052" mass0="10">Glc(a1-4)Glc(a1-4)Glc(a1-4)b-Glc</compound>
+         <compound ID="71739" kegg_id="C01835" mass0="10">Maltotriose</compound>
+         <compound ID="8074" kegg_id="C00208" mass0="10">4-O-alpha-D-Glucopyranosyl-D-glucose</compound>
          <compound ID="13819" mass0="10">Glc(a1-4)Glc(a1-4)Glc(a1-4)Glc(a1-4)Glc(a1-4)Glc(a1-4)Hex</compound>
          <compound ID="158105" mass0="10">4'-phosphopantetheine</compound>
          <compound ID="159722" mass0="10">a 7-aminomethyl-7-deazaguanosine&lt;sup&gt;34&lt;/sup&gt; in tRNA</compound>
@@ -29684,7 +29684,7 @@
          <compound ID="158391" mass0="10">5-amino-6-(5-phospho-D-ribitylamino)uracil</compound>
          <compound ID="80999" mass0="10">5-amino-6-(5-phospho-D-ribosylamino)uracil</compound>
          <compound ID="160030" mass0="10">2,5-diamino-6-(5-phospho-D-ribosylamino)pyrimidin-4(3H)-one</compound>
-         <compound ID="71857" mass0="10">5-amino-6-(D-ribitylamino)uracil</compound>
+         <compound ID="71857" kegg_id="C04732" mass0="10">5-amino-6-(D-ribitylamino)uracil</compound>
          <compound ID="157938" mass0="10">6,7-dimethyl-8-(1-D-ribityl)lumazine</compound>
          <compound ID="158654" mass0="10">1-deoxy-L-glycero-tetrulose 4-phosphate</compound>
          <compound ID="56008" mass0="10">Thiamine phosphate</compound>
@@ -29712,7 +29712,7 @@
          <compound ID="157018" mass0="10">an acyl-CoA</compound>
          <compound ID="156003" mass0="10">a 2,3,4-saturated fatty acyl CoA</compound>
          <compound ID="155390" mass0="10">a 2,3,4-saturated fatty acid</compound>
-         <compound ID="9892" mass0="10">Acetyl-maltose</compound>
+         <compound ID="9892" kegg_id="C02130" mass0="10">Acetyl-maltose</compound>
          <compound ID="156000" mass0="10">a [protein]-L-histidine</compound>
          <compound ID="156128" mass0="10">a [protein]-&lt;i&gt;N&lt;/i&gt;-phospho-L-histidine</compound>
          <compound ID="155205" mass0="10">heme &lt;i&gt;b&lt;/i&gt;</compound>
@@ -29722,7 +29722,7 @@
          <compound ID="154298" mass0="10">a ribonucleoside</compound>
          <compound ID="156843" mass0="10">a UDP-sugar</compound>
          <compound ID="155301" mass0="10">an &amp;alpha;-D-aldose 1-phosphate</compound>
-         <compound ID="111156" mass0="10">Magnesium</compound>
+         <compound ID="111156" kegg_id="C00305" mass0="10">Magnesium</compound>
          <compound ID="159158" mass0="10">Mg&lt;SUP&gt;2+&lt;/SUP&gt;</compound>
          <compound ID="155239" mass0="10">a phenol</compound>
          <compound ID="9315" mass0="10">Glycerylphosphorylcholine</compound>
@@ -29740,7 +29740,7 @@
          <compound ID="99454" mass0="10">Decanoate</compound>
          <compound ID="157640" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-ureidoglycolate</compound>
          <compound ID="86900" mass0="10">Glyoxylate</compound>
-         <compound ID="12518" mass0="10">Urea</compound>
+         <compound ID="12518" kegg_id="C00086" mass0="10">Urea</compound>
          <compound ID="155156" mass0="10">tartronate semialdehyde</compound>
          <compound ID="158083" mass0="10">(2R)-tartronate semialdehyde</compound>
          <compound ID="137569" mass0="10">Hydroxypyruvate</compound>
@@ -29759,18 +29759,18 @@
          <compound ID="156698" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;10&lt;/sup&gt;-formyltetrahydrofolate</compound>
          <compound ID="156195" mass0="10">DNA combined with exogenous DNA to form a recombinational junction</compound>
          <compound ID="159555" mass0="10">resolution of recombinational junction formation of two intact strands</compound>
-         <compound ID="54195" mass0="10">5,6,7,8-Tetrahydropteridine</compound>
-         <compound ID="64123" mass0="10">6,7-Dihydropteridine</compound>
-         <compound ID="27192" mass0="10">Sapropterin</compound>
-         <compound ID="27191" mass0="10">4a-Carbinolamine tetrahydrobiopterin</compound>
+         <compound ID="54195" kegg_id="C05650" mass0="10">5,6,7,8-Tetrahydropteridine</compound>
+         <compound ID="64123" kegg_id="C05649" mass0="10">6,7-Dihydropteridine</compound>
+         <compound ID="27192" kegg_id="C00272" mass0="10">Sapropterin</compound>
+         <compound ID="27191" kegg_id="C00268" mass0="10">4a-Carbinolamine tetrahydrobiopterin</compound>
          <compound ID="156802" mass0="10">6,7-dihydrobiopterin</compound>
          <compound ID="159066" mass0="10">&amp;gamma;-L-glutamyl-L-cysteine</compound>
          <compound ID="158356" mass0="10">iron(III)-enterobactin complex</compound>
          <compound ID="158600" mass0="10">iron(III)-[&lt;i&gt;N&lt;/i&gt;-(2,3-dihydroxybenzoyl)-L-serine] complex</compound>
          <compound ID="80989" mass0="10">N-(2,3-dihydroxybenzoyl)-L-serinate</compound>
-         <compound ID="116766" mass0="10">Serine</compound>
+         <compound ID="116766" kegg_id="C00065" mass0="10">Serine</compound>
          <compound ID="111279" mass0="10">2,3-Dihydroxybenzoate</compound>
-         <compound ID="86342" mass0="10">Enterobactin</compound>
+         <compound ID="86342" kegg_id="C05821" mass0="10">Enterobactin</compound>
          <compound ID="157838" mass0="10">chorismate</compound>
          <compound ID="159453" mass0="10">isochorismate</compound>
          <compound ID="159015" mass0="10">(2&lt;i&gt;S&lt;/i&gt;,3&lt;i&gt;S&lt;/i&gt;)-2,3-dihydroxy-2,3-dihydrobenzoate</compound>
@@ -29797,7 +29797,7 @@
          <compound ID="155182" mass0="10">a 1-lysophosphatidylglycerol</compound>
          <compound ID="158529" mass0="10">&amp;alpha;-D-Kdo-(2&amp;rarr;4)-&amp;alpha;-D-Kdo-(2&amp;rarr;6)-lipid A (&lt;i&gt;E. coli&lt;/i&gt;)</compound>
          <compound ID="158567" mass0="10">hepta-acylated Kdo&lt;sub&gt;2&lt;/sub&gt; lipid A (&lt;i&gt;E. coli&lt;/i&gt;)</compound>
-         <compound ID="3463" mass0="10">Iron, isotope of mass 56</compound>
+         <compound ID="3463" kegg_id="C00023" mass0="10">Iron, isotope of mass 56</compound>
          <compound ID="158166" mass0="10">hydrosulfide</compound>
          <compound ID="155980" mass0="10">a [lipoyl-carrier protein] &lt;i&gt;N&lt;sup&gt;6&lt;/sup&gt;&lt;/i&gt;-octanoyl-L-lysine</compound>
          <compound ID="83065" mass0="10">Sulfide ion</compound>
@@ -29807,12 +29807,12 @@
          <compound ID="154568" mass0="10">a pseudouridine&lt;sup&gt;1915&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="159538" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;3&lt;/sup&gt;-methylpseudouridine&lt;sup&gt;1915&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="159307" mass0="10">&amp;alpha;-ribazole 5'-phosphate</compound>
-         <compound ID="56529" mass0="10">alpha-Ribazole</compound>
+         <compound ID="56529" kegg_id="C05775" mass0="10">alpha-Ribazole</compound>
          <compound ID="159401" mass0="10">adenosylcobalamin 5'-phosphate</compound>
-         <compound ID="13820" mass0="10">(2S,3S,4R,5R)-2-(6-aminopurin-9-yl)-5-methanidyloxolane-3,4-diol;cobalt(2+);[(2R,3S,4R,5S)-5-(5,6-dimethylbenzimidazol-1-yl)-4-hydroxy-2-(hydroxymethyl)oxolan-3-yl] [(2R)-1-[3-[(1R,2R,3R,4Z,7S,9Z,12S,13S,14Z,17S,18S,19R)-2,13,18-tris(2-amino-2-oxoethyl)-7,12,17-tris(3-amino-3-oxopropyl)-3,5,8,8,13,15,18,19-octamethyl-2,7,12,17-tetrahydro-1H-corrin-21-id-3-yl]propanoylamino]propan-2-yl] phosphate</compound>
+         <compound ID="13820" kegg_id="C00194" mass0="10">(2S,3S,4R,5R)-2-(6-aminopurin-9-yl)-5-methanidyloxolane-3,4-diol;cobalt(2+);[(2R,3S,4R,5S)-5-(5,6-dimethylbenzimidazol-1-yl)-4-hydroxy-2-(hydroxymethyl)oxolan-3-yl] [(2R)-1-[3-[(1R,2R,3R,4Z,7S,9Z,12S,13S,14Z,17S,18S,19R)-2,13,18-tris(2-amino-2-oxoethyl)-7,12,17-tris(3-amino-3-oxopropyl)-3,5,8,8,13,15,18,19-octamethyl-2,7,12,17-tetrahydro-1H-corrin-21-id-3-yl]propanoylamino]propan-2-yl] phosphate</compound>
          <compound ID="158767" mass0="10">adenosylcobalamin</compound>
          <compound ID="97692" mass0="10">deamido-NAD</compound>
-         <compound ID="89488" mass0="10">D-Norvaline</compound>
+         <compound ID="89488" kegg_id="C01799" mass0="10">D-Norvaline</compound>
          <compound ID="153768" mass0="10">a phosphatidylethanolamine</compound>
          <compound ID="153950" mass0="10">an &lt;i&gt;N&lt;/i&gt;-acyl-(&lt;i&gt;S&lt;/i&gt;-diacyl-&lt;i&gt;sn&lt;/i&gt;-glyceryl)-L-cysteinyl-[lipoprotein]</compound>
          <compound ID="154001" mass0="10">a phosphoglyceride</compound>
@@ -29823,7 +29823,7 @@
          <compound ID="154712" mass0="10">a [3Fe-3S] iron-sulfur cluster</compound>
          <compound ID="157909" mass0="10">6-methoxy-3-methyl-2-&lt;i&gt;all-trans&lt;/i&gt;-octaprenyl-1,4-benzoquinol</compound>
          <compound ID="160064" mass0="10">3-demethylubiquinol-&lt;i&gt;8&lt;/i&gt;</compound>
-         <compound ID="69526" mass0="10">N-Acetylglucosamine</compound>
+         <compound ID="69526" kegg_id="C00140" mass0="10">N-Acetylglucosamine</compound>
          <compound ID="156045" mass0="10">&lt;i&gt;N&lt;/i&gt;-acetyl-D-glucosamine 6-phosphate</compound>
          <compound ID="154731" mass0="10">an [HPr protein]-&lt;i&gt;N&lt;sup&gt;&amp;pi;&lt;/sup&gt;&lt;/i&gt;-phospho-L-histidine</compound>
          <compound ID="155792" mass0="10">an [HPr]-L-histidine</compound>
@@ -29852,7 +29852,7 @@
          <compound ID="76708" mass0="10">Iminoaspartate</compound>
          <compound ID="160053" mass0="10">3-deoxy-D-arabino-heptulosonate 7-phosphate</compound>
          <compound ID="158598" mass0="10">2-phospho-D-glycerate</compound>
-         <compound ID="89417" mass0="10">alpha-D-GALACTOSE</compound>
+         <compound ID="89417" kegg_id="C00984" mass0="10">alpha-D-GALACTOSE</compound>
          <compound ID="158406" mass0="10">&amp;alpha;-D-galactose 1-phosphate</compound>
          <compound ID="63993" mass0="10">UDP-alpha-D-glucose(2-)</compound>
          <compound ID="157778" mass0="10">UDP-&amp;alpha;-D-galactose</compound>
@@ -29883,15 +29883,15 @@
          <compound ID="155293" mass0="10">a halide anion</compound>
          <compound ID="117007" mass0="10">1-Chloro-2,4-dinitrobenzene</compound>
          <compound ID="81262" mass0="10">2,4-dinitrophenyl-S-glutathione</compound>
-         <compound ID="85390" mass0="10">Chloride Ion</compound>
+         <compound ID="85390" kegg_id="C00698" mass0="10">Chloride Ion</compound>
          <compound ID="157523" mass0="10">1-chloro-2,4-dinitrobenzene</compound>
          <compound ID="158209" mass0="10">chloride</compound>
          <compound ID="157442" mass0="10">monochlorobimane</compound>
          <compound ID="158311" mass0="10">(glutathion-&lt;i&gt;S&lt;/i&gt;-yl)-bimane</compound>
          <compound ID="157749" mass0="10">&amp;alpha;-D-Kdo-(2&amp;rarr;4)-&amp;alpha;-D-Kdo-(2&amp;rarr;6)-lipid A 1-diphosphate</compound>
          <compound ID="159407" mass0="10">lipid A-core 1-diphosphate</compound>
-         <compound ID="71882" mass0="10">4-Hydroxy-L-threonine</compound>
-         <compound ID="132697" mass0="10">Hydroxylamine</compound>
+         <compound ID="71882" kegg_id="C06056" mass0="10">4-Hydroxy-L-threonine</compound>
+         <compound ID="132697" kegg_id="C00192" mass0="10">Hydroxylamine</compound>
          <compound ID="157031" mass0="10">an N-terminal arginyl-[protein]</compound>
          <compound ID="155150" mass0="10">L-phenylalanyl-L-arginyl-[protein]</compound>
          <compound ID="154232" mass0="10">an N-terminal L-lysyl-[protein]</compound>
@@ -29905,39 +29905,39 @@
          <compound ID="157762" mass0="10">CDP</compound>
          <compound ID="158912" mass0="10">dCMP</compound>
          <compound ID="159501" mass0="10">dCDP</compound>
-         <compound ID="76044" mass0="10">Pentose</compound>
+         <compound ID="76044" kegg_id="C00259" mass0="10">Pentose</compound>
          <compound ID="158289" mass0="10">3-deoxy-&amp;alpha;-D-&lt;i&gt;manno&lt;/i&gt;-2-octulosonate</compound>
          <compound ID="158963" mass0="10">CMP-3-deoxy-&amp;beta;-D-&lt;i&gt;manno&lt;/i&gt;-octulosonate</compound>
-         <compound ID="11028" mass0="10">DL-Tyrosine</compound>
-         <compound ID="117678" mass0="10">Phenylalanine</compound>
+         <compound ID="11028" kegg_id="C00082" mass0="10">DL-Tyrosine</compound>
+         <compound ID="117678" kegg_id="C00079" mass0="10">Phenylalanine</compound>
          <compound ID="98313" mass0="10">2-Oxo-3-phenylpropanoate</compound>
          <compound ID="149422" mass0="10">Nicotinate</compound>
          <compound ID="159191" mass0="10">FMNH&lt;SUB&gt;2&lt;/SUB&gt;</compound>
          <compound ID="157409" mass0="10">isethionate</compound>
          <compound ID="157975" mass0="10">1-butanesulfonate</compound>
-         <compound ID="81565" mass0="10">Butyraldehyde</compound>
+         <compound ID="81565" kegg_id="C01412" mass0="10">Butyraldehyde</compound>
          <compound ID="158090" mass0="10">3-(&lt;i&gt;N&lt;/i&gt;-morpholino)propanesulfonate</compound>
          <compound ID="8673" mass0="10">3-Morpholinopropanal</compound>
          <compound ID="157109" mass0="10">an alkylsulfonate</compound>
          <compound ID="158031" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-dihydroorotate</compound>
-         <compound ID="104775" mass0="10">Coenzyme Q8</compound>
+         <compound ID="104775" kegg_id="C17569" mass0="10">Coenzyme Q8</compound>
          <compound ID="159306" mass0="10">orotate</compound>
          <compound ID="158438" mass0="10">ubiquinol-&lt;i&gt;8&lt;/i&gt;</compound>
          <compound ID="156545" mass0="10">a guanine&lt;sup&gt;2445&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="155550" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt;-methylguanine&lt;sup&gt;2445&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="155755" mass0="10">a guanine&lt;sup&gt;2069&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="156190" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;7&lt;/sup&gt;-methylguanine&lt;sup&gt;2069&lt;/sup&gt; in 23S rRNA</compound>
-         <compound ID="143130" mass0="10">Methylglyoxal</compound>
+         <compound ID="143130" kegg_id="C00546" mass0="10">Methylglyoxal</compound>
          <compound ID="153774" mass0="10">a cytosine&lt;sup&gt;1962&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="154169" mass0="10">a 5-methylcytosine&lt;sup&gt;1962&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="156540" mass0="10">an acyl phosphate</compound>
-         <compound ID="111084" mass0="10">Protium</compound>
+         <compound ID="111084" kegg_id="C00282" mass0="10">Protium</compound>
          <compound ID="156175" mass0="10">a [protein]-L-tyrosine phosphate</compound>
          <compound ID="155226" mass0="10">a [protein]-L-tyrosine</compound>
-         <compound ID="120213" mass0="10">Dihydrouracil</compound>
-         <compound ID="149406" mass0="10">Dihydrothymine</compound>
+         <compound ID="120213" kegg_id="C00429" mass0="10">Dihydrouracil</compound>
+         <compound ID="149406" kegg_id="C00906" mass0="10">Dihydrothymine</compound>
          <compound ID="159462" mass0="10">trimethylamine</compound>
-         <compound ID="10324" mass0="10">Trimethylamine oxide</compound>
+         <compound ID="10324" kegg_id="C01104" mass0="10">Trimethylamine oxide</compound>
          <compound ID="156008" mass0="10">a quinone</compound>
          <compound ID="156062" mass0="10">a quinol</compound>
          <compound ID="159218" mass0="10">(&lt;i&gt;Z&lt;/i&gt;)-2-methylureidoacrylate</compound>
@@ -29964,20 +29964,20 @@
          <compound ID="158930" mass0="10">a nascent peptidoglycan (&lt;i&gt;meso&lt;/i&gt;-DAP containing) with GlcNAc non-reducing terminus</compound>
          <compound ID="64460" mass0="10">Thymidine 5'-monophosphate</compound>
          <compound ID="136700" mass0="10">Thymidine 5'-diphosphate</compound>
-         <compound ID="89462" mass0="10">Salicin</compound>
+         <compound ID="89462" kegg_id="C01451" mass0="10">Salicin</compound>
          <compound ID="158292" mass0="10">salicin 6-phosphate</compound>
-         <compound ID="7261" mass0="10">2-deoxy-D-glucose</compound>
+         <compound ID="7261" kegg_id="C00586" mass0="10">2-deoxy-D-glucose</compound>
          <compound ID="157575" mass0="10">2-deoxy-D-glucose 6-phosphate</compound>
          <compound ID="156926" mass0="10">an &lt;i&gt;N&lt;/i&gt;-acetyl-&amp;beta;-D-hexosaminide</compound>
          <compound ID="155645" mass0="10">an &lt;i&gt;N&lt;/i&gt;-acetyl-&amp;beta;-D-hexosamine</compound>
          <compound ID="157577" mass0="10">1,6-anhydro-&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;beta;-D-muramate</compound>
-         <compound ID="88103" mass0="10">Menadione</compound>
-         <compound ID="2497" mass0="10">Menadiol</compound>
-         <compound ID="11012" mass0="10">cobalt(3+);3-[(1R,2S,3S,5Z,7S,8S,10Z,13S,15Z,17R,18R,19R)-2,7,18-tris(2-amino-2-oxoethyl)-3,13-bis(3-amino-3-oxopropyl)-17-[3-[[(2R)-2-hydroxypropyl]amino]-3-oxopropyl]-1,2,5,7,12,12,15,17-octamethyl-8,13,18,19-tetrahydro-3H-corrin-24-id-8-yl]propanamide</compound>
+         <compound ID="88103" kegg_id="C05377" mass0="10">Menadione</compound>
+         <compound ID="2497" kegg_id="C07126" mass0="10">Menadiol</compound>
+         <compound ID="11012" kegg_id="C05774" mass0="10">cobalt(3+);3-[(1R,2S,3S,5Z,7S,8S,10Z,13S,15Z,17R,18R,19R)-2,7,18-tris(2-amino-2-oxoethyl)-3,13-bis(3-amino-3-oxopropyl)-17-[3-[[(2R)-2-hydroxypropyl]amino]-3-oxopropyl]-1,2,5,7,12,12,15,17-octamethyl-8,13,18,19-tetrahydro-3H-corrin-24-id-8-yl]propanamide</compound>
          <compound ID="159253" mass0="10">adenosylcobinamide</compound>
-         <compound ID="56657" mass0="10">Cobalt(2+);[(2R,3S,4R,5S)-5-(5,6-dimethylbenzimidazol-1-yl)-4-hydroxy-2-(hydroxymethyl)oxolan-3-yl] [(2R)-1-[3-[(1R,2R,3R,4Z,7S,9Z,12S,13S,14Z,17S,18S,19R)-2,13,18-tris(2-amino-2-oxoethyl)-7,12,17-tris(3-amino-3-oxopropyl)-3,5,8,8,13,15,18,19-octamethyl-2,7,12,17-tetrahydro-1H-corrin-21-id-3-yl]propanoylamino]propan-2-yl] phosphate</compound>
+         <compound ID="56657" kegg_id="C00541" mass0="10">Cobalt(2+);[(2R,3S,4R,5S)-5-(5,6-dimethylbenzimidazol-1-yl)-4-hydroxy-2-(hydroxymethyl)oxolan-3-yl] [(2R)-1-[3-[(1R,2R,3R,4Z,7S,9Z,12S,13S,14Z,17S,18S,19R)-2,13,18-tris(2-amino-2-oxoethyl)-7,12,17-tris(3-amino-3-oxopropyl)-3,5,8,8,13,15,18,19-octamethyl-2,7,12,17-tetrahydro-1H-corrin-21-id-3-yl]propanoylamino]propan-2-yl] phosphate</compound>
          <compound ID="158935" mass0="10">cob(II)inamide</compound>
-         <compound ID="149414" mass0="10">Niacinamide</compound>
+         <compound ID="149414" kegg_id="C00153" mass0="10">Niacinamide</compound>
          <compound ID="154746" mass0="10">a [protein]-&lt;i&gt;N&lt;/i&gt;&lt;sup&gt;6&lt;/sup&gt;-acetyl-L-lysine</compound>
          <compound ID="154551" mass0="10">a tripeptide</compound>
          <compound ID="159627" mass0="10">a [50S ribosomal subunit protein L16]-L-arginine&lt;sup&gt;81&lt;/sup&gt;</compound>
@@ -29994,10 +29994,10 @@
          <compound ID="157915" mass0="10">enol-oxaloacetate</compound>
          <compound ID="158473" mass0="10">L-alanyl-&amp;gamma;-D-glutamyl-&lt;i&gt;meso&lt;/i&gt;-diaminopimelate</compound>
          <compound ID="157431" mass0="10">a nascent peptidoglycan with (L-alanyl-&amp;gamma;-D-glutamyl-&lt;i&gt;meso&lt;/i&gt;-2,6-diaminopimelate) tripeptide</compound>
-         <compound ID="130447" mass0="10">Trehalose</compound>
-         <compound ID="16384" mass0="10">L-galactopyranose</compound>
+         <compound ID="130447" kegg_id="C01083" mass0="10">Trehalose</compound>
+         <compound ID="16384" kegg_id="C00031" mass0="10">L-galactopyranose</compound>
          <compound ID="6593" mass0="10">D(+)-Glucose</compound>
-         <compound ID="121550" mass0="10">Dihydroxyacetone</compound>
+         <compound ID="121550" kegg_id="C00184" mass0="10">Dihydroxyacetone</compound>
          <compound ID="154244" mass0="10">an &lt;i&gt;N&lt;/i&gt;-modified amino acid</compound>
          <compound ID="155010" mass0="10">D-ribofuranose 5-phosphate</compound>
          <compound ID="155652" mass0="10">D-ribose 5-phosphate</compound>
@@ -30010,10 +30010,10 @@
          <compound ID="149503" mass0="10">Nitrate</compound>
          <compound ID="149568" mass0="10">Nitrite Ion</compound>
          <compound ID="153710" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;10&lt;/sup&gt;-formyl-7,8-dihydrofolate</compound>
-         <compound ID="124115" mass0="10">Ethanol</compound>
+         <compound ID="124115" kegg_id="C00469" mass0="10">Ethanol</compound>
          <compound ID="154969" mass0="10">a primary alcohol</compound>
          <compound ID="158390" mass0="10">(1&lt;i&gt;S&lt;/i&gt;,2&lt;i&gt;R&lt;/i&gt;)-1-C-(indol-3-yl)glycerol 3-phosphate</compound>
-         <compound ID="10511" mass0="10">DL-Tryptophan</compound>
+         <compound ID="10511" kegg_id="C00078" mass0="10">DL-Tryptophan</compound>
          <compound ID="160059" mass0="10">1-(2-carboxyphenylamino)-1-deoxy-D-ribulose 5-phosphate</compound>
          <compound ID="159294" mass0="10">&lt;i&gt;N&lt;/i&gt;-(5-phosphoribosyl)-anthranilate</compound>
          <compound ID="110989" mass0="10">Anthranilate</compound>
@@ -30023,22 +30023,22 @@
          <compound ID="155467" mass0="10">a pseudouridine&lt;sup&gt;2605&lt;/sup&gt; in 23S rRNA</compound>
          <compound ID="158370" mass0="10">orotidine 5'-phosphate</compound>
          <compound ID="158663" mass0="10">4-(&amp;gamma;-L-glutamylamino)butanoate</compound>
-         <compound ID="15639" mass0="10">Gamma-Aminobutyric Acid</compound>
-         <compound ID="149761" mass0="10">4-Oxobutanoate</compound>
-         <compound ID="132102" mass0="10">Hydrogen Cyanide</compound>
+         <compound ID="15639" kegg_id="C00334" mass0="10">Gamma-Aminobutyric Acid</compound>
+         <compound ID="149761" kegg_id="C00232" mass0="10">4-Oxobutanoate</compound>
+         <compound ID="132102" kegg_id="C01326" mass0="10">Hydrogen Cyanide</compound>
          <compound ID="149337" mass0="10">Thiocyanate</compound>
          <compound ID="159272" mass0="10">thiosulfate</compound>
          <compound ID="157097" mass0="10">kojibiose</compound>
          <compound ID="158440" mass0="10">&amp;beta;-D-glucopyranose 1-phosphate</compound>
          <compound ID="157998" mass0="10">&amp;beta;-D-glucose 6-phosphate</compound>
-         <compound ID="132629" mass0="10">Hydrogen Peroxide</compound>
+         <compound ID="132629" kegg_id="C00027" mass0="10">Hydrogen Peroxide</compound>
          <compound ID="158444" mass0="10">L-alanyl-D-glutamate</compound>
          <compound ID="153887" mass0="10">an &lt;i&gt;O&lt;/i&gt;&lt;sup&gt;6&lt;/sup&gt;-methylguanine in DNA</compound>
          <compound ID="156888" mass0="10">a [protein]-&lt;i&gt;S&lt;/i&gt;-methyl-L-cysteine</compound>
          <compound ID="155417" mass0="10">a guanine in DNA</compound>
          <compound ID="155957" mass0="10">an &lt;i&gt;O&lt;/i&gt;&lt;sup&gt;4&lt;/sup&gt;-methylthymine in DNA</compound>
          <compound ID="153969" mass0="10">a thymine in DNA</compound>
-         <compound ID="153415" mass0="10">Phenylacetaldehyde</compound>
+         <compound ID="153415" kegg_id="C00601" mass0="10">Phenylacetaldehyde</compound>
          <compound ID="89844" mass0="10">Benzeneacetate</compound>
          <compound ID="158884" mass0="10">2-phenylethylamine</compound>
          <compound ID="155774" mass0="10">a primary amine</compound>
@@ -30060,11 +30060,11 @@
          <compound ID="159210" mass0="10">(S)-3-hydroxy-(9Z)-hexadecenoyl-CoA</compound>
          <compound ID="158701" mass0="10">(S)-3-hydroxy-(5Z)-tetradecenoyl-CoA</compound>
          <compound ID="159393" mass0="10">3-oxoadipoyl-CoA</compound>
-         <compound ID="5414" mass0="10">Pyridoxine</compound>
-         <compound ID="5167" mass0="10">Pyridoxal</compound>
-         <compound ID="130601" mass0="10">N,N-Dimethyl-p-phenylenediamine</compound>
+         <compound ID="5414" kegg_id="C00314" mass0="10">Pyridoxine</compound>
+         <compound ID="5167" kegg_id="C00250" mass0="10">Pyridoxal</compound>
+         <compound ID="130601" kegg_id="C04203" mass0="10">N,N-Dimethyl-p-phenylenediamine</compound>
          <compound ID="157635" mass0="10">methyl red</compound>
-         <compound ID="89378" mass0="10">L-lactaldehyde</compound>
+         <compound ID="89378" kegg_id="C00424" mass0="10">L-lactaldehyde</compound>
          <compound ID="157386" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-lactate</compound>
          <compound ID="98402" mass0="10">2-Hydroxypentanedioate</compound>
          <compound ID="158075" mass0="10">Cu&lt;SUP&gt;+&lt;/SUP&gt;</compound>
@@ -30074,7 +30074,7 @@
          <compound ID="158154" mass0="10">tellurite</compound>
          <compound ID="158743" mass0="10">4-aminobutanal</compound>
          <compound ID="157498" mass0="10">5-aminopentanal</compound>
-         <compound ID="31727" mass0="10">5-Aminovaleric acid</compound>
+         <compound ID="31727" kegg_id="C00431" mass0="10">5-Aminovaleric acid</compound>
          <compound ID="155664" mass0="10">an &lt;i&gt;N&lt;/i&gt;-acetoxyarylamine</compound>
          <compound ID="156261" mass0="10">an &lt;i&gt;N&lt;/i&gt;-hydroxy-arylamine</compound>
          <compound ID="155101" mass0="10">an arylamine</compound>
@@ -30082,7 +30082,7 @@
          <compound ID="157480" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-malate</compound>
          <compound ID="157618" mass0="10">(4&lt;i&gt;S&lt;/i&gt;)-4,5-dihydroxypentane-2,3-dione</compound>
          <compound ID="158095" mass0="10">(2&lt;i&gt;S&lt;/i&gt;)-2-hydroxy-3,4-dioxopentyl phosphate</compound>
-         <compound ID="89600" mass0="10">Nicotinamide riboside</compound>
+         <compound ID="89600" kegg_id="C03150" mass0="10">Nicotinamide riboside</compound>
          <compound ID="158428" mass0="10">&amp;beta;-nicotinamide D-ribonucleotide</compound>
          <compound ID="158680" mass0="10">3-hydroxy-2,4-dioxopentyl phosphate</compound>
          <compound ID="157676" mass0="10">&lt;i&gt;trans&lt;/i&gt;-aconitate</compound>
@@ -30107,7 +30107,7 @@
          <compound ID="158636" mass0="10">3&amp;alpha;,12&amp;alpha;-dihydroxy-7-oxo-5&amp;beta;-cholan-24-oate</compound>
          <compound ID="158451" mass0="10">&amp;alpha;-maltose 6'-phosphate</compound>
          <compound ID="155466" mass0="10">a thiol</compound>
-         <compound ID="1114" mass0="10">Allocystathionine</compound>
+         <compound ID="1114" kegg_id="C00542" mass0="10">Allocystathionine</compound>
          <compound ID="140404" mass0="10">Pyridoxal 5'-phosphate(2-)</compound>
          <compound ID="158293" mass0="10">pyridoxamine</compound>
          <compound ID="158771" mass0="10">pyridoxamine 5'-phosphate</compound>
@@ -30143,10 +30143,10 @@
          <compound ID="154171" mass0="10">an &lt;i&gt;O&lt;/i&gt;-(5'-adenylyl)-L-serine/L-threonine-[protein]</compound>
          <compound ID="158953" mass0="10">glutathione disulfide</compound>
          <compound ID="76707" mass0="10">D-mannitol 1-phosphate(2-)</compound>
-         <compound ID="13421" mass0="10">Galactitol</compound>
+         <compound ID="13421" kegg_id="C00392" mass0="10">Galactitol</compound>
          <compound ID="158191" mass0="10">D-sorbitol 6-phosphate</compound>
-         <compound ID="115981" mass0="10">Sorbitol</compound>
-         <compound ID="23440" mass0="10">ManNAc(b1-4)b-GalNAc</compound>
+         <compound ID="115981" kegg_id="C00794" mass0="10">Sorbitol</compound>
+         <compound ID="23440" kegg_id="C01674" mass0="10">ManNAc(b1-4)b-GalNAc</compound>
          <compound ID="156985" mass0="10">&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;beta;-D-glucosaminyl-(1&amp;rarr;4)-D-glucosamine</compound>
          <compound ID="155291" mass0="10">D-cellobiose 6'-phosphate</compound>
          <compound ID="157391" mass0="10">methyl &amp;beta;-D-glucoside 6-phosphate</compound>
@@ -30162,11 +30162,11 @@
          <compound ID="157092" mass0="10">a [protein]-L-methionine</compound>
          <compound ID="155487" mass0="10">a protein-L-methionine-(&lt;i&gt;R&lt;/i&gt;)-&lt;i&gt;S&lt;/i&gt;-oxide</compound>
          <compound ID="99780" mass0="10">3-phosphonato-D-glyceroyl phosphate(4-)</compound>
-         <compound ID="6357" mass0="10">D-(+)-Cellobiose</compound>
-         <compound ID="89415" mass0="10">beta-D-GALACTOPYRANOSE</compound>
-         <compound ID="89533" mass0="10">alpha-L-arabinopyranose</compound>
-         <compound ID="117292" mass0="10">Alpha-d-xylopyranose</compound>
-         <compound ID="20187" mass0="10">Beta-D-Xylopyranose</compound>
+         <compound ID="6357" kegg_id="C00185" mass0="10">D-(+)-Cellobiose</compound>
+         <compound ID="89415" kegg_id="C00962" mass0="10">beta-D-GALACTOPYRANOSE</compound>
+         <compound ID="89533" kegg_id="C02604" mass0="10">alpha-L-arabinopyranose</compound>
+         <compound ID="117292" kegg_id="C01394" mass0="10">Alpha-d-xylopyranose</compound>
+         <compound ID="20187" kegg_id="C02096" mass0="10">Beta-D-Xylopyranose</compound>
          <compound ID="158870" mass0="10">(R)-malate</compound>
          <compound ID="156186" mass0="10">a tRNA</compound>
          <compound ID="156504" mass0="10">D-mannopyranose</compound>
@@ -30194,14 +30194,14 @@
          <compound ID="155601" mass0="10">a [protein]-L-glutamine</compound>
          <compound ID="157447" mass0="10">&amp;alpha;,&amp;alpha;-trehalose 6-phosphate</compound>
          <compound ID="158775" mass0="10">[FeO(OH)] monomer</compound>
-         <compound ID="149237" mass0="10">D-cysteine</compound>
-         <compound ID="71235" mass0="10">Hydron;sulfanide</compound>
+         <compound ID="149237" kegg_id="C00793" mass0="10">D-cysteine</compound>
+         <compound ID="71235" kegg_id="C00087" mass0="10">Hydron;sulfanide</compound>
          <compound ID="160033" mass0="10">2-&lt;i&gt;O&lt;/i&gt;-(&amp;alpha;-D-mannosyl)-3-phospho-D-glycerate</compound>
          <compound ID="154697" mass0="10">a cytosine in DNA</compound>
          <compound ID="156867" mass0="10">a 5-methylcytosine in DNA</compound>
          <compound ID="79757" mass0="10">5-Hydroxyisourate</compound>
          <compound ID="158942" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-2-oxo-4-hydroxy-4-carboxy-5-ureidoimidazoline</compound>
-         <compound ID="121947" mass0="10">5,6-Dimethylbenzimidazole</compound>
+         <compound ID="121947" kegg_id="C03114" mass0="10">5,6-Dimethylbenzimidazole</compound>
          <compound ID="158927" mass0="10">adenosylcobinamide-GDP</compound>
          <compound ID="158417" mass0="10">adenosyl-cobinamide phosphate</compound>
          <compound ID="158278" mass0="10">1-(5-phospho-&amp;beta;-D-ribosyl)-ATP</compound>
@@ -30233,10 +30233,10 @@
          <compound ID="159496" mass0="10">D-tagatofuranose 1,6-bisphosphate</compound>
          <compound ID="111101" mass0="10">beta-D-fructofuranose 1,6-bisphosphate(4-)</compound>
          <compound ID="157561" mass0="10">D-sedoheptulose 1,7-bisphosphate</compound>
-         <compound ID="132374" mass0="10">4-Amino-5-hydroxymethyl-2-methylpyrimidine</compound>
+         <compound ID="132374" kegg_id="C01279" mass0="10">4-Amino-5-hydroxymethyl-2-methylpyrimidine</compound>
          <compound ID="157490" mass0="10">4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine</compound>
          <compound ID="160048" mass0="10">4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine</compound>
-         <compound ID="9932" mass0="10">4-Methyl-5-thiazoleethanol</compound>
+         <compound ID="9932" kegg_id="C04294" mass0="10">4-Methyl-5-thiazoleethanol</compound>
          <compound ID="157889" mass0="10">4-methyl-5-(2-phosphooxyethyl)thiazole</compound>
          <compound ID="159050" mass0="10">5-(2-hydroxyethyl)-4-methyl-1,3-thiazole-2-carboxylate</compound>
          <compound ID="158777" mass0="10">2-(2-carboxy-4-methylthiazol-5-yl)ethyl phosphate</compound>
@@ -30245,12 +30245,12 @@
          <compound ID="157017" mass0="10">an alkylphosphonate</compound>
          <compound ID="156560" mass0="10">a &amp;beta;-D glucoside</compound>
          <compound ID="159786" mass0="10">a non glucosylated D-glucose acceptor</compound>
-         <compound ID="30025" mass0="10">2'-Deoxycytidine</compound>
-         <compound ID="115977" mass0="10">D-ribofuranose</compound>
+         <compound ID="30025" kegg_id="C00881" mass0="10">2'-Deoxycytidine</compound>
+         <compound ID="115977" kegg_id="C00121" mass0="10">D-ribofuranose</compound>
          <compound ID="156546" mass0="10">a pyrimidine base</compound>
          <compound ID="155886" mass0="10">a pyrimidine nucleoside</compound>
          <compound ID="159168" mass0="10">pseudouridine 5'-phosphate</compound>
-         <compound ID="49811" mass0="10">Pseudouridine</compound>
+         <compound ID="49811" kegg_id="C02067" mass0="10">Pseudouridine</compound>
          <compound ID="111012" mass0="10">D-mannonate</compound>
          <compound ID="99786" mass0="10">keto-D-fructuronate</compound>
          <compound ID="158139" mass0="10">D-tagaturonate</compound>
@@ -30259,12 +30259,12 @@
          <compound ID="156124" mass0="10">a uridine&lt;sup&gt;516&lt;/sup&gt; in 16S rRNA</compound>
          <compound ID="154718" mass0="10">a 16S rRNA pseudouridine&lt;sup&gt;516&lt;/sup&gt;</compound>
          <compound ID="159414" mass0="10">&lt;i&gt;aldehydo&lt;/i&gt;-D-allose</compound>
-         <compound ID="57817" mass0="10">(2S,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanal</compound>
+         <compound ID="57817" kegg_id="C00159" mass0="10">(2S,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanal</compound>
          <compound ID="8980" mass0="10">Sulfate Ion</compound>
          <compound ID="158583" mass0="10">adenosine 5'-phosphosulfate</compound>
-         <compound ID="125490" mass0="10">Formaldehyde</compound>
+         <compound ID="125490" kegg_id="C00067" mass0="10">Formaldehyde</compound>
          <compound ID="159679" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;3&lt;/sup&gt;-methylcytosine in DNA</compound>
-         <compound ID="27188" mass0="10">1-Methyladenine</compound>
+         <compound ID="27188" kegg_id="C02216" mass0="10">1-Methyladenine</compound>
          <compound ID="154352" mass0="10">a methylated nucleobase within DNA</compound>
          <compound ID="153886" mass0="10">a nucleobase within DNA</compound>
          <compound ID="157704" mass0="10">1-methyl-dAMP</compound>
@@ -30276,9 +30276,9 @@
          <compound ID="155276" mass0="10">a [protein]-L-threonine</compound>
          <compound ID="155121" mass0="10">a [protein]-FMN-L-threonine</compound>
          <compound ID="158667" mass0="10">acetoacetyl-CoA</compound>
-         <compound ID="103981" mass0="10">3-(All-trans-octaprenyl)benzene-1,2-diol</compound>
-         <compound ID="103982" mass0="10">2-Octaprenyl-6-methoxyphenol</compound>
-         <compound ID="103977" mass0="10">2-Hexaprenyl-6-methoxyphenol</compound>
+         <compound ID="103981" kegg_id="C05811" mass0="10">3-(All-trans-octaprenyl)benzene-1,2-diol</compound>
+         <compound ID="103982" kegg_id="C05812" mass0="10">2-Octaprenyl-6-methoxyphenol</compound>
+         <compound ID="103977" kegg_id="C05802" mass0="10">2-Hexaprenyl-6-methoxyphenol</compound>
          <compound ID="116145" mass0="10">Ubiquinol-6</compound>
          <compound ID="153199" mass0="10">Ubiquinol</compound>
          <compound ID="155099" mass0="10">a nucleoside diphosphate</compound>
@@ -30290,7 +30290,7 @@
          <compound ID="158989" mass0="10">glucosyl-(heptosyl)&lt;sub&gt;2&lt;/sub&gt;-Kdo&lt;sub&gt;2&lt;/sub&gt;-lipid A-phosphate</compound>
          <compound ID="158549" mass0="10">&amp;alpha;-Hep-(1&amp;rarr;3)-4-&lt;i&gt;O&lt;/i&gt;-phospho-&amp;alpha;-Hep-(1&amp;rarr;5)-[&amp;alpha;-Kdo-(2&amp;rarr;4)]-&amp;alpha;-Kdo-(2&amp;rarr;6)-lipid A (&lt;i&gt;E. coli&lt;/i&gt;)</compound>
          <compound ID="157790" mass0="10">glycerophosphoserine</compound>
-         <compound ID="130817" mass0="10">Glycerin</compound>
+         <compound ID="130817" kegg_id="C00116" mass0="10">Glycerin</compound>
          <compound ID="158946" mass0="10">ethanolamine</compound>
          <compound ID="80698" mass0="10">Bis(2,3-dihydroxypropyl) phosphate</compound>
          <compound ID="158936" mass0="10">2-dehydro-3-deoxy-L-rhamnonate</compound>
@@ -30344,19 +30344,19 @@
          <compound ID="158950" mass0="10">oxalyl-CoA</compound>
          <compound ID="158257" mass0="10">formyl-CoA</compound>
          <compound ID="154308" mass0="10">D-fructofuranose 1-phosphate</compound>
-         <compound ID="71351" mass0="10">3-Acetyloxy-2-aminopropanoic acid</compound>
+         <compound ID="71351" kegg_id="C00979" mass0="10">3-Acetyloxy-2-aminopropanoic acid</compound>
          <compound ID="158738" mass0="10">3-chloro-L-alanine</compound>
          <compound ID="102393" mass0="10">Mercaptoacetate</compound>
          <compound ID="157384" mass0="10">&lt;i&gt;aldehydo&lt;/i&gt;-D-arabinose 5-phosphate</compound>
          <compound ID="158929" mass0="10">coproporphyrinogen III</compound>
          <compound ID="158672" mass0="10">protoporphyrinogen IX</compound>
-         <compound ID="89573" mass0="10">S-1,2-Propanediol</compound>
-         <compound ID="81523" mass0="10">R-1,2-Propanediol</compound>
+         <compound ID="89573" kegg_id="C02917" mass0="10">S-1,2-Propanediol</compound>
+         <compound ID="81523" kegg_id="C02912" mass0="10">R-1,2-Propanediol</compound>
          <compound ID="159391" mass0="10">(R)-lactaldehyde</compound>
          <compound ID="73627" mass0="10">aldehydo-D-ribose 5-phosphate</compound>
          <compound ID="158341" mass0="10">&lt;i&gt;N&lt;/i&gt;-succinyl-L,L-2,6-diaminopimelate</compound>
-         <compound ID="89395" mass0="10">(2S,6S)-2,6-diaminoheptanedioic acid</compound>
-         <compound ID="89380" mass0="10">(2S)-2-amino-4-oxobutanoic acid</compound>
+         <compound ID="89395" kegg_id="C00666" mass0="10">(2S,6S)-2,6-diaminoheptanedioic acid</compound>
+         <compound ID="89380" kegg_id="C00441" mass0="10">(2S)-2-amino-4-oxobutanoic acid</compound>
          <compound ID="155712" mass0="10">a lipid A-core oligosaccharide</compound>
          <compound ID="160040" mass0="10">2-(formamido)-N&lt;sup&gt;1&lt;/sup&gt;-(5-phospho-&amp;beta;-D-ribosyl)acetamidine</compound>
          <compound ID="156406" mass0="10">long chain polyphosphate</compound>
@@ -30370,14 +30370,14 @@
          <compound ID="154717" mass0="10">a 2'-&lt;i&gt;O&lt;/i&gt;-methyluridine&lt;sup&gt;32&lt;/sup&gt; in tRNA</compound>
          <compound ID="154245" mass0="10">a cytidine &lt;sup&gt;32&lt;/sup&gt; in tRNA</compound>
          <compound ID="156488" mass0="10">a 2'-&lt;i&gt;O&lt;/i&gt;-methylcytidine&lt;sup&gt;32&lt;/sup&gt; in tRNA</compound>
-         <compound ID="143411" mass0="10">Inositol</compound>
+         <compound ID="143411" kegg_id="C00137" mass0="10">Inositol</compound>
          <compound ID="158128" mass0="10">1D-&lt;i&gt;myo&lt;/i&gt;-inositol 1-monophosphate</compound>
          <compound ID="159049" mass0="10">1D-&lt;i&gt;myo&lt;/i&gt;-inositol 2-phosphate</compound>
          <compound ID="100619" mass0="10">3-Phenylpropionate</compound>
          <compound ID="116861" mass0="10">Cinnamate</compound>
          <compound ID="158388" mass0="10">(2&lt;i&gt;E&lt;/i&gt;)-3-(5,6-dihydroxycyclohexa-1,3-dien-1-yl)prop-2-enoate</compound>
          <compound ID="160055" mass0="10">3-(5,6-dihydroxycyclohexa-1,3-dien-1-yl)propanoate</compound>
-         <compound ID="34648" mass0="10">Nitric Oxide</compound>
+         <compound ID="34648" kegg_id="C00533" mass0="10">Nitric Oxide</compound>
          <compound ID="157426" mass0="10">adenosine 3',5'-bisphosphate</compound>
          <compound ID="153670" mass0="10">a uridine&lt;sup&gt;47&lt;/sup&gt; in tRNA&lt;sup&gt;Phe&lt;/sup&gt;</compound>
          <compound ID="159658" mass0="10">a 3-[(3S)-3-amino-3-carboxypropyl]-uridine&lt;sup&gt;47&lt;/sup&gt; in tRNA&lt;sup&gt;Phe&lt;/sup&gt;</compound>
@@ -30417,11 +30417,11 @@
          <compound ID="155055" mass0="10">a pyrimidine ribonucleotide</compound>
          <compound ID="157613" mass0="10">L-fuculose 1-phosphate</compound>
          <compound ID="159437" mass0="10">D-ribulose 1-phosphate</compound>
-         <compound ID="66942" mass0="10">L-Fucose</compound>
-         <compound ID="79691" mass0="10">6-Deoxyhex-2-ulose</compound>
-         <compound ID="89480" mass0="10">alpha-L-fucopyranose</compound>
+         <compound ID="66942" kegg_id="C01019" mass0="10">L-Fucose</compound>
+         <compound ID="79691" kegg_id="C01721" mass0="10">6-Deoxyhex-2-ulose</compound>
+         <compound ID="89480" kegg_id="C20835" mass0="10">alpha-L-fucopyranose</compound>
          <compound ID="160076" mass0="10">D-arabinopyranose</compound>
-         <compound ID="95286" mass0="10">beta-L-fucopyranose</compound>
+         <compound ID="95286" kegg_id="C20836" mass0="10">beta-L-fucopyranose</compound>
          <compound ID="158765" mass0="10">&amp;beta;-D-ribopyranose</compound>
          <compound ID="158003" mass0="10">&amp;beta;-D-ribofuranose</compound>
          <compound ID="154879" mass0="10">a cytidine&lt;sup&gt;2498&lt;/sup&gt; in 23S rRNA</compound>
@@ -30433,12 +30433,12 @@
          <compound ID="139476" mass0="10">(4S)-4,6-Dihydroxy-2,5-dioxohexanoate</compound>
          <compound ID="156901" mass0="10">D-xylopyranose</compound>
          <compound ID="154338" mass0="10">2,3-diaminopropanoate</compound>
-         <compound ID="89529" mass0="10">(S)-(+)-allantoin</compound>
+         <compound ID="89529" kegg_id="C02350" mass0="10">(S)-(+)-allantoin</compound>
          <compound ID="158226" mass0="10">cytidylyl molybdenum cofactor (dioxo)</compound>
-         <compound ID="6551" mass0="10">N4-Acetylcytidine</compound>
+         <compound ID="6551" kegg_id="C22293" mass0="10">N4-Acetylcytidine</compound>
          <compound ID="152783" mass0="10">N4-Acetylcytosine</compound>
          <compound ID="156046" mass0="10">a [glycine-cleavage complex H protein] &lt;i&gt;N&lt;sup&gt;6&lt;/sup&gt;&lt;/i&gt;-aminomethyldihydrolipoyl-L-lysine</compound>
-         <compound ID="103980" mass0="10">2-Octaprenylphenol</compound>
+         <compound ID="103980" kegg_id="C05810" mass0="10">2-Octaprenylphenol</compound>
          <compound ID="27144" mass0="10">Citrovorum factor</compound>
          <compound ID="154194" mass0="10">a (6&lt;i&gt;S&lt;/i&gt;)-5-formyltetrahydrofolate</compound>
          <compound ID="156830" mass0="10">methylmalonyl-CoA</compound>
@@ -30469,12 +30469,12 @@
          <compound ID="157809" mass0="10">1-cis-vaccenoyl-2-palmitoleoyl-&lt;i&gt;sn&lt;/i&gt;-glycerol-3-phosphate</compound>
          <compound ID="158697" mass0="10">1-myristoyl-2-palmitoleoyl-&lt;i&gt;sn&lt;/i&gt;-glycerol 3-phosphate</compound>
          <compound ID="157203" mass0="10">a 2-lysophosphatidate</compound>
-         <compound ID="117323" mass0="10">Levodopa</compound>
+         <compound ID="117323" kegg_id="C00355" mass0="10">Levodopa</compound>
          <compound ID="157441" mass0="10">4,5-&lt;i&gt;seco&lt;/i&gt;-dopa</compound>
          <compound ID="159114" mass0="10">ADP-D-glycero-&amp;beta;-D-&lt;i&gt;manno&lt;/i&gt;-heptose</compound>
          <compound ID="157177" mass0="10">a [glutamine-synthetase]-L-tyrosine</compound>
          <compound ID="159733" mass0="10">a [glutamine synthetase]-&lt;i&gt;O&lt;/i&gt;&lt;sup&gt;4&lt;/sup&gt;-(5'-adenylyl)-L-tyrosine</compound>
-         <compound ID="27165" mass0="10">7,8-Dihydroneopterin</compound>
+         <compound ID="27165" kegg_id="C04874" mass0="10">7,8-Dihydroneopterin</compound>
          <compound ID="15842" mass0="10">Tartrate</compound>
          <compound ID="158769" mass0="10">(L-threonylcarbamoyl)adenylate</compound>
          <compound ID="153717" mass0="10">an adenine&lt;sup&gt;37&lt;/sup&gt; in tRNA</compound>
@@ -30493,7 +30493,7 @@
          <compound ID="156819" mass0="10">D-fructofuranuronate</compound>
          <compound ID="158849" mass0="10">&lt;i&gt;aldehydo&lt;/i&gt;-D-galacturonate</compound>
          <compound ID="158940" mass0="10">&lt;i&gt;aldehydo&lt;/i&gt;-D-glucuronate</compound>
-         <compound ID="132658" mass0="10">Hydroquinone</compound>
+         <compound ID="132658" kegg_id="C00530" mass0="10">Hydroquinone</compound>
          <compound ID="158715" mass0="10">6-(glutathion-&lt;i&gt;S&lt;/i&gt;-yl)-2-methylhydroquinone</compound>
          <compound ID="128809" mass0="10">Methylhydroquinone</compound>
          <compound ID="4886" mass0="10">Propionate</compound>
@@ -30514,7 +30514,7 @@
          <compound ID="158015" mass0="10">(acetamidomethyl)phosphonate</compound>
          <compound ID="158741" mass0="10">&amp;alpha;-D-ribose 1-(acetamidomethylphosphonate) 5-triphosphate</compound>
          <compound ID="155125" mass0="10">an &lt;i&gt;N&lt;/i&gt;-acyl-D-mannosamine</compound>
-         <compound ID="8609" mass0="10">beta-D-N-Acetylmannosamine</compound>
+         <compound ID="8609" kegg_id="C00645" mass0="10">beta-D-N-Acetylmannosamine</compound>
          <compound ID="155947" mass0="10">&lt;i&gt;N&lt;/i&gt;-acetyl-D-mannosamine</compound>
          <compound ID="111836" mass0="10">N-acetyl-mannosamine 6-phosphate</compound>
          <compound ID="158678" mass0="10">aceneuramate</compound>
@@ -30544,8 +30544,8 @@
          <compound ID="118646" mass0="10">D-gluconate</compound>
          <compound ID="158070" mass0="10">quercetin</compound>
          <compound ID="160046" mass0="10">2-protocatechuoylphloroglucinolcarboxylate</compound>
-         <compound ID="82686" mass0="10">Carbon Monoxide</compound>
-         <compound ID="8944" mass0="10">Glycylglycine</compound>
+         <compound ID="82686" kegg_id="C00237" mass0="10">Carbon Monoxide</compound>
+         <compound ID="8944" kegg_id="C02037" mass0="10">Glycylglycine</compound>
          <compound ID="159312" mass0="10">&amp;gamma;-L-glutamyl-glycylglycine</compound>
          <compound ID="154150" mass0="10">a 5-L-glutamyl-[peptide]</compound>
          <compound ID="154886" mass0="10">an amino acid</compound>
@@ -30553,7 +30553,7 @@
          <compound ID="158614" mass0="10">&amp;alpha;-D-ribose 1,5-bisphosphate</compound>
          <compound ID="157240" mass0="10">a guanine&lt;sup&gt;966&lt;/sup&gt; in 16S rRNA</compound>
          <compound ID="154166" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt;-methylguanine&lt;sup&gt;966&lt;/sup&gt; in 16S rRNA</compound>
-         <compound ID="77895" mass0="10">Zinc</compound>
+         <compound ID="77895" kegg_id="C00038" mass0="10">Zinc</compound>
          <compound ID="158703" mass0="10">Zn&lt;SUP&gt;2+&lt;/SUP&gt;</compound>
          <compound ID="157511" mass0="10">Cd&lt;SUP&gt;2+&lt;/SUP&gt;</compound>
          <compound ID="156284" mass0="10">a guanine&lt;sup&gt;1516&lt;/sup&gt; in 16S rRNA</compound>
@@ -30566,10 +30566,10 @@
          <compound ID="155826" mass0="10">cellulose</compound>
          <compound ID="154287" mass0="10">a cellodextrin</compound>
          <compound ID="154943" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;3&lt;/sup&gt;-methyladenine in DNA</compound>
-         <compound ID="27198" mass0="10">3-Methyladenine</compound>
+         <compound ID="27198" kegg_id="C00913" mass0="10">3-Methyladenine</compound>
          <compound ID="158520" mass0="10">&amp;alpha;-D-xylulofuranose</compound>
          <compound ID="8678" mass0="10">alpha-D-fructofuranose</compound>
-         <compound ID="26930" mass0="10">D-Xylose</compound>
+         <compound ID="26930" kegg_id="C00181" mass0="10">D-Xylose</compound>
          <compound ID="158656" mass0="10">3-dehydro-L-gulonate</compound>
          <compound ID="159002" mass0="10">2,3-didehydro-L-gulonate</compound>
          <compound ID="158708" mass0="10">3-dehydro-L-gulonate 6-phosphate</compound>
@@ -30589,10 +30589,10 @@
          <compound ID="157789" mass0="10">(heptosyl)&lt;sub&gt;3&lt;/sub&gt;-Kdo&lt;sub&gt;2&lt;/sub&gt;-lipid A-phosphate (&lt;i&gt;E. coli&lt;/i&gt;)</compound>
          <compound ID="158682" mass0="10">&amp;alpha;-Kdo-(2&amp;rarr;6)-lipid IV&lt;sub&gt;A&lt;/sub&gt; (E. coli)</compound>
          <compound ID="154599" mass0="10">a 7,8-dihydro-8-oxoguanine in DNA</compound>
-         <compound ID="27513" mass0="10">8-Hydroxyguanine</compound>
+         <compound ID="27513" kegg_id="C20155" mass0="10">8-Hydroxyguanine</compound>
          <compound ID="74805" mass0="10">Pent-2-ene-1,4-dione</compound>
          <compound ID="160011" mass0="10">a ring-opened 7-methylguanine in DNA</compound>
-         <compound ID="27228" mass0="10">N-(2,4-diamino-6-hydroxypyrimidin-5-yl)-N-methylformamide</compound>
+         <compound ID="27228" kegg_id="C04744" mass0="10">N-(2,4-diamino-6-hydroxypyrimidin-5-yl)-N-methylformamide</compound>
          <compound ID="160042" mass0="10">(R)-4'-phosphopantothenoyl-L-cysteine</compound>
          <compound ID="64461" mass0="10">(R)-4'-phosphonatopantothenate(3-)</compound>
          <compound ID="158890" mass0="10">pppGpp</compound>
@@ -30603,9 +30603,9 @@
          <compound ID="158772" mass0="10">isoprimeverose</compound>
          <compound ID="159187" mass0="10">2-dehydro-3-deoxy-D-galactonate</compound>
          <compound ID="160037" mass0="10">2-dehydro-3-deoxy-D-galactonate 6-phosphate</compound>
-         <compound ID="132914" mass0="10">Indole</compound>
+         <compound ID="132914" kegg_id="C00463" mass0="10">Indole</compound>
          <compound ID="157781" mass0="10">&amp;alpha;-D-glucosamine 6-phosphate</compound>
-         <compound ID="9665" mass0="10">Thiamine</compound>
+         <compound ID="9665" kegg_id="C00378" mass0="10">Thiamine</compound>
          <compound ID="157432" mass0="10">&lt;i&gt;N&lt;/i&gt;-acetyl-&amp;alpha;-D-glucosamine 1-phosphate</compound>
          <compound ID="154685" mass0="10">a guanine&lt;sup&gt;527&lt;/sup&gt; in 16S rRNA</compound>
          <compound ID="157261" mass0="10">an &lt;i&gt;N&lt;/i&gt;&lt;sup&gt;7&lt;/sup&gt;-methylguanine&lt;sup&gt;527&lt;/sup&gt; in 16S rRNA</compound>
@@ -30630,7 +30630,7 @@
          <compound ID="119398" mass0="10">Menaquinol-6</compound>
          <compound ID="158597" mass0="10">2-methoxy-6-&lt;i&gt;all trans&lt;/i&gt;-octaprenyl-1,4-benzoquinol</compound>
          <compound ID="159142" mass0="10">4-hydroxy-3-octaprenylbenzoate</compound>
-         <compound ID="103976" mass0="10">2-Hexaprenylphenol</compound>
+         <compound ID="103976" kegg_id="C05800" mass0="10">2-Hexaprenylphenol</compound>
          <compound ID="158531" mass0="10">reduced riboflavin</compound>
          <compound ID="156526" mass0="10">a dipeptide with a C-terminal L-proline</compound>
          <compound ID="157445" mass0="10">guanylyl molybdenum cofactor</compound>
@@ -30645,14 +30645,14 @@
          <compound ID="158699" mass0="10">(2&lt;i&gt;S&lt;/i&gt;)-3-sulfolactaldehyde</compound>
          <compound ID="101860" mass0="10">(S)-2,3-dihydroxypropane-1-sulfonate</compound>
          <compound ID="84267" mass0="10">4-Hydroxybutanoate</compound>
-         <compound ID="126950" mass0="10">D-phenylalanine</compound>
+         <compound ID="126950" kegg_id="C02265" mass0="10">D-phenylalanine</compound>
          <compound ID="154556" mass0="10">a D-amino acid</compound>
-         <compound ID="71675" mass0="10">(2R,3R,4S,5S)-2,3,4,5-tetrahydroxyhexanal</compound>
+         <compound ID="71675" kegg_id="C00507" mass0="10">(2R,3R,4S,5S)-2,3,4,5-tetrahydroxyhexanal</compound>
          <compound ID="159038" mass0="10">&amp;beta;-L-rhamnopyranose</compound>
          <compound ID="157397" mass0="10">L-rhamnulose 1-phosphate</compound>
          <compound ID="158958" mass0="10">&lt;i&gt;keto&lt;/i&gt;-L-rhamnulose</compound>
          <compound ID="156957" mass0="10">L-rhamnulofuranose</compound>
-         <compound ID="111285" mass0="10">4-Hydroxybenzoate</compound>
+         <compound ID="111285" kegg_id="C00156" mass0="10">4-Hydroxybenzoate</compound>
          <compound ID="158034" mass0="10">&lt;i&gt;all-trans&lt;/i&gt;-nonaprenyl diphosphate</compound>
          <compound ID="159212" mass0="10">all-&lt;i&gt;trans&lt;/i&gt;-hexaprenyl diphosphate</compound>
          <compound ID="160062" mass0="10">all-&lt;i&gt;trans&lt;/i&gt;-heptaprenyl diphosphate</compound>
@@ -30674,7 +30674,7 @@
          <compound ID="154293" mass0="10">a 5-methyluracil&lt;sup&gt;54&lt;/sup&gt; in tRNA</compound>
          <compound ID="155248" mass0="10">a [biotin carboxyl-carrier protein]-L-lysine</compound>
          <compound ID="156151" mass0="10">a [biotin carboxyl-carrier protein]-&lt;i&gt;N&lt;/i&gt;&lt;sup&gt;6&lt;/sup&gt;-biotinyl-L-lysine</compound>
-         <compound ID="82953" mass0="10">P-Cresol</compound>
+         <compound ID="82953" kegg_id="C01468" mass0="10">P-Cresol</compound>
          <compound ID="158084" mass0="10">2-iminoacetate</compound>
          <compound ID="157795" mass0="10">2-[(2&lt;i&gt;R&lt;/i&gt;,5&lt;i&gt;Z&lt;/i&gt;)-2-carboxy-4-methylthiazol-5(2&lt;i&gt;H&lt;/i&gt;)-ylidene]ethyl phosphate</compound>
          <compound ID="157659" mass0="10">reduced &amp;beta;-nicotinamide D-ribonucleotide</compound>
@@ -30690,14 +30690,14 @@
          <compound ID="156265" mass0="10">a phosphate monoester</compound>
          <compound ID="154289" mass0="10">a nucleoside</compound>
          <compound ID="89199" mass0="10">Irium</compound>
-         <compound ID="133277" mass0="10">Lauryl Alcohol</compound>
+         <compound ID="133277" kegg_id="C02277" mass0="10">Lauryl Alcohol</compound>
          <compound ID="155804" mass0="10">D-allopyranose</compound>
          <compound ID="158793" mass0="10">&lt;i&gt;aldehydo&lt;/i&gt;-D-allose 6-phosphate</compound>
          <compound ID="158846" mass0="10">5-phospho-&amp;alpha;-D-ribose 1,2-cyclic phosphate</compound>
          <compound ID="160013" mass0="10">a globotriosylceramide</compound>
          <compound ID="155345" mass0="10">a lactosylceramide</compound>
          <compound ID="156625" mass0="10">D-galactopyranose</compound>
-         <compound ID="10361" mass0="10">6-O-beta-D-Galactopyranosyl-D-galactose</compound>
+         <compound ID="10361" kegg_id="C05402" mass0="10">6-O-beta-D-Galactopyranosyl-D-galactose</compound>
          <compound ID="157346" mass0="10">a queuosine&lt;sup&gt;34&lt;/sup&gt; in tRNA</compound>
          <compound ID="158168" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-NADHX</compound>
          <compound ID="157655" mass0="10">(&lt;i&gt;S&lt;/i&gt;)-NADPHX</compound>
@@ -30714,8 +30714,8 @@
          <compound ID="155392" mass0="10">a protein-L-methionine-(&lt;i&gt;S&lt;/i&gt;)-&lt;i&gt;S&lt;/i&gt;-oxide</compound>
          <compound ID="159065" mass0="10">UDP-MurNAc-L-Ala-&amp;gamma;-D-Glu-&lt;i&gt;meso&lt;/i&gt;-DAP-D-Ala</compound>
          <compound ID="156838" mass0="10">a ribonucleoside triphosphate</compound>
-         <compound ID="70744" mass0="10">2-Iminobutanoic acid</compound>
-         <compound ID="104996" mass0="10">2-Iminiopropanoate</compound>
+         <compound ID="70744" kegg_id="C20905" mass0="10">2-Iminobutanoic acid</compound>
+         <compound ID="104996" kegg_id="C20904" mass0="10">2-Iminiopropanoate</compound>
          <compound ID="158988" mass0="10">2-iminobutanoate</compound>
          <compound ID="111003" mass0="10">L-idonate</compound>
          <compound ID="157419" mass0="10">5-dehydro-D-gluconate</compound>
