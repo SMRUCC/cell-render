@@ -222,7 +222,7 @@ Public Class Compiler
                                               "factor")
 
                 If compounds.IsNullOrEmpty OrElse compounds.Any(Function(c) c.molecule_id = 0) Then
-                    Exit For
+                    Continue For
                 End If
 
                 Dim sides = compounds _
