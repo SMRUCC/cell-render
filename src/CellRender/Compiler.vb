@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
+Imports Org.BouncyCastle.Asn1.X500
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
@@ -143,7 +144,7 @@ Public Class Compiler
 
                             Return New Reaction With {
                                 .ID = rxn.Key,
-                                .bounds = {1, 1},
+                                .bounds = {5, 5},
                                 .is_enzymatic = True,
                                 .name = ec_number,
                                 .substrate = sides!substrate,
@@ -196,7 +197,7 @@ Public Class Compiler
     Private Iterator Function PullReactionNoneEnzyme() As IEnumerable(Of Reaction)
         Dim page_size = 2000
 
-        For i As Integer = 1 To 10000
+        For i As Integer = 1 To Integer.MaxValue
             Dim offset As Integer = (i - 1) * page_size
             Dim q = cad_registry.reaction _
                 .left_join("regulation_graph") _
@@ -211,14 +212,42 @@ Public Class Compiler
 
             For Each r As biocad_registryModel.reaction In TqdmWrapper.Wrap(q)
                 Dim compounds = cad_registry.reaction_graph _
+                    .left_join("vocabulary") _
+                    .on(field("`vocabulary`.id") = field("role")) _
                     .where(field("reaction") = r.id) _
-                    .select(Of biocad_registryModel.reaction_graph)
+                    .select(Of reaction_view)("reaction AS reaction_id",
+                                              "molecule_id",
+                                              "db_xref",
+                                              "term AS side",
+                                              "factor")
 
                 If compounds.Any(Function(c) c.molecule_id = 0) Then
                     Exit For
                 End If
 
+                Dim sides = compounds _
+                    .GroupBy(Function(a) a.side) _
+                    .ToDictionary(Function(a) a.Key,
+                                    Function(a)
+                                        Return a _
+                                            .Select(Function(c)
+                                                        Return New CompoundFactor(c.factor, c.molecule_id)
+                                                    End Function) _
+                                            .ToArray
+                                    End Function)
 
+                If Not (sides.ContainsKey("substrate") AndAlso sides.ContainsKey("product")) Then
+                    Continue For
+                End If
+
+                Yield New Reaction With {
+                    .ID = r.id,
+                    .bounds = {1, 1},
+                    .is_enzymatic = False,
+                    .name = r.name,
+                    .substrate = sides!substrate,
+                    .product = sides!product
+                }
             Next
         Next
     End Function
