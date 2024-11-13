@@ -15,12 +15,14 @@ Public Class Compiler
     ReadOnly template As GeneTable()
     ReadOnly dna_term As UInteger
     ReadOnly ec_number As UInteger
+    ReadOnly kegg_term As UInteger
 
     Sub New(registry As biocad_registry, genes As GeneTable())
         template = genes
         cad_registry = registry
         dna_term = cad_registry.GetVocabulary("Nucleic Acid").id
         ec_number = cad_registry.GetVocabulary("EC").id
+        kegg_term = cad_registry.GetVocabulary("KEGG").id
     End Sub
 
     Private Function BuildGenome() As replicon
@@ -209,7 +211,6 @@ Public Class Compiler
             .IteratesALL _
             .GroupBy(Function(c) c.compound) _
             .ToArray
-        Dim kegg_term As UInteger = cad_registry.GetVocabulary("KEGG").id
         Dim kegg_id As biocad_registryModel.db_xrefs
 
         For Each ref In TqdmWrapper.Wrap(all)
