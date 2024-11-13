@@ -108,13 +108,19 @@ Public Class Compiler
         Next
 
         For Each ec_number As String In TqdmWrapper.Wrap(ec_reg.Distinct.ToArray)
+            Dim ec_generic = ec_number.Trim("-"c, "."c)
             Dim view = cad_registry.regulation_graph _
                 .left_join("reaction_graph") _
                 .on(field("reaction_graph.reaction") = field("reaction_id")) _
                 .left_join("vocabulary") _
                 .on(field("vocabulary.id") = field("reaction_graph.role")) _
-                .where(field("regulation_graph.term") = ec_number) _
-                .select(Of reaction_view)("reaction_id", "molecule_id", "db_xref", "vocabulary.term AS side", "factor")
+                .where(field("`regulation_graph`.term") = ec_number Or
+                    field("`regulation_graph`.term").instr(ec_generic) = 1) _
+                .select(Of reaction_view)("reaction_id",
+                                          "molecule_id",
+                                          "db_xref",
+                                          "vocabulary.term AS side",
+                                          "factor")
             Dim reactions As Reaction() = view _
                 .Where(Function(c) c.molecule_id > 0 AndAlso Not c.side Is Nothing) _
                 .GroupBy(Function(a) a.reaction_id) _
