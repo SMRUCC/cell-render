@@ -22,6 +22,12 @@ Public Class biocad_registry : Inherits biocad_registryModel.db_registry
         End Get
     End Property
 
+    Public ReadOnly Property db_xrefs As Model
+        Get
+            Return m_db_xrefs
+        End Get
+    End Property
+
     Public Sub New(mysqli As ConnectionUri)
         MyBase.New(mysqli)
     End Sub

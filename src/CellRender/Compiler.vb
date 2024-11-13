@@ -209,6 +209,8 @@ Public Class Compiler
             .IteratesALL _
             .GroupBy(Function(c) c.compound) _
             .ToArray
+        Dim kegg_term As UInteger = cad_registry.GetVocabulary("KEGG").id
+        Dim kegg_id As biocad_registryModel.db_xrefs
 
         For Each ref In TqdmWrapper.Wrap(all)
             Dim mol = cad_registry.molecule.where(field("id") = ref.Key).find(Of biocad_registryModel.molecule)
@@ -217,6 +219,15 @@ Public Class Compiler
                 .name = mol.name,
                 .mass0 = 10
             }
+
+            kegg_id = cad_registry.db_xrefs _
+                .where(field("db_key") = kegg_term,
+                       field("obj_id") = mol.id) _
+                .find(Of biocad_registryModel.db_xrefs)
+
+            If Not kegg_id Is Nothing Then
+                compound.kegg_id = kegg_id.xref
+            End If
 
             Yield compound
         Next
