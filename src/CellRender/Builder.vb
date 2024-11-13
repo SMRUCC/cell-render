@@ -7,6 +7,7 @@ Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
+Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
 ''' Helper functions for build virtualcell model
@@ -25,7 +26,7 @@ Public Module Builder
         Dim template As GeneTable()
 
         If genes Is Nothing Then
-            Return Internal.debug.stop("the required template source should not be nothing!", env)
+            Return RInternal.debug.stop("the required template source should not be nothing!", env)
         End If
 
         If TypeOf genes Is GBFF.File Then
