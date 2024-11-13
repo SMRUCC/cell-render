@@ -84,6 +84,7 @@ Public Class Compiler
         Dim ec_reg As New List(Of String)
         Dim ec_link As New List(Of NamedValue(Of String))
         Dim ec_rxn As New Dictionary(Of String, Reaction())
+        Dim none_enzymatic = PullReactionNoneEnzyme().ToArray
 
         For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
             For Each gene As gene In t_unit.genes
@@ -190,6 +191,36 @@ Public Class Compiler
             },
             .enzymes = enzymes.ToArray
         }
+    End Function
+
+    Private Iterator Function PullReactionNoneEnzyme() As IEnumerable(Of Reaction)
+        Dim page_size = 2000
+
+        For i As Integer = 1 To 10000
+            Dim offset As Integer = (i - 1) * page_size
+            Dim q = cad_registry.reaction _
+                .left_join("regulation_graph") _
+                .on(field("`regulation_graph`.reaction_id") = field("`reaction`.id")) _
+                .where(field("term").is_nothing) _
+                .limit(offset, page_size) _
+                .select(Of biocad_registryModel.reaction)("`reaction`.*")
+
+            If q.IsNullOrEmpty Then
+                Exit For
+            End If
+
+            For Each r As biocad_registryModel.reaction In TqdmWrapper.Wrap(q)
+                Dim compounds = cad_registry.reaction_graph _
+                    .where(field("reaction") = r.id) _
+                    .select(Of biocad_registryModel.reaction_graph)
+
+                If compounds.Any(Function(c) c.molecule_id = 0) Then
+                    Exit For
+                End If
+
+
+            Next
+        Next
     End Function
 
     Private Iterator Function FillReactions(ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Reaction)

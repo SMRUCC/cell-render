@@ -22,6 +22,12 @@ Public Class biocad_registry : Inherits biocad_registryModel.db_registry
         End Get
     End Property
 
+    Public ReadOnly Property reaction_graph As Model
+        Get
+            Return m_reaction_graph
+        End Get
+    End Property
+
     Public ReadOnly Property db_xrefs As Model
         Get
             Return m_db_xrefs
