@@ -278,7 +278,7 @@ Public Class Compiler
             .JoinIterates(etc.Select(Function(r) r.substrate.JoinIterates(r.product)).IteratesALL) _
             .GroupBy(Function(c) c.compound) _
             .ToArray
-        Dim kegg_id As biocad_registryModel.db_xrefs
+        Dim kegg_id As biocad_registryModel.db_xrefs()
 
         For Each ref As IGrouping(Of String, CompoundFactor) In TqdmWrapper.Wrap(all)
             Dim mol = cad_registry.molecule _
@@ -293,10 +293,13 @@ Public Class Compiler
             kegg_id = cad_registry.db_xrefs _
                 .where(field("db_key") = kegg_term,
                        field("obj_id") = mol.id) _
-                .find(Of biocad_registryModel.db_xrefs)
+                .select(Of biocad_registryModel.db_xrefs)
 
             If Not kegg_id Is Nothing Then
-                compound.kegg_id = kegg_id.xref
+                compound.kegg_id = kegg_id _
+                    .Select(Function(d) d.xref) _
+                    .Distinct _
+                    .ToArray
             End If
 
             Yield compound
