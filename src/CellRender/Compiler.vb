@@ -5,6 +5,7 @@ Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
+Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 Imports SMRUCC.genomics.Metagenomics
 Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
@@ -27,7 +28,9 @@ Public Class Compiler
 
     Private Function BuildGenome() As replicon
         Dim genes As New List(Of TranscriptUnit)
+        Dim rnas As New List(Of RNA)
 
+        ' contains CDS/tRNA/rRNA
         For Each gene_info As GeneTable In TqdmWrapper.Wrap(template)
             ' fetch gene information from database
             Dim find As gene_molecule = cad_registry.molecule _
@@ -44,6 +47,7 @@ Public Class Compiler
                            gene_info.UniprotTrEMBL}, nullFilter:=True)) _
                 .find(Of gene_molecule)("`molecule`.id", "xref_id", "name", "note", "sequence")
 
+            ' missing current gene item inside database
             If find Is Nothing Then
                 Continue For
             End If
@@ -63,10 +67,19 @@ Public Class Compiler
             }
 
             If Not find_prot Is Nothing Then
+                ' find a protein sequnece
+                ' is CDS/ORF
                 gene.protein_id = find_prot.id
                 gene.amino_acid = ProteinComposition _
                     .FromRefSeq(find_prot.sequence, find_prot.xref_id) _
                     .CreateVector
+            Else
+                ' no protein sequence could be found
+                ' is rRNA or tRNA or other kind of RNA
+                Call rnas.Add(New RNA With {
+                    .gene = gene.locus_tag,
+                    .type = RNAType(gene_info.type)
+                })
             End If
 
             Call genes.Add(New TranscriptUnit With {.id = find.id, .genes = {gene}})
@@ -76,8 +89,12 @@ Public Class Compiler
             .genomeName = "",
             .isPlasmid = False,
             .operons = genes.ToArray,
-            .RNAs = {}
+            .RNAs = rnas.ToArray
         }
+    End Function
+
+    Private Shared Function RNAType(s As String) As RNATypes
+
     End Function
 
     Private Function BuildMetabolicNetwork(chromosome As replicon) As MetabolismStructure
