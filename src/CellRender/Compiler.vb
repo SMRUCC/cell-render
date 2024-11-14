@@ -78,7 +78,8 @@ Public Class Compiler
                 ' is rRNA or tRNA or other kind of RNA
                 Call rnas.Add(New RNA With {
                     .gene = gene.locus_tag,
-                    .type = RNAType(gene_info.type)
+                    .type = RNAType(gene_info.type),
+                    .val = gene_info.commonName
                 })
             End If
 
@@ -94,7 +95,16 @@ Public Class Compiler
     End Function
 
     Private Shared Function RNAType(s As String) As RNATypes
-
+        Select Case Strings.Trim(s).ToLower
+            ' broken data!
+            Case "cds" : Return RNATypes.micsRNA
+            Case "trna"
+                Return RNATypes.tRNA
+            Case "rrna"
+                Return RNATypes.ribosomalRNA
+            Case Else
+                Return RNATypes.micsRNA
+        End Select
     End Function
 
     Private Function BuildMetabolicNetwork(chromosome As replicon) As MetabolismStructure
