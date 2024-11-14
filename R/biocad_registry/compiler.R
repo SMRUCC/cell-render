@@ -11,6 +11,6 @@ const compile_genbank = function(cad_registry, gbff) {
     }
 
     cad_registry |> Builder::create_modelfile(
-        genes = gbff |> GenBank::as_tabular()
+        genes = gbff |> GenBank::as_tabular(ORF = FALSE)
     );
 }
