@@ -30,7 +30,11 @@ Public Module Builder
         End If
 
         If TypeOf genes Is GBFF.File Then
-            template = DirectCast(genes, GBFF.File).ExportGeneFeatures
+            template = DirectCast(genes, GBFF.File) _
+                .EnumerateGeneFeatures(ORF:=False) _
+                .AsParallel _
+                .Select(Function(gene) gene.DumpExportFeature) _
+                .ToArray
         Else
             Dim pull As pipeline = pipeline.TryCreatePipeline(Of GeneTable)(genes, env)
 
