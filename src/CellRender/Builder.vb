@@ -45,7 +45,9 @@ Public Module Builder
             End If
         End If
 
-        Return New Compiler(register, template).CreateModel
+        Using compiler As New Compiler(register, template)
+            Return compiler.Compile()
+        End Using
     End Function
 
 End Module

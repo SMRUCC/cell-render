@@ -1,16 +1,18 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
+Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 Imports SMRUCC.genomics.Metagenomics
 Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
 
-Public Class Compiler
+Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
     ReadOnly cad_registry As biocad_registry
     ReadOnly template As GeneTable()
@@ -333,11 +335,11 @@ Public Class Compiler
         Next
     End Function
 
-    Public Function CreateModel() As VirtualCell
+    Protected Overrides Function CompileImpl(args As CommandLine) As Integer
         Dim chromosome As replicon = BuildGenome()
         Dim metabolic As MetabolismStructure = BuildMetabolicNetwork(chromosome)
 
-        Return New VirtualCell With {
+        m_compiledModel = New VirtualCell With {
             .properties = New [property],
             .taxonomy = New Taxonomy,
             .genome = New Genome With {
@@ -345,5 +347,7 @@ Public Class Compiler
             },
             .metabolismStructure = metabolic
         }
+
+        Return 0
     End Function
 End Class
