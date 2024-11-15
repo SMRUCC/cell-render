@@ -41,7 +41,7 @@ let engine = vcell
 
 debugger::dump_core(engine, file = "./core0.txt");
 
-using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine) {
+using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine, graph_debug= FALSE) {
 	print(rawXml);
 
 	# run virtual cell simulation and then 
