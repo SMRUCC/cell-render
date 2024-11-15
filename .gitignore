@@ -366,3 +366,4 @@ test/result.vcXML
 test/result.vcellPack
 test/workspace_2024_ecoli/MG1655.xml
 test/workspace_2024_ecoli/result.vcellPack
+test/workspace_2024_ecoli/metabolites.csv
