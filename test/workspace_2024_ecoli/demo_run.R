@@ -3,6 +3,7 @@ require(igraph);
 
 imports ["rawXML", "simulator", "modeller"] from "vcellkit";
 imports "analysis" from "vcellkit";
+imports "debugger" from "vcellkit";
 
 setwd(@dir);
 
@@ -38,6 +39,8 @@ let engine = vcell
 |> as.object()
 ;
 
+debugger::dump_core(engine, file = "./core0.txt");
+
 using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine) {
 	print(rawXml);
 
@@ -46,4 +49,6 @@ using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine) {
 	# target data directory
 	engine$AttachBiologicalStorage(xml);
 	engine$Run();
+
+	debugger::dump_core(engine, file = "./core1.txt");
 }
