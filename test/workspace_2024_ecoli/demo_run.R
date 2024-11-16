@@ -34,7 +34,8 @@ let engine = vcell
 	inits            = mass0(model),
 	iterations       = time.ticks, 
 	time_resolutions = 100, 	
-	showProgress     = TRUE
+	showProgress     = TRUE,
+	debug            = TRUE
 ) 
 |> as.object()
 ;
