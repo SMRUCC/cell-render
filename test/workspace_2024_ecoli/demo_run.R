@@ -33,7 +33,7 @@ let engine = vcell
 |> engine.load(	
 	inits            = mass0(model),
 	iterations       = time.ticks, 
-	time_resolutions = 100, 	
+	time_resolutions = 1000, 	
 	showProgress     = TRUE,
 	debug            = FALSE
 ) 
