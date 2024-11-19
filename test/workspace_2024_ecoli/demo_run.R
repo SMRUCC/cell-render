@@ -35,7 +35,7 @@ let engine = vcell
 |> engine.load(	
 	inits            = mass0(model),
 	iterations       = time.ticks, 
-	time_resolutions = 100, 	
+	time_resolutions = 1000, 	
 	showProgress     = TRUE,
 	debug            = FALSE
 ) 
@@ -45,6 +45,8 @@ let engine = vcell
 debugger::dump_core(engine, file = "./core0.txt");
 
 using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine, graph_debug= FALSE) {
+	debugger::set_symbols(xml, model);
+
 	print(rawXml);
 
 	# run virtual cell simulation and then 
