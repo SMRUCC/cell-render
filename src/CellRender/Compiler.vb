@@ -57,6 +57,11 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
             ' missing current gene item inside database
             If find Is Nothing Then
+                Dim warn As String = $"missing gene model from the registry: {gene_info}"
+
+                Call warn.Warning
+                Call VBDebugger.EchoLine(warn)
+
                 Continue For
             Else
                 Call bar.SetLabel(gene_info.ToString)
