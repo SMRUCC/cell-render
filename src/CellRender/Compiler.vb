@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -31,9 +32,12 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     Private Function BuildGenome() As replicon
         Dim genes As New List(Of TranscriptUnit)
         Dim rnas As New List(Of RNA)
+        Dim bar As Tqdm.ProgressBar = Nothing
+
+        Call VBDebugger.EchoLine("compile of the genome model, pull gene and proteins.")
 
         ' contains CDS/tRNA/rRNA
-        For Each gene_info As GeneTable In TqdmWrapper.Wrap(template)
+        For Each gene_info As GeneTable In TqdmWrapper.Wrap(template, bar:=bar, useColor:=True)
             ' fetch gene information from database
             Dim find As gene_molecule = cad_registry.molecule _
                 .left_join("db_xrefs") _
@@ -52,6 +56,8 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
             ' missing current gene item inside database
             If find Is Nothing Then
                 Continue For
+            Else
+                Call bar.SetLabel(gene_info.ToString)
             End If
 
             Dim rna = RNAComposition _

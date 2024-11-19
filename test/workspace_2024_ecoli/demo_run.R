@@ -7,6 +7,8 @@ imports "debugger" from "vcellkit";
 
 setwd(@dir);
 
+sink(file = "./run.log");
+
 let modelfile  = "./MG1655.xml";
 let model      = as.object(read.vcell(path = modelfile));
 let time.ticks = 1000;
@@ -33,7 +35,7 @@ let engine = vcell
 |> engine.load(	
 	inits            = mass0(model),
 	iterations       = time.ticks, 
-	time_resolutions = 1000, 	
+	time_resolutions = 100, 	
 	showProgress     = TRUE,
 	debug            = FALSE
 ) 
@@ -53,3 +55,5 @@ using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine, gra
 
 	debugger::dump_core(engine, file = "./core1.txt");
 }
+
+sink();
