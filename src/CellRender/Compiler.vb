@@ -13,6 +13,9 @@ Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 Imports SMRUCC.genomics.Metagenomics
 Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
 
+''' <summary>
+''' Compiler for the gcmodeller virtual cell model
+''' </summary>
 Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
     ReadOnly cad_registry As biocad_registry
@@ -96,12 +99,14 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                 gene.amino_acid = ProteinComposition _
                     .FromRefSeq(find_prot.sequence, find_prot.xref_id) _
                     .CreateVector
+                gene.type = RNATypes.mRNA
             Else
+                gene.type = RNAType(gene_info.type)
                 ' no protein sequence could be found
                 ' is rRNA or tRNA or other kind of RNA
                 Call rnas.Add(New RNA With {
                     .gene = gene.locus_tag,
-                    .type = RNAType(gene_info.type),
+                    .type = gene.type,
                     .val = gene_info.commonName
                 })
             End If
