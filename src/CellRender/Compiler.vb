@@ -20,6 +20,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     ReadOnly dna_term As UInteger
     ReadOnly ec_number As UInteger
     ReadOnly kegg_term As UInteger
+    ReadOnly polypeptide_term As UInteger
 
     Sub New(registry As biocad_registry, genes As GeneTable())
         template = genes
@@ -27,6 +28,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         dna_term = cad_registry.GetVocabulary("Nucleic Acid").id
         ec_number = cad_registry.GetVocabulary("EC").id
         kegg_term = cad_registry.GetVocabulary("KEGG").id
+        polypeptide_term = cad_registry.GetVocabulary("Polypeptide").id
     End Sub
 
     Private Function BuildGenome() As replicon
@@ -73,6 +75,14 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                 .product = find.note,
                 .nucleotide_base = rna
             }
+
+            If find_prot Is Nothing AndAlso Not gene_info.ProteinId.StringEmpty(, True) Then
+                find_prot = cad_registry.db_xrefs _
+                    .left_join("sequence_graph") _
+                    .on(field("`sequence_graph`.molecule_id") = field("obj_id")) _
+                    .where(field("type") = polypeptide_term, field("xref") = gene_info.ProteinId) _
+                    .find(Of gene_molecule)("molecule_id AS id", "xref AS xref_id", "sequence")
+            End If
 
             If Not find_prot Is Nothing Then
                 ' find a protein sequnece
