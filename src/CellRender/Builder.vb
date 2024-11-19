@@ -21,6 +21,7 @@ Public Module Builder
     Public Function CreateModelFile(register As biocad_registry,
                                     <RRawVectorArgument>
                                     genes As Object,
+                                    Optional logfile As String = "./model_compile.log",
                                     Optional env As Environment = Nothing) As Object
 
         Dim template As GeneTable()
@@ -46,7 +47,7 @@ Public Module Builder
         End If
 
         Using compiler As New Compiler(register, template)
-            Return compiler.Compile()
+            Return compiler.Compile($"/compile --log ""{logfile}""")
         End Using
     End Function
 
