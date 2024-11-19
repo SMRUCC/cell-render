@@ -10,7 +10,8 @@
 */
 declare namespace Builder {
    /**
+     * @param logfile default value Is ``'./model_compile.log'``.
      * @param env default value Is ``null``.
    */
-   function create_modelfile(register: object, genes: any, env?: object): object;
+   function create_modelfile(register: object, genes: any, logfile?: string, env?: object): object;
 }
