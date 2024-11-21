@@ -4,7 +4,8 @@ Title: Create virtualCell model
 Version: 1.0.148
 Author: xieguigang <xie.guigang@gcmodeller.org>
 Maintainer: xieguigang <xie.guigang@gcmodeller.org>
-Description: This package provides some function tools for create virtualCell model for run simulation inside GCModeller.
+Description: This package provides some function tools for create virtualCell model 
+for run simulation inside GCModeller.
 License: MIT License
 Encoding: UTF-8
 LazyData: true
