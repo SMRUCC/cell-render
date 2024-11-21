@@ -11,10 +11,10 @@
 #' of the protein is missing. for multiple ec_number, a comma seperator will be 
 #' used for join the ec_number list.
 #' 
-const local_protDb = function(cad_registry) {
+const local_protDb = function(cad_registry, dbfile) {
     let page_size = 1000;
     let offset = 1;
-    let 
+    let stream = open.fasta(dbfile, read = FALSE);
 
     for(let page in tqdm(1:10000)) {
         offset <- (page - 1) * page_size;
@@ -35,6 +35,15 @@ const local_protDb = function(cad_registry) {
         ;
 
         print(page);
-        stop();
+
+        page[, "ec_number"] <- ifelse(nchar(page$ec_number) == 0, "-", page$ec_number);
+        page[, "ref"] <- `${page$id} ${page$ec_number}`;
+        page <- as.list(page, byrow = TRUE);
+        page 
+        |> sapply(i -> fasta(i$prot_seq, attrs = [i$ref, i$prot])) 
+        |> write.fasta(file = stream)
+        ;
     }
+
+    close(stream);
 }
