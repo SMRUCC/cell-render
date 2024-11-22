@@ -13,7 +13,7 @@
 #' 
 const local_protDb = function(cad_registry, dbfile) {
     let prot_term = 3;
-    let page_size = 50000;
+    let page_size = 25000;
     let offset = 1;
     let stream = open.fasta(dbfile, read = FALSE);
     let total_size = cad_registry |> table("molecule") 
@@ -50,7 +50,7 @@ const local_protDb = function(cad_registry, dbfile) {
         page 
         |> tqdm()
         |> sapply(i -> fasta(i$prot_seq, attrs = [i$ref, i$prot])) 
-        |> write.fasta(file = stream)
+        |> write.fasta(file = stream, filter_empty = TRUE)
         ;
     }
 
