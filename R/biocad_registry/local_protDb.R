@@ -12,11 +12,18 @@
 #' used for join the ec_number list.
 #' 
 const local_protDb = function(cad_registry, dbfile) {
-    let page_size = 1000;
+    let prot_term = 3;
+    let page_size = 10000;
     let offset = 1;
     let stream = open.fasta(dbfile, read = FALSE);
+    let total_size = cad_registry |> table("molecule") 
+    |> where(type = prot_term) 
+    |> count();
+    let total_pages = as.integer(total_size / page_size) + 1;
 
-    for(let page in tqdm(1:10000)) {
+    for(let page in 1:total_pages) {
+        print(`load data page ${page}:`);
+
         offset <- (page - 1) * page_size;
         page <- cad_registry 
         |> table("molecule") 
@@ -24,7 +31,7 @@ const local_protDb = function(cad_registry, dbfile) {
         |> on(sequence_graph.molecule_id = molecule.id)
         |> left_join("db_xrefs")
         |> on(db_xrefs.obj_id = molecule.id, db_xrefs.db_key in [77 , 79])
-        |> where(molecule.type = 3)
+        |> where(molecule.type = prot_term)
         |> group_by("molecule.id")
         |> limit(offset, page_size)
         |> select(
@@ -41,6 +48,7 @@ const local_protDb = function(cad_registry, dbfile) {
         page[, "ref"] <- `${page$id} ${page$ec_number}`;
         page <- as.list(page, byrow = TRUE);
         page 
+        |> tqdm()
         |> sapply(i -> fasta(i$prot_seq, attrs = [i$ref, i$prot])) 
         |> write.fasta(file = stream)
         ;
