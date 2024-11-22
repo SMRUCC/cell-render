@@ -31,6 +31,9 @@ declare namespace CellRender {
    */
    function extract_gene_table(app: any, context: any): object;
    /**
+   */
+   function local_protDb(cad_registry: any, dbfile: any): object;
+   /**
      * @param outputdir default value Is ``null``.
      * @param up_len default value Is ``150``.
      * @param biocyc default value Is ``./biocyc``.

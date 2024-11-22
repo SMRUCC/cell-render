@@ -1,0 +1,22 @@
+﻿.TH LOCAL_PROTDB 1 2024-Nov "" "Create local fasta database for protein alignment"
+.SH NAME
+local_protDb \- local_protDb(cad.registry, dbfile)
+.SH SYNOPSIS
+\fIlocal_protDb(cad.registry, dbfile)\fR
+.SH OPTIONS
+.PP
+\fBcad.registry\fB \fR\- . 
+.PP
+.PP
+\fBdbfile\fB \fR\- . 
+.PP
+.SH DETAILS
+.PP
+this function will pull all protein sequence from the biocad_registry, and then build local fasta sequence database with header formats: ``` > cad_id ec_number|function description ``` a placeholder symbol ``-`` will be placed after the cad_id if the ``ec_number`` of the protein is missing. for multiple ec_number, a comma seperator will be used for join the ec_number list.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.local_protDb at local_protDb.R:line 14
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2024
