@@ -35,6 +35,7 @@ const local_protDb = function(cad_registry, dbfile) {
         ;
 
         print(page);
+        stop();
 
         page[, "ec_number"] <- ifelse(nchar(page$ec_number) == 0, "-", page$ec_number);
         page[, "ref"] <- `${page$id} ${page$ec_number}`;
