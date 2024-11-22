@@ -13,7 +13,7 @@
 #' 
 const local_protDb = function(cad_registry, dbfile) {
     let prot_term = 3;
-    let page_size = 10000;
+    let page_size = 50000;
     let offset = 1;
     let stream = open.fasta(dbfile, read = FALSE);
     let total_size = cad_registry |> table("molecule") 
