@@ -34,8 +34,8 @@ const local_protDb = function(cad_registry, dbfile) {
             "GROUP_CONCAT(DISTINCT xref) AS ec_number")
         ;
 
-        print(page);
-        stop();
+        # print(page);
+        # stop();
 
         page[, "ec_number"] <- ifelse(nchar(page$ec_number) == 0, "-", page$ec_number);
         page[, "ref"] <- `${page$id} ${page$ec_number}`;
