@@ -23,7 +23,7 @@ const local_protDb = function(cad_registry, dbfile) {
         |> left_join("sequence_graph")
         |> on(sequence_graph.molecule_id = molecule.id)
         |> left_join("db_xrefs")
-        |> on(db_xrefs.obj_id = molecule.id, db_key in [77 , 79])
+        |> on(db_xrefs.obj_id = molecule.id, db_xrefs.db_key in [77 , 79])
         |> where(molecule.type = 3)
         |> group_by("molecule.id")
         |> limit(offset, page_size)
