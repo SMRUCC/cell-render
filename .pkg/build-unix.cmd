@@ -8,4 +8,4 @@ SET REnv="%R_HOME%/R#.exe"
 %Rscript% --build /src ../ /save ../CellRender.zip --skip-src-build
 %REnv% --install.packages ../CellRender.zip
 
-pause
+REM pause
