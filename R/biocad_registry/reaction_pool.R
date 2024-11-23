@@ -36,7 +36,7 @@ const reaction_pool = function(cad_registry, repo) {
                 next;
             } else {
                 let txt = file(`/reactions/${r$id}.csv`, truncate=TRUE, repo = local_repo); 
-                write.csv(page, file = txt);
+                write.csv(page, file = txt, row.names = FALSE);
                 close(txt);
             }            
         }
