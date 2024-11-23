@@ -16,7 +16,7 @@ const reaction_pool = function(cad_registry) {
             ;
 
         for(let r in as.list(page, byrow = TRUE) |> tqdm()) {
-            
+            str(r);
         }
     }
 }
