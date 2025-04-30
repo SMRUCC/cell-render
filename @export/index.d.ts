@@ -51,7 +51,7 @@ declare namespace CellRender {
    function open_registry(user: any, passwd: any, host?: any, port?: any): object;
    /**
    */
-   function reaction_pool(cad_registry: any): object;
+   function reaction_pool(cad_registry: any, repo: any): object;
    /**
    */
    function tfbs_motif_scanning(app: any, context: any): object;
