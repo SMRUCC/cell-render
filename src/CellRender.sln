@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{0E4F
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "libmysql", "..\..\graphQL\src\mysqli\LibMySQL\libmysql.vbproj", "{131C9E21-288F-4A27-8B82-7792A9E46485}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "mysql_registry", "..\..\biocad_registry\src\biocad_storage\mysql\mysql_registry.shproj", "{BD58C2B6-4588-4BE9-A8AB-9BE85F023D12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CFD_win32|Any CPU = CFD_win32|Any CPU
@@ -1850,5 +1852,7 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\GCModeller\src\R-sharp\studio\Rstudio.common\Rstudio.common.projitems*{2b724ff8-290b-4c8f-81ad-308d546ae623}*SharedItemsImports = 5
+		..\..\biocad_registry\src\biocad_storage\mysql\mysql_registry.projitems*{44709a7a-ea01-4a17-8692-4a6b3c855b80}*SharedItemsImports = 5
+		..\..\biocad_registry\src\biocad_storage\mysql\mysql_registry.projitems*{bd58c2b6-4588-4be9-a8ab-9be85f023d12}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

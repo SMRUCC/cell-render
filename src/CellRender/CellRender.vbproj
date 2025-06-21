@@ -73,4 +73,6 @@
     <ProjectReference Include="..\..\..\graphQL\src\mysqli\LibMySQL\libmysql.vbproj" />
   </ItemGroup>
 
+  <Import Project="..\..\..\biocad_registry\src\biocad_storage\mysql\mysql_registry.projitems" Label="Shared" />
+
 </Project>

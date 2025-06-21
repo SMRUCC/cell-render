@@ -37,12 +37,14 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     ''' information of a genome, such as locus_tag, product, location, etc.
     ''' </remarks>
     Sub New(registry As biocad_registry, genes As GeneTable())
+        Dim terms As BioCadVocabulary = registry.vocabulary_terms
+
         template = genes
         cad_registry = registry
-        dna_term = cad_registry.GetVocabulary("Nucleic Acid").id
-        ec_number = cad_registry.GetVocabulary("EC").id
-        kegg_term = cad_registry.GetVocabulary("KEGG").id
-        polypeptide_term = cad_registry.GetVocabulary("Polypeptide").id
+        dna_term = terms.gene_term
+        ec_number = terms.ecnumber_term
+        kegg_term = terms.kegg_term
+        polypeptide_term = terms.protein_term
     End Sub
 
     Private Function BuildGenome() As replicon
