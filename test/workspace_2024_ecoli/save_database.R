@@ -1,3 +1,4 @@
+require(CellRender);
 require(GCModeller);
 
 imports "rawXML" from "vcellkit";
