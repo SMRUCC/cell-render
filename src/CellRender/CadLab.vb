@@ -13,7 +13,14 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Module CadLab
 
     ''' <summary>
+    ''' save the molecule expression data into the database
     ''' 
+    ''' The molecule expression data is a <see cref="Matrix"/> object, which contains the molecule expression
+    ''' data for each gene in the virtual cell. The <see cref="cad_lab"/> object is used to access the database
+    ''' and save the data.
+    ''' 
+    ''' The function will create a new experiment project if it does not exist, and then save the molecule
+    ''' expression data into the database.
     ''' </summary>
     ''' <param name="cad_lab"></param>
     ''' <param name="exp_id">
@@ -21,7 +28,7 @@ Module CadLab
     ''' </param>
     ''' <param name="dynaimics"></param>
     ''' <returns></returns>
-    <ExportAPI("save_molecules")>
+    <ExportAPI("save_expression")>
     Public Function save_molecules(cad_lab As cad_lab, exp_id As String, dynaimics As Matrix, Optional env As Environment = Nothing) As Object
         Dim exp = cad_lab.experiment _
             .where(field("proj_id") = exp_id) _
