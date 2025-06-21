@@ -10,7 +10,10 @@ const compile_genbank = function(cad_registry, gbff) {
         gbff <- read.genbank(gbff);
     }
 
+    let ncbi_taxid = taxon_id(gbff);
+
     cad_registry |> Builder::create_modelfile(
-        genes = gbff |> GenBank::as_tabular(ORF = FALSE)
+        genes = gbff |> GenBank::as_tabular(ORF = FALSE),
+        taxid = ncbi_taxid
     );
 }

@@ -22,6 +22,7 @@ Public Module Builder
                                     <RRawVectorArgument>
                                     genes As Object,
                                     Optional logfile As String = "./model_compile.log",
+                                    Optional taxid As String = Nothing,
                                     Optional env As Environment = Nothing) As Object
 
         Dim template As GeneTable()
@@ -44,6 +45,15 @@ Public Module Builder
             Else
                 template = pull.populates(Of GeneTable)(env).ToArray
             End If
+        End If
+
+        If taxid.IsPattern("\d+") Then
+            template = template _
+               .Select(Function(gene)
+                           gene.locus_id = taxid & ":" & gene.locus_id
+                           Return gene
+                       End Function) _
+               .ToArray
         End If
 
         Using compiler As New Compiler(register, template)
