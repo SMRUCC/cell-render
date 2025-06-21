@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>save the molecule expression data into the database</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>save_expression {cad_lab}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>save the molecule expression data into the database</h2>
+
+        <h3>Description</h3>
+
+        <p><br /> The molecule expression data is a <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/DataFrame/Matrix.html">Matrix</a> object, which contains the molecule expression<br /> data for each gene in the virtual cell. The <a href="/vignettes/clr/CellRender/cad_lab.html">cad_lab</a> object is used to access the database<br /> and save the data.<br /> <br /> The function will create a new experiment project if it does not exist, and then save the molecule<br /> expression data into the database.</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>save_expression</strong>(<i>cad.lab</i>, <i>exp.id</i>, <i>dynaimics</i>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>cad.lab</dt>
+<dd><p>[as <a href="/vignettes/clr/CellRender/cad_lab.html">cad_lab</a>]</p></dd>
+
+
+<dt>exp.id</dt>
+<dd><p>the experiment project id. [as string]</p></dd>
+
+
+<dt>dynaimics</dt>
+<dd><p>[as <a href="/vignettes/clr/SMRUCC/genomics/Analysis/HTS/DataFrame/Matrix.html">Matrix</a>]</p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        CellRender
+
+        <h3>Value</h3>
+
+        this function returns data object of type <i>any</i> kind.<h4>clr value class</h4><ul><li><i>any</i> kind</li></ul>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>cad_lab</em> version 1.0.0.0 <a
+                href="../cad_lab.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

@@ -1,0 +1,38 @@
+.\" man page create by R# package system.
+.TH CAD_LAB 1 2000-Jan "save_expression" "save_expression"
+.SH NAME
+save_expression \- save the molecule expression data into the database
+.SH SYNOPSIS
+\fIsave_expression(\fBcad_lab\fR as <generic> cad_lab, 
+\fBexp_id\fR as string, 
+\fBdynaimics\fR as <generic> Matrix, 
+[\fB<Environment>\fR]);\fR
+.SH DESCRIPTION
+.PP
+save the molecule expression data into the database
+ 
+ The molecule expression data is a @\fBT:SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix\fR object, which contains the molecule expression
+ data for each gene in the virtual cell. The @\fBT:CellRender.cad_lab\fR object is used to access the database
+ and save the data.
+ 
+ The function will create a new experiment project if it does not exist, and then save the molecule
+ expression data into the database.
+.PP
+.SH OPTIONS
+.PP
+\fBcad_lab\fB \fR\- -. 
+.PP
+.PP
+\fBexp_id\fB \fR\- 
+ the experiment project id
+. 
+.PP
+.PP
+\fBdynaimics\fB \fR\- -. 
+.PP
+.SH SEE ALSO
+cad_lab
+.SH FILES
+.PP
+CellRender.dll
+.PP

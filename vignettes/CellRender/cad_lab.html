@@ -4,13 +4,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Builder</title>
+    <title>cad_lab</title>
     <meta name="author" content="xie.guigang@gcmodeller.org" />
     <meta name="copyright" content="SMRUCC genomics Copyright (c) 2022" />
-    <meta name="keywords" content="R#; Builder; CellRender" />
+    <meta name="keywords" content="R#; cad_lab; CellRender" />
     <meta name="generator" content="https://github.com/rsharp-lang" />
     <meta name="theme-color" content="#333" />
-    <meta name="description" content="Helper functions for build virtualcell model..." />
+    <meta name="description" content="..." />
     <meta class="foundation-data-attribute-namespace" />
     <meta class="foundation-mq-xxlarge" />
     <meta class="foundation-mq-xlarge" />
@@ -50,23 +50,23 @@ table caption {font-size:14px;font-weight:bolder;}
 </style>
   </head>
   <body>
-    <table width="100%" summary="page for {Builder}">
+    <table width="100%" summary="page for {cad_lab}">
       <tbody>
         <tr>
-          <td>{Builder}</td>
+          <td>{cad_lab}</td>
           <td style="text-align: right;">R# Documentation</td>
         </tr>
       </tbody>
     </table>
-    <h1>Builder</h1>
+    <h1>cad_lab</h1>
     <hr />
     <p style="     font-size: 1.125em;     line-height: .8em;     margin-left: 0.5%;     background-color: #fbfbfb;     padding: 24px; ">
       <code>
         <span style="color: blue;">require</span>(<span style="color: black; font-weight: bold;">CellRender</span>);
-                               <br /><br /><span style="color: green;">#' Helper functions for build virtualcell model</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "Builder"</span><span style="color: blue;"> from</span><span style="color: brown"> "CellRender"</span>;
+                               <br /><br /><span style="color: green;">{$desc_comments}</span><br /><span style="color: blue;">imports</span><span style="color: brown"> "cad_lab"</span><span style="color: blue;"> from</span><span style="color: brown"> "CellRender"</span>;
                            </code>
     </p>
-    <p><p>Helper functions for build virtualcell model</p></p>
+    <p></p>
     <blockquote>
       <p style="font-style: italic; font-size: 0.9em;">
                            
@@ -76,10 +76,10 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line" style="display: block">
         <caption>.NET clr type export</caption>
         <tbody><tr>
-  <td id="cad_registry">
-    <a href="/vignettes/clr/CellRender/biocad_registry.html">cad_registry: biocad_registry</a>
+  <td id="cad_lab">
+    <a href="/vignettes/clr/CellRender/cad_lab.html">cad_lab: cad_lab</a>
   </td>
-  <td><p>a wrapper of the biocad registry database</p></td>
+  <td></td>
 </tr></tbody>
       </table>
       <br />
@@ -87,10 +87,17 @@ table caption {font-size:14px;font-weight:bolder;}
       <table class="table-three-line">
         <caption>.NET clr function exports</caption>
         <tbody><tr>
-  <td id="create_modelfile">
-    <a href="./Builder/create_modelfile.html">create_modelfile</a>
+  <td id="save_expression">
+    <a href="./cad_lab/save_expression.html">save_expression</a>
   </td>
-  <td></td>
+  <td><p>save the molecule expression data into the database
+ 
+ The molecule expression data is a @<code>T:SMRUCC.genomics.Analysis.HTS.DataFrame.Matrix</code> object, which contains the molecule expression
+ data for each gene in the virtual cell. The @<code>T:CellRender.cad_lab</code> object is used to access the database
+ and save the data.
+ 
+ The function will create a new experiment project if it does not exist, and then save the molecule
+ expression data into the database.</p></td>
 </tr></tbody>
       </table>
     </div>
