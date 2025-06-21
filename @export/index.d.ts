@@ -48,6 +48,11 @@ declare namespace CellRender {
      * @param host default value Is ``localhost``.
      * @param port default value Is ``3306``.
    */
+   function open_cadlab(user: any, passwd: any, host?: any, port?: any): object;
+   /**
+     * @param host default value Is ``localhost``.
+     * @param port default value Is ``3306``.
+   */
    function open_registry(user: any, passwd: any, host?: any, port?: any): object;
    /**
    */
