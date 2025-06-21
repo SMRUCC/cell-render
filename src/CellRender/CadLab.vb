@@ -54,20 +54,20 @@ Module CadLab
         Dim cell = cad_lab.virtualcell _
             .where(field("run_id") = exp.id,
                    field("name") = tagdata.Value,
-                   field("taxid") = tagdata.Name) _
+                   field("taxid") = Val(tagdata.Name)) _
             .find(Of biocad_labModel.virtualcell)
 
         If cell Is Nothing Then
             cad_lab.virtualcell.add(
                 field("run_id") = exp.id,
                 field("name") = tagdata.Value,
-                field("taxid") = tagdata.Name
+                field("taxid") = Val(tagdata.Name)
             )
 
             cell = cad_lab.virtualcell _
                 .where(field("run_id") = exp.id,
                        field("name") = tagdata.Value,
-                       field("taxid") = tagdata.Name) _
+                       field("taxid") = Val(tagdata.Name)) _
                 .order_by("id", desc:=True) _
                 .find(Of biocad_labModel.virtualcell)
 
