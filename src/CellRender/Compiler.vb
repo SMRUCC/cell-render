@@ -14,7 +14,7 @@ Imports SMRUCC.genomics.Metagenomics
 Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
 
 ''' <summary>
-''' Compiler for the gcmodeller virtual cell model
+''' Compiler for the gcmodeller virtual cell model based on the ncbi genbank gene models.
 ''' </summary>
 Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
@@ -25,6 +25,17 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     ReadOnly kegg_term As UInteger
     ReadOnly polypeptide_term As UInteger
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="registry"></param>
+    ''' <param name="genes">
+    ''' A gene set that loaded from the NCBI genbank file.
+    ''' </param>
+    ''' <remarks>
+    ''' The gene set should be a <see cref="GeneTable"/> array that contains all the genes
+    ''' information of a genome, such as locus_tag, product, location, etc.
+    ''' </remarks>
     Sub New(registry As biocad_registry, genes As GeneTable())
         template = genes
         cad_registry = registry
@@ -44,18 +55,46 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         ' contains CDS/tRNA/rRNA
         For Each gene_info As GeneTable In TqdmWrapper.Wrap(template, bar:=bar, useColor:=True)
             ' fetch gene information from database
+            Dim findMol = cad_registry.molecule _
+                .where(field("`molecule`.type") = dna_term,
+                       field("xref_id") = gene_info.locus_id) _
+                .find(Of biocad_registryModel.molecule)
+
+            If findMol Is Nothing Then
+                findMol = cad_registry.db_xrefs _
+                    .left_join("molecule") _
+                    .on(field("molecule.id") = field("db_xrefs.obj_id")) _
+                    .where(field("xref").in({
+                               gene_info.locus_id,
+                               gene_info.ProteinId,
+                               gene_info.UniprotSwissProt,
+                               gene_info.UniprotTrEMBL}, nullFilter:=True)) _
+                    .order_by("parent") _
+                    .find(Of biocad_registryModel.molecule)("`molecule`.*")
+            End If
+
+            If findMol Is Nothing Then
+                Dim warn As String = $"missing gene model from the registry: {gene_info}"
+                Call warn.Warning
+                Call VBDebugger.EchoLine(warn)
+                Continue For
+            ElseIf findMol.parent > 0 Then
+                findMol = cad_registry.molecule _
+                    .where(field("id") = findMol.parent) _
+                    .find(Of biocad_registryModel.molecule)
+
+                If findMol Is Nothing Then
+                    Dim warn As String = $"missing parent replicon for the gene model: {gene_info}"
+                    Call warn.Warning
+                    Call VBDebugger.EchoLine(warn)
+                    Continue For
+                End If
+            End If
+
             Dim find As gene_molecule = cad_registry.molecule _
-                .left_join("db_xrefs") _
-                .on(field("`db_xrefs`.obj_id") = field("`molecule`.id")) _
                 .left_join("sequence_graph") _
                 .on(field("`sequence_graph`.molecule_id") = field("`molecule`.id")) _
-                .where(field("`molecule`.type") = dna_term,
-                       field("xref_id") = gene_info.locus_id Or
-                       field("xref").in({
-                           gene_info.locus_id,
-                           gene_info.ProteinId,
-                           gene_info.UniprotSwissProt,
-                           gene_info.UniprotTrEMBL}, nullFilter:=True)) _
+                .where(field("`molecule`.id") = findMol.id) _
                 .find(Of gene_molecule)("`molecule`.id", "xref_id", "name", "note", "sequence")
 
             ' missing current gene item inside database
