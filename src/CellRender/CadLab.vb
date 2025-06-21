@@ -91,6 +91,13 @@ Module CadLab
                     field("x0") = mol(Scan0),
                     field("dynamics") = encoder.Base64String(mol.experiments, gzip:=True)
                 )
+            Else
+                cad_lab.dynamics _
+                    .where(field("id") = moldata.id) _
+                    .save(
+                        field("x0") = mol(Scan0),
+                        field("dynamics") = encoder.Base64String(mol.experiments, gzip:=True)
+                )
             End If
         Next
 
