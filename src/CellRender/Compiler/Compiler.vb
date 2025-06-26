@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -7,9 +6,6 @@ Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 Imports SMRUCC.genomics.GCModeller.CompilerServices
-Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
-Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular
-Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 Imports SMRUCC.genomics.Metagenomics
 Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
 
@@ -18,12 +14,12 @@ Imports [property] = SMRUCC.genomics.GCModeller.CompilerServices.Property
 ''' </summary>
 Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
-    ReadOnly cad_registry As biocad_registry
-    ReadOnly template As GeneTable()
-    ReadOnly dna_term As UInteger
-    ReadOnly ec_number As UInteger
-    ReadOnly kegg_term As UInteger
-    ReadOnly polypeptide_term As UInteger
+    Friend ReadOnly cad_registry As biocad_registry
+    Friend ReadOnly template As GeneTable()
+    Friend ReadOnly dna_term As UInteger
+    Friend ReadOnly ec_number As UInteger
+    Friend ReadOnly kegg_term As UInteger
+    Friend ReadOnly polypeptide_term As UInteger
 
     ''' <summary>
     ''' 
@@ -274,7 +270,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     End Function
 
     Protected Overrides Function CompileImpl(args As CommandLine) As Integer
-        Dim chromosome As replicon = BuildGenome()
+        Dim chromosome As replicon = New ReplicateBuilder(Me).BuildGenome()
         Dim metabolic As MetabolismStructure = BuildMetabolicNetwork(chromosome)
 
         m_compiledModel = New VirtualCell With {

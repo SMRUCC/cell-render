@@ -1,9 +1,21 @@
-﻿Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
+Imports SMRUCC.genomics.ComponentModel.Annotation
+Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
+Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular
+Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 
 Public Class ReplicateBuilder
 
     ReadOnly compiler As Compiler
+
+    Public ReadOnly Property cad_registry As biocad_registry
+        Get
+            Return compiler.cad_registry
+        End Get
+    End Property
 
     Sub New(compiler As Compiler)
         Me.compiler = compiler
@@ -17,10 +29,10 @@ Public Class ReplicateBuilder
         Call VBDebugger.EchoLine("compile of the genome model, pull gene and proteins.")
 
         ' contains CDS/tRNA/rRNA
-        For Each gene_info As GeneTable In TqdmWrapper.Wrap(template, bar:=bar, useColor:=True)
+        For Each gene_info As GeneTable In TqdmWrapper.Wrap(compiler.template, bar:=bar, useColor:=True)
             ' fetch gene information from database
             Dim findMol = cad_registry.molecule _
-                .where(field("`molecule`.type") = dna_term,
+                .where(field("`molecule`.type") = compiler.dna_term,
                        field("xref_id") = gene_info.locus_id) _
                 .find(Of biocad_registryModel.molecule)
 
@@ -91,7 +103,7 @@ Public Class ReplicateBuilder
                 find_prot = cad_registry.db_xrefs _
                     .left_join("sequence_graph") _
                     .on(field("`sequence_graph`.molecule_id") = field("obj_id")) _
-                    .where(field("type") = polypeptide_term, field("xref") = gene_info.ProteinId) _
+                    .where(field("type") = compiler.polypeptide_term, field("xref") = gene_info.ProteinId) _
                     .find(Of gene_molecule)("molecule_id AS id", "xref AS xref_id", "sequence")
             End If
 
