@@ -117,7 +117,7 @@ Public Class MetabolicNetworkBuilder
             }
 
             kegg_id = cad_registry.db_xrefs _
-                .where(field("db_key") = kegg_term,
+                .where(field("db_key") = compiler.kegg_term,
                        field("obj_id") = mol.id) _
                 .select(Of biocad_registryModel.db_xrefs)
 
@@ -149,7 +149,7 @@ Public Class MetabolicNetworkBuilder
                     .left_join("db_xrefs") _
                     .on(field("`db_xrefs`.obj_id") = field("`molecule`.id")) _
                     .where(field("`molecule`.id") = gene.protein_id,
-                           field("db_key") = ec_number) _
+                           field("db_key") = compiler.ec_number) _
                     .distinct() _
                     .project(Of String)("xref")
                 Dim prot_id = gene.locus_tag
