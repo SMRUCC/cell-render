@@ -1,6 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 
@@ -20,7 +23,7 @@ Public Class MetabolicNetworkBuilder
         Me.chromosome = chromosome
     End Sub
 
-    Private Iterator Function PullReactionNoneEnzyme() As IEnumerable(Of Reaction)
+    Private Iterator Function PullReactionNoneEnzymatic() As IEnumerable(Of Reaction)
         Dim page_size = 2000
 
         For i As Integer = 1 To Integer.MaxValue
@@ -124,6 +127,7 @@ Public Class MetabolicNetworkBuilder
             If Not kegg_id Is Nothing Then
                 compound.kegg_id = kegg_id _
                     .Select(Function(d) d.xref) _
+                    .Where(Function(id) id.IsPattern("C\d+")) _
                     .Distinct _
                     .ToArray
             End If
@@ -136,10 +140,12 @@ Public Class MetabolicNetworkBuilder
         Dim ec_reg As New List(Of String)
         Dim ec_link As New List(Of NamedValue(Of String))
         Dim ec_rxn As Dictionary(Of String, Reaction())
-        Dim none_enzymatic = PullReactionNoneEnzyme().ToArray
+        Dim none_enzymatic = PullReactionNoneEnzymatic().ToArray
 
         For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
             For Each gene As gene In t_unit.genes
+                ' current gene is not a CDS encoder
+                ' skip this rna gene
                 If gene.amino_acid Is Nothing Then
                     Continue For
                 End If
@@ -216,7 +222,8 @@ Public Class MetabolicNetworkBuilder
                                 .is_enzymatic = True,
                                 .name = ec_number,
                                 .substrate = sides!substrate,
-                                .product = sides!product
+                                .product = sides!product,
+                                .ec_number = {ec_number}
                             }
                         End Function) _
                 .Where(Function(r)
@@ -245,12 +252,67 @@ Public Class MetabolicNetworkBuilder
                 .geneID = gene.Key,
                 .ECNumber = ec_str.JoinBy(" / "),
                 .catalysis = rxns _
-                    .Select(Function(r)
-                                Return New Catalysis(r.Key) With {
-                                    .PH = 7.0,
-                                    .temperature = 30
-                                }
+                    .Select(Iterator Function(r) As IEnumerable(Of Catalysis)
+                                ' get ec number for query kinetics law
+                                Dim ec_id As String() = r.Select(Function(a) a.ec_number).IteratesALL.Distinct.ToArray
+                                Dim laws = cad_registry.kinetic_law.where(field("ec_number").in(ec_id)).select(Of biocad_registryModel.kinetic_law)
+                                ' use substrate network for make confirmed
+                                Dim hits_any As Boolean = False
+                                Dim compounds As Index(Of String) = r _
+                                    .Select(Function(a) a.AsEnumerable) _
+                                    .IteratesALL _
+                                    .Select(Function(a) a.compound) _
+                                    .Distinct _
+                                    .Indexing
+
+                                For Each law As biocad_registryModel.kinetic_law In laws
+                                    Dim links = cad_registry.kinetic_substrate.where(field("kinetic_id") = law.id).select(Of biocad_registryModel.kinetic_substrate)
+
+                                    For Each meta_link In links
+                                        If meta_link.metabolite_id.ToString Like compounds Then
+                                            Dim args = law.params.LoadJSON(Of Dictionary(Of String, String))
+
+                                            Yield New Catalysis(r.Key) With {
+                                                .PH = law.pH,
+                                                .temperature = law.temperature,
+                                                .parameter = args _
+                                                    .Select(Function(a)
+                                                                If a.Value.IsNumeric Then
+                                                                    Return New KineticsParameter With {
+                                                                        .name = a.Key,
+                                                                        .value = Val(a.Value)
+                                                                    }
+                                                                ElseIf a.Value.StartsWith("ENZ") Then
+                                                                    Return New KineticsParameter With {
+                                                                        .name = a.Key,
+                                                                        .isModifier = True,
+                                                                        .target = ec_id.JoinBy("/")
+                                                                    }
+                                                                Else
+                                                                    Return New KineticsParameter With {
+                                                                        .name = a.Key,
+                                                                        .isModifier = False,
+                                                                        .target = meta_link.metabolite_id
+                                                                    }
+                                                                End If
+                                                            End Function) _
+                                                    .ToArray,
+                                                .formula = New FunctionElement With {.lambda = law.lambda, .name = law.id, .parameters = args.Keys.ToArray}
+                                            }
+                                            hits_any = True
+                                            Exit For
+                                        End If
+                                    Next
+                                Next
+
+                                If Not hits_any Then
+                                    Yield New Catalysis(r.Key) With {
+                                        .PH = 7.0,
+                                        .temperature = 30
+                                    }
+                                End If
                             End Function) _
+                    .IteratesALL _
                     .ToArray
             }
         Next
