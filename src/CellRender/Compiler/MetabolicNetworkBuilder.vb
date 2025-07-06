@@ -209,8 +209,17 @@ Public Class MetabolicNetworkBuilder
             Call ec_rxn.Add(ec_number, reactions)
         Next
 
-        Dim enzymes As New List(Of Enzyme)
+        Return New MetabolismStructure With {
+            .compounds = PullCompounds(ec_rxn, none_enzymatic).ToArray,
+            .reactions = New ReactionGroup With {
+                .enzymatic = FillReactions(ec_rxn).ToArray,
+                .etc = none_enzymatic
+            },
+            .enzymes = queryEnzymes(ec_link, ec_rxn).ToArray
+        }
+    End Function
 
+    Private Iterator Function queryEnzymes(ec_link As IEnumerable(Of NamedValue(Of String)), ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Enzyme)
         For Each gene In ec_link.GroupBy(Function(a) a.Name)
             Dim ec_str As String() = gene _
                 .Select(Function(e) e.Value) _
@@ -223,7 +232,7 @@ Public Class MetabolicNetworkBuilder
                 .GroupBy(Function(r) r.ID) _
                 .ToArray
 
-            Call enzymes.Add(New Enzyme With {
+            Yield New Enzyme With {
                 .geneID = gene.Key,
                 .ECNumber = ec_str.JoinBy(" / "),
                 .catalysis = rxns _
@@ -234,16 +243,7 @@ Public Class MetabolicNetworkBuilder
                                 }
                             End Function) _
                     .ToArray
-            })
+            }
         Next
-
-        Return New MetabolismStructure With {
-            .compounds = PullCompounds(ec_rxn, none_enzymatic).ToArray,
-            .reactions = New ReactionGroup With {
-                .enzymatic = FillReactions(ec_rxn).ToArray,
-                .etc = none_enzymatic
-            },
-            .enzymes = enzymes.ToArray
-        }
     End Function
 End Class
