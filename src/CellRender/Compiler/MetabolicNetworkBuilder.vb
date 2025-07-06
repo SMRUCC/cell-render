@@ -252,69 +252,73 @@ Public Class MetabolicNetworkBuilder
                 .geneID = gene.Key,
                 .ECNumber = ec_str.JoinBy(" / "),
                 .catalysis = rxns _
-                    .Select(Iterator Function(r) As IEnumerable(Of Catalysis)
-                                ' get ec number for query kinetics law
-                                Dim ec_id As String() = r.Select(Function(a) a.ec_number).IteratesALL.Distinct.ToArray
-                                Dim laws = cad_registry.kinetic_law.where(field("ec_number").in(ec_id)).select(Of biocad_registryModel.kinetic_law)
-                                ' use substrate network for make confirmed
-                                Dim hits_any As Boolean = False
-                                Dim compounds As Index(Of String) = r _
-                                    .Select(Function(a) a.AsEnumerable) _
-                                    .IteratesALL _
-                                    .Select(Function(a) a.compound) _
-                                    .Distinct _
-                                    .Indexing
-
-                                For Each law As biocad_registryModel.kinetic_law In laws
-                                    Dim links = cad_registry.kinetic_substrate.where(field("kinetic_id") = law.id).select(Of biocad_registryModel.kinetic_substrate)
-
-                                    For Each meta_link In links
-                                        If meta_link.metabolite_id.ToString Like compounds Then
-                                            Dim args = law.params.LoadJSON(Of Dictionary(Of String, String))
-
-                                            Yield New Catalysis(r.Key) With {
-                                                .PH = law.pH,
-                                                .temperature = law.temperature,
-                                                .parameter = args _
-                                                    .Select(Function(a)
-                                                                If a.Value.IsNumeric Then
-                                                                    Return New KineticsParameter With {
-                                                                        .name = a.Key,
-                                                                        .value = Val(a.Value)
-                                                                    }
-                                                                ElseIf a.Value.StartsWith("ENZ") Then
-                                                                    Return New KineticsParameter With {
-                                                                        .name = a.Key,
-                                                                        .isModifier = True,
-                                                                        .target = ec_id.JoinBy("/")
-                                                                    }
-                                                                Else
-                                                                    Return New KineticsParameter With {
-                                                                        .name = a.Key,
-                                                                        .isModifier = False,
-                                                                        .target = meta_link.metabolite_id
-                                                                    }
-                                                                End If
-                                                            End Function) _
-                                                    .ToArray,
-                                                .formula = New FunctionElement With {.lambda = law.lambda, .name = law.id, .parameters = args.Keys.ToArray}
-                                            }
-                                            hits_any = True
-                                            Exit For
-                                        End If
-                                    Next
-                                Next
-
-                                If Not hits_any Then
-                                    Yield New Catalysis(r.Key) With {
-                                        .PH = 7.0,
-                                        .temperature = 30
-                                    }
-                                End If
+                    .Select(Function(r) As IEnumerable(Of Catalysis)
+                                Return GetKineticsParameters(r)
                             End Function) _
                     .IteratesALL _
                     .ToArray
             }
         Next
+    End Function
+
+    Private Iterator Function GetKineticsParameters(r As IGrouping(Of String, Reaction)) As IEnumerable(Of Catalysis)
+        ' get ec number for query kinetics law
+        Dim ec_id As String() = r.Select(Function(a) a.ec_number).IteratesALL.Distinct.ToArray
+        Dim laws = cad_registry.kinetic_law.where(field("ec_number").in(ec_id)).select(Of biocad_registryModel.kinetic_law)
+        ' use substrate network for make confirmed
+        Dim hits_any As Boolean = False
+        Dim compounds As Index(Of String) = r _
+            .Select(Function(a) a.AsEnumerable) _
+            .IteratesALL _
+            .Select(Function(a) a.compound) _
+            .Distinct _
+            .Indexing
+
+        For Each law As biocad_registryModel.kinetic_law In laws
+            Dim links = cad_registry.kinetic_substrate.where(field("kinetic_id") = law.id).select(Of biocad_registryModel.kinetic_substrate)
+
+            For Each meta_link In links
+                If meta_link.metabolite_id.ToString Like compounds Then
+                    Dim args = law.params.LoadJSON(Of Dictionary(Of String, String))
+
+                    Yield New Catalysis(r.Key) With {
+                        .PH = law.pH,
+                        .temperature = law.temperature,
+                        .parameter = args _
+                            .Select(Function(a)
+                                        If a.Value.IsNumeric Then
+                                            Return New KineticsParameter With {
+                                                .name = a.Key,
+                                                .value = Val(a.Value)
+                                            }
+                                        ElseIf a.Value.StartsWith("ENZ") Then
+                                            Return New KineticsParameter With {
+                                                .name = a.Key,
+                                                .isModifier = True,
+                                                .target = ec_id.JoinBy("/")
+                                            }
+                                        Else
+                                            Return New KineticsParameter With {
+                                                .name = a.Key,
+                                                .isModifier = False,
+                                                .target = meta_link.metabolite_id
+                                            }
+                                        End If
+                                    End Function) _
+                            .ToArray,
+                        .formula = New FunctionElement With {.lambda = law.lambda, .name = law.id, .parameters = args.Keys.ToArray}
+                    }
+                    hits_any = True
+                    Exit For
+                End If
+            Next
+        Next
+
+        If Not hits_any Then
+            Yield New Catalysis(r.Key) With {
+                .PH = 7.0,
+                .temperature = 30
+            }
+        End If
     End Function
 End Class
