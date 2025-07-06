@@ -132,11 +132,10 @@ Public Class MetabolicNetworkBuilder
         Next
     End Function
 
-
     Public Function BuildMetabolicNetwork() As MetabolismStructure
         Dim ec_reg As New List(Of String)
         Dim ec_link As New List(Of NamedValue(Of String))
-        Dim ec_rxn As New Dictionary(Of String, Reaction())
+        Dim ec_rxn As Dictionary(Of String, Reaction())
         Dim none_enzymatic = PullReactionNoneEnzyme().ToArray
 
         For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
@@ -161,6 +160,23 @@ Public Class MetabolicNetworkBuilder
             Next
         Next
 
+        ec_rxn = loadEnzymeReactions(ec_reg) _
+            .ToDictionary(Function(a) a.ec_number,
+                          Function(a)
+                              Return a.rxns
+                          End Function)
+
+        Return New MetabolismStructure With {
+            .compounds = PullCompounds(ec_rxn, none_enzymatic).ToArray,
+            .reactions = New ReactionGroup With {
+                .enzymatic = FillReactions(ec_rxn).ToArray,
+                .etc = none_enzymatic
+            },
+            .enzymes = queryEnzymes(ec_link, ec_rxn).ToArray
+        }
+    End Function
+
+    Private Iterator Function loadEnzymeReactions(ec_reg As IEnumerable(Of String)) As IEnumerable(Of (ec_number$, rxns As Reaction()))
         For Each ec_number As String In TqdmWrapper.Wrap(ec_reg.Distinct.ToArray)
             Dim ec_generic = ec_number.Trim("-"c, "."c)
             Dim view = cad_registry.regulation_graph _
@@ -203,20 +219,13 @@ Public Class MetabolicNetworkBuilder
                                 .product = sides!product
                             }
                         End Function) _
-                .Where(Function(r) Not r Is Nothing) _
+                .Where(Function(r)
+                           Return Not r Is Nothing
+                       End Function) _
                 .ToArray
 
-            Call ec_rxn.Add(ec_number, reactions)
+            Yield (ec_number, reactions)
         Next
-
-        Return New MetabolismStructure With {
-            .compounds = PullCompounds(ec_rxn, none_enzymatic).ToArray,
-            .reactions = New ReactionGroup With {
-                .enzymatic = FillReactions(ec_rxn).ToArray,
-                .etc = none_enzymatic
-            },
-            .enzymes = queryEnzymes(ec_link, ec_rxn).ToArray
-        }
     End Function
 
     Private Iterator Function queryEnzymes(ec_link As IEnumerable(Of NamedValue(Of String)), ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Enzyme)
