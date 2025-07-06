@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -236,7 +237,11 @@ Public Class MetabolicNetworkBuilder
     End Function
 
     Private Iterator Function queryEnzymes(ec_link As IEnumerable(Of NamedValue(Of String)), ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Enzyme)
-        For Each gene In ec_link.GroupBy(Function(a) a.Name)
+        Dim bar As Tqdm.ProgressBar = Nothing
+
+        Call VBDebugger.EchoLine("fetch enzyme and catalysis kinetics data...")
+
+        For Each gene In TqdmWrapper.Wrap(ec_link.GroupBy(Function(a) a.Name).ToArray, bar:=bar)
             Dim ec_str As String() = gene _
                 .Select(Function(e) e.Value) _
                 .Distinct _
@@ -247,6 +252,8 @@ Public Class MetabolicNetworkBuilder
                 .IteratesALL _
                 .GroupBy(Function(r) r.ID) _
                 .ToArray
+
+            Call bar.SetLabel(ec_str.JoinBy(" / "))
 
             Yield New Enzyme With {
                 .geneID = gene.Key,
