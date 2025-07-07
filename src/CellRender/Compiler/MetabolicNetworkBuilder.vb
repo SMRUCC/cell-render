@@ -297,7 +297,9 @@ Public Class MetabolicNetworkBuilder
     Private Iterator Function GetKineticsParameters(r As IGrouping(Of String, Reaction)) As IEnumerable(Of Catalysis)
         ' get ec number for query kinetics law
         Dim ec_id As String() = r.Select(Function(a) a.ec_number).IteratesALL.Distinct.ToArray
-        Dim laws = cad_registry.kinetic_law.where(field("ec_number").in(ec_id)).select(Of biocad_registryModel.kinetic_law)
+        Dim laws = cad_registry.kinetic_law _
+            .where(field("ec_number").in(ec_id)) _
+            .select(Of biocad_registryModel.kinetic_law)
         ' use substrate network for make confirmed
         Dim hits_any As Boolean = False
         Dim compounds As Index(Of String) = r _
