@@ -12,6 +12,7 @@ Public Class MetabolicNetworkBuilder
 
     ReadOnly compiler As Compiler
     ReadOnly chromosome As replicon
+    ReadOnly substrate_links As Dictionary(Of String, biocad_registryModel.kinetic_substrate())
 
     Public ReadOnly Property cad_registry As biocad_registry
         Get
@@ -22,6 +23,31 @@ Public Class MetabolicNetworkBuilder
     Sub New(compiler As Compiler, chromosome As replicon)
         Me.compiler = compiler
         Me.chromosome = chromosome
+
+        Dim links As New List(Of biocad_registryModel.kinetic_substrate)
+        Dim page As biocad_registryModel.kinetic_substrate()
+        Dim page_size As Integer = 10000
+
+        For i As Integer = 0 To 100000
+            page = compiler.cad_registry.kinetic_substrate _
+                .limit(i * page_size, page_size) _
+                .select(Of biocad_registryModel.kinetic_substrate)
+
+            If page.IsNullOrEmpty Then
+                Exit For
+            Else
+                Call links.AddRange(page)
+            End If
+        Next
+
+        substrate_links = links _
+            .GroupBy(Function(a) a.kinetic_id) _
+            .ToDictionary(Function(a)
+                              Return a.Key.ToString
+                          End Function,
+                          Function(a)
+                              Return a.ToArray
+                          End Function)
     End Sub
 
     Private Iterator Function PullReactionNoneEnzymatic() As IEnumerable(Of Reaction)
@@ -282,7 +308,11 @@ Public Class MetabolicNetworkBuilder
             .Indexing
 
         For Each law As biocad_registryModel.kinetic_law In laws
-            Dim links = cad_registry.kinetic_substrate.where(field("kinetic_id") = law.id).select(Of biocad_registryModel.kinetic_substrate)
+            Dim links = substrate_links.TryGetValue(law.id.ToString)
+
+            If links Is Nothing Then
+                Continue For
+            End If
 
             For Each meta_link In links
                 If meta_link.metabolite_id.ToString Like compounds Then
