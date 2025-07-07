@@ -369,3 +369,4 @@ test/workspace_2024_ecoli/result.vcellPack
 test/workspace_2024_ecoli/metabolites.csv
 test/workspace_2024_ecoli/core0.txt
 test/workspace_2024_ecoli/core1.txt
+test/workspace_2024_ecoli/MG1655_1.xml
