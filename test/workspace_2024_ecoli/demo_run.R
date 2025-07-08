@@ -9,8 +9,8 @@ setwd(@dir);
 
 sink(file = "./run.log");
 
-let modelfile  = "./MG1655.xml";
-let model      = as.object(read.vcell(path = modelfile));
+let modelfile  = "G:\GCModeller\src\GCModeller\engine\vcellkit\test\bin\x64\Debug\net8.0\cell1.json";
+let model      = as.object(read.json_model(file = modelfile));
 let time.ticks = 1000;
 
 print("Run virtual cell model:");
