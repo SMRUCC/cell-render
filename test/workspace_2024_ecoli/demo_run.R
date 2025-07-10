@@ -16,7 +16,7 @@ let time.ticks = 1000;
 print("Run virtual cell model:");
 print(model);
 
-let vcell = vcell.model(model);
+let vcell = vcell.model(model,unit.test =TRUE);
 let mass  = vcell.mass.index(vcell);
 let flux  = vcell.flux.index(vcell);
 
@@ -33,11 +33,12 @@ let rawXml = "./result.vcellPack";
 
 let engine = vcell
 |> engine.load(	
-	inits            = mass0(model),
+	inits            = mass0(model, unit.test = TRUE),
 	iterations       = time.ticks, 
 	time_resolutions = 1000, 	
 	showProgress     = TRUE,
-	debug            = FALSE
+	debug            = FALSE,
+	unit.test        = TRUE
 ) 
 |> as.object()
 ;
