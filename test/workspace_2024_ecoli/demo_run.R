@@ -11,7 +11,7 @@ sink(file = "./run.log");
 
 let modelfile  = "G:\GCModeller\src\GCModeller\engine\vcellkit\test\bin\x64\Debug\net8.0\cell1.json";
 let model      = as.object(read.json_model(file = modelfile));
-let time.ticks = 1000;
+let time.ticks = 250;
 
 print("Run virtual cell model:");
 print(model);
@@ -33,9 +33,12 @@ let rawXml = "./result.vcellPack";
 
 let engine = vcell
 |> engine.load(	
-	inits            = mass0(model, unit.test = TRUE),
+	inits = mass0(model, unit.test = TRUE, random = [1,100]) |> set_status( 
+						 Intracellular = list(A = 120, B = 10, C = 0),
+						 Extracellular = list(A = 120,   B = 0,  C = 0)
+	),
 	iterations       = time.ticks, 
-	time_resolutions = 1000, 	
+	time_resolutions = 2000, 	
 	showProgress     = TRUE,
 	debug            = FALSE,
 	unit.test        = TRUE

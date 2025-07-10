@@ -17,6 +17,7 @@
 mono_crash.*
 
 assembly/
+test/workspace_2024_ecoli/vcell_sim/
 
 # Build results
 [Dd]ebug/
