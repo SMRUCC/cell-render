@@ -1,4 +1,7 @@
 require(CellRender);
+require(GCModeller);
+
+imports "modeller" from "vcellkit";
 
 let cad_registry = CellRender::open_registry("root", 123456, host = "192.168.3.15");
 let template = "G:\biocad_registry\test\Escherichia coli str. K-12 substr. MG1655.txt";
