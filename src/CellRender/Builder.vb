@@ -1,3 +1,4 @@
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
@@ -56,7 +57,7 @@ Public Module Builder
                .ToArray
         End If
 
-        Using compiler As New Compiler(register, template)
+        Using compiler As New Compiler(register, template, CLng(Val(taxid.Match("\d+"))).ToString)
             Return compiler.Compile($"/compile --log ""{logfile}""")
         End Using
     End Function

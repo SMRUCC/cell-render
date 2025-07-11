@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
@@ -12,6 +13,7 @@ Public Class ReplicateBuilder
     ReadOnly compiler As Compiler
     ReadOnly genes As New List(Of TranscriptUnit)
     ReadOnly rnas As New List(Of RNA)
+    ReadOnly tax_id As ULong
 
     Public ReadOnly Property cad_registry As biocad_registry
         Get
@@ -21,9 +23,10 @@ Public Class ReplicateBuilder
 
     Sub New(compiler As Compiler)
         Me.compiler = compiler
+        Me.tax_id = ULong.Parse(compiler.tax_id)
     End Sub
 
-    Private Sub linkGene(gene_info As GeneTable)
+    Private Function linkGene(gene_info As GeneTable, ByRef find As gene_molecule) As gene
         ' fetch gene information from database
         Dim findMol = cad_registry.molecule _
             .where(field("`molecule`.type") = compiler.dna_term,
@@ -47,7 +50,7 @@ Public Class ReplicateBuilder
             Dim warn As String = $"missing gene model from the registry: {gene_info}"
             Call warn.Warning
             Call VBDebugger.EchoLine(warn)
-            Return
+            Return Nothing
         End If
 
         If findMol.parent > 0 Then
@@ -59,11 +62,11 @@ Public Class ReplicateBuilder
                 Dim warn As String = $"missing parent replicon for the gene model: {gene_info}"
                 Call warn.Warning
                 Call VBDebugger.EchoLine(warn)
-                Return
+                Return Nothing
             End If
         End If
 
-        Dim find As gene_molecule = cad_registry.molecule _
+        find = cad_registry.molecule _
             .left_join("sequence_graph") _
             .on(field("`sequence_graph`.molecule_id") = field("`molecule`.id")) _
             .where(field("`molecule`.id") = findMol.id) _
@@ -76,7 +79,7 @@ Public Class ReplicateBuilder
             Call warn.Warning
             Call VBDebugger.EchoLine(warn)
 
-            Return
+            Return Nothing
         End If
 
         Dim rna = RNAComposition _
@@ -120,18 +123,71 @@ Public Class ReplicateBuilder
             })
         End If
 
-        Call genes.Add(New TranscriptUnit With {.id = find.id, .genes = {gene}})
-    End Sub
+        Return gene
+    End Function
 
+    ''' <summary>
+    ''' contains CDS/tRNA/rRNA
+    ''' </summary>
+    ''' <returns></returns>
     Public Function BuildGenome() As replicon
         Dim bar As Tqdm.ProgressBar = Nothing
+        Dim operons = cad_registry.conserved_cluster _
+            .where(field("tax_id") = tax_id) _
+            .select(Of biocad_registryModel.conserved_cluster)
+        Dim tu_units As New Index(Of String)
+        Dim template_index = compiler.template.ToDictionary(Function(a) a.locus_id)
 
         Call VBDebugger.EchoLine("compile of the genome model, pull gene and proteins.")
 
-        ' contains CDS/tRNA/rRNA
-        For Each gene_info As GeneTable In TqdmWrapper.Wrap(compiler.template, bar:=bar, useColor:=True)
+        ' processing of the transcript unit
+        For Each operon As biocad_registryModel.conserved_cluster In operons
+            Dim tu = cad_registry.cluster_link _
+                .left_join("molecule") _
+                .on(field("`molecule`.id") = field("gene_id")) _
+                .where(field("cluster_id") = operon.id) _
+                .select(Of biocad_registryModel.molecule)("molecule.*")
+            ' matches from the templates list
+            Dim members As New List(Of gene)
+
+            For Each unit_gene In tu
+                Dim gene_info As GeneTable = template_index.TryGetValue(unit_gene.xref_id)
+
+                If Not gene_info Is Nothing Then
+                    Dim find As gene_molecule = Nothing
+                    Dim gene_model As gene = linkGene(gene_info, find)
+
+                    If gene_model Is Nothing OrElse find Is Nothing Then
+                        Continue For
+                    End If
+
+                    Call members.Add(gene_model)
+                    Call template_index.Remove(unit_gene.xref_id)
+                End If
+            Next
+
+            If members.Count > 0 Then
+                Call genes.Add(New TranscriptUnit With {
+                      .id = operon.db_xref & ":" & operon.name,
+                      .genes = members.ToArray
+                })
+            End If
+        Next
+
+        ' processing other genes that not inside the operons
+        For Each gene_info As GeneTable In TqdmWrapper.Wrap(template_index.Values, bar:=bar, useColor:=True)
             Call bar.SetLabel(gene_info.ToString)
-            Call linkGene(gene_info)
+
+            Dim find As gene_molecule = Nothing
+            Dim gene_model As gene = linkGene(gene_info, find)
+
+            If gene_model Is Nothing OrElse find Is Nothing Then
+                Continue For
+            End If
+
+            Dim gene_tu As New TranscriptUnit With {.id = find.id, .genes = {gene_model}}
+
+            Call genes.Add(gene_tu)
         Next
 
         Return New replicon With {

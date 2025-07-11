@@ -16,6 +16,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     Friend ReadOnly ec_number As UInteger
     Friend ReadOnly kegg_term As UInteger
     Friend ReadOnly polypeptide_term As UInteger
+    Friend ReadOnly tax_id As String
 
     ''' <summary>
     ''' 
@@ -28,7 +29,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     ''' The gene set should be a <see cref="GeneTable"/> array that contains all the genes
     ''' information of a genome, such as locus_tag, product, location, etc.
     ''' </remarks>
-    Sub New(registry As biocad_registry, genes As GeneTable())
+    Sub New(registry As biocad_registry, genes As GeneTable(), taxid As String)
         Dim terms As BioCadVocabulary = registry.vocabulary_terms
 
         template = genes
@@ -37,6 +38,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         ec_number = terms.ecnumber_term
         kegg_term = terms.kegg_term
         polypeptide_term = terms.protein_term
+        tax_id = taxid
     End Sub
 
     Protected Overrides Function CompileImpl(args As CommandLine) As Integer
