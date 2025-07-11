@@ -13,6 +13,7 @@ Public Class MetabolicNetworkBuilder
     ReadOnly compiler As Compiler
     ReadOnly chromosome As replicon
     ReadOnly substrate_links As Dictionary(Of String, biocad_registryModel.kinetic_substrate())
+    ReadOnly union_hashcode
 
     Public ReadOnly Property cad_registry As biocad_registry
         Get
@@ -28,6 +29,7 @@ Public Class MetabolicNetworkBuilder
         Dim page As biocad_registryModel.kinetic_substrate()
         Dim page_size As Integer = 10000
 
+        ' load data into memory for create cache
         For i As Integer = 0 To 100000
             page = compiler.cad_registry.kinetic_substrate _
                 .limit(i * page_size, page_size) _
