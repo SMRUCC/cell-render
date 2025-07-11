@@ -3,6 +3,10 @@ Imports Oracle.LinuxCompatibility.MySQL.Reflection.DbAttributes
 
 Public Class UnionHashCode
 
+    ''' <summary>
+    ''' the reacttion has the same ec_number, substrate, products if there hashcode identical
+    ''' </summary>
+    ''' <returns></returns>
     <DatabaseField> Public Property hashcode As String
     <DatabaseField> Public Property reaction_id As String
 

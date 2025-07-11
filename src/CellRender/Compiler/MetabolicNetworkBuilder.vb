@@ -13,7 +13,7 @@ Public Class MetabolicNetworkBuilder
     ReadOnly compiler As Compiler
     ReadOnly chromosome As replicon
     ReadOnly substrate_links As Dictionary(Of String, biocad_registryModel.kinetic_substrate())
-    ReadOnly union_hashcode
+    ReadOnly union_hashcode As UnionHashCode()
 
     Public ReadOnly Property cad_registry As biocad_registry
         Get
@@ -42,6 +42,7 @@ Public Class MetabolicNetworkBuilder
             End If
         Next
 
+        union_hashcode = UnionHashCode.LoadUniqueHashCodes(compiler.cad_registry)
         substrate_links = links _
             .GroupBy(Function(a) a.kinetic_id) _
             .ToDictionary(Function(a)
@@ -50,6 +51,7 @@ Public Class MetabolicNetworkBuilder
                           Function(a)
                               Return a.ToArray
                           End Function)
+
     End Sub
 
     Private Iterator Function PullReactionNoneEnzymatic() As IEnumerable(Of Reaction)
