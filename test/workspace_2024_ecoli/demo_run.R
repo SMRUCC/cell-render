@@ -22,9 +22,13 @@ let flux  = vcell.flux.index(vcell);
 
 let dynamics = dynamics.default() |> as.object;
 
-dynamics$transcriptionBaseline   = 200;
-dynamics$transcriptionCapacity   = 500;
+dynamics$transcriptionBaseline   = 2;
+dynamics$transcriptionCapacity   = 5;
 dynamics$productInhibitionFactor = 0.00000125;
+
+dynamics$translationCapacity = 1;
+dynamics$proteinMatureBaseline = 2;
+dynamics$proteinMatureCapacity = 10;
 
 print("Using dynamics parameter configuration:");
 print(dynamics);
@@ -33,7 +37,7 @@ let rawXml = "./result.vcellPack";
 
 let engine = vcell
 |> engine.load(	
-	inits = mass0(model, unit.test = TRUE, random = [1,100]) |> set_status( 
+	inits = mass0(model, unit.test = TRUE, random = [100,5000]) |> set_status( 
 						 Intracellular = list(A = 120, B = 10, C = 0),
 						 Extracellular = list(A = 120,   B = 0,  C = 0)
 	),
