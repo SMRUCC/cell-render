@@ -87,7 +87,7 @@ Public Class MetabolicNetworkBuilder
                                     Function(a)
                                         Return a _
                                             .Select(Function(c)
-                                                        Return New CompoundFactor(c.factor, c.molecule_id)
+                                                        Return New CompoundFactor(c.factor, c.molecule_id.ToString)
                                                     End Function) _
                                             .ToArray
                                     End Function)
@@ -234,7 +234,7 @@ Public Class MetabolicNetworkBuilder
                                               Function(a)
                                                   Return a _
                                                       .Select(Function(c)
-                                                                  Return New CompoundFactor(c.factor, c.molecule_id)
+                                                                  Return New CompoundFactor(c.factor, c.molecule_id.ToString)
                                                               End Function) _
                                                       .ToArray
                                               End Function)
@@ -282,7 +282,7 @@ Public Class MetabolicNetworkBuilder
             Call bar.SetLabel(ec_str.JoinBy(" / "))
 
             Yield New Enzyme With {
-                .geneID = gene.Key,
+                .proteinID = gene.Key,
                 .ECNumber = ec_str.JoinBy(" / "),
                 .catalysis = rxns _
                     .Select(Function(r) As IEnumerable(Of Catalysis)

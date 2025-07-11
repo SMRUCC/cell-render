@@ -39,7 +39,7 @@ let engine = vcell
 |> engine.load(	
 	inits = mass0(model, unit.test = TRUE, random = [100,5000]) |> set_status( 
 						 Intracellular = list(A = 120, B = 10, C = 0),
-						 Extracellular = list(A = 120,   B = 0,  C = 0)
+						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
 	iterations       = time.ticks, 
 	time_resolutions = 2000, 	
