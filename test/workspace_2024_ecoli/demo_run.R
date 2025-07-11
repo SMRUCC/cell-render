@@ -9,7 +9,7 @@ setwd(@dir);
 
 sink(file = "./run.log");
 
-let modelfile  = "G:\GCModeller\src\GCModeller\engine\vcellkit\test\bin\x64\Debug\net8.0\cell1.json";
+let modelfile  = "./MG1655.json";
 let model      = as.object(read.json_model(file = modelfile));
 let time.ticks = 250;
 
