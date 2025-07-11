@@ -168,7 +168,8 @@ Public Class ReplicateBuilder
 
             If members.Count > 0 Then
                 Call genes.Add(New TranscriptUnit With {
-                      .id = operon.db_xref & ":" & operon.name,
+                      .id = operon.db_xref,
+                      .name = operon.name,
                       .genes = members.ToArray
                 })
             End If
@@ -185,7 +186,11 @@ Public Class ReplicateBuilder
                 Continue For
             End If
 
-            Dim gene_tu As New TranscriptUnit With {.id = find.id, .genes = {gene_model}}
+            Dim gene_tu As New TranscriptUnit With {
+                .id = find.id,
+                .name = gene_info.geneName,
+                .genes = {gene_model}
+            }
 
             Call genes.Add(gene_tu)
         Next
