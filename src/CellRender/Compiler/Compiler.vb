@@ -32,7 +32,9 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     Sub New(registry As biocad_registry, genes As GeneTable(), taxid As String)
         Dim terms As BioCadVocabulary = registry.vocabulary_terms
 
-        template = genes
+        template = genes.GroupBy(Function(g) g.locus_id) _
+            .Select(Function(g) g.First) _
+            .ToArray
         cad_registry = registry
         dna_term = terms.gene_term
         ec_number = terms.ecnumber_term
