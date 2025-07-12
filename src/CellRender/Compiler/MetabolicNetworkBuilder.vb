@@ -295,7 +295,7 @@ Public Class MetabolicNetworkBuilder
             .compounds = PullCompounds(ec_rxn, chemical_rxns.ToArray).ToArray,
             .reactions = New ReactionGroup With {
                 .enzymatic = biological_rxns.ToArray,
-                .etc = chemical_rxns.ToArray
+                .none_enzymatic = chemical_rxns.ToArray
             },
             .enzymes = queryEnzymes(ec_link, ec_rxn).ToArray
         }
