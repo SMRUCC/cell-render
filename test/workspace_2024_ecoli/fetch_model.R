@@ -11,4 +11,4 @@ let model = cad_registry |> compile_genbank(gbff = template);
 # |> xml()
 # |> writeLines(con = file.path(@dir,"MG1655.xml"))
 # ;
-write.json_model(model , file =file.path(@dir,"MG1655.json"));
+write.zip(model , file =file.path(@dir,"MG1655.zip"));
