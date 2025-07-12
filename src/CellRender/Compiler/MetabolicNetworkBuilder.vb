@@ -42,6 +42,13 @@ Public Class MetabolicNetworkBuilder
             End If
         Next
 
+        lawsData = cad_registry.kinetic_law _
+            .select(Of biocad_registryModel.kinetic_law) _
+            .GroupBy(Function(l) l.ec_number) _
+            .ToDictionary(Function(e) e.Key,
+                          Function(e)
+                              Return e.ToArray
+                          End Function)
         union_hashcode = UnionHashCode.LoadUniqueHashCodes(compiler.cad_registry)
         substrate_links = links _
             .GroupBy(Function(a) a.kinetic_id) _
@@ -52,7 +59,7 @@ Public Class MetabolicNetworkBuilder
                               Return a.ToArray
                           End Function)
 
-        Call VBDebugger.EchoLine($"load all {union_hashcode.Length} unique reaction signature hashcode data!")
+        Call VBDebugger.EchoLine($"load all {union_hashcode.Length} unique reaction signature hashcode data and {lawsData} enzyme kinetics law data!")
     End Sub
 
     ''' <summary>
@@ -333,12 +340,12 @@ Public Class MetabolicNetworkBuilder
         Next
     End Function
 
+    Dim lawsData As Dictionary(Of String, biocad_registryModel.kinetic_law())
+
     Private Iterator Function GetKineticsParameters(r As IGrouping(Of String, Reaction)) As IEnumerable(Of Catalysis)
         ' get ec number for query kinetics law
         Dim ec_id As String() = r.Select(Function(a) a.ec_number).IteratesALL.Distinct.ToArray
-        Dim laws = cad_registry.kinetic_law _
-            .where(field("ec_number").in(ec_id)) _
-            .select(Of biocad_registryModel.kinetic_law)
+        Dim laws = ec_id.Select(Function(eid) lawsData.TryGetValue(eid)).IteratesALL.ToArray
         ' use substrate network for make confirmed
         Dim hits_any As Boolean = False
         Dim compounds As Index(Of String) = r _
