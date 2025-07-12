@@ -139,9 +139,9 @@ Public Class ReplicateBuilder
         Dim template_index = compiler.template.ToDictionary(Function(a) a.locus_id)
 
         Call VBDebugger.EchoLine("compile of the genome model, pull gene and proteins.")
+        Call VBDebugger.EchoLine("processing of the conserved transcript unit")
 
-        ' processing of the transcript unit
-        For Each operon As biocad_registryModel.conserved_cluster In operons
+        For Each operon As biocad_registryModel.conserved_cluster In TqdmWrapper.Wrap(operons, bar:=bar)
             Dim tu = cad_registry.cluster_link _
                 .left_join("molecule") _
                 .on(field("`molecule`.id") = field("gene_id")) _
@@ -149,6 +149,8 @@ Public Class ReplicateBuilder
                 .select(Of biocad_registryModel.molecule)("molecule.*")
             ' matches from the templates list
             Dim members As New List(Of gene)
+
+            Call bar.SetLabel(operon.db_xref)
 
             For Each unit_gene In tu
                 Dim gene_info As GeneTable = template_index.TryGetValue(unit_gene.xref_id)
@@ -166,6 +168,10 @@ Public Class ReplicateBuilder
                 End If
             Next
 
+            If tu.Length <> members.Count Then
+                Call $"missing gene object for operon {operon.name}".Warning
+            End If
+
             If members.Count > 0 Then
                 Call genes.Add(New TranscriptUnit With {
                       .id = operon.db_xref,
@@ -175,8 +181,10 @@ Public Class ReplicateBuilder
             End If
         Next
 
-        ' processing other genes that not inside the operons
-        For Each gene_info As GeneTable In TqdmWrapper.Wrap(template_index.Values, bar:=bar, useColor:=True)
+        Call VBDebugger.EchoLine($"create {genes.Count} conserved operons!")
+        Call VBDebugger.EchoLine("processing other genes that not inside the conserved operons")
+
+        For Each gene_info As GeneTable In TqdmWrapper.Wrap(template_index.Values, bar:=bar)
             Call bar.SetLabel(gene_info.ToString)
 
             Dim find As gene_molecule = Nothing

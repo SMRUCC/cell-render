@@ -52,6 +52,7 @@ Public Class MetabolicNetworkBuilder
                               Return a.ToArray
                           End Function)
 
+        Call VBDebugger.EchoLine($"load all {union_hashcode.Length} unique reaction signature hashcode data!")
     End Sub
 
     ''' <summary>
@@ -117,6 +118,8 @@ Public Class MetabolicNetworkBuilder
             .ToArray
         Dim kegg_id As biocad_registryModel.db_xrefs()
 
+        Call VBDebugger.EchoLine("load reaction related compound information")
+
         For Each ref As IGrouping(Of String, CompoundFactor) In TqdmWrapper.Wrap(all)
             Dim mol = cad_registry.molecule _
                 .where(field("id") = ref.Key) _
@@ -154,7 +157,13 @@ Public Class MetabolicNetworkBuilder
     Dim ec_link As New List(Of NamedValue(Of String))
 
     Private Sub LoadEnzymeLinks()
-        For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
+        Dim bar As Tqdm.ProgressBar = Nothing
+
+        Call VBDebugger.EchoLine("create ec_number links to the annotated genome data!")
+
+        For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons, bar:=bar)
+            Call bar.SetLabel(t_unit.id)
+
             For Each gene As gene In t_unit.genes
                 ' current gene is not a CDS encoder
                 ' skip this rna gene
@@ -205,8 +214,13 @@ Public Class MetabolicNetworkBuilder
                           End Function)
         Dim enzyme_role = cad_registry.getVocabulary("Enzymatic Catalysis", "Regulation Type")
         Dim scan_id As New Index(Of String)
+        Dim bar As Tqdm.ProgressBar = Nothing
 
-        For Each hash As UnionHashCode In TqdmWrapper.Wrap(union_hashcode)
+        Call VBDebugger.EchoLine("fetch the reaction model for build network...")
+
+        For Each hash As UnionHashCode In TqdmWrapper.Wrap(union_hashcode, bar:=bar)
+            Call bar.SetLabel($"[{hash.hashcode}] {hash.AsEnumerable.Count} duplicated models")
+
             For Each id As String In hash.AsEnumerable
                 If id Like scan_id Then
                     Continue For
