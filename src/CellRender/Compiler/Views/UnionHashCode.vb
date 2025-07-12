@@ -1,7 +1,8 @@
-﻿Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
+﻿Imports Microsoft.VisualBasic.Linq
+Imports Oracle.LinuxCompatibility.MySQL.MySqlBuilder
 Imports Oracle.LinuxCompatibility.MySQL.Reflection.DbAttributes
 
-Public Class UnionHashCode
+Public Class UnionHashCode : Implements Enumeration(Of String)
 
     ''' <summary>
     ''' the reacttion has the same ec_number, substrate, products if there hashcode identical
@@ -21,4 +22,9 @@ Public Class UnionHashCode
         Return hash_query
     End Function
 
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of String) Implements Enumeration(Of String).GenericEnumerator
+        For Each id As String In reaction_id.Split(","c)
+            Yield id
+        Next
+    End Function
 End Class

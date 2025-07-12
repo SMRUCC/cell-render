@@ -54,80 +54,57 @@ Public Class MetabolicNetworkBuilder
 
     End Sub
 
-    Private Iterator Function PullReactionNoneEnzymatic() As IEnumerable(Of Reaction)
-        Dim page_size = 2000
+    ''' <summary>
+    ''' get reaction model of a non-enzymatic reaction by its id
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
+    Private Function PullReactionNoneEnzymatic(id As String) As Reaction
+        Dim r As biocad_registryModel.reaction = cad_registry.reaction.where(field("id") = id).find(Of biocad_registryModel.reaction)
 
-        For i As Integer = 1 To Integer.MaxValue
-            Dim offset As Integer = (i - 1) * page_size
-            Dim q = cad_registry.reaction _
-                .left_join("regulation_graph") _
-                .on(field("`regulation_graph`.reaction_id") = field("`reaction`.id")) _
-                .where(field("term").is_nothing) _
-                .limit(offset, page_size) _
-                .select(Of biocad_registryModel.reaction)("`reaction`.*")
+        If r Is Nothing Then
+            Return Nothing
+        End If
 
-            If q.IsNullOrEmpty Then
-                Exit For
-            End If
+        Dim compounds = cad_registry.reaction_graph _
+            .left_join("vocabulary") _
+            .on(field("`vocabulary`.id") = field("role")) _
+            .where(field("reaction") = r.id) _
+            .select(Of reaction_view)("reaction AS reaction_id",
+                                        "molecule_id",
+                                        "db_xref",
+                                        "term AS side",
+                                        "factor")
 
-            For Each r As biocad_registryModel.reaction In TqdmWrapper.Wrap(q)
-                Dim compounds = cad_registry.reaction_graph _
-                    .left_join("vocabulary") _
-                    .on(field("`vocabulary`.id") = field("role")) _
-                    .where(field("reaction") = r.id) _
-                    .select(Of reaction_view)("reaction AS reaction_id",
-                                              "molecule_id",
-                                              "db_xref",
-                                              "term AS side",
-                                              "factor")
+        If compounds.IsNullOrEmpty OrElse compounds.Any(Function(c) c.molecule_id = 0) Then
+            Return Nothing
+        End If
 
-                If compounds.IsNullOrEmpty OrElse compounds.Any(Function(c) c.molecule_id = 0) Then
-                    Continue For
-                End If
+        Dim sides = compounds _
+            .GroupBy(Function(a) a.side) _
+            .ToDictionary(Function(a) a.Key,
+                            Function(a)
+                                Return a _
+                                    .Select(Function(c)
+                                                Return New CompoundFactor(c.factor, c.molecule_id.ToString)
+                                            End Function) _
+                                    .ToArray
+                            End Function)
 
-                Dim sides = compounds _
-                    .GroupBy(Function(a) a.side) _
-                    .ToDictionary(Function(a) a.Key,
-                                    Function(a)
-                                        Return a _
-                                            .Select(Function(c)
-                                                        Return New CompoundFactor(c.factor, c.molecule_id.ToString)
-                                                    End Function) _
-                                            .ToArray
-                                    End Function)
+        If Not (sides.ContainsKey("substrate") AndAlso sides.ContainsKey("product")) Then
+            Return Nothing
+        End If
 
-                If Not (sides.ContainsKey("substrate") AndAlso sides.ContainsKey("product")) Then
-                    Continue For
-                End If
-
-                Yield New Reaction With {
-                    .ID = r.id,
-                    .bounds = {1, 1},
-                    .is_enzymatic = False,
-                    .name = r.name,
-                    .substrate = sides!substrate,
-                    .product = sides!product
-                }
-            Next
-        Next
-    End Function
-
-    Private Iterator Function FillReactions(ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Reaction)
-        For Each rxn As Reaction In TqdmWrapper.Wrap(ec_rxn.Values _
-            .IteratesALL _
-            .GroupBy(Function(r) r.ID) _
-            .Select(Function(r) r.First) _
-            .ToArray)
-
-            Dim reaction = cad_registry.reaction _
-                .where(field("id") = rxn.ID) _
-                .find(Of biocad_registryModel.reaction)
-
-            rxn.name = reaction.name
-            rxn.note = reaction.note
-
-            Yield rxn
-        Next
+        Return New Reaction With {
+            .ID = r.id,
+            .bounds = {1, 1},
+            .is_enzymatic = False,
+            .name = r.name,
+            .substrate = sides!substrate,
+            .product = sides!product,
+            .note = r.note,
+            .ec_number = Nothing
+        }
     End Function
 
     Private Iterator Function PullCompounds(pool As Dictionary(Of String, Reaction()), etc As Reaction()) As IEnumerable(Of Compound)
@@ -167,12 +144,16 @@ Public Class MetabolicNetworkBuilder
         Next
     End Function
 
-    Public Function BuildMetabolicNetwork() As MetabolismStructure
-        Dim ec_reg As New List(Of String)
-        Dim ec_link As New List(Of NamedValue(Of String))
-        Dim ec_rxn As Dictionary(Of String, Reaction())
-        Dim none_enzymatic = PullReactionNoneEnzymatic().ToArray
+    ''' <summary>
+    ''' a list of the ec-number that annotated from current genome
+    ''' </summary>
+    Dim ec_reg As New List(Of String)
+    ''' <summary>
+    ''' the mapping from gene locus id to the ec_number
+    ''' </summary>
+    Dim ec_link As New List(Of NamedValue(Of String))
 
+    Private Sub LoadEnzymeLinks()
         For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons)
             For Each gene As gene In t_unit.genes
                 ' current gene is not a CDS encoder
@@ -196,74 +177,114 @@ Public Class MetabolicNetworkBuilder
                                       Select New NamedValue(Of String)(prot_id, ec))
             Next
         Next
+    End Sub
 
-        ec_rxn = loadEnzymeReactions(ec_reg) _
-            .ToDictionary(Function(a) a.ec_number,
+    ''' <summary>
+    ''' scan all unique reaction, and build network via rules:
+    ''' 
+    ''' 1. only add the enzyme reaction which is annotated from the genome
+    ''' 2. other non-annotated enzyme reaction is treated as the non-enzymatic reaction
+    ''' 3. all non-enzymatic reaction is added into the model
+    ''' 4. all reaction is treated as reversiable
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function BuildMetabolicNetwork() As MetabolismStructure
+        Dim ec_rxn As Dictionary(Of String, Reaction())
+        Dim chemical_rxns As New List(Of Reaction)
+        Dim biological_rxns As New List(Of Reaction)
+
+        Call LoadEnzymeLinks()
+
+        Dim ec_numbers As Index(Of String) = ec_reg.Indexing
+        Dim ec_generic = ec_numbers.Objects _
+            .Select(Function(ec) (ec.Trim("-"c, "."c), ec)) _
+            .GroupBy(Function(e) e.Item1) _
+            .ToDictionary(Function(e) e.Key,
+                          Function(e)
+                              Return e.Select(Function(i) i.Item2).Distinct.ToArray
+                          End Function)
+        Dim enzyme_role = cad_registry.getVocabulary("Enzymatic Catalysis", "Regulation Type")
+        Dim scan_id As New Index(Of String)
+
+        For Each hash As UnionHashCode In TqdmWrapper.Wrap(union_hashcode)
+            For Each id As String In hash.AsEnumerable
+                If id Like scan_id Then
+                    Continue For
+                Else
+                    Call scan_id.Add(id)
+                End If
+
+                Dim reaction As Reaction = PullReactionNoneEnzymatic(id)
+
+                If reaction Is Nothing Then
+                    Continue For
+                End If
+
+                ' check enzyme
+                Dim ecs = cad_registry.regulation_graph _
+                    .where(field("reaction_id") = id,
+                           field("role") = enzyme_role) _
+                    .distinct _
+                    .project(Of String)("term")
+
+                ecs = ecs.Where(Function(eid)
+                                    ' genome contains this ec number exactly
+                                    Return eid Like ec_numbers
+                                End Function) _
+                    .JoinIterates(ec_generic _
+                         .AsParallel _
+                         .Select(Function(ecg)
+                                     ' mapping generic enzyme to annotated enzyme?
+                                     If ecs.Any(Function(eid) eid.StartsWith(ecg.Key)) Then
+                                         Return ecg.Value
+                                     Else
+                                         Return {}
+                                     End If
+                                 End Function) _
+                         .IteratesALL) _
+                    .Distinct _
+                    .ToArray
+
+                If ecs.IsNullOrEmpty Then
+                    ' is non-enzymatic reaction
+                    Call chemical_rxns.Add(reaction)
+                Else
+                    ' is enzymatic reaction annotated in current genome
+                    reaction.bounds = {10, 10}
+                    reaction.is_enzymatic = True
+                    reaction.ec_number = ecs
+                    reaction.compartment = "Intracellular"
+
+                    Call biological_rxns.Add(reaction)
+                End If
+
+                ' hash code is the unique hashcode of the duplicated
+                ' reaction models
+                ' we has created a reaction object for current hash code
+                ' so NO NEEDS for scan other duplicated models
+                Exit For
+            Next
+        Next
+
+        ec_rxn = biological_rxns _
+            .Select(Function(a)
+                        Return a.ec_number.Select(Function(id) (ec_number:=id, a))
+                    End Function) _
+            .IteratesALL _
+            .GroupBy(Function(r) r.ec_number) _
+            .ToDictionary(Function(a) a.Key,
                           Function(a)
-                              Return a.rxns
+                              Return a.Select(Function(g) g.a).ToArray
                           End Function)
 
         Return New MetabolismStructure With {
-            .compounds = PullCompounds(ec_rxn, none_enzymatic).ToArray,
+            .compounds = PullCompounds(ec_rxn, chemical_rxns.ToArray).ToArray,
             .reactions = New ReactionGroup With {
-                .enzymatic = FillReactions(ec_rxn).ToArray,
-                .etc = none_enzymatic
+                .enzymatic = biological_rxns.ToArray,
+                .etc = chemical_rxns.ToArray
             },
             .enzymes = queryEnzymes(ec_link, ec_rxn).ToArray
         }
-    End Function
-
-    Private Iterator Function loadEnzymeReactions(ec_reg As IEnumerable(Of String)) As IEnumerable(Of (ec_number$, rxns As Reaction()))
-        For Each ec_number As String In TqdmWrapper.Wrap(ec_reg.Distinct.ToArray)
-            Dim ec_generic = ec_number.Trim("-"c, "."c)
-            Dim view = cad_registry.regulation_graph _
-                .left_join("reaction_graph") _
-                .on(field("reaction_graph.reaction") = field("reaction_id")) _
-                .left_join("vocabulary") _
-                .on(field("vocabulary.id") = field("reaction_graph.role")) _
-                .where(field("`regulation_graph`.term") = ec_number Or
-                    field("`regulation_graph`.term").instr(ec_generic) = 1) _
-                .select(Of reaction_view)("reaction_id",
-                                          "molecule_id",
-                                          "db_xref",
-                                          "vocabulary.term AS side",
-                                          "factor")
-            Dim reactions As Reaction() = view _
-                .Where(Function(c) c.molecule_id > 0 AndAlso Not c.side Is Nothing) _
-                .GroupBy(Function(a) a.reaction_id) _
-                .Select(Function(rxn)
-                            Dim sides = rxn _
-                                .GroupBy(Function(a) a.side) _
-                                .ToDictionary(Function(a) a.Key,
-                                              Function(a)
-                                                  Return a _
-                                                      .Select(Function(c)
-                                                                  Return New CompoundFactor(c.factor, c.molecule_id.ToString)
-                                                              End Function) _
-                                                      .ToArray
-                                              End Function)
-
-                            If Not (sides.ContainsKey("substrate") AndAlso sides.ContainsKey("product")) Then
-                                Return Nothing
-                            End If
-
-                            Return New Reaction With {
-                                .ID = rxn.Key,
-                                .bounds = {5, 5},
-                                .is_enzymatic = True,
-                                .name = ec_number,
-                                .substrate = sides!substrate,
-                                .product = sides!product,
-                                .ec_number = {ec_number}
-                            }
-                        End Function) _
-                .Where(Function(r)
-                           Return Not r Is Nothing
-                       End Function) _
-                .ToArray
-
-            Yield (ec_number, reactions)
-        Next
     End Function
 
     Private Iterator Function queryEnzymes(ec_link As IEnumerable(Of NamedValue(Of String)), ec_rxn As Dictionary(Of String, Reaction())) As IEnumerable(Of Enzyme)
