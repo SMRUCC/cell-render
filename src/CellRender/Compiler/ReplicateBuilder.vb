@@ -11,9 +11,10 @@ Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.Cellular.Vector
 Public Class ReplicateBuilder
 
     ReadOnly compiler As Compiler
+    ReadOnly tax_id As ULong
+
     ReadOnly genes As New List(Of TranscriptUnit)
     ReadOnly rnas As New List(Of RNA)
-    ReadOnly tax_id As ULong
 
     Public ReadOnly Property cad_registry As biocad_registry
         Get
@@ -130,13 +131,22 @@ Public Class ReplicateBuilder
     ''' contains CDS/tRNA/rRNA
     ''' </summary>
     ''' <returns></returns>
-    Public Function BuildGenome() As replicon
+    Public Iterator Function BuildGenome() As IEnumerable(Of replicon)
+        For Each data As KeyValuePair(Of String, (Boolean, GeneTable())) In compiler.template
+            Call genes.Clear()
+            Call rnas.Clear()
+
+            Yield createReplicon(data.Key, data.Value.Item1, data.Value.Item2)
+        Next
+    End Function
+
+    Private Function createReplicon(name As String, is_plasmid As Boolean, geneSet As GeneTable()) As replicon
         Dim bar As Tqdm.ProgressBar = Nothing
         Dim operons = cad_registry.conserved_cluster _
             .where(field("tax_id") = tax_id) _
             .select(Of biocad_registryModel.conserved_cluster)
         Dim tu_units As New Index(Of String)
-        Dim template_index = compiler.template.ToDictionary(Function(a) a.locus_id)
+        Dim template_index As Dictionary(Of String, GeneTable) = geneSet.ToDictionary(Function(a) a.locus_id)
 
         Call VBDebugger.EchoLine("compile of the genome model, pull gene and proteins.")
         Call VBDebugger.EchoLine("processing of the conserved transcript unit")
@@ -173,7 +183,7 @@ Public Class ReplicateBuilder
             End If
 
             If members.Count > 0 Then
-                Call genes.Add(New TranscriptUnit With {
+                Call Me.genes.Add(New TranscriptUnit With {
                       .id = operon.db_xref,
                       .name = operon.name,
                       .genes = members.ToArray
@@ -200,14 +210,14 @@ Public Class ReplicateBuilder
                 .genes = {gene_model}
             }
 
-            Call genes.Add(gene_tu)
+            Call Me.genes.Add(gene_tu)
         Next
 
         Return New replicon With {
-            .genomeName = "",
-            .isPlasmid = False,
-            .operons = genes.ToArray,
-            .RNAs = rnas.ToArray
+            .genomeName = name,
+            .isPlasmid = is_plasmid,
+            .operons = Me.genes.ToArray,
+            .RNAs = Me.rnas.ToArray
         }
     End Function
 

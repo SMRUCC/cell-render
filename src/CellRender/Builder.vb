@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
+Imports SMRUCC.genomics.Metagenomics
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
@@ -27,6 +28,8 @@ Public Module Builder
                                     Optional env As Environment = Nothing) As Object
 
         Dim template As GeneTable()
+        Dim taxinfo As Taxonomy = Nothing
+        Dim cellular_id As String = "intracellular"
 
         If genes Is Nothing Then
             Return RInternal.debug.stop("the required template source should not be nothing!", env)
@@ -38,6 +41,8 @@ Public Module Builder
                 .AsParallel _
                 .Select(Function(gene) gene.DumpExportFeature) _
                 .ToArray
+            taxinfo = DirectCast(genes, GBFF.File).Source.GetTaxonomy
+            cellular_id = If(DirectCast(genes, GBFF.File).Taxon, cellular_id)
         Else
             Dim pull As pipeline = pipeline.TryCreatePipeline(Of GeneTable)(genes, env)
 
@@ -57,8 +62,13 @@ Public Module Builder
                .ToArray
         End If
 
-        Using compiler As New Compiler(register, template, CLng(Val(taxid.Match("\d+"))).ToString)
-            Return compiler.Compile($"/compile --log ""{logfile}""")
+        Using compiler As New Compiler(register, template, CLng(Val(taxid.Match("\d+"))).ToString, cellular_id)
+            Dim vcell As VirtualCell = compiler.Compile($"/compile --log ""{logfile}""")
+
+            vcell.taxonomy = taxinfo
+            vcell.cellular_id = cellular_id
+
+            Return vcell
         End Using
     End Function
 

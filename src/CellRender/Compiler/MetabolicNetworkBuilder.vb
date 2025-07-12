@@ -11,7 +11,7 @@ Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 Public Class MetabolicNetworkBuilder
 
     ReadOnly compiler As Compiler
-    ReadOnly chromosome As replicon
+    ReadOnly chromosome As replicon()
     ReadOnly substrate_links As Dictionary(Of String, biocad_registryModel.kinetic_substrate())
     ReadOnly union_hashcode As UnionHashCode()
 
@@ -21,7 +21,7 @@ Public Class MetabolicNetworkBuilder
         End Get
     End Property
 
-    Sub New(compiler As Compiler, chromosome As replicon)
+    Sub New(compiler As Compiler, chromosome As replicon())
         Me.compiler = compiler
         Me.chromosome = chromosome
 
@@ -165,10 +165,14 @@ Public Class MetabolicNetworkBuilder
 
     Private Sub LoadEnzymeLinks()
         Dim bar As Tqdm.ProgressBar = Nothing
+        Dim all_operons As TranscriptUnit() = chromosome _
+            .Select(Function(chr) chr.operons) _
+            .IteratesALL _
+            .ToArray
 
         Call VBDebugger.EchoLine("create ec_number links to the annotated genome data!")
 
-        For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(chromosome.operons, bar:=bar)
+        For Each t_unit As TranscriptUnit In TqdmWrapper.Wrap(all_operons, bar:=bar)
             Call bar.SetLabel(t_unit.id)
 
             For Each gene As gene In t_unit.genes
@@ -274,7 +278,7 @@ Public Class MetabolicNetworkBuilder
                     reaction.bounds = {10, 10}
                     reaction.is_enzymatic = True
                     reaction.ec_number = ecs
-                    reaction.compartment = "Intracellular"
+                    reaction.compartment = compiler.cellularId
 
                     Call biological_rxns.Add(reaction)
                 End If
