@@ -94,7 +94,7 @@ Public Class MetabolicNetworkBuilder
                             Function(a)
                                 Return a _
                                     .Select(Function(c)
-                                                Return New CompoundFactor(c.factor, c.molecule_id.ToString)
+                                                Return New CompoundFactor(c.factor, "BioCAD" & c.molecule_id.ToString.PadLeft(13, "0"c))
                                             End Function) _
                                     .ToArray
                             End Function)
@@ -129,12 +129,12 @@ Public Class MetabolicNetworkBuilder
 
         For Each ref As IGrouping(Of String, CompoundFactor) In TqdmWrapper.Wrap(all)
             Dim mol = cad_registry.molecule _
-                .where(field("id") = ref.Key) _
+                .where(field("id") = UInteger.Parse(ref.Key.Match("\d+"))) _
                 .find(Of biocad_registryModel.molecule)
             Dim compound As New Compound With {
-                .ID = mol.id,
+                .ID = ref.Key,
                 .name = mol.name,
-                .mass0 = 10
+                .formula = mol.formula
             }
 
             kegg_id = cad_registry.db_xrefs _
@@ -336,7 +336,7 @@ Public Class MetabolicNetworkBuilder
                 .ECNumber = ec_str.JoinBy(" / "),
                 .catalysis = rxns _
                     .Select(Function(r) As IEnumerable(Of Catalysis)
-                                Return GetKineticsParameters(r)
+                                Return GetKineticsParameters(r, .proteinID)
                             End Function) _
                     .IteratesALL _
                     .ToArray
@@ -348,7 +348,7 @@ Public Class MetabolicNetworkBuilder
 
     Dim lawsData As Dictionary(Of String, biocad_registryModel.kinetic_law())
 
-    Private Iterator Function GetKineticsParameters(r As IGrouping(Of String, Reaction)) As IEnumerable(Of Catalysis)
+    Private Iterator Function GetKineticsParameters(r As IGrouping(Of String, Reaction), proteinID As String) As IEnumerable(Of Catalysis)
         ' get ec number for query kinetics law
         Dim ec_id As String() = r.Select(Function(a) a.ec_number).IteratesALL.Distinct.ToArray
         Dim laws = ec_id.Select(Function(eid) lawsData.TryGetValue(eid)).IteratesALL.ToArray
@@ -371,8 +371,10 @@ Public Class MetabolicNetworkBuilder
                     Continue For
                 End If
 
-                For Each meta_link In links
-                    If meta_link.metabolite_id.ToString Like compounds Then
+                For Each meta_link As biocad_registryModel.kinetic_substrate In links
+                    Dim substrate_id = "BioCAD" & meta_link.metabolite_id.ToString.PadLeft(13, "0"c)
+
+                    If substrate_id Like compounds Then
                         Dim args = law.params.LoadJSON(Of Dictionary(Of String, String))
 
                         Yield New Catalysis(r.Key) With {
@@ -389,13 +391,13 @@ Public Class MetabolicNetworkBuilder
                                                 Return New KineticsParameter With {
                                                     .name = a.Key,
                                                     .isModifier = True,
-                                                    .target = ec_id.JoinBy("/")
+                                                    .target = proteinID
                                                 }
                                             Else
                                                 Return New KineticsParameter With {
                                                     .name = a.Key,
                                                     .isModifier = False,
-                                                    .target = meta_link.metabolite_id
+                                                    .target = substrate_id
                                                 }
                                             End If
                                         End Function) _
