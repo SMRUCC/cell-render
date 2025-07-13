@@ -42,7 +42,7 @@ let engine = vcell
 						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
 	iterations       = time.ticks, 
-	time_resolutions = 2000, 	
+	time_resolutions = 500, 	
 	showProgress     = TRUE,
 	debug            = FALSE,
 	unit.test        = TRUE
