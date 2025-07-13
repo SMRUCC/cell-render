@@ -1,4 +1,3 @@
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
@@ -25,11 +24,12 @@ Public Module Builder
                                     genes As Object,
                                     Optional logfile As String = "./model_compile.log",
                                     Optional taxid As String = Nothing,
+                                    Optional cellular_id As String = "intracellular",
+                                    Optional taxonomy As Taxonomy = Nothing,
                                     Optional env As Environment = Nothing) As Object
 
         Dim template As GeneTable()
-        Dim taxinfo As Taxonomy = Nothing
-        Dim cellular_id As String = "intracellular"
+        Dim taxinfo As Taxonomy = taxonomy
 
         If genes Is Nothing Then
             Return RInternal.debug.stop("the required template source should not be nothing!", env)

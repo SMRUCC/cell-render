@@ -11,9 +11,13 @@ const compile_genbank = function(cad_registry, gbff) {
     }
 
     let ncbi_taxid = taxon_id(gbff);
-
+    let cellular_id = accession_id(gbff);
+    let taxon = taxonomy_lineage(gbff);
+    
     cad_registry |> Builder::create_modelfile(
         genes = gbff |> GenBank::as_tabular(ORF = FALSE),
-        taxid = ncbi_taxid
+        taxid = ncbi_taxid,
+        cellular_id = cellular_id,
+        taxonomy = taxon
     );
 }
