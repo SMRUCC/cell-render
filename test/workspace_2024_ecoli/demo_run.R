@@ -9,8 +9,8 @@ setwd(@dir);
 
 sink(file = "./run.log");
 
-let modelfile  = "./MG1655.json";
-let model      = as.object(read.json_model(file = modelfile));
+let modelfile  = "./MG1655.zip";
+let model      = as.object(read.vcell(modelfile));
 let time.ticks = 250;
 
 print("Run virtual cell model:");
