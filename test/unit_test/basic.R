@@ -7,9 +7,9 @@ let vcell = compile_network(
 );
 let engine = vcell.model(vcell) |> engine.load(	
 	inits = mass0(vcell, random = [100,5000]) |> set_status( 
-						Intracellular = list(A = 120, B = 1000, C = 0, D = 100)
+						Intracellular = list(A = 0, B = 20, C = 0, D = 100)
 	),
-	iterations       = 100, 
+	iterations       = 10, 
 	time_resolutions = 1000, 	
 	showProgress     = TRUE
 ) 
