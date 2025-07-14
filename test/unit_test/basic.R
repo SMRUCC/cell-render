@@ -7,10 +7,7 @@ let vcell = compile_network(
     A == 2*C + 2 * D,
     B == 2 * C
 );
-
-vcell = vcell.model(vcell);
-
-let engine = vcell |> engine.load(	
+let engine = vcell.model(vcell) |> engine.load(	
 	inits = mass0(vcell, random = [100,5000]) |> set_status( 
 						 Intracellular = list(A = 120, B = 10, C = 0, D = 100)
 	),
