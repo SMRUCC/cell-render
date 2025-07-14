@@ -11,12 +11,12 @@ sink(file = "./run.log");
 
 let modelfile  = "./MG1655.zip";
 let model      = as.object(read.vcell(modelfile));
-let time.ticks = 250;
+let time.ticks = 1000;
 
 print("Run virtual cell model:");
 print(model);
 
-let vcell = vcell.model(model,unit.test =TRUE);
+let vcell = vcell.model(model,unit.test =FALSE);
 let mass  = vcell.mass.index(vcell);
 let flux  = vcell.flux.index(vcell);
 
@@ -37,15 +37,15 @@ let rawXml = "./result.vcellPack";
 
 let engine = vcell
 |> engine.load(	
-	inits = mass0(model, unit.test = TRUE, random = [100,5000]) |> set_status( 
+	inits = mass0(model, unit.test = FALSE, random = [100,5000]) |> set_status( 
 						 Intracellular = list(A = 120, B = 10, C = 0),
 						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
 	iterations       = time.ticks, 
-	time_resolutions = 500, 	
+	time_resolutions = 100, 	
 	showProgress     = TRUE,
 	debug            = FALSE,
-	unit.test        = TRUE
+	unit.test        = FALSE
 ) 
 |> as.object()
 ;
