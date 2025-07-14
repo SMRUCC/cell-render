@@ -15,6 +15,12 @@ let engine = vcell.model(vcell) |> engine.load(
 	time_resolutions = 1000, 	
 	showProgress     = TRUE
 ) 
+|> attach_memorydataset()
 |> run()
 ;
 
+let result_mass = as.data.frame([engine]::dataStorageDriver, mass = TRUE);
+let result_flux = as.data.frame([engine]::dataStorageDriver, mass = FALSE);
+
+print(result_mass);
+print(result_flux);
