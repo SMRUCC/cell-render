@@ -7,7 +7,7 @@ setwd(@dir);
 
 let rawdata = open.vcellPack(file = "./result.vcellPack", mode = "read");
 
-for(let term in ["Message-RNA" "Component-RNA" "Polypeptide" "Protein" "Metabolite"]) {
+for(let term in ["Transfer-RNA"  "Ribosomal-RNA" "Message-RNA" "Component-RNA" "Polypeptide" "Protein" "Metabolite"]) {
     let metabolome = time.frames(rawdata, module=term, symbol_name= TRUE);
 
     metabolome |> write.expr_matrix(file =`./vcell_sim/${term}.csv`, id = "molecules");
