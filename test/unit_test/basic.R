@@ -24,3 +24,32 @@ let result_flux = as.data.frame([engine]::dataStorageDriver, mass = FALSE);
 
 print(result_mass);
 print(result_flux);
+
+require(ggplot);
+
+result_mass[,"time.axis"] = as.numeric(rownames(result_mass));
+result_flux[,"time.axis"] = as.numeric(rownames(result_flux));
+
+bitmap(file = relative_work("mass.png"), width = 3600, height = 1920) {
+    let p = ggplot(result_mass, padding = "padding: 5% 30% 10% 7%;");
+
+    for(name in colnames(result_mass)) {
+        if (name != "time.axis") {
+            p = p + geom_line(aes(x = "time.axis", y = name), width = 8);
+        }        
+    }
+
+    p;
+}
+
+bitmap(file = relative_work("flux.png"), width = 3600, height = 1920) {
+    let p = ggplot(result_flux, padding = "padding: 5% 30% 10% 7%;");
+
+    for(name in colnames(result_flux)) {
+        if (name != "time.axis") {
+            p = p + geom_line(aes(x = "time.axis", y = name), width = 8);
+        }        
+    }
+
+    p;
+}
