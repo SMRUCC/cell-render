@@ -35,7 +35,7 @@ let vcell = compile_network(
 );
 let engine = vcell.model(vcell) |> engine.load(	
 	inits = mass0(vcell, random = [10,50]),
-	iterations       = 30, 
+	iterations       = 20, 
 	time_resolutions = 3000, 	
 	showProgress     = TRUE
 ) 
