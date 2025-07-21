@@ -9,7 +9,7 @@ setwd(@dir);
 
 sink(file = "./run.log");
 
-let modelfile  = "./MG1655.zip";
+let modelfile  = "F:\\ecoli\\ecoli.xml";
 let model      = as.object(read.vcell(modelfile));
 let time.ticks = 300;
 
@@ -37,7 +37,7 @@ let rawXml = "./result.vcellPack";
 
 let engine = vcell
 |> engine.load(	
-	inits = mass0(model, unit.test = FALSE, random = [100,5000]) |> set_status( 
+	inits = mass0(model, unit.test = FALSE, random = [100,5000], map = "metacyc") |> set_status( 
 						 Intracellular = list(A = 120, B = 10, C = 0),
 						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
