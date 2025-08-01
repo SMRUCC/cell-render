@@ -93,7 +93,7 @@ Public Class ReplicateBuilder
             .find(Of gene_molecule)("`molecule`.id", "molecule.xref_id", "sequence")
         Dim gene As New gene(gene_info.Location) With {
             .locus_tag = gene_info.locus_id,
-            .product = find.note,
+            .product = {find.note},
             .nucleotide_base = rna
         }
 
@@ -108,7 +108,7 @@ Public Class ReplicateBuilder
         If Not find_prot Is Nothing Then
             ' find a protein sequnece
             ' is CDS/ORF
-            gene.protein_id = find_prot.id
+            gene.protein_id = {find_prot.id}
             gene.amino_acid = ProteinComposition _
                 .FromRefSeq(find_prot.sequence, find_prot.xref_id) _
                 .CreateVector

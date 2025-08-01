@@ -143,7 +143,7 @@ Public Class MetabolicNetworkBuilder
                 .select(Of biocad_registryModel.db_xrefs)
 
             If Not kegg_id Is Nothing Then
-                compound.kegg_id = kegg_id _
+                compound.referenceIds = kegg_id _
                     .Select(Function(d) d.xref) _
                     .Where(Function(id) id.IsPattern("C\d+")) _
                     .Distinct _
@@ -278,7 +278,7 @@ Public Class MetabolicNetworkBuilder
                     reaction.bounds = {10, 10}
                     reaction.is_enzymatic = True
                     reaction.ec_number = ecs
-                    reaction.compartment = compiler.cellularId
+                    reaction.compartment = {compiler.cellularId}
 
                     Call biological_rxns.Add(reaction)
                 End If
