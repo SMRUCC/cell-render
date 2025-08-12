@@ -61,6 +61,7 @@ using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine, gra
 	# save the result snapshot data files into 
 	# target data directory
 	engine$AttachBiologicalStorage(xml);
+	engine$MakeNetworkSnapshot(as.object(xml)$GetStream());
 	engine$Run();
 
 	debugger::dump_core(engine, file = "./core1.txt");
