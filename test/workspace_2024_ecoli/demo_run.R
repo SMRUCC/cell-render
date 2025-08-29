@@ -42,7 +42,7 @@ let engine = vcell
 						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
 	iterations       = time.ticks, 
-	time_resolutions = 5000, 	
+	time_resolutions = 500, 	
 	showProgress     = TRUE,
 	debug            = FALSE,
 	unit.test        = FALSE
@@ -53,6 +53,8 @@ let engine = vcell
 debugger::dump_core(engine, file = "./core0.txt");
 
 using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine, graph_debug= FALSE) {
+	let rawfile = as.object(xml);
+
 	debugger::set_symbols(xml, model);
 
 	print(rawXml);
@@ -61,7 +63,7 @@ using xml as open.vcellPack(file  = rawXml, mode  = "write", vcell = engine, gra
 	# save the result snapshot data files into 
 	# target data directory
 	engine$AttachBiologicalStorage(xml);
-	engine$MakeNetworkSnapshot(as.object(xml)$GetStream());
+	engine$MakeNetworkSnapshot(rawfile$GetStream());
 	engine$Run();
 
 	debugger::dump_core(engine, file = "./core1.txt");
