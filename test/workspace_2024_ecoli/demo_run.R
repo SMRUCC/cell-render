@@ -11,7 +11,7 @@ sink(file = "./run.log");
 
 let modelfile  = "F:\\ecoli\\ecoli.xml";
 let model      = as.object(read.vcell(modelfile));
-let time.ticks = 3000;
+let time.ticks = 10000;
 
 print("Run virtual cell model:");
 print(model);
@@ -22,13 +22,13 @@ let flux  = vcell.flux.index(vcell);
 
 let dynamics = dynamics.default() |> as.object;
 
-dynamics$transcriptionBaseline   = 2;
-dynamics$transcriptionCapacity   = 5;
+dynamics$transcriptionBaseline   = 20;
+dynamics$transcriptionCapacity   = 50;
 dynamics$productInhibitionFactor = 0.00000125;
 
-dynamics$translationCapacity = 1;
-dynamics$proteinMatureBaseline = 2;
-dynamics$proteinMatureCapacity = 10;
+dynamics$translationCapacity = 10;
+dynamics$proteinMatureBaseline = 20;
+dynamics$proteinMatureCapacity = 20;
 
 print("Using dynamics parameter configuration:");
 print(dynamics);
@@ -42,7 +42,7 @@ let engine = vcell
 						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
 	iterations       = time.ticks, 
-	time_resolutions = 500, 	
+	time_resolutions = 100, 	
 	showProgress     = TRUE,
 	debug            = FALSE,
 	unit.test        = FALSE
