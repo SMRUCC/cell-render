@@ -11,7 +11,7 @@ sink(file = "./run.log");
 
 let modelfile  = "F:\\ecoli\\ecoli.xml";
 let model      = as.object(read.vcell(modelfile));
-let time.ticks = 10000;
+let time.ticks = 50000;
 
 print("Run virtual cell model:");
 print(model);
@@ -42,7 +42,7 @@ let engine = vcell
 						 Extracellular = list(A = 1200,   B = 0,  C = 0)
 	),
 	iterations       = time.ticks, 
-	time_resolutions = 100, 	
+	time_resolutions = 10000, 	
 	showProgress     = TRUE,
 	debug            = FALSE,
 	unit.test        = FALSE
