@@ -9,7 +9,7 @@ declare namespace CellRender {
       function onLoad(): object;
    }
    /**
-     * @param workdir default value Is ``null``.
+     * @param workdir default value Is ``./``.
    */
    function analysis(embedding_file: any, workdir?: any): object;
    /**
