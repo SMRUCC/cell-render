@@ -1,4 +1,4 @@
-const analysis = function(embedding_file, workdir = "./") {
+const analysis = function(embedding_file, knn = 200, workdir = "./") {
     let data = read.csv(embedding_file, row.names = 1, check.names = FALSE);
     let taxon = biom_string.parse(data$taxonomy);
 
@@ -8,7 +8,7 @@ const analysis = function(embedding_file, workdir = "./") {
     print("view of the scientific names:");
     print(taxonomy_name(taxon, rank = "NA"));
 
-    let result = umap(data, dimension = 3, numberOfNeighbors = 3000, localConnectivity = 1, method="Cosine");
+    let result = umap(data, dimension = 3, numberOfNeighbors = knn, localConnectivity = 1, method="Cosine");
 
     result = as.data.frame(result$umap, labels = result$labels);
     result = cbind(result, data[, c("1.-.-.-","2.-.-.-","3.-.-.-","4.-.-.-","5.-.-.-","6.-.-.-","7.-.-.-")]);
