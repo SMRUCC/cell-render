@@ -9,9 +9,10 @@ declare namespace CellRender {
       function onLoad(): object;
    }
    /**
+     * @param knn default value Is ``200``.
      * @param workdir default value Is ``./``.
    */
-   function analysis(embedding_file: any, workdir?: any): object;
+   function analysis(embedding_file: any, knn?: any, workdir?: any): object;
    /**
    */
    function annotation_workflow(): object;
