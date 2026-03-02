@@ -37,6 +37,17 @@ const export_tree = function(embedding_file, workdir = "./", node_equals = 0.999
     igraph::save.network(graph, file.path(workdir, "metabolic_tree"));
 }
 
+const singlecells_analysis = function(embedding_file, workdir = "./") {
+    let data = read.csv(embedding_file, row.names = 1, check.names = FALSE);
+    let taxon = biom_string.parse(data$taxonomy);
+
+    for(rank in c("Phylum","Class","Order")) {
+        data[, "taxonomy"] <- taxonomy_name(taxon, rank = rank) ;
+
+        write.csv(data, file = file.path(workdir, "singlecells", `group_${tolower(rank)}.csv`));
+    }
+}
+
 const analysis = function(embedding_file, workdir = NULL) {
     let data = read.csv(embedding_file, row.names = 1, check.names = FALSE);
     let taxon = biom_string.parse(data$taxonomy);
