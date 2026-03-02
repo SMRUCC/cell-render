@@ -37,9 +37,20 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>this function will pull all protein sequence from the biocad_registry,
+and then build local fasta sequence database with header formats:
+
+
+<pre><code class="">> cad_id ec_number|function description
+</code></pre>
+
+</p>
+
+<p>a placeholder symbol <code>-</code> will be placed after the cad_id if the <code>ec_number</code>
+of the protein is missing. for multiple ec_number, a comma seperator will be
+used for join the ec_number list.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -64,4 +75,4 @@
 <script type="text/javascript" src="../../_assets/highlights.js"></script>
 <script type="text/javascript">r_highlights("example_r");</script>
 
-</html>
+</html>

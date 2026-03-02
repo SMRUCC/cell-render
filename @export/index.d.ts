@@ -9,6 +9,10 @@ declare namespace CellRender {
       function onLoad(): object;
    }
    /**
+     * @param workdir default value Is ``null``.
+   */
+   function analysis(embedding_file: any, workdir?: any): object;
+   /**
    */
    function annotation_workflow(): object;
    /**
@@ -22,6 +26,16 @@ declare namespace CellRender {
    function compile_genbank(cad_registry: any, gbff: any): object;
    /**
      * @param workdir default value Is ``./``.
+     * @param union_contigs default value Is ``250``.
+   */
+   function diamond_embedding(diamond_result: any, workdir?: any, union_contigs?: any): object;
+   /**
+     * @param workdir default value Is ``./``.
+     * @param node_equals default value Is ``0.999``.
+   */
+   function export_tree(embedding_file: any, workdir?: any, node_equals?: any): object;
+   /**
+     * @param workdir default value Is ``./``.
      * @param upstream_size default value Is ``150``.
      * @param tag_genbank_accid default value Is ``false``.
      * @param verbose default value Is ``true``.
@@ -30,6 +44,10 @@ declare namespace CellRender {
    /**
    */
    function extract_gene_table(app: any, context: any): object;
+   /**
+     * @param outputdir default value Is ``./``.
+   */
+   function genome_scatter_viz(data: any, outputdir?: any): object;
    /**
    */
    function local_protDb(cad_registry: any, dbfile: any): object;
@@ -57,6 +75,14 @@ declare namespace CellRender {
    /**
    */
    function reaction_pool(cad_registry: any, repo: any): object;
+   /**
+     * @param workdir default value Is ``./``.
+   */
+   function singlecells_analysis(embedding_file: any, workdir?: any): object;
+   /**
+     * @param outputdir default value Is ``./``.
+   */
+   function singlecells_viz(rawdata: any, outputdir?: any): object;
    /**
    */
    function tfbs_motif_scanning(app: any, context: any): object;

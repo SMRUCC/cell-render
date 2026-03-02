@@ -1,4 +1,4 @@
-﻿.TH MODELLING_CELLGRAPH 1 2025-Jul "" "Run the cell graph structure modelling workflow"
+﻿.TH MODELLING_CELLGRAPH 1 2026-3月 "" "Run the cell graph structure modelling workflow"
 .SH NAME
 modelling_cellgraph \- modelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
@@ -13,10 +13,12 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>regprecise</i> = <span style='color: brown;'><strong>'./RegPrecise.Xml'</strong></span>)\fR
 .SH OPTIONS
 .PP
-\fBsrc\fB \fR\- . 
+\fBsrc\fB \fR\- . the ncbi genbank assembly source file its file path
 .PP
 .PP
-\fBoutputdir\fB \fR\- NULL. the result outputdir and temp workspace location, default value is NULL means use the parent dir of the input src
+\fBoutputdir\fB \fR\- NULL. the result outputdir and temp workspace
+location, default value is NULL means use the parent dir of
+the input src
 .PP
 .PP
 \fBup.len\fB \fR\- 150. 
@@ -25,15 +27,19 @@ modelling_cellgraph \- modelling_cellgraph(src,
 \fBbiocyc\fB \fR\- './biocyc'. the directory path to the biocyc reference pathway
 .PP
 .PP
-\fBregprecise\fB \fR\- './RegPrecise.Xml'. the data repository xml file path to the regprecise motif database.
+\fBregprecise\fB \fR\- './RegPrecise.Xml'. the data repository xml file path to the regprecise
+motif database.
 .PP
 .SH VALUE
 .PP
-this function has no return value, and then generated virtual cell model file will be saved at the ``outputdir`` with a fixed file name: ``model.vcell``. and the output dir also contains a html/pdf report about the virtual cell modelling result.
+this function has no return value, and then generated virtual
+cell model file will be saved at the ``outputdir`` with a fixed
+file name: ``model.vcell``. and the output dir also contains a html/pdf
+report about the virtual cell modelling result.
 .PP
 .SH FILES
 .PP
 SMRUCC/R#.declare_function.modelling_cellgraph at main.R:line 16
 .PP
 .SH COPYRIGHT
-Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2025
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026
