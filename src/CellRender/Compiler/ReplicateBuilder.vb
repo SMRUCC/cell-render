@@ -93,7 +93,7 @@ Public Class ReplicateBuilder
             .find(Of gene_molecule)("`molecule`.id", "molecule.xref_id", "sequence")
         Dim gene As New gene(gene_info.Location) With {
             .locus_tag = gene_info.locus_id,
-            .product = {find.note},
+            .product = find.note,
             .nucleotide_base = rna
         }
 
