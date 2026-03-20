@@ -43,6 +43,9 @@ Module workflow
         Dim familyIds As String() = CLRVector.asCharacter(family)
 
         If seqs Is Nothing Then
+            If TypeOf search_regions Is GenBankProject Then
+                seqs = DirectCast(search_regions, GenBankProject).DumpTSSUpstreamFasta
+            End If
             Return RInternal.debug.stop("invalid fasta sequence source for run TFBS motif site search!", env)
         End If
 
