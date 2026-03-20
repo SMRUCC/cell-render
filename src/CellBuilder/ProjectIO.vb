@@ -96,14 +96,8 @@ Public Module ProjectIO
                                     Return a.ToArray
                                 End Function)
 
-            Return New GenBankProject With {
+            Dim annos As New AnnotationSet With {
                 .enzyme_hits = enzyme_hits,
-                .nt = source_nt,
-                .taxonomy = source_json.LoadJSON(Of Taxonomy)(throwEx:=False),
-                .gene_table = genes,
-                .genes = geneSeqIndex,
-                .proteins = protSeqIndex,
-                .tss_upstream = tssSiteIndex,
                 .ec_numbers = ec_numbers,
                 .operon_hits = operon_hits,
                 .operons = operons,
@@ -113,12 +107,24 @@ Public Module ProjectIO
                 .transporter = transport_blast,
                 .membrane_proteins = membranes
             }
+
+            Return New GenBankProject With {
+                .nt = source_nt,
+                .taxonomy = source_json.LoadJSON(Of Taxonomy)(throwEx:=False),
+                .gene_table = genes,
+                .genes = geneSeqIndex,
+                .proteins = protSeqIndex,
+                .tss_upstream = tssSiteIndex,
+                .annotations = annos
+            }
         End Using
     End Function
 
     <Extension>
     Public Function SaveZip(proj As GenBankProject, s As Stream) As Boolean
         Using zip As New ZipStream(s)
+            Dim annos As AnnotationSet = proj.annotations
+
             Call zip.WriteText(proj.taxonomy.GetJson, "/source.json")
             Call zip.WriteText(proj.nt.GetJson, "/source.txt")
 
@@ -127,16 +133,16 @@ Public Module ProjectIO
             Call proj.DumpTSSUpstreamFasta(zip.OpenFile("/tss_upstream.txt", access:=FileAccess.Write))
 
             Call zip.WriteLines(proj.gene_table.SafeQuery.Select(Function(a) a.GetJson), "/genes.jsonl")
-            Call zip.WriteLines(proj.enzyme_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/enzyme_hits.jsonl")
-            Call zip.WriteLines(proj.operon_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/operon_hits.jsonl")
-            Call zip.WriteLines(proj.tf_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/tf_hits.jsonl")
-            Call zip.WriteLines(proj.ec_numbers.SafeQuery.Select(Function(e) e.Value.GetJson), "/localblast/ec_numbers.jsonl")
-            Call zip.WriteLines(proj.transcript_factors.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transcript_factors.jsonl")
-            Call zip.WriteLines(proj.operons.SafeQuery.Select(Function(e) e.GetJson), "/localblast/operons.jsonl")
-            Call zip.WriteLines(proj.tfbs_hits.SafeQuery.Values.IteratesALL.Select(Function(e) e.GetJson), "/tfbs.jsonl")
+            Call zip.WriteLines(annos.enzyme_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/enzyme_hits.jsonl")
+            Call zip.WriteLines(annos.operon_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/operon_hits.jsonl")
+            Call zip.WriteLines(annos.tf_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/tf_hits.jsonl")
+            Call zip.WriteLines(annos.ec_numbers.SafeQuery.Select(Function(e) e.Value.GetJson), "/localblast/ec_numbers.jsonl")
+            Call zip.WriteLines(annos.transcript_factors.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transcript_factors.jsonl")
+            Call zip.WriteLines(annos.operons.SafeQuery.Select(Function(e) e.GetJson), "/localblast/operons.jsonl")
+            Call zip.WriteLines(annos.tfbs_hits.SafeQuery.Values.IteratesALL.Select(Function(e) e.GetJson), "/tfbs.jsonl")
 
-            Call zip.WriteLines(proj.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
-            Call zip.WriteLines(proj.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
+            Call zip.WriteLines(annos.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
+            Call zip.WriteLines(annos.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
         End Using
 
         Return True
