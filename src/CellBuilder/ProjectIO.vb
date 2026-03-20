@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
@@ -117,8 +118,8 @@ Public Module ProjectIO
     End Function
 
     <Extension>
-    Public Sub SaveZip(proj As GenBankProject, filepath As String)
-        Using zip As New ZipStream(filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
+    Public Function SaveZip(proj As GenBankProject, s As Stream) As Boolean
+        Using zip As New ZipStream(s)
             Call zip.WriteText(proj.taxonomy.GetJson, "/source.json")
             Call zip.WriteText(proj.nt.GetJson, "/source.txt")
 
@@ -138,5 +139,12 @@ Public Module ProjectIO
             Call zip.WriteLines(proj.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
             Call zip.WriteLines(proj.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
         End Using
+
+        Return True
+    End Function
+
+    <Extension>
+    Public Sub SaveZip(proj As GenBankProject, filepath As String)
+        Call SaveZip(proj, filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
     End Sub
 End Module

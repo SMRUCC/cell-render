@@ -5,6 +5,6 @@
 Module zzz
 
     Public Sub onLoad()
-
+        Call ProjectBuilder.Main()
     End Sub
 End Module
