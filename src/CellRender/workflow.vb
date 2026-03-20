@@ -44,7 +44,9 @@ Module workflow
 
         If seqs Is Nothing Then
             If TypeOf search_regions Is GenBankProject Then
-                seqs = DirectCast(search_regions, GenBankProject).DumpTSSUpstreamFasta
+                seqs = DirectCast(search_regions, GenBankProject) _
+                    .DumpTSSUpstreamFasta _
+                    .ToArray
             End If
             Return RInternal.debug.stop("invalid fasta sequence source for run TFBS motif site search!", env)
         End If

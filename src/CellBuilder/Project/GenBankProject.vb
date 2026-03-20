@@ -1,9 +1,11 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.Metagenomics
 Imports SMRUCC.genomics.SequenceModel
+Imports SMRUCC.genomics.SequenceModel.FASTA
 
 Public Class GenBankProject
 
@@ -29,6 +31,12 @@ Public Class GenBankProject
     Public Sub DumpTSSUpstreamFasta(s As Stream)
         Call FASTA.StreamWriter.WriteList(tss_upstream, s)
     End Sub
+
+    Public Iterator Function DumpTSSUpstreamFasta() As IEnumerable(Of FastaSeq)
+        For Each seq In tss_upstream.SafeQuery
+            Yield New FastaSeq(seq.Value, title:=seq.Key)
+        Next
+    End Function
 
     Public Function ComputeHashCode() As String
         Dim hashcode As String = ""
