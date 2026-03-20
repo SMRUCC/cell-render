@@ -30,23 +30,12 @@
             <code id="clr_ts">
 # namespace CellBuilder
 export class GenBankProject {
-   ec_numbers: list;
-   # ec number blastp hits
-   enzyme_hits: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection[]</a>;
+   annotations: <a href="/vignettes/clr/CellBuilder/AnnotationSet.html">AnnotationSet</a>;
    gene_table: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/Annotation/GeneTable.html">GeneTable[]</a>;
    genes: list;
-   membrane_proteins: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Pipeline/RankTerm.html">RankTerm[]</a>;
    nt: list;
-   # operon gene blastn hits
-   operon_hits: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection[]</a>;
-   operons: <a href="/vignettes/clr/CellBuilder/AnnotatedOperon.html">AnnotatedOperon[]</a>;
    proteins: list;
    taxonomy: <a href="/vignettes/clr/SMRUCC/genomics/Metagenomics/Taxonomy.html">Taxonomy</a>;
-   tf_hits: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection[]</a>;
-   # TFBS data is grouped and index by gene id
-   tfbs_hits: list;
-   transcript_factors: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/LocalBLAST/Application/BBH/BestHit.html">BestHit[]</a>;
-   transporter: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection[]</a>;
    tss_upstream: list;
 }
 </code>
@@ -55,20 +44,12 @@ export class GenBankProject {
         <h3>.NET clr type reference tree</h3>
 
         <ol>
-<li>use by <i>property</i> member <code>ec_numbers</code>: list</li>
-<li>use by <i>property</i> member <code>enzyme_hits</code>: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection</a></li>
+<li>use by <i>property</i> member <code>annotations</code>: <a href="/vignettes/clr/CellBuilder/AnnotationSet.html">AnnotationSet</a></li>
 <li>use by <i>property</i> member <code>gene_table</code>: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/Annotation/GeneTable.html">GeneTable</a></li>
 <li>use by <i>property</i> member <code>genes</code>: list</li>
-<li>use by <i>property</i> member <code>membrane_proteins</code>: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Pipeline/RankTerm.html">RankTerm</a></li>
 <li>use by <i>property</i> member <code>nt</code>: list</li>
-<li>use by <i>property</i> member <code>operon_hits</code>: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection</a></li>
-<li>use by <i>property</i> member <code>operons</code>: <a href="/vignettes/clr/CellBuilder/AnnotatedOperon.html">AnnotatedOperon</a></li>
 <li>use by <i>property</i> member <code>proteins</code>: list</li>
 <li>use by <i>property</i> member <code>taxonomy</code>: <a href="/vignettes/clr/SMRUCC/genomics/Metagenomics/Taxonomy.html">Taxonomy</a></li>
-<li>use by <i>property</i> member <code>tf_hits</code>: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection</a></li>
-<li>use by <i>property</i> member <code>tfbs_hits</code>: list</li>
-<li>use by <i>property</i> member <code>transcript_factors</code>: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/LocalBLAST/Application/BBH/BestHit.html">BestHit</a></li>
-<li>use by <i>property</i> member <code>transporter</code>: <a href="/vignettes/clr/SMRUCC/genomics/Interops/NCBI/Extensions/Tasks/Models/HitCollection.html">HitCollection</a></li>
 <li>use by <i>property</i> member <code>tss_upstream</code>: list</li>
 </ol>
 
