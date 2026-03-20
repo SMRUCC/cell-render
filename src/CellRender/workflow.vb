@@ -31,6 +31,11 @@ Module workflow
     Public Function motif_search(db As MotifDatabase, <RRawVectorArgument> search_regions As Object,
                                  <RRawVectorArgument(TypeCodes.string)>
                                  Optional family As Object = Nothing,
+                                 Optional identities_cutoff As Double = 0.8,
+                                 Optional minW As Double = 0.85,
+                                 Optional top As Integer = 3,
+                                 Optional permutation As Integer = 2500,
+                                 Optional tqdm_bar As Boolean = True,
                                  Optional env As Environment = Nothing) As Object
 
         Dim seqs As IEnumerable(Of FastaSeq) = pipHelper.GetFastaSeq(search_regions, env)
@@ -55,7 +60,13 @@ Module workflow
                               End Function)
         End If
 
-        Dim tfbs_hits = db.ScanSites(seqs, n_threads:=1, workflowMode:=True)
+        Dim tfbs_hits = motifs.ScanSequential(seqs,
+                                              identities_cutoff:=identities_cutoff,
+                                              minW:=minW,
+                                              top:=top,
+                                              permutation:=permutation,
+                                              tqdm_bar:=tqdm_bar)
+        Return tfbs_hits
     End Function
 
 End Module
