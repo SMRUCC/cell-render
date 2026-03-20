@@ -73,6 +73,4 @@
     <ProjectReference Include="..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
   </ItemGroup>
 
-  <Import Project="..\..\..\biocad_registry\src\biocad_storage\mysql\mysql_registry.projitems" Label="Shared" />
-
 </Project>
