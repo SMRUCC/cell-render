@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
@@ -123,27 +124,31 @@ Public Module ProjectIO
     <Extension>
     Public Function SaveZip(proj As GenBankProject, s As Stream) As Boolean
         Using zip As New ZipStream(s)
-            Dim annos As AnnotationSet = proj.annotations
-
-            Call zip.WriteText(proj.taxonomy.GetJson, "/source.json")
-            Call zip.WriteText(proj.nt.GetJson, "/source.txt")
-
-            Call proj.DumpGeneFasta(zip.OpenFile("/genes.txt", access:=FileAccess.Write))
-            Call proj.DumpProteinFasta(zip.OpenFile("/proteins.txt", access:=FileAccess.Write))
-            Call proj.DumpTSSUpstreamFasta(zip.OpenFile("/tss_upstream.txt", access:=FileAccess.Write))
-
-            Call zip.WriteLines(proj.gene_table.SafeQuery.Select(Function(a) a.GetJson), "/genes.jsonl")
-            Call zip.WriteLines(annos.enzyme_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/enzyme_hits.jsonl")
-            Call zip.WriteLines(annos.operon_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/operon_hits.jsonl")
-            Call zip.WriteLines(annos.tf_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/tf_hits.jsonl")
-            Call zip.WriteLines(annos.ec_numbers.SafeQuery.Select(Function(e) e.Value.GetJson), "/localblast/ec_numbers.jsonl")
-            Call zip.WriteLines(annos.transcript_factors.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transcript_factors.jsonl")
-            Call zip.WriteLines(annos.operons.SafeQuery.Select(Function(e) e.GetJson), "/localblast/operons.jsonl")
-            Call zip.WriteLines(annos.tfbs_hits.SafeQuery.Values.IteratesALL.Select(Function(e) e.GetJson), "/tfbs.jsonl")
-
-            Call zip.WriteLines(annos.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
-            Call zip.WriteLines(annos.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
+            Return SaveFs(proj, fs:=zip)
         End Using
+    End Function
+
+    Public Function SaveFs(proj As GenBankProject, fs As IFileSystemEnvironment) As Boolean
+        Dim annos As AnnotationSet = proj.annotations
+
+        Call fs.WriteText(proj.taxonomy.GetJson, "/source.json")
+        Call fs.WriteText(proj.nt.GetJson, "/source.txt")
+
+        Call proj.DumpGeneFasta(fs.OpenFile("/genes.txt", access:=FileAccess.Write))
+        Call proj.DumpProteinFasta(fs.OpenFile("/proteins.txt", access:=FileAccess.Write))
+        Call proj.DumpTSSUpstreamFasta(fs.OpenFile("/tss_upstream.txt", access:=FileAccess.Write))
+
+        Call fs.WriteLines(proj.gene_table.SafeQuery.Select(Function(a) a.GetJson), "/genes.jsonl")
+        Call fs.WriteLines(annos.enzyme_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/enzyme_hits.jsonl")
+        Call fs.WriteLines(annos.operon_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/operon_hits.jsonl")
+        Call fs.WriteLines(annos.tf_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/tf_hits.jsonl")
+        Call fs.WriteLines(annos.ec_numbers.SafeQuery.Select(Function(e) e.Value.GetJson), "/localblast/ec_numbers.jsonl")
+        Call fs.WriteLines(annos.transcript_factors.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transcript_factors.jsonl")
+        Call fs.WriteLines(annos.operons.SafeQuery.Select(Function(e) e.GetJson), "/localblast/operons.jsonl")
+        Call fs.WriteLines(annos.tfbs_hits.SafeQuery.Values.IteratesALL.Select(Function(e) e.GetJson), "/tfbs.jsonl")
+
+        Call fs.WriteLines(annos.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
+        Call fs.WriteLines(annos.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
 
         Return True
     End Function
