@@ -9,6 +9,10 @@
 */
 declare namespace project {
    /**
+     * @param env default value Is ``null``.
+   */
+   function load(file: any, env?: object): any;
+   /**
     * 
     * 
      * @param replicons a vector of the ncbi genbank object of the genome replicons
@@ -17,4 +21,8 @@ declare namespace project {
      * + default value Is ``null``.
    */
    function new(replicons: any, env?: object): object;
+   /**
+     * @param env default value Is ``null``.
+   */
+   function save(proj: object, file: any, env?: object): any;
 }
