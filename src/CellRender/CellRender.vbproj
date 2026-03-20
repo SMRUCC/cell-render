@@ -72,7 +72,6 @@
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%rdf+xml\rdf_xml-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\GCModeller\src\runtime\sciBASIC#\mime\application%xml\xml-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\GCModeller\src\workbench\modules\ExperimentDesigner\designer-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\graphQL\src\mysqli\LibMySQL\libmysql.vbproj" />
   </ItemGroup>
 
   <Import Project="..\..\..\biocad_registry\src\biocad_storage\mysql\mysql_registry.projitems" Label="Shared" />
