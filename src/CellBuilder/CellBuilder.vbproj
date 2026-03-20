@@ -4,6 +4,8 @@
     <RootNamespace>CellBuilder</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyTitle>Build Virtual Cell Model</AssemblyTitle>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
