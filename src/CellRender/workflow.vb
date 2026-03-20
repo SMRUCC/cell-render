@@ -28,6 +28,7 @@ Module workflow
     End Function
 
     <ExportAPI("motif_search")>
+    <RApiReturn(GetType(MotifMatch))>
     Public Function motif_search(db As MotifDatabase, <RRawVectorArgument> search_regions As Object,
                                  <RRawVectorArgument(TypeCodes.string)>
                                  Optional family As Object = Nothing,
