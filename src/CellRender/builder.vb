@@ -67,4 +67,15 @@ Module ProjectBuilder
         Return Nothing
     End Function
 
+    <ExportAPI("load")>
+    Public Function load(<RRawVectorArgument> file As Object, Optional env As Environment = Nothing) As Object
+        Dim is_file As Boolean = False
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, IO.FileAccess.Write, env, is_filepath:=is_file)
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        Else
+            Return ProjectIO.Load(s.TryCast(Of Stream))
+        End If
+    End Function
 End Module
