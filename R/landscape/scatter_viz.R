@@ -1,3 +1,5 @@
+#' native R function for make scatter plot of the genome embedding result.
+#' 
 let genome_scatter_viz = function(data, outputdir = "./") {
   require(ggplot2);
   require(dplyr);
