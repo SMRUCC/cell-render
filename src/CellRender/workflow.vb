@@ -16,6 +16,11 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 <Package("workflow")>
 Module workflow
 
+    ''' <summary>
+    ''' extract of the tss upstream location site sequence data
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <returns></returns>
     <ExportAPI("tss_upstream")>
     <RApiReturn(GetType(FastaSeq))>
     Public Function tss_upstream(proj As GenBankProject) As Object
