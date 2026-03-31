@@ -376,3 +376,9 @@ test/workspace_2024_ecoli/MG1655.zip
 test/workspace_2024_ecoli/MG1655 - Copy.zip
 data/membrane.fasta
 data/enzyme.fasta
+*.fasta
+data/metabolic_network.jsonl
+data/molecules.csv
+data/molecules.jsonl
+*.meme
+data/subcellular.json
