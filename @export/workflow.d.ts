@@ -10,17 +10,14 @@
 */
 declare namespace workflow {
    /**
-     * @param family default value Is ``null``.
-     * @param identities_cutoff default value Is ``0.8``.
-     * @param minW default value Is ``0.85``.
-     * @param top default value Is ``3``.
-     * @param permutation default value Is ``2500``.
-     * @param tqdm_bar default value Is ``true``.
      * @param env default value Is ``null``.
    */
-   function motif_search(db: object, search_regions: any, family?: any, identities_cutoff?: number, minW?: number, top?: object, permutation?: object, tqdm_bar?: boolean, env?: object): object;
+   function save_proteins(proj: object, file: any, env?: object): any;
    /**
-     * @param env default value Is ``null``.
+    * extract of the tss upstream location site sequence data
+    * 
+    * 
+     * @param proj -
    */
-   function open_motifdb(file: any, env?: object): any;
+   function tss_upstream(proj: object): object;
 }

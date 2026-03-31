@@ -30,8 +30,9 @@
             <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>modelling_cellgraph</strong>(<i>src</i>,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
     <i>up.len</i> = <span style='color: green;'>150</span>,
-    <i>biocyc</i> = <span style='color: brown;'><strong>'./biocyc'</strong></span>,
-    <i>regprecise</i> = <span style='color: brown;'><strong>'./RegPrecise.Xml'</strong></span>);</code></pre>
+    <i>localdb</i> = <span style='color: blue !important;'>NULL</span>,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -49,12 +50,11 @@ the input src</p></p></dd>
 
 
 <dt>biocyc</dt>
-<dd><p><p>the directory path to the biocyc reference pathway</p></p></dd>
+<dd><p><p>the directory path to the local reference dataset for make the cellular component annotation.</p></p></dd>
 
 
-<dt>regprecise</dt>
-<dd><p><p>the data repository xml file path to the regprecise
-motif database.</p></p></dd>
+<dt>up.len</dt>
+<dd><p><p>an integer vector for specific the length of the TSS upstream site</p></p></dd>
 
         </table>
 

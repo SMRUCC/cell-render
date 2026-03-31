@@ -18,10 +18,10 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      diamond = Sys.which("diamond"), 
                                      n_threads = 32) {
 
-    WorkflowRender::init_context(outputdir ?? dirname(src));
+    WorkflowRender::init_context(outputdir || dirname(src));
     WorkflowRender::set_config(list(
         src       = normalizePath(src),
-        localdb   = localdb ?? normalizePath(@datadir),
+        localdb   = localdb || normalizePath(@datadir),
         up_len    = up_len,
         diamond   = unlist(diamond),
         n_threads = n_threads

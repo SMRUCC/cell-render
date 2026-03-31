@@ -18,12 +18,6 @@ declare namespace CellRender {
    function annotation_workflow(): object;
    /**
    */
-   function assemble_metabolic_graph(app: any, context: any): object;
-   /**
-   */
-   function assemble_transcript_graph(app: any, context: any): object;
-   /**
-   */
    function compile_genbank(cad_registry: any, gbff: any): object;
    /**
      * @param workdir default value Is ``./``.
@@ -43,9 +37,6 @@ declare namespace CellRender {
    */
    function extract_gbff(src: any, workdir?: any, upstream_size?: any, tag_genbank_accid?: any, verbose?: any): object;
    /**
-   */
-   function extract_gene_table(app: any, context: any): object;
-   /**
      * @param outputdir default value Is ``./``.
    */
    function genome_scatter_viz(data: any, outputdir?: any): object;
@@ -53,16 +44,23 @@ declare namespace CellRender {
    */
    function local_protDb(cad_registry: any, dbfile: any): object;
    /**
-     * @param outputdir default value Is ``null``.
-     * @param up_len default value Is ``150``.
-     * @param biocyc default value Is ``./biocyc``.
-     * @param regprecise default value Is ``./RegPrecise.Xml``.
+     * @param diamond default value Is ``Call "Sys.which"("diamond")``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, biocyc?: any, regprecise?: any): object;
+   function make_diamond(local_db: any, diamond?: any): object;
+   /**
+   */
+   function make_diamond_hits(app: any, context: any): object;
+   /**
+   */
+   function make_genbank_proj(app: any, context: any): object;
    /**
      * @param outputdir default value Is ``null``.
+     * @param up_len default value Is ``150``.
+     * @param localdb default value Is ``null``.
+     * @param diamond default value Is ``Call "Sys.which"("diamond")``.
+     * @param n_threads default value Is ``32``.
    */
-   function modelling_kinetics(src: any, outputdir?: any): object;
+   function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, localdb?: any, diamond?: any, n_threads?: any): object;
    /**
      * @param host default value Is ``localhost``.
      * @param port default value Is ``3306``.
