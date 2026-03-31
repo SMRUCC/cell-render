@@ -29,4 +29,16 @@ Module workflow
             .ToArray
     End Function
 
+    <ExportAPI("save_proteins")>
+    Public Function save_proteins(proj As GenBankProject, file As Object, Optional env As Environment = Nothing) As Object
+        Dim s = SMRUCC.Rsharp.GetFileStream(file, FileAccess.Write, env)
+
+        If s Like GetType(Message) Then
+            Return s.TryCast(Of Message)
+        End If
+
+        Call proj.DumpProteinFasta(s.TryCast(Of Stream))
+
+        Return Nothing
+    End Function
 End Module
