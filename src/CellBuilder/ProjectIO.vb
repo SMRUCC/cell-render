@@ -11,6 +11,7 @@ Imports SMRUCC.genomics.Interops.NCBI.Extensions.LocalBLAST.Application.BBH
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 Imports SMRUCC.genomics.Metagenomics
+Imports SMRUCC.genomics.Model.OperonMapper
 Imports SMRUCC.genomics.SequenceModel.FASTA
 
 Public Module ProjectIO
