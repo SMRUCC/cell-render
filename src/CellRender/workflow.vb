@@ -116,4 +116,9 @@ Module workflow
 
         Return proj
     End Function
+
+    <ExportAPI("open_datapool")>
+    Public Function open_datapool(dir As String) As DataRepository
+        Return New DataRepository(dir)
+    End Function
 End Module

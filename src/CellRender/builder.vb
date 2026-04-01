@@ -1,8 +1,10 @@
 ﻿Imports System.IO
 Imports CellBuilder
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
+Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
@@ -77,5 +79,21 @@ Module ProjectBuilder
         Else
             Return ProjectIO.Load(s.TryCast(Of Stream))
         End If
+    End Function
+
+    ''' <summary>
+    ''' build the genbank project as a virtual cell model 
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <param name="datapool"></param>
+    ''' <param name="vcell_name"></param>
+    ''' <returns></returns>
+    <ExportAPI("build")>
+    Public Function build(proj As GenBankProject, datapool As DataRepository, Optional vcell_name As String = Nothing) As VirtualCell
+        Dim compiler As New Compiler(proj, datapool, defaultName:=vcell_name)
+        Dim args As CommandLine = CommandLine.Parse($"--build")
+        Dim model As VirtualCell = compiler.Compile(args)
+
+        Return model
     End Function
 End Module
