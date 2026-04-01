@@ -2,7 +2,7 @@
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
 
-Public Class DataRepository
+Public Class DataRepository : Implements IDataRegistry
 
 #Region "in-memory cache data"
     ReadOnly cachedOperon As WebJSON.Operon()
@@ -82,11 +82,11 @@ Public Class DataRepository
         Return cachedOperon.ToArray
     End Function
 
-    Public Function GetMoleculeDataByID(id As UInteger) As WebJSON.Molecule
+    Public Function GetMoleculeDataByID(id As UInteger) As WebJSON.Molecule Implements IDataRegistry.GetMoleculeDataByID
         Return cachedMolecules.TryGetValue(id.ToString, [default]:=cachedMolecules.TryGetValue("BioCAD" & id.ToString.PadLeft(11, "0"c)))
     End Function
 
-    Public Function GetAssociatedReactions(ec_number As String, Optional simple As Boolean = False) As Dictionary(Of String, WebJSON.Reaction)
+    Public Function GetAssociatedReactions(ec_number As String, Optional simple As Boolean = False) As Dictionary(Of String, WebJSON.Reaction) Implements IDataRegistry.GetAssociatedReactions
         Dim list = cachedReactions.TryGetValue(ec_number)
 
         If Not list Is Nothing Then
@@ -101,7 +101,7 @@ Public Class DataRepository
     ''' </summary>
     ''' <param name="registry_id">id of the molecule</param>
     ''' <returns></returns>
-    Public Function ExpandNetworkByCompound(registry_id As String) As Dictionary(Of String, WebJSON.Reaction)
+    Public Function ExpandNetworkByCompound(registry_id As String) As Dictionary(Of String, WebJSON.Reaction) Implements IDataRegistry.ExpandNetworkByCompound
         Dim list = cachedExpansion.TryGetValue(registry_id)
 
         If Not list Is Nothing Then
