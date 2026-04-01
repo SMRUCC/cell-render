@@ -130,7 +130,7 @@ Public Module ProjectIO
     End Function
 
     Public Function SaveFs(proj As GenBankProject, fs As IFileSystemEnvironment) As Boolean
-        Dim annos As AnnotationSet = proj.annotations
+        Dim annos As AnnotationSet = If(proj.annotations, New AnnotationSet)
 
         Call fs.WriteText(proj.taxonomy.GetJson, "/source.json")
         Call fs.WriteText(proj.nt.GetJson, "/source.txt")
