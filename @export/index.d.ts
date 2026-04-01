@@ -54,6 +54,9 @@ declare namespace CellRender {
    */
    function make_terms(app: any, context: any): object;
    /**
+   */
+   function make_TRN(app: any, context: any): object;
+   /**
      * @param outputdir default value Is ``null``.
      * @param up_len default value Is ``150``.
      * @param localdb default value Is ``null``.

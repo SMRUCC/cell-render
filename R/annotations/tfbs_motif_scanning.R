@@ -23,5 +23,11 @@ const tfbs_motif_scanning = function(app, context) {
     #              --- ---- -------------------   
     # "AsnC; MOTIF 557 AsnC [YwrC - Bacillales] Motif_1" 
 
+    # TF 
+    #
+    #   TF.name motif.id protein_model
+    #    ------ ----     --------------
+    #   >jk0144 1269 Protein:144-jk0144
+
     write.csv(motifs, file = outfile, row.names = FALSE);
 }
