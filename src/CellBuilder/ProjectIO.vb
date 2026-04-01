@@ -57,77 +57,81 @@ Public Module ProjectIO
 
     Public Function Load(s As Stream) As GenBankProject
         Using zip As New ZipStream(s, is_readonly:=True)
-            Dim source_json As String = zip.ReadAllText("/source.json")
-            Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))
-            Dim nucl_fasta As Dictionary(Of String, String) = zip.readFasta("/genes.txt")
-            Dim prot_fasta As Dictionary(Of String, String) = zip.readFasta("/proteins.txt")
-            Dim tss_fasta As Dictionary(Of String, String) = zip.readFasta("/tss_upstream.txt")
-            Dim genes As GeneTable() = zip.ReadLines("/genes.jsonl") _
-                .SafeQuery _
-                .Select(Function(line) line.LoadJSON(Of GeneTable)) _
-                .Where(Function(line) Not line Is Nothing) _
-                .ToArray
-
-            Dim enzyme_hits As HitCollection() = zip.LoadHitCollection("/localblast/enzyme_hits.jsonl").ToArray
-            Dim operon_hits As HitCollection() = zip.LoadHitCollection("/localblast/operon_hits.jsonl").ToArray
-            Dim tf_hits As HitCollection() = zip.LoadHitCollection("/localblast/tf_hits.jsonl").ToArray
-            Dim transport_blast As HitCollection() = zip.LoadHitCollection("/localblast/transporter.jsonl").ToArray
-
-            Dim operons As AnnotatedOperon() = zip.ReadLines("/localblast/operons.jsonl") _
-                .SafeQuery _
-                .Select(Function(line) line.LoadJSON(Of AnnotatedOperon)(throwEx:=False)) _
-                .Where(Function(line) Not line Is Nothing) _
-                .ToArray
-            Dim ec_numbers As Dictionary(Of String, ECNumberAnnotation) = zip.ReadLines("/localblast/ec_numbers.jsonl") _
-                .SafeQuery _
-                .Select(Function(line) line.LoadJSON(Of ECNumberAnnotation)(throwEx:=False)) _
-                .Where(Function(line) Not line Is Nothing) _
-                .ToDictionary(Function(e) e.gene_id)
-            Dim tfbs As MotifMatch() = zip.ReadLines("/tfbs.jsonl") _
-                .SafeQuery _
-                .Select(Function(line) line.LoadJSON(Of MotifMatch)(throwEx:=False)) _
-                .Where(Function(line) Not line Is Nothing) _
-                .ToArray
-            Dim tfset As BestHit() = zip.ReadLines("/localblast/transcript_factors.jsonl") _
-                .SafeQuery _
-                .Select(Function(line) line.LoadJSON(Of BestHit)(throwEx:=False)) _
-                .Where(Function(line) Not line Is Nothing) _
-                .ToArray
-            Dim membranes As RankTerm() = zip.ReadLines("/localblast/membrane_factors.jsonl") _
-                .SafeQuery _
-                .Select(Function(line) line.LoadJSON(Of RankTerm)(throwEx:=False)) _
-                .Where(Function(line) Not line Is Nothing) _
-                .ToArray
-            Dim tfbs_groups = tfbs _
-                .Where(Function(a) Not a.title Is Nothing) _
-                .GroupBy(Function(a) a.title) _
-                .ToDictionary(Function(a) a.Key,
-                                Function(a)
-                                    Return a.ToArray
-                                End Function)
-
-            Dim annos As New AnnotationSet With {
-                .enzyme_hits = enzyme_hits,
-                .ec_numbers = ec_numbers,
-                .operon_hits = operon_hits,
-                .operons = operons,
-                .tfbs_hits = tfbs_groups,
-                .tf_hits = tf_hits,
-                .transcript_factors = tfset,
-                .transporter = transport_blast,
-                .membrane_proteins = membranes
-            }
-
-            Return New GenBankProject With {
-                .nt = source_nt,
-                .taxonomy = source_json.LoadJSON(Of Taxonomy)(throwEx:=False),
-                .gene_table = genes,
-                .genes = nucl_fasta,
-                .proteins = prot_fasta,
-                .tss_upstream = tss_fasta,
-                .annotations = annos
-            }
+            Return ParseZip(zip)
         End Using
+    End Function
+
+    Public Function ParseZip(zip As ZipStream) As GenBankProject
+        Dim source_json As String = zip.ReadAllText("/source.json")
+        Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))
+        Dim nucl_fasta As Dictionary(Of String, String) = zip.readFasta("/genes.txt")
+        Dim prot_fasta As Dictionary(Of String, String) = zip.readFasta("/proteins.txt")
+        Dim tss_fasta As Dictionary(Of String, String) = zip.readFasta("/tss_upstream.txt")
+        Dim genes As GeneTable() = zip.ReadLines("/genes.jsonl") _
+            .SafeQuery _
+            .Select(Function(line) line.LoadJSON(Of GeneTable)) _
+            .Where(Function(line) Not line Is Nothing) _
+            .ToArray
+
+        Dim enzyme_hits As HitCollection() = zip.LoadHitCollection("/localblast/enzyme_hits.jsonl").ToArray
+        Dim operon_hits As HitCollection() = zip.LoadHitCollection("/localblast/operon_hits.jsonl").ToArray
+        Dim tf_hits As HitCollection() = zip.LoadHitCollection("/localblast/tf_hits.jsonl").ToArray
+        Dim transport_blast As HitCollection() = zip.LoadHitCollection("/localblast/transporter.jsonl").ToArray
+
+        Dim operons As AnnotatedOperon() = zip.ReadLines("/localblast/operons.jsonl") _
+            .SafeQuery _
+            .Select(Function(line) line.LoadJSON(Of AnnotatedOperon)(throwEx:=False)) _
+            .Where(Function(line) Not line Is Nothing) _
+            .ToArray
+        Dim ec_numbers As Dictionary(Of String, ECNumberAnnotation) = zip.ReadLines("/localblast/ec_numbers.jsonl") _
+            .SafeQuery _
+            .Select(Function(line) line.LoadJSON(Of ECNumberAnnotation)(throwEx:=False)) _
+            .Where(Function(line) Not line Is Nothing) _
+            .ToDictionary(Function(e) e.gene_id)
+        Dim tfbs As MotifMatch() = zip.ReadLines("/tfbs.jsonl") _
+            .SafeQuery _
+            .Select(Function(line) line.LoadJSON(Of MotifMatch)(throwEx:=False)) _
+            .Where(Function(line) Not line Is Nothing) _
+            .ToArray
+        Dim tfset As BestHit() = zip.ReadLines("/localblast/transcript_factors.jsonl") _
+            .SafeQuery _
+            .Select(Function(line) line.LoadJSON(Of BestHit)(throwEx:=False)) _
+            .Where(Function(line) Not line Is Nothing) _
+            .ToArray
+        Dim membranes As RankTerm() = zip.ReadLines("/localblast/membrane_factors.jsonl") _
+            .SafeQuery _
+            .Select(Function(line) line.LoadJSON(Of RankTerm)(throwEx:=False)) _
+            .Where(Function(line) Not line Is Nothing) _
+            .ToArray
+        Dim tfbs_groups = tfbs _
+            .Where(Function(a) Not a.title Is Nothing) _
+            .GroupBy(Function(a) a.title) _
+            .ToDictionary(Function(a) a.Key,
+                            Function(a)
+                                Return a.ToArray
+                            End Function)
+
+        Dim annos As New AnnotationSet With {
+            .enzyme_hits = enzyme_hits,
+            .ec_numbers = ec_numbers,
+            .operon_hits = operon_hits,
+            .operons = operons,
+            .tfbs_hits = tfbs_groups,
+            .tf_hits = tf_hits,
+            .transcript_factors = tfset,
+            .transporter = transport_blast,
+            .membrane_proteins = membranes
+        }
+
+        Return New GenBankProject With {
+            .nt = source_nt,
+            .taxonomy = source_json.LoadJSON(Of Taxonomy)(throwEx:=False),
+            .gene_table = genes,
+            .genes = nucl_fasta,
+            .proteins = prot_fasta,
+            .tss_upstream = tss_fasta,
+            .annotations = annos
+        }
     End Function
 
     <Extension>
