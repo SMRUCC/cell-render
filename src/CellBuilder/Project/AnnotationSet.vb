@@ -6,6 +6,7 @@ Imports SMRUCC.genomics.Model.OperonMapper
 
 Public Class AnnotationSet
 
+#Region "raw blastp output"
     ''' <summary>
     ''' ec number blastp hits
     ''' </summary>
@@ -18,6 +19,7 @@ Public Class AnnotationSet
     Public Property operon_hits As HitCollection()
     Public Property transporter As HitCollection()
     Public Property tf_hits As HitCollection()
+#End Region
 
     Public Property operons As AnnotatedOperon()
     Public Property ec_numbers As Dictionary(Of String, ECNumberAnnotation)
