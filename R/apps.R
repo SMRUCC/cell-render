@@ -9,6 +9,7 @@ const annotation_workflow = function() {
     WorkflowRender::hook(make_genbank_proj);
     WorkflowRender::hook(tfbs_motif_scanning);
     WorkflowRender::hook(make_diamond_hits);
+    WorkflowRender::hook(make_terms);
 
     # steps for create virtual cell model from genbank annotation project file
     WorkflowRender::hook(build_project);

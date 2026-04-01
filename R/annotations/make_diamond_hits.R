@@ -3,15 +3,25 @@ const make_diamond_hits = function(app, context) {
     let diamond = get_config("diamond");
     let local_db = get_config("localdb");
     let proteins = workfile("make_genbank_proj://proteins.fasta");
+    let n_threads = get_config("n_threads");
     let workdir = getwd();
+    let diamond_blastp = function(db, output) {
+        system2(diamond, c("blastp",
+            "--db", db, 
+            "--query", proteins, 
+            "--out", output, 
+            "--threads", n_threads
+        ))
+        ;
+    }
 
     setwd(WorkflowRender::workspace("make_diamond_hits"));
 
     make_diamond(local_db, diamond);
 
-    system2(diamond, c("blastp","--db","ec_number", "--query", proteins, "--out", "ec_number.m8", "--threads", n_threads));
-    system2(diamond, c("blastp","--db","subcellular", "--query", proteins, "--out", "subcellular.m8", "--threads", n_threads));
-    system2(diamond, c("blastp","--db","transcript_factor", "--query", proteins, "--out", "transcript_factor.m8", "--threads", n_threads));
+    diamond_blastp("ec_number", "ec_number.m8");
+    diamond_blastp("subcellular", "subcellular.m8");
+    diamond_blastp("transcript_factor","transcript_factor.m8");
 
     setwd(workdir);
 }
