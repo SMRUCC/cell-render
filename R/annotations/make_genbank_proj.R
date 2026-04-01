@@ -1,5 +1,5 @@
 imports "project" from "CellRender";
-
+imports "workflow" from "CellRender";
 
 #' Extract the genbank source
 #' 
