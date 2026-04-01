@@ -17,6 +17,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      localdb = NULL, 
                                      diamond = Sys.which("diamond"), 
                                      domain = c("bacteria", "plant", "animal", "fungi"),
+                                     builds = c("TRN_network","Metabolic_network"),
                                      n_threads = 32) {
 
     WorkflowRender::init_context(outputdir || dirname(src));
@@ -26,7 +27,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         up_len    = up_len,
         diamond   = unlist(diamond),
         n_threads = n_threads,
-        domain    = .Internal::first(domain)
+        domain    = .Internal::first(domain),
+        builds     = builds
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
