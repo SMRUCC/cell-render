@@ -85,4 +85,29 @@ Public Class DataRepository
     Public Function GetMoleculeDataByID(id As UInteger) As WebJSON.Molecule
         Return cachedMolecules.TryGetValue(id.ToString, [default]:=cachedMolecules.TryGetValue("BioCAD" & id.ToString.PadLeft(11, "0"c)))
     End Function
+
+    Public Function GetAssociatedReactions(ec_number As String, Optional simple As Boolean = False) As Dictionary(Of String, WebJSON.Reaction)
+        Dim list = cachedReactions.TryGetValue(ec_number)
+
+        If Not list Is Nothing Then
+            Return list.ToDictionary(Function(r) r.guid)
+        Else
+            Return Nothing
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="registry_id">id of the molecule</param>
+    ''' <returns></returns>
+    Public Function ExpandNetworkByCompound(registry_id As String) As Dictionary(Of String, WebJSON.Reaction)
+        Dim list = cachedExpansion.TryGetValue(registry_id)
+
+        If Not list Is Nothing Then
+            Return list.ToDictionary(Function(r) r.guid)
+        Else
+            Return Nothing
+        End If
+    End Function
 End Class
