@@ -18,7 +18,7 @@ declare namespace CellRender {
    function annotation_workflow(): object;
    /**
    */
-   function compile_genbank(cad_registry: any, gbff: any): object;
+   function build_project(app: any, context: any): object;
    /**
      * @param workdir default value Is ``./``.
      * @param union_contigs default value Is ``250``.
@@ -41,9 +41,6 @@ declare namespace CellRender {
    */
    function genome_scatter_viz(data: any, outputdir?: any): object;
    /**
-   */
-   function local_protDb(cad_registry: any, dbfile: any): object;
-   /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
    */
    function make_diamond(local_db: any, diamond?: any): object;
@@ -54,6 +51,9 @@ declare namespace CellRender {
    */
    function make_genbank_proj(app: any, context: any): object;
    /**
+   */
+   function make_terms(app: any, context: any): object;
+   /**
      * @param outputdir default value Is ``null``.
      * @param up_len default value Is ``150``.
      * @param localdb default value Is ``null``.
@@ -61,19 +61,6 @@ declare namespace CellRender {
      * @param n_threads default value Is ``32``.
    */
    function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, localdb?: any, diamond?: any, n_threads?: any): object;
-   /**
-     * @param host default value Is ``localhost``.
-     * @param port default value Is ``3306``.
-   */
-   function open_cadlab(user: any, passwd: any, host?: any, port?: any): object;
-   /**
-     * @param host default value Is ``localhost``.
-     * @param port default value Is ``3306``.
-   */
-   function open_registry(user: any, passwd: any, host?: any, port?: any): object;
-   /**
-   */
-   function reaction_pool(cad_registry: any, repo: any): object;
    /**
      * @param workdir default value Is ``./``.
    */
