@@ -11,8 +11,8 @@ const make_genbank_proj = function(app, context) {
     let gb_src = load_genbanks(get_config("src"));
     let proj = project::new(gb_src);
 
-    project::save(proj, file = workfile("builder.gcproj"));
+    project::save(proj, file = workfile(app, "builder.gcproj"));
 
-    write.fasta(tss_upstream(proj), file = workfile("upstream_locis.fasta")); 
-    workflow::save_proteins(proj, file = workfile("proteins.fasta"));
+    write.fasta(tss_upstream(proj), file = workfile(app, "upstream_locis.fasta")); 
+    workflow::save_proteins(proj, file = workfile(app, "proteins.fasta"));
 }
