@@ -167,6 +167,8 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
         Call $"processing of {enzymes.Count} enzyme annotations".debug
 
+        Dim missing_enzyme As New List(Of String)
+
         For Each enzyme As ECNumberAnnotation In From e As ECNumberAnnotation
                                                  In enzymes.Values
                                                  Where e.Score > enzyme_cutoff
@@ -174,7 +176,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
             Dim list = registry.GetAssociatedReactions(enzyme.EC, simple:=False)
 
             If list Is Nothing Then
-                Call $"missing metabolic network inside registry which is associated with enzyme {enzyme.EC}!".warning
+                Call missing_enzyme.Add(ec_number)
                 Continue For
             Else
                 Dim gene As GeneTable = geneIndex(enzyme.gene_id)
@@ -212,6 +214,10 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                 ec_numbers(guid).Add(ec_number)
             Next
         Next
+
+        If missing_enzyme.Any Then
+            Call $"missing {missing_enzyme.Distinct.Count} metabolic network inside registry which is associated with enzymes: {missing_enzyme.Distinct.JoinBy(", ")}!".warning
+        End If
 
         Call $"load {network.Count} enzymatic reactions!".debug
 
