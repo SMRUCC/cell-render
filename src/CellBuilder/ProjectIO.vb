@@ -43,13 +43,25 @@ Public Module ProjectIO
         End If
     End Function
 
+    <Extension>
+    Private Function readFasta(zip As ZipStream, file As String) As Dictionary(Of String, String)
+        Dim fasta As FastaSeq() = FastaFile.DocParser(zip.ReadLines(file)).ToArray
+        Dim seq_index As Dictionary(Of String, String) = fasta _
+            .ToDictionary(Function(a) a.Title,
+                          Function(a)
+                              Return a.SequenceData
+                          End Function)
+
+        Return seq_index
+    End Function
+
     Public Function Load(s As Stream) As GenBankProject
         Using zip As New ZipStream(s, is_readonly:=True)
             Dim source_json As String = zip.ReadAllText("/source.json")
             Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))
-            Dim nucl_fasta As FastaSeq() = FastaFile.DocParser(zip.ReadLines("/genes.txt")).ToArray
-            Dim prot_fasta As FastaSeq() = FastaFile.DocParser(zip.ReadLines("/proteins.txt")).ToArray
-            Dim tss_fasta As FastaSeq() = FastaFile.DocParser(zip.ReadLines("/tss_upstream.txt")).ToArray
+            Dim nucl_fasta As Dictionary(Of String, String) = zip.readFasta("/genes.txt")
+            Dim prot_fasta As Dictionary(Of String, String) = zip.readFasta("/proteins.txt")
+            Dim tss_fasta As Dictionary(Of String, String) = zip.readFasta("/tss_upstream.txt")
             Dim genes As GeneTable() = zip.ReadLines("/genes.jsonl") _
                 .SafeQuery _
                 .Select(Function(line) line.LoadJSON(Of GeneTable)) _
@@ -86,10 +98,6 @@ Public Module ProjectIO
                 .Select(Function(line) line.LoadJSON(Of RankTerm)(throwEx:=False)) _
                 .Where(Function(line) Not line Is Nothing) _
                 .ToArray
-
-            Dim geneSeqIndex = nucl_fasta.ToDictionary(Function(a) a.Title, Function(a) a.SequenceData)
-            Dim protSeqIndex = prot_fasta.ToDictionary(Function(a) a.Title, Function(a) a.SequenceData)
-            Dim tssSiteIndex = tss_fasta.ToDictionary(Function(a) a.Title, Function(a) a.SequenceData)
             Dim tfbs_groups = tfbs _
                 .Where(Function(a) Not a.title Is Nothing) _
                 .GroupBy(Function(a) a.title) _
@@ -114,9 +122,9 @@ Public Module ProjectIO
                 .nt = source_nt,
                 .taxonomy = source_json.LoadJSON(Of Taxonomy)(throwEx:=False),
                 .gene_table = genes,
-                .genes = geneSeqIndex,
-                .proteins = protSeqIndex,
-                .tss_upstream = tssSiteIndex,
+                .genes = nucl_fasta,
+                .proteins = prot_fasta,
+                .tss_upstream = tss_fasta,
                 .annotations = annos
             }
         End Using
