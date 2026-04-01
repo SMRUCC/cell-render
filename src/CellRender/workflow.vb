@@ -1,15 +1,16 @@
 ﻿Imports System.IO
 Imports CellBuilder
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
+Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 Imports SMRUCC.genomics.SequenceModel.FASTA
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
-Imports SMRUCC.Rsharp.Runtime.Vectorization
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 
 ''' <summary>
@@ -64,9 +65,30 @@ Module workflow
         Dim protein_hits As HitCollection() = pull.populates(Of HitCollection)(env).ToArray
 
         Select Case Strings.LCase(group)
-            Case "ec_number" : proj.annotations.enzyme_hits = protein_hits
-            Case "subcellular_location" : proj.annotations.transporter = protein_hits
-            Case "transcript_factor" : proj.annotations.tf_hits = protein_hits
+            Case "ec_number"
+                proj.annotations.enzyme_hits = protein_hits
+                proj.annotations.ec_numbers = ECNumberAnnotation _
+                    .MakeEnzymeTerms(proj.annotations.enzyme_hits) _
+                    .ToDictionary(Function(a)
+                                      Return a.gene_id
+                                  End Function)
+
+            Case "subcellular_location"
+                proj.annotations.transporter = protein_hits
+                proj.annotations.membrane_proteins = proj.annotations.transporter _
+                    .Select(Function(hits) RankTerm.RankTopTerm(hits)) _
+                    .IteratesALL _
+                    .ToArray
+
+            Case "transcript_factor"
+                proj.annotations.tf_hits = protein_hits
+                proj.annotations.transcript_factors = proj.annotations.tf_hits _
+                    .Select(Function(hits)
+                                Return hits.AssignTFFamilyHit()
+                            End Function) _
+                    .Where(Function(ec) Not ec Is Nothing) _
+                    .ToArray
+
             Case Else
                 Return RInternal.debug.stop($"unknown annotation group of '{group}'", env)
         End Select

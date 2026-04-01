@@ -36,8 +36,8 @@ Public Module Annotation
 
     <Extension>
     Public Function AssignTFFamilyHit(tfhits As HitCollection) As BestHit
-        Dim enzymes = tfhits.AsEnumerable.GroupBy(Function(a) a.hitName.Split("|"c).First).ToArray
-        Dim enzyme_scores As BestHit() = enzymes _
+        Dim transcript_factors = tfhits.AsEnumerable.GroupBy(Function(a) a.hitName.Split("|"c).First).ToArray
+        Dim tf_scores As BestHit() = transcript_factors _
             .Select(Function(a)
                         Dim ec_number = a.Key
                         Dim total As Double = Aggregate hit As Hit In a Into Sum(hit.score * hit.identities * hit.positive)
@@ -56,12 +56,12 @@ Public Module Annotation
                     End Function) _
             .ToArray
 
-        If enzyme_scores.Length = 0 Then
+        If tf_scores.Length = 0 Then
             Return Nothing
-        ElseIf enzyme_scores.Length = 1 Then
-            Return enzyme_scores(0)
+        ElseIf tf_scores.Length = 1 Then
+            Return tf_scores(0)
         Else
-            Return enzyme_scores _
+            Return tf_scores _
                 .OrderByDescending(Function(a) a.score) _
                 .First
         End If
