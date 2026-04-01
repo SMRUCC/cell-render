@@ -9,6 +9,17 @@
 */
 declare namespace project {
    /**
+    * build the genbank project as a virtual cell model
+    * 
+    * 
+     * @param proj -
+     * @param datapool -
+     * @param vcell_name -
+     * 
+     * + default value Is ``null``.
+   */
+   function build(proj: object, datapool: object, vcell_name?: string): object;
+   /**
      * @param env default value Is ``null``.
    */
    function load(file: any, env?: object): any;

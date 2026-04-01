@@ -10,6 +10,9 @@
 */
 declare namespace workflow {
    /**
+   */
+   function open_datapool(dir: string): object;
+   /**
     * extract of the protein fasta sequence data to file
     * 
     * 

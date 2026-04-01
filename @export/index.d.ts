@@ -61,6 +61,7 @@ declare namespace CellRender {
    function make_TRN(app: any, context: any): object;
    /**
      * @param outputdir default value Is ``null``.
+     * @param name default value Is ``null``.
      * @param up_len default value Is ``150``.
      * @param localdb default value Is ``null``.
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
@@ -71,7 +72,7 @@ declare namespace CellRender {
      * @param builds default value Is ``Call "c"("TRN_network", "Metabolic_network")``.
      * @param n_threads default value Is ``32``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, n_threads?: any): object;
+   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, n_threads?: any): object;
    /**
      * @param workdir default value Is ``./``.
    */
