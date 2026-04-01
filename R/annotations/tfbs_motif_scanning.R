@@ -6,7 +6,7 @@ imports "bioseq.patterns" from "seqtoolkit";
 [@app "tfbs_motif_scanning"]
 const tfbs_motif_scanning = function(app, context) {    
     let upstream_seq = workfile("make_genbank_proj://upstream_locis.fasta");
-    let motifs_db = file.path(get_config("localdb"), "motifs");
+    let motifs_db = file.path(get_config("localdb"), "motifs", get_config("domain"));
     let motifs = GCModeller::scan_motifs(
         db = motifs_db, 
         seqs = upstream_seq, 
