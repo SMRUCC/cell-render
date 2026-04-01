@@ -91,7 +91,7 @@ Module ProjectBuilder
     <ExportAPI("build")>
     Public Function build(proj As GenBankProject, datapool As DataRepository, Optional vcell_name As String = Nothing) As VirtualCell
         Dim compiler As New Compiler(proj, datapool, defaultName:=vcell_name)
-        Dim args As CommandLine = CommandLine.Parse($"--build")
+        Dim args As CommandLine = CommandLine.Parse($"--build --name ""{vcell_name}""")
         Dim model As VirtualCell = compiler.Compile(args)
 
         Return model
