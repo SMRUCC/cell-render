@@ -13,6 +13,7 @@
 #'    report about the virtual cell modelling result.
 #'
 const modelling_cellgraph = function(src, outputdir = NULL, 
+                                     name = NULL,
                                      up_len = 150, 
                                      localdb = NULL, 
                                      diamond = Sys.which("diamond"), 
@@ -31,7 +32,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         builds     = builds,
         release    = file.path(workdir_root(), "release"),
         proj_file  = file.path(workdir_root(), "release", "builder.gcproj"),
-        model_file = file.path(workdir_root(), "release", "model.xml") 
+        model_file = file.path(workdir_root(), "release", "model.xml"),
+        vcell_name = name 
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
