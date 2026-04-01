@@ -22,13 +22,16 @@ const modelling_cellgraph = function(src, outputdir = NULL,
 
     WorkflowRender::init_context(outputdir || dirname(src));
     WorkflowRender::set_config(list(
-        src       = normalizePath(src),
-        localdb   = localdb || normalizePath(@datadir),
-        up_len    = up_len,
-        diamond   = unlist(diamond),
-        n_threads = n_threads,
-        domain    = .Internal::first(domain),
-        builds     = builds
+        src        = normalizePath(src),
+        localdb    = localdb || normalizePath(@datadir),
+        up_len     = up_len,
+        diamond    = unlist(diamond),
+        n_threads  = n_threads,
+        domain     = .Internal::first(domain),
+        builds     = builds,
+        release    = file.path(workdir_root(), "release")
+        proj_file  = file.path(workdir_root(), "release", "builder.gcproj"),
+        model_file = file.path(workdir_root(), "release", "model.xml") 
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();

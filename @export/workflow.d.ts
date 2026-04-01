@@ -25,6 +25,10 @@ declare namespace workflow {
    */
    function set_blastp_result(blastp_hits: any, proj: object, group: string, env?: object): any;
    /**
+     * @param env default value Is ``null``.
+   */
+   function set_tfbs(proj: object, tfbs: any, env?: object): any;
+   /**
     * extract of the tss upstream location site sequence data
     * 
     * 

@@ -20,6 +20,9 @@ declare namespace CellRender {
    */
    function build_project(app: any, context: any): object;
    /**
+   */
+   function check_build_module(flag: any): object;
+   /**
      * @param workdir default value Is ``./``.
      * @param union_contigs default value Is ``250``.
    */
@@ -61,9 +64,14 @@ declare namespace CellRender {
      * @param up_len default value Is ``150``.
      * @param localdb default value Is ``null``.
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
+     * @param domain default value Is ``Call "c"("bacteria",
+     *       "plant",
+     *       "animal",
+     *       "fungi")``.
+     * @param builds default value Is ``Call "c"("TRN_network", "Metabolic_network")``.
      * @param n_threads default value Is ``32``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, localdb?: any, diamond?: any, n_threads?: any): object;
+   function modelling_cellgraph(src: any, outputdir?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, n_threads?: any): object;
    /**
      * @param workdir default value Is ``./``.
    */
