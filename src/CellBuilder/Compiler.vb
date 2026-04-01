@@ -1,6 +1,4 @@
-﻿Imports CADRegistry
-Imports CellBuilder
-Imports Microsoft.VisualBasic.CommandLine
+﻿Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -23,23 +21,17 @@ Imports SMRUCC.genomics.SequenceModel.NucleotideModels.Translation
 Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
     ReadOnly proj As GenBankProject
-    ReadOnly registry As RegistryUrl
+    ReadOnly registry As IDataRegistry
     ReadOnly motifSites As Dictionary(Of String, MotifMatch())
     ReadOnly defaultName As String
 
     Public Property enzyme_cutoff As Double = 450
 
-    Sub New(proj As GenBankProject, Optional serverUrl As String = RegistryUrl.defaultServer, Optional defaultName As String = Nothing)
+    Sub New(proj As GenBankProject, registry As IDataRegistry, Optional defaultName As String = Nothing)
         Dim annoSet As AnnotationSet = proj.annotations
 
         Me.defaultName = defaultName
-
-        If serverUrl.ToLower.StartsWith("http://") OrElse serverUrl.ToLower.StartsWith("https://") Then
-            Me.registry = New RegistryUrl(serverUrl)
-        Else
-            Me.registry = New RegistryUrl(RegistryUrl.defaultServer, serverUrl)
-        End If
-
+        Me.registry = registry
         Me.motifSites = annoSet.tfbs_hits.Values _
             .IteratesALL _
             .Where(Function(a) a.identities > 0.97) _
