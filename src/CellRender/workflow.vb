@@ -73,4 +73,25 @@ Module workflow
 
         Return Nothing
     End Function
+
+    <ExportAPI("set_tfbs")>
+    Public Function set_tfbs(proj As GenBankProject, <RRawVectorArgument> tfbs As Object, Optional env As Environment = Nothing) As Object
+        Dim pull As pipeline = pipeline.TryCreatePipeline(Of MotifMatch)(tfbs, env)
+
+        If pull.isError Then
+            Return pull.getError
+        ElseIf proj.annotations Is Nothing Then
+            proj.annotations = New AnnotationSet
+        End If
+
+        proj.annotations.tfbs_hits = pull _
+            .populates(Of MotifMatch)(env) _
+            .GroupBy(Function(m) m.title) _
+            .ToDictionary(Function(m) m.Key,
+                          Function(m)
+                              Return m.ToArray
+                          End Function)
+
+        Return proj
+    End Function
 End Module
