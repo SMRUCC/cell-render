@@ -29,7 +29,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         n_threads  = n_threads,
         domain     = .Internal::first(domain),
         builds     = builds,
-        release    = file.path(workdir_root(), "release")
+        release    = file.path(workdir_root(), "release"),
         proj_file  = file.path(workdir_root(), "release", "builder.gcproj"),
         model_file = file.path(workdir_root(), "release", "model.xml") 
     ));
