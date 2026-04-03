@@ -38,7 +38,7 @@ imports "annotation.terms" from "seqtoolkit";
 #'   the \code{result_dir} as side effects.
 #'
 #' @export
-const pangenome = function(src, result_dir, diamond = Sys.which("diamond"), n_threads = 32) {
+const pangenome_analysis = function(src, result_dir, diamond = Sys.which("diamond"), n_threads = 32) {
     let source_dir = file.path(result_dir, "source");
     let blastp_dir = file.path(result_dir, "blastp");
 
