@@ -70,6 +70,7 @@ const pangenome_analysis = function(src, result_dir,
     let genome_files = list.files(source_dir, pattern = "*.csv");
     let bin = pangenome::build_context(
         genomes = as.list(genome_files, names = basename(genome_files)) 
+                    |> tqdm() 
                     |> lapply(file => read_genetable(file))
     );
     # run pan-genome analysis
