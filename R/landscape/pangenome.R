@@ -115,7 +115,7 @@ const batch_diamond = function(source_dir, result_dir,
     let local_db = file.path(@datadir, "ec_numbers.fasta");
 
     setwd(blastp_dir);        
-    system2(diamond, c("makedb","--in", local_db, "--db", "ec_number"));
+    system2(diamond, c("makedb","--in", local_db, "--db", "ec_number"), shell=TRUE);
 
     for(let faa in list.files(source_dir, pattern = "*.faa")) {
         system2(diamond, c("blastp",
@@ -123,7 +123,7 @@ const batch_diamond = function(source_dir, result_dir,
             "--query", faa, 
             "--out", file.path(result_dir, `${basename(faa)}.m8`), 
             "--threads", n_threads
-        ))
+        ), shell=TRUE)
         ;
     }
 

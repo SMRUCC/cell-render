@@ -52,7 +52,7 @@ const make_diamond_hits = function(app, context) {
             "--query", proteins, 
             "--out", output, 
             "--threads", n_threads
-        ))
+        ), shell=TRUE)
         ;
     }
 
@@ -105,7 +105,7 @@ const make_diamond = function(local_db, diamond = Sys.which("diamond")) {
 
     diamond <- unlist(diamond);
 
-    system2(diamond, c("makedb","--in",enzyme_db, "--db", "ec_number"));
-    system2(diamond, c("makedb","--in",cc_location, "--db", "subcellular"));
-    system2(diamond, c("makedb","--in",tf_db, "--db", "transcript_factor"));
+    system2(diamond, c("makedb","--in",enzyme_db, "--db", "ec_number"), shell=TRUE);
+    system2(diamond, c("makedb","--in",cc_location, "--db", "subcellular"), shell=TRUE);
+    system2(diamond, c("makedb","--in",tf_db, "--db", "transcript_factor"), shell=TRUE);
 }
