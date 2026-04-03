@@ -1,0 +1,64 @@
+﻿.TH EXTRACT_GENOMES 1 2026-4月 "" "Extract Protein Sequences and Gene Features from Batch GenBank Files"
+.SH NAME
+extract_genomes \- extract_genomes(src, outputdir)
+.SH SYNOPSIS
+\fIextract_genomes(src, outputdir)\fR
+.SH DESCRIPTION
+.PP
+
+
+This function processes multiple GenBank files located in a source directory.
+It extracts protein sequences and gene feature tables from each file and
+exports them to a specified output directory. Specifically, it generates
+FASTA files (`.faa`) for protein sequences and CSV files (`.csv`) for
+gene annotation tables.
+.PP
+.SH OPTIONS
+.PP
+\fBsrc\fB \fR\- . A character string specifying the directory path containing the
+GenBank source files. The function scans for files with extensions
+`.gb`, `.gbk`, or `.gbff`.
+.PP
+.PP
+\fBoutputdir\fB \fR\- . A character string specifying the directory path where the
+extracted data files will be saved. If the directory does not exist, it
+should be created beforehand (or the function may fail depending on
+implementation).
+.PP
+.SH VALUE
+.PP
+Invisible `NULL`. This function is called for its side effects
+(writing files to disk) and does not return a value to the console.
+.PP
+.SH DETAILS
+.PP
+The function iterates through all matching GenBank files in the source
+directory. For each file:
+\itemize{
+\item Reads the GenBank record.
+\item Extracts the accession ID to name the output files.
+\item Exports protein sequences in FASTA format, using the gene locus tag
+as the sequence header.
+\item Exports gene features (ORFs) as a tabular CSV file.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Define source and output directories
+source_path <- "path/to/genbank_files"
+output_path <- "path/to/output_data"
+# Run the extraction
+extract_genomes(src = source_path, outputdir = output_path)
+
+#}
+.PP
+.SH SEE ALSO
+[read.genbank], [GenBank::accession_id], [write.fasta]
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.extract_genomes at extract_genomes.R:line 46
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Extract Protein Sequences and Gene Features from Batch GenBank Files</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>extract_genomes {CellRender}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Extract Protein Sequences and Gene Features from Batch GenBank Files</h2>
+
+        <h3>Description</h3>
+
+        <p>This function processes multiple GenBank files located in a source directory.
+It extracts protein sequences and gene feature tables from each file and
+exports them to a specified output directory. Specifically, it generates
+FASTA files (`.faa`) for protein sequences and CSV files (`.csv`) for
+gene annotation tables.</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>extract_genomes</strong>(<i>src</i>, <i>outputdir</i>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>src</dt>
+<dd><p><p>A character string specifying the directory path containing the
+GenBank source files. The function scans for files with extensions
+`.gb`, `.gbk`, or `.gbff`.</p></p></dd>
+
+
+<dt>outputdir</dt>
+<dd><p><p>A character string specifying the directory path where the
+extracted data files will be saved. If the directory does not exist, it
+should be created beforehand (or the function may fail depending on
+implementation).</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: block;">Details</h3>
+
+        <p>The function iterates through all matching GenBank files in the source
+directory. For each file:
+\itemize{
+\item Reads the GenBank record.
+\item Extracts the accession ID to name the output files.
+\item Exports protein sequences in FASTA format, using the gene locus tag
+as the sequence header.
+\item Exports gene features (ORFs) as a tabular CSV file.
+}</p>
+
+        <h3 style="display: block">Authors</h3>
+
+        xieguigang &lt;xie.guigang@gcmodeller.org>
+
+        <h3>Value</h3>
+
+        <p>Invisible `NULL`. This function is called for its side effects
+(writing files to disk) and does not return a value to the console.</p>
+
+        <h3 style="display: block;">Examples</h3>
+
+        <pre><code id="example_r">#\dontrun{
+
+# Define source and output directories
+source_path <- "path/to/genbank_files"
+output_path <- "path/to/output_data"
+# Run the extraction
+extract_genomes(src = source_path, outputdir = output_path)
+
+#}</code></pre>
+
+        <hr />
+        <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a
+                href="../CellRender.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

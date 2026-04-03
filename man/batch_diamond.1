@@ -1,0 +1,48 @@
+﻿.TH BATCH_DIAMOND 1 2026-4月 "" "Batch DIAMOND BLASTP Search Against Enzyme Database"
+.SH NAME
+batch_diamond \- batch_diamond(source.dir, result.dir,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>)
+.SH SYNOPSIS
+\fIbatch_diamond(source.dir, result.dir,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
+.SH DESCRIPTION
+.PP
+A helper function that formats a local EC number reference database and
+executes DIAMOND BLASTP in batch mode for all protein FASTA files in a
+given source directory.
+.PP
+.SH OPTIONS
+.PP
+\fBsource.dir\fB \fR\- . 
+.PP
+.PP
+\fBresult.dir\fB \fR\- . 
+.PP
+.PP
+\fBdiamond\fB \fR\- 'Sys.which'('diamond'). A character string specifying the file path to the DIAMOND
+executable. Defaults to \code{Sys.which("diamond")}.
+.PP
+.PP
+\fBn.threads\fB \fR\- 32. 
+.PP
+.SH VALUE
+.PP
+Returns \code{invisible(NULL)}. Output \code{.m8} files and the
+DIAMOND database file are written to \code{result_dir}.
+.PP
+.SH DETAILS
+.PP
+This function temporarily changes the working directory to \code{result_dir}
+to generate the DIAMOND database (\code{ec_number.dmnd}) using an internal
+package reference file (\code{ec_numbers.fasta}). It then iterates through
+all \code{.faa} files in \code{source_dir} and executes a BLASTP search.
+The original working directory is restored upon completion.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.batch_diamond at pangenome.R:line 109
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

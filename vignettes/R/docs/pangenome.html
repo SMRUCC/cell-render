@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>pan-genome analysis of the microbial community</title>
+    <title>Pan-genome Analysis of a Microbial Community</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,16 +18,21 @@
             </tr>
         </table>
 
-        <h2>pan-genome analysis of the microbial community</h2>
+        <h2>Pan-genome Analysis of a Microbial Community</h2>
 
         <h3>Description</h3>
 
-        
+        <p>This function orchestrates a complete pan-genome analysis pipeline for a
+set of microbial genomes. It extracts genomic data from GenBank files,
+performs protein annotation via DIAMOND BLASTP, assigns orthology groups,
+and calculates both Structural Variation (SV) and Presence/Absence Variation (PAV).</p>
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pangenome</strong>(<i>src</i>, <i>result.dir</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>pangenome</strong>(<i>src</i>, <i>result.dir</i>,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
@@ -35,18 +40,43 @@
         <table>
             
 <dt>src</dt>
-<dd><p><p>a character vector of the directory path that contains the ncbi genbank assembly files.</p></p></dd>
+<dd><p><p>A character string specifying the directory path containing the
+input NCBI GenBank assembly files.</p></p></dd>
 
 
 <dt>result.dir</dt>
-<dd><p><p>a character vector of the directory path for export the analysis result files.</p></p></dd>
+<dd><p><p>A character string specifying the directory path where
+all intermediate and final analysis results will be exported.</p></p></dd>
+
+
+<dt>diamond</dt>
+<dd><p><p>A character string specifying the file path to the DIAMOND
+executable. Defaults to the system PATH via \code{Sys.which("diamond")}.</p></p></dd>
+
+
+<dt>n.threads</dt>
+<dd><p><p>An integer specifying the number of CPU threads to use for
+the DIAMOND BLASTP search. Defaults to 32.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The pipeline proceeds through the following steps:
+\itemize{
+\item \strong{Extraction}: Extracts protein FASTA (.faa) and gene annotation
+(.csv) files into a \code{source} subdirectory.
+\item \strong{Annotation}: Runs DIAMOND BLASTP against an internal EC number
+reference database using \code{\link{batch_diamond}}.
+\item \strong{Orthology Assignment}: Reads BLASTP results (.m8), assigns terms
+(keeping only the top best hit with >30\% identity, filtering unknowns), and
+constructs orthology groups.
+\item \strong{Pan-genome Construction}: Builds the pangenome context and
+executes the core/accessory analysis using the defined ortholog sets.
+\item \strong{Export}: Saves an interactive HTML report, an SV result table
+(CSV), and a PAV result table (CSV) to \code{result_dir}.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -54,7 +84,8 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>Returns \code{invisible(NULL)}. All results are written directly to
+the \code{result_dir} as side effects.</p>
 
         <h3 style="display: none;">Examples</h3>
 

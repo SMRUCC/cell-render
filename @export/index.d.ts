@@ -17,6 +17,11 @@ declare namespace CellRender {
    */
    function annotation_workflow(): object;
    /**
+     * @param diamond default value Is ``Call "Sys.which"("diamond")``.
+     * @param n_threads default value Is ``32``.
+   */
+   function batch_diamond(source_dir: any, result_dir: any, diamond?: any, n_threads?: any): object;
+   /**
    */
    function build_project(app: any, context: any): object;
    /**
@@ -39,6 +44,9 @@ declare namespace CellRender {
      * @param verbose default value Is ``true``.
    */
    function extract_gbff(src: any, workdir?: any, upstream_size?: any, tag_genbank_accid?: any, verbose?: any): object;
+   /**
+   */
+   function extract_genomes(src: any, outputdir: any): object;
    /**
      * @param outputdir default value Is ``./``.
    */
@@ -74,8 +82,10 @@ declare namespace CellRender {
    */
    function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, n_threads?: any): object;
    /**
+     * @param diamond default value Is ``Call "Sys.which"("diamond")``.
+     * @param n_threads default value Is ``32``.
    */
-   function pangenome(src: any, result_dir: any): object;
+   function pangenome(src: any, result_dir: any, diamond?: any, n_threads?: any): object;
    /**
      * @param workdir default value Is ``./``.
    */

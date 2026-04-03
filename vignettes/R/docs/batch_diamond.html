@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Batch DIAMOND BLASTP Search Against Enzyme Database</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>batch_diamond {CellRender}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Batch DIAMOND BLASTP Search Against Enzyme Database</h2>
+
+        <h3>Description</h3>
+
+        <p>A helper function that formats a local EC number reference database and
+executes DIAMOND BLASTP in batch mode for all protein FASTA files in a
+given source directory.</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>batch_diamond</strong>(<i>source.dir</i>, <i>result.dir</i>,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>source.dir</dt>
+<dd><p><p>A character string specifying the directory path containing
+input protein FASTA files (\code{.faa}).</p></p></dd>
+
+
+<dt>result.dir</dt>
+<dd><p><p>A character string specifying the directory path where the
+DIAMOND output files (\code{.m8} format) will be saved.</p></p></dd>
+
+
+<dt>diamond</dt>
+<dd><p><p>A character string specifying the file path to the DIAMOND
+executable. Defaults to \code{Sys.which("diamond")}.</p></p></dd>
+
+
+<dt>n.threads</dt>
+<dd><p><p>An integer specifying the number of CPU threads to allocate
+to DIAMOND. Defaults to 32.</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: block;">Details</h3>
+
+        <p>This function temporarily changes the working directory to \code{result_dir}
+to generate the DIAMOND database (\code{ec_number.dmnd}) using an internal
+package reference file (\code{ec_numbers.fasta}). It then iterates through
+all \code{.faa} files in \code{source_dir} and executes a BLASTP search.
+The original working directory is restored upon completion.</p>
+
+        <h3 style="display: block">Authors</h3>
+
+        xieguigang &lt;xie.guigang@gcmodeller.org>
+
+        <h3>Value</h3>
+
+        <p>Returns \code{invisible(NULL)}. Output \code{.m8} files and the
+DIAMOND database file are written to \code{result_dir}.</p>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a
+                href="../CellRender.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>
