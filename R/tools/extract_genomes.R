@@ -57,7 +57,7 @@ const extract_genomes = function(src, outputdir) {
         
         # export the gene annotation result data from genbank file
         # and also the genomics protein fasta sequence data
-        write.csv(genes, file = file.path(outputdir, `${genbank_id}.csv`));
+        write.csv(genes, file = file.path(outputdir, `${genbank_id}.csv`), silent = TRUE);
         write.fasta(prots, file = file.path(outputdir, `${genbank_id}.faa`));
     }
 
