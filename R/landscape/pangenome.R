@@ -38,17 +38,24 @@ imports "annotation.terms" from "seqtoolkit";
 #'   the \code{result_dir} as side effects.
 #'
 #' @export
-const pangenome_analysis = function(src, result_dir, diamond = Sys.which("diamond"), n_threads = 32) {
+const pangenome_analysis = function(src, result_dir, 
+                                    diamond = Sys.which("diamond"), 
+                                    n_threads = 32, 
+                                    skip_blastp = FALSE) {
+                                        
     let source_dir = file.path(result_dir, "source");
     let blastp_dir = file.path(result_dir, "blastp");
 
     # make export of the genomics protein fasta sequence and
     # gene annotation data as files
     extract_genomes(src, outputdir = source_dir);
-    # run protein annotation search via diamond blastp search
-    batch_diamond(source_dir, blastp_dir, 
-        diamond   = normalizePath(unlist(diamond)), 
-        n_threads = n_threads);
+
+    if (!as.logical(skip_blastp )) {
+        # run protein annotation search via diamond blastp search
+        batch_diamond(source_dir, blastp_dir, 
+            diamond   = normalizePath(unlist(diamond)), 
+            n_threads = n_threads);
+    }
     
     # make the pan-genome analysis at here
     let links <- new ortho_groups();
