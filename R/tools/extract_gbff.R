@@ -52,7 +52,7 @@ const extract_gbff = function(src, workdir = "./",
     # load genbank assembly file from a given file path
     let gbk = read.genbank(src);
     # extract the raw genomics fasta sequence
-    let genomics_seq = origin.fasta(gbk);
+    let genomics_seq = GenBank::origin_fasta(gbk);
     # extract the gene features from the genbank assembly object
     let genes = genome.genes(genome = gbk);
     let gene_ids = [genes]::Synonym;
