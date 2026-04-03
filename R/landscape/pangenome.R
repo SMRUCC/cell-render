@@ -1,3 +1,5 @@
+imports "pangenome" from "comparative_toolkit";
+
 #' pan-genome analysis of the microbial community
 #' 
 #' @param src a character vector of the directory path that contains the ncbi genbank assembly files.
