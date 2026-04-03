@@ -1,5 +1,6 @@
 imports "annotation.workflow" from "seqtoolkit";
 
+#' make annotation terms of the cellular components inside the virtual cell model
 [@app "make_terms"]
 const make_terms = function(app, context) {
     let ec_number = read_m8(workfile("make_diamond_hits://ec_number.m8"));

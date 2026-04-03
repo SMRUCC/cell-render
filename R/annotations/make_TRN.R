@@ -1,5 +1,6 @@
 imports "bioseq.patterns" from "seqtoolkit";
 
+#' make TRN network inside the virtual cell model 
 [@app "make_TRN"]
 const make_TRN = function(app, context) {
     if (check_build_module("TRN_network")) {
