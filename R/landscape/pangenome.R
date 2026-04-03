@@ -4,5 +4,5 @@
 #' @param result_dir a character vector of the directory path for export the analysis result files. 
 #' 
 const pangenome = function(src, result_dir) {
-
+    extract_genomes(src, outputdir = file.path(result_dir, "source"));
 }
