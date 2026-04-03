@@ -46,11 +46,10 @@ const pangenome_analysis = function(src, result_dir,
     let source_dir = file.path(result_dir, "source");
     let blastp_dir = file.path(result_dir, "blastp");
 
-    # make export of the genomics protein fasta sequence and
-    # gene annotation data as files
-    extract_genomes(src, outputdir = source_dir);
-
     if (!as.logical(skip_blastp )) {
+        # make export of the genomics protein fasta sequence and
+        # gene annotation data as files
+        extract_genomes(src, outputdir = source_dir);
         # run protein annotation search via diamond blastp search
         batch_diamond(source_dir, blastp_dir, 
             diamond   = normalizePath(unlist(diamond)), 
