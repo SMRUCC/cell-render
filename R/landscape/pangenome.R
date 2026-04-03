@@ -17,7 +17,7 @@ const pangenome = function(src, result_dir, diamond = Sys.which("diamond"), n_th
     extract_genomes(src, outputdir = source_dir);
     # run protein annotation search via diamond blastp search
     batch_diamond(source_dir, blastp_dir, 
-        diamond   = unlist(diamond), 
+        diamond   = normalizePath(unlist(diamond)), 
         n_threads = n_threads);
     
     # make the pan-genome analysis at here
