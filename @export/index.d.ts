@@ -84,8 +84,9 @@ declare namespace CellRender {
    /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
      * @param n_threads default value Is ``32``.
+     * @param skip_blastp default value Is ``false``.
    */
-   function pangenome_analysis(src: any, result_dir: any, diamond?: any, n_threads?: any): object;
+   function pangenome_analysis(src: any, result_dir: any, diamond?: any, n_threads?: any, skip_blastp?: any): object;
    /**
      * @param workdir default value Is ``./``.
    */

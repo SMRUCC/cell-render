@@ -2,11 +2,13 @@
 .SH NAME
 pangenome_analysis \- pangenome_analysis(src, result.dir,
     <i>diamond</i> = 'Sys.which'('diamond'),
-    <i>n.threads</i> = <span style='color: green;'>32</span>)
+    <i>n.threads</i> = <span style='color: green;'>32</span>,
+    <i>skip.blastp</i> = <span style='color: blue !important;'>FALSE</span>)
 .SH SYNOPSIS
 \fIpangenome_analysis(src, result.dir,
     <i>diamond</i> = 'Sys.which'('diamond'),
-    <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
+    <i>n.threads</i> = <span style='color: green;'>32</span>,
+    <i>skip.blastp</i> = <span style='color: blue !important;'>FALSE</span>)\fR
 .SH DESCRIPTION
 .PP
 This function orchestrates a complete pan-genome analysis pipeline for a
@@ -28,6 +30,9 @@ executable. Defaults to the system PATH via \code{Sys.which("diamond")}.
 .PP
 .PP
 \fBn.threads\fB \fR\- 32. 
+.PP
+.PP
+\fBskip.blastp\fB \fR\- FALSE. 
 .PP
 .SH VALUE
 .PP
