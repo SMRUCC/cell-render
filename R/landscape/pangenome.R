@@ -42,7 +42,7 @@ const pangenome_analysis = function(src, result_dir,
                                     diamond = Sys.which("diamond"), 
                                     n_threads = 32, 
                                     skip_blastp = FALSE) {
-                                        
+
     let source_dir = file.path(result_dir, "source");
     let blastp_dir = file.path(result_dir, "blastp");
 
@@ -58,18 +58,15 @@ const pangenome_analysis = function(src, result_dir,
     }
     
     # make the pan-genome analysis at here
-    let links <- new ortho_groups();
-
+    let links <- list.files(blastp_dir, pattern = "*.m8");
     # scan for all diamond blastp result files
-    for(let align_file in tqdm(list.files(blastp_dir, pattern = "*.m8"))) {
+    links <- as.list(links, names = basename(links));
+    links <- lapply(tqdm(links), function(align_file) {        
+        align_file |> read_m8()
         # read the diamond blastp alignment file
-        align_file 
-        |> read_m8()
         # and then set orthology group for make gene family
         |> assign_terms(top_best = TRUE, filter_unknown = TRUE, identities_cut = 30)
-        |> set_ortho_group(uf = links)
-        ;
-    }
+    });
 
     let genome_files = list.files(source_dir, pattern = "*.csv");
     let bin = pangenome::build_context(
