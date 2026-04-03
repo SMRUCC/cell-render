@@ -8,6 +8,7 @@ const annotation_workflow = function() {
     # steps for make genbank annotation project
     WorkflowRender::hook(make_genbank_proj);
     WorkflowRender::hook(tfbs_motif_scanning);
+    # blastp search and then make annotation terms
     WorkflowRender::hook(make_diamond_hits);
     WorkflowRender::hook(make_terms);
 
