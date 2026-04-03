@@ -1,0 +1,59 @@
+﻿.TH PANGENOME_ANALYSIS 1 2026-4月 "" "Pan-genome Analysis of a Microbial Community"
+.SH NAME
+pangenome_analysis \- pangenome_analysis(src, result.dir,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>)
+.SH SYNOPSIS
+\fIpangenome_analysis(src, result.dir,
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
+.SH DESCRIPTION
+.PP
+This function orchestrates a complete pan-genome analysis pipeline for a
+set of microbial genomes. It extracts genomic data from GenBank files,
+performs protein annotation via DIAMOND BLASTP, assigns orthology groups,
+and calculates both Structural Variation (SV) and Presence/Absence Variation (PAV).
+.PP
+.SH OPTIONS
+.PP
+\fBsrc\fB \fR\- . A character string specifying the directory path containing the
+input NCBI GenBank assembly files.
+.PP
+.PP
+\fBresult.dir\fB \fR\- . 
+.PP
+.PP
+\fBdiamond\fB \fR\- 'Sys.which'('diamond'). A character string specifying the file path to the DIAMOND
+executable. Defaults to the system PATH via \code{Sys.which("diamond")}.
+.PP
+.PP
+\fBn.threads\fB \fR\- 32. 
+.PP
+.SH VALUE
+.PP
+Returns \code{invisible(NULL)}. All results are written directly to
+the \code{result_dir} as side effects.
+.PP
+.SH DETAILS
+.PP
+The pipeline proceeds through the following steps:
+\itemize{
+\item \strong{Extraction}: Extracts protein FASTA (.faa) and gene annotation
+(.csv) files into a \code{source} subdirectory.
+\item \strong{Annotation}: Runs DIAMOND BLASTP against an internal EC number
+reference database using \code{\link{batch_diamond}}.
+\item \strong{Orthology Assignment}: Reads BLASTP results (.m8), assigns terms
+(keeping only the top best hit with >30\% identity, filtering unknowns), and
+constructs orthology groups.
+\item \strong{Pan-genome Construction}: Builds the pangenome context and
+executes the core/accessory analysis using the defined ortholog sets.
+\item \strong{Export}: Saves an interactive HTML report, an SV result table
+(CSV), and a PAV result table (CSV) to \code{result_dir}.
+}
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.pangenome_analysis at pangenome.R:line 41
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026
