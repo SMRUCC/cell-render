@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Run the cell graph structure modelling workflow</title>
+    <title>Run the Virtual Cell Graph Modeling Workflow</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,14 @@
             </tr>
         </table>
 
-        <h2>Run the cell graph structure modelling workflow</h2>
+        <h2>Run the Virtual Cell Graph Modeling Workflow</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Executes the end-to-end workflow for constructing a virtual cell graph model
+from an NCBI GenBank assembly source file. This function initializes the
+environment, configures parameters, runs the annotation workflow, and
+generates the corresponding project files and reports.</p>
 
         <h3>Usage</h3>
 
@@ -43,28 +46,65 @@
         <table>
             
 <dt>src</dt>
-<dd><p><p>the ncbi genbank assembly source file its file path</p></p></dd>
+<dd><p><p>\code{character}. The file path to the NCBI GenBank assembly
+source file.</p></p></dd>
 
 
 <dt>outputdir</dt>
-<dd><p><p>the result outputdir and temp workspace
-location, default value is NULL means use the parent dir of
-the input src</p></p></dd>
+<dd><p><p>\code{character}. The directory path for storing result
+files and temporary workspace. Defaults to \code{NULL}, which will use
+the parent directory of the \code{src} file.</p></p></dd>
 
 
-<dt>biocyc</dt>
-<dd><p><p>the directory path to the local reference dataset for make the cellular component annotation.</p></p></dd>
+<dt>name</dt>
+<dd><p><p>\code{character}. An optional custom name for the virtual cell
+model. If \code{NULL}, a default name may be assigned by the rendering engine.</p></p></dd>
 
 
 <dt>up.len</dt>
-<dd><p><p>an integer vector for specific the length of the TSS upstream site</p></p></dd>
+<dd><p><p>\code{integer}. The length (in base pairs) of the upstream
+region from the Transcription Start Site (TSS) to be extracted.
+Defaults to 150.</p></p></dd>
+
+
+<dt>localdb</dt>
+<dd><p><p>\code{character}. The file path to a local annotation
+database. Defaults to \code{NULL}, which falls back to the internal
+package data directory.</p></p></dd>
+
+
+<dt>diamond</dt>
+<dd><p><p>\code{character}. The file path to the DIAMOND executable
+(used for fast sequence alignment). Defaults to the system path found
+via \code{Sys.which("diamond")}.</p></p></dd>
+
+
+<dt>domain</dt>
+<dd><p><p>\code{character}. The biological domain of the input organism.
+Must be one of \code{"bacteria"}, \code{"plant"}, \code{"animal"}, or
+\code{"fungi"}. Note: If multiple values are provided, only the first
+element will be used.</p></p></dd>
+
+
+<dt>builds</dt>
+<dd><p><p>\code{character}. A character vector specifying which
+annotation modules to build. Supported options are \code{"TRN_network"}
+(Transcriptional Regulatory Network) and \code{"Metabolic_network"}.</p></p></dd>
+
+
+<dt>n.threads</dt>
+<dd><p><p>\code{integer}. The number of CPU threads to allocate
+for parallel processing. Defaults to 32.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>This function acts as a high-level wrapper around the \code{WorkflowRender}
+and \code{CellRender} engines. It sets up a temporary workspace (if not
+provided), resolves dependencies (like the DIAMOND executable), and triggers
+the specific annotation modules requested by the user.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -72,14 +112,32 @@ the input src</p></p></dd>
 
         <h3>Value</h3>
 
-        <p>this function has no return value, and then generated virtual
-cell model file will be saved at the <code>outputdir</code> with a fixed
-file name: <code>model.vcell</code>. and the output dir also contains a html/pdf
-report about the virtual cell modelling result.</p>
+        <p>This function returns \code{invisible(NULL)}. However, as a side
+effect, it generates a \code{release} subdirectory within the
+\code{outputdir} containing:
+\itemize{
+\item \code{builder.gcproj}: The project configuration file.
+\item \code{model.xml}: The core virtual cell graph model file.
+}
+Additionally, an HTML or PDF report summarizing the virtual cell
+modeling results is typically generated in the output directory by
+the workflow renderer.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Run the workflow for a bacterial genome
+modelling_cellgraph(
+src = "path/to/bacteria_genome.gb",
+outputdir = "path/to/output_workspace",
+name = "E_coli_Model",
+domain = "bacteria",
+builds = c("TRN_network", "Metabolic_network"),
+n_threads = 16
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

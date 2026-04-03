@@ -1,4 +1,4 @@
-﻿.TH EXTRACT_GBFF 1 2026-4月 "" "extract_gbff"
+﻿.TH EXTRACT_GBFF 1 2026-4月 "" "Extract Upstream Sequences and Annotations from a GenBank File"
 .SH NAME
 extract_gbff \- extract_gbff(src,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
@@ -11,12 +11,25 @@ extract_gbff \- extract_gbff(src,
     <i>upstream.size</i> = <span style='color: green;'>150</span>,
     <i>tag.genbank.accid</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>verbose</i> = <span style='color: blue !important;'>TRUE</span>)\fR
+.SH DESCRIPTION
+.PP
+This is a helper function that parses a GenBank assembly file to extract
+genomic sequences, gene features, and the upstream regions relative to the
+Transcription Start Sites (TSS). It is designed to prepare data for
+downstream transcript regulation network analysis.
+The function performs extensive file I/O operations. It extracts the raw
+genomic FASTA, calculates the TSS upstream loci for each gene, cuts these
+loci from the genome, and exports both the sequences and tabular context
+files to the specified working directory.
+.PP
 .SH OPTIONS
 .PP
-\fBsrc\fB \fR\- . 
+\fBsrc\fB \fR\- . A character string specifying the file path to the input
+GenBank (`.gb`, `.gbff`, or `.gbk`) file.
 .PP
 .PP
-\fBworkdir\fB \fR\- './'. 
+\fBworkdir\fB \fR\- './'. A character string specifying the directory path where
+all output files will be saved. Defaults to `"./"` (current working directory).
 .PP
 .PP
 \fBupstream.size\fB \fR\- 150. 
@@ -25,11 +38,17 @@ extract_gbff \- extract_gbff(src,
 \fBtag.genbank.accid\fB \fR\- FALSE. 
 .PP
 .PP
-\fBverbose\fB \fR\- TRUE. 
+\fBverbose\fB \fR\- TRUE. A logical value. If `TRUE` (default), progress messages
+and the titles of the extracted upstream loci are printed to the console.
+.PP
+.SH VALUE
+.PP
+Returns `invisible(NULL)`. This function is called primarily for
+its side effects: generating and saving output files to the `workdir`.
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.extract_gbff at extract_gbff.R:line 7
+SMRUCC/R#.declare_function.extract_gbff at extract_gbff.R:line 47
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

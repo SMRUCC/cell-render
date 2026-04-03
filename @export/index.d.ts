@@ -74,6 +74,9 @@ declare namespace CellRender {
    */
    function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, n_threads?: any): object;
    /**
+   */
+   function pangenome(src: any, result_dir: any): object;
+   /**
      * @param workdir default value Is ``./``.
    */
    function singlecells_analysis(embedding_file: any, workdir?: any): object;

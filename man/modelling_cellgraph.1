@@ -1,4 +1,4 @@
-﻿.TH MODELLING_CELLGRAPH 1 2026-4月 "" "Run the cell graph structure modelling workflow"
+﻿.TH MODELLING_CELLGRAPH 1 2026-4月 "" "Run the Virtual Cell Graph Modeling Workflow"
 .SH NAME
 modelling_cellgraph \- modelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
@@ -19,46 +19,93 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>domain</i> = 'c'('bacteria', 'plant', 'animal', 'fungi'),
     <i>builds</i> = 'c'('TRN_network', 'Metabolic_network'),
     <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
+.SH DESCRIPTION
+.PP
+Executes the end-to-end workflow for constructing a virtual cell graph model
+from an NCBI GenBank assembly source file. This function initializes the
+environment, configures parameters, runs the annotation workflow, and
+generates the corresponding project files and reports.
+.PP
 .SH OPTIONS
 .PP
-\fBsrc\fB \fR\- . the ncbi genbank assembly source file its file path
+\fBsrc\fB \fR\- . \code{character}. The file path to the NCBI GenBank assembly
+source file.
 .PP
 .PP
-\fBoutputdir\fB \fR\- NULL. the result outputdir and temp workspace
-location, default value is NULL means use the parent dir of
-the input src
+\fBoutputdir\fB \fR\- NULL. \code{character}. The directory path for storing result
+files and temporary workspace. Defaults to \code{NULL}, which will use
+the parent directory of the \code{src} file.
 .PP
 .PP
-\fBname\fB \fR\- NULL. 
+\fBname\fB \fR\- NULL. \code{character}. An optional custom name for the virtual cell
+model. If \code{NULL}, a default name may be assigned by the rendering engine.
 .PP
 .PP
 \fBup.len\fB \fR\- 150. 
 .PP
 .PP
-\fBlocaldb\fB \fR\- NULL. 
+\fBlocaldb\fB \fR\- NULL. \code{character}. The file path to a local annotation
+database. Defaults to \code{NULL}, which falls back to the internal
+package data directory.
 .PP
 .PP
-\fBdiamond\fB \fR\- 'Sys.which'('diamond'). 
+\fBdiamond\fB \fR\- 'Sys.which'('diamond'). \code{character}. The file path to the DIAMOND executable
+(used for fast sequence alignment). Defaults to the system path found
+via \code{Sys.which("diamond")}.
 .PP
 .PP
-\fBdomain\fB \fR\- 'c'('bacteria', 'plant', 'animal', 'fungi'). 
+\fBdomain\fB \fR\- 'c'('bacteria', 'plant', 'animal', 'fungi'). \code{character}. The biological domain of the input organism.
+Must be one of \code{"bacteria"}, \code{"plant"}, \code{"animal"}, or
+\code{"fungi"}. Note: If multiple values are provided, only the first
+element will be used.
 .PP
 .PP
-\fBbuilds\fB \fR\- 'c'('TRN_network', 'Metabolic_network'). 
+\fBbuilds\fB \fR\- 'c'('TRN_network', 'Metabolic_network'). \code{character}. A character vector specifying which
+annotation modules to build. Supported options are \code{"TRN_network"}
+(Transcriptional Regulatory Network) and \code{"Metabolic_network"}.
 .PP
 .PP
 \fBn.threads\fB \fR\- 32. 
 .PP
 .SH VALUE
 .PP
-this function has no return value, and then generated virtual
-cell model file will be saved at the ``outputdir`` with a fixed
-file name: ``model.vcell``. and the output dir also contains a html/pdf
-report about the virtual cell modelling result.
+This function returns \code{invisible(NULL)}. However, as a side
+effect, it generates a \code{release} subdirectory within the
+\code{outputdir} containing:
+\itemize{
+\item \code{builder.gcproj}: The project configuration file.
+\item \code{model.xml}: The core virtual cell graph model file.
+}
+Additionally, an HTML or PDF report summarizing the virtual cell
+modeling results is typically generated in the output directory by
+the workflow renderer.
+.PP
+.SH DETAILS
+.PP
+This function acts as a high-level wrapper around the \code{WorkflowRender}
+and \code{CellRender} engines. It sets up a temporary workspace (if not
+provided), resolves dependencies (like the DIAMOND executable), and triggers
+the specific annotation modules requested by the user.
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Run the workflow for a bacterial genome
+modelling_cellgraph(
+src = "path/to/bacteria_genome.gb",
+outputdir = "path/to/output_workspace",
+name = "E_coli_Model",
+domain = "bacteria",
+builds = c("TRN_network", "Metabolic_network"),
+n_threads = 16
+)
+
+#}
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.modelling_cellgraph at main.R:line 15
+SMRUCC/R#.declare_function.modelling_cellgraph at main.R:line 65
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

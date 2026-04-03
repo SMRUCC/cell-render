@@ -5,16 +5,42 @@ make_diamond \- make_diamond(local.db,
 .SH SYNOPSIS
 \fImake_diamond(local.db,
     <i>diamond</i> = 'Sys.which'('diamond'))\fR
+.SH DESCRIPTION
+.PP
+
+
+Generates DIAMOND binary databases (`.dmnd`) from source FASTA files.
+This utility function constructs three specific databases required for
+the annotation workflow: Enzyme Commission (EC) numbers, Subcellular
+locations, and Transcription Factors.
+.PP
 .SH OPTIONS
 .PP
 \fBlocal.db\fB \fR\- . 
 .PP
 .PP
-\fBdiamond\fB \fR\- 'Sys.which'('diamond'). 
+\fBdiamond\fB \fR\- 'Sys.which'('diamond'). A character string specifying the path to the DIAMOND
+executable. Defaults to \code{Sys.which("diamond")} if not provided.
+.PP
+.SH VALUE
+.PP
+Invisible \code{NULL}. This function is called for its side effect
+of creating database files (e.g., \code{ec_number.dmnd}) in the current
+working directory.
+.PP
+.SH DETAILS
+.PP
+This function expects the following source files to exist in \code{local_db}:
+\itemize{
+\item \code{ec_numbers.fasta}
+\item \code{subcellular.fasta}
+\item \code{TF.fasta}
+}
+It utilizes \code{system2} to invoke the \code{diamond makedb} command.
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_diamond at make_diamond_hits.R:line 30
+SMRUCC/R#.declare_function.make_diamond at make_diamond_hits.R:line 101
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

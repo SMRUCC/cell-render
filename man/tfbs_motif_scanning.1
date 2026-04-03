@@ -1,18 +1,69 @@
-﻿.TH TFBS_MOTIF_SCANNING 1 2026-4月 "" "tfbs_motif_scanning"
+﻿.TH TFBS_MOTIF_SCANNING 1 2026-4月 "" "Scan for Transcription Factor Binding Sites (TFBS) Motifs"
 .SH NAME
 tfbs_motif_scanning \- tfbs_motif_scanning(app, context)
 .SH SYNOPSIS
 \fItfbs_motif_scanning(app, context)\fR
+.SH DESCRIPTION
+.PP
+
+
+Performs motif scanning on gene upstream sequences to identify
+Transcription Factor Binding Sites (TFBS). This function is conditionally
+executed and will only run if the \code{TRN_network} module is enabled in
+the virtual cell build configuration.
+.PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . 
+\fBapp\fB \fR\- . The application environment or object, used to determine the
+output working directory via \code{workfile()}.
 .PP
 .PP
-\fBcontext\fB \fR\- . 
+\fBcontext\fB \fR\- . The execution context passed by the GCModeller framework.
+.PP
+.SH VALUE
+.PP
+This function does not return an object to the R environment.
+Its primary purpose is the side effect of generating the
+\code{tfbs_motifs.csv} file in the application working directory.
+.PP
+.SH DETAILS
+.PP
+The function executes a specific workflow for regulatory network
+construction:
+\enumerate{
+\item \strong{Input Retrieval}: Reads the TSS upstream region sequences
+(generated from \code{make_genbank_proj}) as a FASTA file.
+\item \strong{Database Query}: Constructs the path to the local MEME
+motif database using the \code{localdb} and \code{domain} configurations.
+\item \strong{Scanning}: Calls \code{GCModeller::scan_motifs} to scan
+the upstream sequences against the motif database. The search uses
+a strict identity cutoff of \code{0.9} and utilizes multithreading
+based on the \code{n_threads} configuration.
+\item \strong{Output}: Parses the motif seeds and their associated
+Transcription Factors (TFs) and writes the result to \code{tfbs_motifs.csv}.
+}
+The output CSV file contains structured string representations of the
+identified motifs and TFs. The parsed text formats are as follows:
+\itemize{
+\item \strong{Motif Seeds}: Formatted as
+\code{"{motif.id} {motif.family} [{motif.name}]"}
+(e.g., \code{"AsnC; MOTIF 557 AsnC [YwrC - Bacillales] Motif_1"}).
+\item \strong{Transcription Factors}: Mapped via TF name and protein model,
+formatted as \code{">{TF.name} {motif.id} Protein:{protein_model}"}
+(e.g., \code{">jk0144 1269 Protein:144-jk0144"}).
+}
+.PP
+.SH EXAMPLES
+.PP
+# This function is typically executed internally by the GCModeller
+# virtual cell framework based on the [@app] decorator, rather than
+# called directly by the user.
+# Example of manual configuration checks:
+# check_build_module("TRN_network")
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.tfbs_motif_scanning at tfbs_motif_scanning.R:line 7
+SMRUCC/R#.declare_function.tfbs_motif_scanning at tfbs_motif_scanning.R:line 54
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

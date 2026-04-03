@@ -22,7 +22,11 @@
 
         <h3>Description</h3>
 
-        
+        <p>Executes a DIAMOND blastp search workflow against multiple reference databases.
+This function orchestrates the entire process: it configures the environment,
+creates the necessary DIAMOND databases (if not already created), performs
+the sequence alignment against EC numbers, subcellular locations, and
+transcription factors, and manages the working directory state.</p>
 
         <h3>Usage</h3>
 
@@ -34,12 +38,33 @@
 
         <table>
             
+<dt>app</dt>
+<dd><p><p>The application object passed by the workflow engine.
+Used for workflow context and configuration.</p></p></dd>
+
+
+<dt>context</dt>
+<dd><p><p>The execution context object provided by the workflow engine.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The function performs the following steps:
+\enumerate{
+\item Retrieves configuration for the DIAMOND path, database directory,
+and thread count.
+\item Sets the working directory to the specific workflow workspace.
+\item Calls \code{make_diamond} to build binary databases from FASTA sources.
+\item Runs DIAMOND blastp against three databases:
+\itemize{
+\item \strong{ec_number}: Enzyme Commission numbers.
+\item \strong{subcellular}: Subcellular location predictions.
+\item \strong{transcript_factor}: Transcription factors.
+}
+\item Restores the original working directory upon completion.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -47,7 +72,9 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>This function is called for its side effects (creating .m8 output files).
+It does not return a value explicitly to the R session, but generates
+alignment result files in the workflow workspace.</p>
 
         <h3 style="display: none;">Examples</h3>
 

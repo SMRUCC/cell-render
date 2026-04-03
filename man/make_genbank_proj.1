@@ -1,18 +1,64 @@
-﻿.TH MAKE_GENBANK_PROJ 1 2026-4月 "" "Extract the genbank source"
+﻿.TH MAKE_GENBANK_PROJ 1 2026-4月 "" "Initialize a GenBank Project and Export Downstream Sequence Files"
 .SH NAME
 make_genbank_proj \- make_genbank_proj(app, context)
 .SH SYNOPSIS
 \fImake_genbank_proj(app, context)\fR
+.SH DESCRIPTION
+.PP
+
+
+Loads GenBank source files specified in the application configuration,
+initializes a new `project` object via `CellRender`, and saves the
+resulting project state to disk. Additionally, it extracts and exports
+essential FASTA files required for downstream bioinformatics analyses,
+such as motif scanning and homology searches.
+.PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . the current workflow app object
+\fBapp\fB \fR\- . A CellRender workflow app object. Primarily used in this
+function to resolve working file paths via \code{workfile()}.
 .PP
 .PP
-\fBcontext\fB \fR\- . the workflow context object
+\fBcontext\fB \fR\- . A CellRender workflow context object.
+\emph{Note:} Currently unused in this specific function but required
+by the standard workflow execution signature.
+.PP
+.SH VALUE
+.PP
+This function is called for its side effects and returns \code{NULL}
+invisibly. Upon execution, it generates the following local files:
+\itemize{
+\item \strong{Project File:} The serialized project object (path defined
+by \code{get_config("proj_file")}).
+\item \strong{upstream_locis.fasta:} Contains TSS (Transcription Start Site)
+upstream sequences, prepared for downstream motif site scanning.
+\item \strong{proteins.fasta:} Contains genomic protein sequences, prepared
+for enzyme and Transcription Factor (TF) annotation via Diamond BLASTp.
+}
+.PP
+.SH DETAILS
+.PP
+The function executes a sequential pipeline:
+\enumerate{
+\item \strong{Data Ingestion:} Reads GenBank files from the path
+specified in \code{get_config("src")} using \code{load_genbanks()}.
+\item \strong{Object Creation:} Wraps the raw GenBank data into a
+standardized \code{project} object.
+\item \strong{State Persistence:} Saves the core project object locally
+to avoid redundant parsing in future workflow steps.
+\item \strong{Sequence Export:** Formats and writes specific sequence
+subsets (upstream loci and proteins) into standardized FASTA files
+tailored for specific downstream tools.
+}
+.PP
+.SH EXAMPLES
+.PP
+# Typically called internally by the CellRender workflow engine:
+# make_genbank_proj(current_app, current_context)
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_genbank_proj at make_genbank_proj.R:line 10
+SMRUCC/R#.declare_function.make_genbank_proj at make_genbank_proj.R:line 53
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

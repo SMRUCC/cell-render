@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Extract the genbank source</title>
+    <title>Initialize a GenBank Project and Export Downstream Sequence Files</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,15 @@
             </tr>
         </table>
 
-        <h2>Extract the genbank source</h2>
+        <h2>Initialize a GenBank Project and Export Downstream Sequence Files</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Loads GenBank source files specified in the application configuration,
+initializes a new `project` object via `CellRender`, and saves the
+resulting project state to disk. Additionally, it extracts and exports
+essential FASTA files required for downstream bioinformatics analyses,
+such as motif scanning and homology searches.</p>
 
         <h3>Usage</h3>
 
@@ -35,18 +39,32 @@
         <table>
             
 <dt>app</dt>
-<dd><p><p>the current workflow app object</p></p></dd>
+<dd><p><p>A CellRender workflow app object. Primarily used in this
+function to resolve working file paths via \code{workfile()}.</p></p></dd>
 
 
 <dt>context</dt>
-<dd><p><p>the workflow context object</p></p></dd>
+<dd><p><p>A CellRender workflow context object.
+\emph{Note:} Currently unused in this specific function but required
+by the standard workflow execution signature.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The function executes a sequential pipeline:
+\enumerate{
+\item \strong{Data Ingestion:} Reads GenBank files from the path
+specified in \code{get<em>config("src")} using \code{load</em>genbanks()}.
+\item \strong{Object Creation:} Wraps the raw GenBank data into a
+standardized \code{project} object.
+\item \strong{State Persistence:} Saves the core project object locally
+to avoid redundant parsing in future workflow steps.
+\item \strong{Sequence Export:<em></em> Formats and writes specific sequence
+subsets (upstream loci and proteins) into standardized FASTA files
+tailored for specific downstream tools.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -54,11 +72,21 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>This function is called for its side effects and returns \code{NULL}
+invisibly. Upon execution, it generates the following local files:
+\itemize{
+\item \strong{Project File:} The serialized project object (path defined
+by \code{get<em>config("proj</em>file")}).
+\item \strong{upstream_locis.fasta:} Contains TSS (Transcription Start Site)
+upstream sequences, prepared for downstream motif site scanning.
+\item \strong{proteins.fasta:} Contains genomic protein sequences, prepared
+for enzyme and Transcription Factor (TF) annotation via Diamond BLASTp.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r"># Typically called internally by the CellRender workflow engine:
+# make_genbank_proj(current_app, current_context)</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

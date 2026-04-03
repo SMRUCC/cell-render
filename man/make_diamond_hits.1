@@ -3,16 +3,52 @@
 make_diamond_hits \- make_diamond_hits(app, context)
 .SH SYNOPSIS
 \fImake_diamond_hits(app, context)\fR
+.SH DESCRIPTION
+.PP
+
+
+Executes a DIAMOND blastp search workflow against multiple reference databases.
+This function orchestrates the entire process: it configures the environment,
+creates the necessary DIAMOND databases (if not already created), performs
+the sequence alignment against EC numbers, subcellular locations, and
+transcription factors, and manages the working directory state.
+.PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . 
+\fBapp\fB \fR\- . The application object passed by the workflow engine.
+Used for workflow context and configuration.
 .PP
 .PP
-\fBcontext\fB \fR\- . 
+\fBcontext\fB \fR\- . The execution context object provided by the workflow engine.
 .PP
+.SH VALUE
+.PP
+This function is called for its side effects (creating .m8 output files).
+It does not return a value explicitly to the R session, but generates
+alignment result files in the workflow workspace.
+.PP
+.SH DETAILS
+.PP
+The function performs the following steps:
+\enumerate{
+\item Retrieves configuration for the DIAMOND path, database directory,
+and thread count.
+\item Sets the working directory to the specific workflow workspace.
+\item Calls \code{make_diamond} to build binary databases from FASTA sources.
+\item Runs DIAMOND blastp against three databases:
+\itemize{
+\item \strong{ec_number}: Enzyme Commission numbers.
+\item \strong{subcellular}: Subcellular location predictions.
+\item \strong{transcript_factor}: Transcription factors.
+}
+\item Restores the original working directory upon completion.
+}
+.PP
+.SH SEE ALSO
+\code{\link{make_diamond}} for the database creation logic.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_diamond_hits at make_diamond_hits.R:line 2
+SMRUCC/R#.declare_function.make_diamond_hits at make_diamond_hits.R:line 37
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026
