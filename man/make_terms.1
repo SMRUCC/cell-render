@@ -1,18 +1,35 @@
-﻿.TH MAKE_TERMS 1 2026-4月 "" "make_terms"
+﻿.TH MAKE_TERMS 1 2026-4月 "" "Generate Annotation Terms for Virtual Cell Modeling"
 .SH NAME
 make_terms \- make_terms(app, context)
 .SH SYNOPSIS
 \fImake_terms(app, context)\fR
+.SH DESCRIPTION
+.PP
+Executes the workflow step to parse DIAMOND BLASTP results and inject
+the extracted annotation terms into the virtual cell project session files.
+It supports two execution modes based on the "batch_process" configuration:
+\itemize{
+\item \strong{Batch Mode}: Iterates through all available models, mapping
+each model to its specific DIAMOND output directory to parse terms.
+\item \strong{Single Mode}: Processes a single project file, looking for
+DIAMOND results in a shared workspace directory.
+}
+.PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . 
+\fBapp\fB \fR\- . The application object or environment.
 .PP
 .PP
-\fBcontext\fB \fR\- . 
+\fBcontext\fB \fR\- . The execution context for the current application run.
+.PP
+.SH VALUE
+.PP
+Returns \code{invisible(NULL)}. Called for its side effects of
+updating project session files with parsed annotation terms.
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_terms at make_terms.R:line 5
+SMRUCC/R#.declare_function.make_terms at make_terms.R:line 24
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

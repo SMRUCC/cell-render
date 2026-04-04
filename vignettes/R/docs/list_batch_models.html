@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Generate Annotation Terms for Virtual Cell Modeling</title>
+    <title>list_batch_models</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,42 +13,27 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>make_terms {CellRender}</td>
+                <td>list_batch_models {CellRender}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>Generate Annotation Terms for Virtual Cell Modeling</h2>
+        <h2>list_batch_models</h2>
 
         <h3>Description</h3>
 
-        <p>Executes the workflow step to parse DIAMOND BLASTP results and inject
-the extracted annotation terms into the virtual cell project session files.
-It supports two execution modes based on the "batch_process" configuration:
-\itemize{
-\item \strong{Batch Mode}: Iterates through all available models, mapping
-each model to its specific DIAMOND output directory to parse terms.
-\item \strong{Single Mode}: Processes a single project file, looking for
-DIAMOND results in a shared workspace directory.
-}</p>
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>make_terms</strong>(<i>app</i>, <i>context</i>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>list_batch_models</strong>();</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
-<dt>app</dt>
-<dd><p><p>The application object or environment.</p></p></dd>
-
-
-<dt>context</dt>
-<dd><p><p>The execution context for the current application run.</p></p></dd>
-
         </table>
 
 
@@ -62,8 +47,7 @@ DIAMOND results in a shared workspace directory.
 
         <h3>Value</h3>
 
-        <p>Returns \code{invisible(NULL)}. Called for its side effects of
-updating project session files with parsed annotation terms.</p>
+        This function has no value returns.
 
         <h3 style="display: none;">Examples</h3>
 

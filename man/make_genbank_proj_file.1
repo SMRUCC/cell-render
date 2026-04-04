@@ -1,0 +1,49 @@
+﻿.TH MAKE_GENBANK_PROJ_FILE 1 2026-4月 "internal" "Initialize a Single GenBank Project and Export Sequence Files"
+.SH NAME
+make_genbank_proj_file \- make_genbank_proj_file(src, release.dir,
+    <i>workdir</i> = <span style='color: brown;'><strong>''</strong></span>,
+    <i>batch.process</i> = <span style='color: blue !important;'>FALSE</span>)
+.SH SYNOPSIS
+\fImake_genbank_proj_file(src, release.dir,
+    <i>workdir</i> = <span style='color: brown;'><strong>''</strong></span>,
+    <i>batch.process</i> = <span style='color: blue !important;'>FALSE</span>)\fR
+.SH DESCRIPTION
+.PP
+Core processing function that ingests a GenBank file, wraps it into a
+standardized \code{project} object via \code{CellRender}, saves the
+project state to disk, and extracts essential FASTA files required for
+downstream bioinformatics analyses (motif scanning and homology searches).
+.PP
+.SH OPTIONS
+.PP
+\fBsrc\fB \fR\- . Character. The file path to a single GenBank source file.
+.PP
+.PP
+\fBrelease.dir\fB \fR\- . 
+.PP
+.PP
+\fBworkdir\fB \fR\- ''. Character. The working directory where extracted FASTA
+files will be written.
+.PP
+.PP
+\fBbatch.process\fB \fR\- FALSE. 
+.PP
+.SH VALUE
+.PP
+Returns \code{invisible(NULL)}. Upon execution, it generates the
+following local files:
+\itemize{
+\item \strong{Project File:} \code{builder.gcproj} containing the
+parsed GenBank project data.
+\item \strong{upstream_locis.fasta:} TSS (Transcription Start Site)
+upstream sequences, prepared for downstream motif site scanning.
+\item \strong{proteins.fasta:} Genomic protein sequences, prepared
+for enzyme and Transcription Factor (TF) annotation via DIAMOND BLASTp.
+}
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.make_genbank_proj_file at make_genbank_proj.R:line 110
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

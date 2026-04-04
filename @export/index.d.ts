@@ -28,6 +28,10 @@ declare namespace CellRender {
    */
    function check_build_module(flag: any): object;
    /**
+     * @param vcell_name default value Is ``null``.
+   */
+   function compile_model(proj_file: any, save_model: any, registry: any, vcell_name?: any): object;
+   /**
      * @param workdir default value Is ``./``.
      * @param union_contigs default value Is ``250``.
    */
@@ -52,6 +56,12 @@ declare namespace CellRender {
    */
    function genome_scatter_viz(data: any, outputdir?: any): object;
    /**
+   */
+   function list_batch_models(): object;
+   /**
+   */
+   function make_blastp_term(proj_file: any, model_dir: any): object;
+   /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
    */
    function make_diamond(local_db: any, diamond?: any): object;
@@ -62,11 +72,19 @@ declare namespace CellRender {
    */
    function make_genbank_proj(app: any, context: any): object;
    /**
+     * @param workdir default value Is ````.
+     * @param batch_process default value Is ``false``.
+   */
+   function make_genbank_proj_file(src: any, release_dir: any, workdir?: any, batch_process?: any): object;
+   /**
    */
    function make_terms(app: any, context: any): object;
    /**
    */
    function make_TRN(app: any, context: any): object;
+   /**
+   */
+   function model_accession_id(replicons: any): object;
    /**
      * @param outputdir default value Is ``null``.
      * @param name default value Is ``null``.

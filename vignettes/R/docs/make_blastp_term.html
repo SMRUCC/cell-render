@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Parse DIAMOND BLASTP Results into Project Session</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>make_blastp_term {CellRender}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Parse DIAMOND BLASTP Results into Project Session</h2>
+
+        <h3>Description</h3>
+
+        <p>Reads standard DIAMOND BLASTP tabular output (m8 format) from a specified
+working directory, groups the hits, and writes them as annotation terms into
+a virtual cell modeling project session file. These terms are essential for
+constructing distinct cellular networks in later steps.
+Specifically, it parses three files and maps them to the following networks:
+\itemize{
+\item \code{ec_number.m8}: Extracts EC numbers for building the
+\strong{metabolic network}.
+\item \code{subcellular.m8}: Extracts subcellular localization terms for
+building the \strong{transmembrane network}.
+\item \code{transcript_factor.m8}: Extracts transcription factor hits for
+building the \strong{gene expression transcription regulation network}.
+}</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>make_blastp_term</strong>(<i>proj.file</i>, <i>model.dir</i>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>proj.file</dt>
+<dd><p><p>Character. The file path to the GenBank annotation
+project file (\code{.gcproj}) to be updated.</p></p></dd>
+
+
+<dt>model.dir</dt>
+<dd><p><p>Character. The file path to the temporary workspace
+directory containing the DIAMOND BLASTP \code{.m8} result files.</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        xieguigang &lt;xie.guigang@gcmodeller.org>
+
+        <h3>Value</h3>
+
+        <p>Returns \code{invisible(NULL)}. The project file specified by
+\code{proj_file} is modified and saved with the new annotation terms.</p>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a
+                href="../CellRender.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

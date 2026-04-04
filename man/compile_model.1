@@ -1,0 +1,39 @@
+﻿.TH COMPILE_MODEL 1 2026-4月 "internal" "Compile Project File into Virtual Cell Model XML"
+.SH NAME
+compile_model \- compile_model(proj.file, save.model, registry,
+    <i>vcell.name</i> = <span style='color: blue !important;'>NULL</span>)
+.SH SYNOPSIS
+\fIcompile_model(proj.file, save.model, registry,
+    <i>vcell.name</i> = <span style='color: blue !important;'>NULL</span>)\fR
+.SH DESCRIPTION
+.PP
+Core processing function that loads a GenBank annotation project, constructs
+the virtual cell component network using a local data registry, and exports
+the resulting model as a GCMarkup XML file.
+.PP
+.SH OPTIONS
+.PP
+\fBproj.file\fB \fR\- . 
+.PP
+.PP
+\fBsave.model\fB \fR\- . 
+.PP
+.PP
+\fBregistry\fB \fR\- . A local data repository (data pool object) containing the
+necessary reference data required to construct the virtual cell component
+network.
+.PP
+.PP
+\fBvcell.name\fB \fR\- NULL. 
+.PP
+.SH VALUE
+.PP
+Writes an XML file to the specified \code{save_model} path and
+returns \code{invisible(NULL)}.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.compile_model at build_project.R:line 77
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

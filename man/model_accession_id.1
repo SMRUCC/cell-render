@@ -1,0 +1,48 @@
+﻿.TH MODEL_ACCESSION_ID 1 2026-4月 "" "Extract the Model Genomic Accession ID from Replicons"
+.SH NAME
+model_accession_id \- model_accession_id(replicons)
+.SH SYNOPSIS
+\fImodel_accession_id(replicons)\fR
+.SH DESCRIPTION
+.PP
+Retrieves the primary genomic accession ID from a list of GenBank replicons.
+It prioritizes the chromosomal sequence (non-plasmid) over plasmid sequences.
+.PP
+.SH OPTIONS
+.PP
+\fBreplicons\fB \fR\- . A list or vector of GenBank replicon objects (e.g., parsed
+from a multi-replicon GenBank file).
+.PP
+.SH VALUE
+.PP
+A character string representing the accession ID, or `NULL` if no
+replicons are provided.
+.PP
+.SH DETAILS
+.PP
+The function iterates through the provided `replicons`. As soon as it encounters
+a replicon that is not flagged as a plasmid (typically representing the main
+chromosome), it immediately returns its accession ID.
+If the GenBank file contains *only* plasmid data, the function falls back to
+returning the accession ID of the last plasmid processed.
+If the input list is empty, it returns `NULL`.
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Assuming 'gb_file_replicons' is a list of parsed GenBank replicon objects
+model_id <- model_accession_id(gb_file_replicons)
+print(model_id)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link[GenBank]{accession_id}} for extracting accession IDs,
+and \code{\link{is.plasmid}} for checking replicon type.
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.model_accession_id at model_access_id.R:line 31
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

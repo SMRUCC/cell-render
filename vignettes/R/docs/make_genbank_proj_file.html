@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Initialize a Single GenBank Project and Export Sequence Files</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <table style="width: 100%;">
+            <tr>
+                <td>make_genbank_proj_file {CellRender}</td>
+                <td style="text-align: right;">R Documentation</td>
+            </tr>
+        </table>
+
+        <h2>Initialize a Single GenBank Project and Export Sequence Files</h2>
+
+        <h3>Description</h3>
+
+        <p>Core processing function that ingests a GenBank file, wraps it into a
+standardized \code{project} object via \code{CellRender}, saves the
+project state to disk, and extracts essential FASTA files required for
+downstream bioinformatics analyses (motif scanning and homology searches).</p>
+
+        <h3>Usage</h3>
+
+        <div style="width: 100%; padding-left: 3%; color: black;">
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>make_genbank_proj_file</strong>(<i>src</i>, <i>release.dir</i>,
+    <i>workdir</i> = <span style='color: brown;'><strong>''</strong></span>,
+    <i>batch.process</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+        </div>
+
+        <h3>Arguments</h3>
+
+        <table>
+            
+<dt>src</dt>
+<dd><p><p>Character. The file path to a single GenBank source file.</p></p></dd>
+
+
+<dt>release.dir</dt>
+<dd><p><p>Character. The root directory where the generated
+\code{builder.gcproj} file will be saved.</p></p></dd>
+
+
+<dt>workdir</dt>
+<dd><p><p>Character. The working directory where extracted FASTA
+files will be written.</p></p></dd>
+
+
+<dt>batch.process</dt>
+<dd><p><p>Logical. If \code{TRUE}, the function extracts the
+model accession ID to create a specific subdirectory inside
+\code{release_dir} for organized batch storage. If \code{FALSE}, files
+are saved directly into the root of \code{release_dir}.</p></p></dd>
+
+        </table>
+
+
+        <h3 style="display: none;">Details</h3>
+
+        
+
+        <h3 style="display: block">Authors</h3>
+
+        xieguigang &lt;xie.guigang@gcmodeller.org>
+
+        <h3>Value</h3>
+
+        <p>Returns \code{invisible(NULL)}. Upon execution, it generates the
+following local files:
+\itemize{
+\item \strong{Project File:} \code{builder.gcproj} containing the
+parsed GenBank project data.
+\item \strong{upstream_locis.fasta:} TSS (Transcription Start Site)
+upstream sequences, prepared for downstream motif site scanning.
+\item \strong{proteins.fasta:} Genomic protein sequences, prepared
+for enzyme and Transcription Factor (TF) annotation via DIAMOND BLASTp.
+}</p>
+
+        <h3 style="display: none;">Examples</h3>
+
+        
+
+        <hr />
+        <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a
+                href="../CellRender.html">Index</a>]
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../_assets/R_syntax.js"></script>
+<script type="text/javascript" src="../../_assets/highlights.js"></script>
+<script type="text/javascript">r_highlights("example_r");</script>
+
+</html>

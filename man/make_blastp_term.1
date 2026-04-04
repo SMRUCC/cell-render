@@ -1,0 +1,39 @@
+﻿.TH MAKE_BLASTP_TERM 1 2026-4月 "internal" "Parse DIAMOND BLASTP Results into Project Session"
+.SH NAME
+make_blastp_term \- make_blastp_term(proj.file, model.dir)
+.SH SYNOPSIS
+\fImake_blastp_term(proj.file, model.dir)\fR
+.SH DESCRIPTION
+.PP
+Reads standard DIAMOND BLASTP tabular output (m8 format) from a specified
+working directory, groups the hits, and writes them as annotation terms into
+a virtual cell modeling project session file. These terms are essential for
+constructing distinct cellular networks in later steps.
+Specifically, it parses three files and maps them to the following networks:
+\itemize{
+\item \code{ec_number.m8}: Extracts EC numbers for building the
+\strong{metabolic network}.
+\item \code{subcellular.m8}: Extracts subcellular localization terms for
+building the \strong{transmembrane network}.
+\item \code{transcript_factor.m8}: Extracts transcription factor hits for
+building the \strong{gene expression transcription regulation network}.
+}
+.PP
+.SH OPTIONS
+.PP
+\fBproj.file\fB \fR\- . 
+.PP
+.PP
+\fBmodel.dir\fB \fR\- . 
+.PP
+.SH VALUE
+.PP
+Returns \code{invisible(NULL)}. The project file specified by
+\code{proj_file} is modified and saved with the new annotation terms.
+.PP
+.SH FILES
+.PP
+SMRUCC/R#.declare_function.make_blastp_term at make_terms.R:line 73
+.PP
+.SH COPYRIGHT
+Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

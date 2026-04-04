@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>build_project</title>
+    <title>Build GenBank Annotation Project into Virtual Cell Model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,22 @@
             </tr>
         </table>
 
-        <h2>build_project</h2>
+        <h2>Build GenBank Annotation Project into Virtual Cell Model</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Acts as the main entry point for building virtual cell models from
+GenBank annotation project files. It automatically detects the processing
+mode based on the "batch_process" configuration parameter:
+\itemize{
+\item \strong{Batch Mode} (\code{batch_process = TRUE}): Iterates through
+all models returned by \code{list<em>batch</em>models()}, reading the
+\code{builder.gcproj} file in each directory and saving the compiled
+output as \code{model.xml}.
+\item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
+single project file specified in the configuration, allowing a specific
+virtual cell name (\code{vcell_name}) to be assigned.
+}</p>
 
         <h3>Usage</h3>
 
@@ -34,6 +45,13 @@
 
         <table>
             
+<dt>app</dt>
+<dd><p><p>The application object or environment.</p></p></dd>
+
+
+<dt>context</dt>
+<dd><p><p>The execution context for the current application run.</p></p></dd>
+
         </table>
 
 
@@ -47,7 +65,9 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>Returns \code{invisible(NULL)}. This function is called primarily
+for its side effects: generating virtual cell model XML files and logging
+progress messages to the console.</p>
 
         <h3 style="display: none;">Examples</h3>
 

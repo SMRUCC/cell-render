@@ -1,18 +1,39 @@
-﻿.TH BUILD_PROJECT 1 2026-4月 "" "build_project"
+﻿.TH BUILD_PROJECT 1 2026-4月 "" "Build GenBank Annotation Project into Virtual Cell Model"
 .SH NAME
 build_project \- build_project(app, context)
 .SH SYNOPSIS
 \fIbuild_project(app, context)\fR
+.SH DESCRIPTION
+.PP
+Acts as the main entry point for building virtual cell models from
+GenBank annotation project files. It automatically detects the processing
+mode based on the "batch_process" configuration parameter:
+\itemize{
+\item \strong{Batch Mode} (\code{batch_process = TRUE}): Iterates through
+all models returned by \code{list_batch_models()}, reading the
+\code{builder.gcproj} file in each directory and saving the compiled
+output as \code{model.xml}.
+\item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
+single project file specified in the configuration, allowing a specific
+virtual cell name (\code{vcell_name}) to be assigned.
+}
+.PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . 
+\fBapp\fB \fR\- . The application object or environment.
 .PP
 .PP
-\fBcontext\fB \fR\- . 
+\fBcontext\fB \fR\- . The execution context for the current application run.
+.PP
+.SH VALUE
+.PP
+Returns \code{invisible(NULL)}. This function is called primarily
+for its side effects: generating virtual cell model XML files and logging
+progress messages to the console.
 .PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.build_project at build_project.R:line 3
+SMRUCC/R#.declare_function.build_project at build_project.R:line 26
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026
