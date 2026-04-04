@@ -55,8 +55,13 @@ const make_genbank_proj = function(app, context) {
     let release_dir = get_config("release");
     let workdir = WorkflowRender::workspace(app);
 
-    if (batch_process) {        
-        for(let file in list.files(get_config("src"), pattern = c("*.gb","*.gbk","*.gbff"))) {
+    if (batch_process) {  
+        let genbank_files = list.files(get_config("src"), 
+                                pattern = c("*.gb","*.gbk","*.gbff"));
+
+        message(`Build virtualcell community model based ${length(genbank_files)} genbank source files!`);
+
+        for(let file in tqdm(genbank_files)) {
             file |> make_genbank_proj_file(
                 release_dir = release_dir,
                 workdir = workdir,
