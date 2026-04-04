@@ -1,4 +1,27 @@
-#' build the genbank annotation project file into the virtual cell model
+#' Build GenBank Annotation Project into Virtual Cell Model
+#'
+#' Acts as the main entry point for building virtual cell models from
+#' GenBank annotation project files. It automatically detects the processing
+#' mode based on the "batch_process" configuration parameter:
+#' \itemize{
+#'   \item \strong{Batch Mode} (\code{batch_process = TRUE}): Iterates through 
+#'     all models returned by \code{list_batch_models()}, reading the 
+#'     \code{builder.gcproj} file in each directory and saving the compiled 
+#'     output as \code{model.xml}.
+#'   \item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a 
+#'     single project file specified in the configuration, allowing a specific
+#'     virtual cell name (\code{vcell_name}) to be assigned.
+#' }
+#'
+#' @param app The application object or environment.
+#' @param context The execution context for the current application run.
+#'
+#' @return Returns \code{invisible(NULL)}. This function is called primarily 
+#'   for its side effects: generating virtual cell model XML files and logging 
+#'   progress messages to the console.
+#'
+#' @app build_project
+#' @export
 [@app "build_project"]
 const build_project = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
@@ -28,12 +51,29 @@ const build_project = function(app, context) {
     invisible(NULL);
 }
 
-#' compile the project file into virtual cell model file
-#' 
-#' @param proj_file the file path to the genbank annotation project file
-#' @param save_model the file save path of the generated virtual cell model file, model file will be saved in GCMarkup xml file format.
-#' @param registry a local data repository that contains the necessary data for make the virtual cell component network.
-#' 
+#' Compile Project File into Virtual Cell Model XML
+#'
+#' Core processing function that loads a GenBank annotation project, constructs 
+#' the virtual cell component network using a local data registry, and exports 
+#' the resulting model as a GCMarkup XML file.
+#'
+#' @param proj_file Character. The file path to the GenBank annotation 
+#'   project file (e.g., \code{.gcproj}).
+#' @param save_model Character. The destination file path where the generated 
+#'   virtual cell model will be saved. The model is saved in GCMarkup XML format.
+#' @param registry A local data repository (data pool object) containing the 
+#'   necessary reference data required to construct the virtual cell component 
+#'   network.
+#' @param vcell_name Character, optional. The specific name to assign to the 
+#'   generated virtual cell. If \code{NULL} (default), the naming defaults to 
+#'   the project's internal settings. This parameter is typically utilized only 
+#'   in single-project mode.
+#'
+#' @return Writes an XML file to the specified \code{save_model} path and 
+#'   returns \code{invisible(NULL)}.
+#'
+#' @keywords internal
+#' @export
 const compile_model = function(proj_file, save_model, registry, vcell_name = NULL) {
     let proj = project::load(proj_file);
     let vcell = proj |> build(

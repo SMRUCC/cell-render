@@ -45,11 +45,11 @@ const make_blastp_term = function(proj_file, model_dir) {
     }
 
     # ec number terms for build the metabolic network
-    write_proj_data(ec_number, "ec_number");
+    write_proj_session(ec_number, "ec_number");
     # subcellular location terms for build the transmembrane network
-    write_proj_data(subcellular, "subcellular_location");
+    write_proj_session(subcellular, "subcellular_location");
     # tf list term hits for build the gene expression transcription regulation network
-    write_proj_data(tf_list, "transcript_factor");
+    write_proj_session(tf_list, "transcript_factor");
 
     project::save(proj, file = proj_file);
 }
