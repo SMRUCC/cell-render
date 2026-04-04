@@ -63,10 +63,12 @@ const make_diamond_hits = function(app, context) {
     make_diamond(localdb, diamond);
 
     if (batch_process) {
-        for(let model_dir in list.dirs(WorkflowRender::workspace("make_genbank_proj"), recursive = FALSE)) {
-            let proteins = file.path(model_dir, "proteins.fasta");
-            let model_id = basename(model_dir);
+        let source_dir = WorkflowRender::workspace("make_genbank_proj");
 
+        for(let model_dir in list_batch_models()) {
+            let model_id = basename(model_dir);
+            let proteins = file.path(source_dir, model_id, "proteins.fasta");
+            
             model_dir <- file.path(temp_dir, model_id);
 
             # then run diamond blastp search against the reference database
