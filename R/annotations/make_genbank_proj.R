@@ -52,45 +52,45 @@ imports "workflow" from "CellRender";
 [@app "make_genbank_proj"]
 const make_genbank_proj = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
+    let release_dir = get_config("release");
+    let workdir = WorkflowRender::workspace(app);
 
-    if (batch_process) {
-        let release_dir = get_config("release");
-
+    if (batch_process) {        
         for(let file in list.files(get_config("src"), pattern = c("*.gb","*.gbk","*.gbff"))) {
-            let gb_src = load_genbanks(file);
-            let proj = project::new(gb_src);
-
-            # save the ncbi genbank project data as local file
-            project::save(proj, file = get_config("proj_file"));
-
-            # write the TSS upstream and genomics protein fasta sequence
-            # as file for the downstream annotation search
-            # TSS upstream site for run motif site scanning
-            # genomics protein used for make enzyme and TF annotation via the diamond blastp
-            # search
-            write.fasta(tss_upstream(proj), file = workfile(app, "upstream_locis.fasta")); 
-            workflow::save_proteins(proj, file = workfile(app, "proteins.fasta"));
+            file |> make_genbank_proj_file(
+                release_dir = release_dir,
+                workdir = workdir,
+                batch_process = TRUE
+            );
         }
     } else {
         # input source is a single genbank file
-        let gb_src = load_genbanks(get_config("src"));
-        let proj = project::new(gb_src);
+        let gb_src = get_config("src");        
 
-        # save the ncbi genbank project data as local file
-        project::save(proj, file = get_config("proj_file"));
-
-        # write the TSS upstream and genomics protein fasta sequence
-        # as file for the downstream annotation search
-        # TSS upstream site for run motif site scanning
-        # genomics protein used for make enzyme and TF annotation via the diamond blastp
-        # search
-        write.fasta(tss_upstream(proj), file = workfile(app, "upstream_locis.fasta")); 
-        workflow::save_proteins(proj, file = workfile(app, "proteins.fasta"));
+        gb_src |> make_genbank_proj_file(
+            release_dir = release_dir,
+            workdir = workdir,
+            batch_process = FALSE
+        );
     }
 
     invisible(NULL);
 }
 
-const make_genbank_proj_file = function(src, ) {
+const make_genbank_proj_file = function(src, release_dir, workdir, batch_process = FALSE) {
+    let gb_src = load_genbanks(src) |> as.vector();
+    let proj = project::new(gb_src);
+    let model_id = ifelse(batch_process, model_accession_id(gb_src), ""); 
+    let proj_file = file.path(release_dir, model_id, "builder.gcproj");
 
+    # save the ncbi genbank project data as local file
+    project::save(proj, file = proj_file);
+
+    # write the TSS upstream and genomics protein fasta sequence
+    # as file for the downstream annotation search
+    # TSS upstream site for run motif site scanning
+    # genomics protein used for make enzyme and TF annotation via the diamond blastp
+    # search
+    write.fasta(tss_upstream(proj), file = workfile(app, model_id, "upstream_locis.fasta")); 
+    workflow::save_proteins(proj, file = workfile(app, model_id, "proteins.fasta"));
 }
