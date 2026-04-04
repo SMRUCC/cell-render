@@ -71,6 +71,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      builds = c("TRN_network","Metabolic_network"),
                                      n_threads = 32) {
 
+    let batch_process as boolean = dir.exists(src); 
+
     WorkflowRender::init_context(outputdir || dirname(src));
     WorkflowRender::set_config(list(
         src        = normalizePath(src),
@@ -83,10 +85,15 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         release    = file.path(workdir_root(), "release"),
         proj_file  = file.path(workdir_root(), "release", "builder.gcproj"),
         model_file = file.path(workdir_root(), "release", "model.xml"),
-        vcell_name = name 
+        vcell_name = name,
+        # the input source filesystem handle is a directory
+        # that contains multiple genbank assembly files
+        # run this workflow in batch mode 
+        batch_process = batch_process
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
 
     invisible(NULL);
 }
+
