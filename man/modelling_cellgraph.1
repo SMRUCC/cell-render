@@ -8,6 +8,7 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>diamond</i> = 'Sys.which'('diamond'),
     <i>domain</i> = 'c'('bacteria', 'plant', 'animal', 'fungi'),
     <i>builds</i> = 'c'('TRN_network', 'Metabolic_network'),
+    <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>n.threads</i> = <span style='color: green;'>32</span>)
 .SH SYNOPSIS
 \fImodelling_cellgraph(src,
@@ -18,6 +19,7 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>diamond</i> = 'Sys.which'('diamond'),
     <i>domain</i> = 'c'('bacteria', 'plant', 'animal', 'fungi'),
     <i>builds</i> = 'c'('TRN_network', 'Metabolic_network'),
+    <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
 .SH DESCRIPTION
 .PP
@@ -63,6 +65,9 @@ element will be used.
 \fBbuilds\fB \fR\- 'c'('TRN_network', 'Metabolic_network'). \code{character}. A character vector specifying which
 annotation modules to build. Supported options are \code{"TRN_network"}
 (Transcriptional Regulatory Network) and \code{"Metabolic_network"}.
+.PP
+.PP
+\fBenable.blastp.cache\fB \fR\- FALSE. 
 .PP
 .PP
 \fBn.threads\fB \fR\- 32. 

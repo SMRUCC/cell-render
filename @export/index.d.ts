@@ -96,9 +96,10 @@ declare namespace CellRender {
      *       "animal",
      *       "fungi")``.
      * @param builds default value Is ``Call "c"("TRN_network", "Metabolic_network")``.
+     * @param enable_blastp_cache default value Is ``false``.
      * @param n_threads default value Is ``32``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, n_threads?: any): object;
+   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, enable_blastp_cache?: any, n_threads?: any): object;
    /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
      * @param n_threads default value Is ``32``.
