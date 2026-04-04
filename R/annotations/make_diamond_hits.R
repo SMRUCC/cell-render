@@ -84,9 +84,9 @@ const make_diamond_hits = function(app, context) {
 
             if (enable_blastp_cache) {
                 let check_size  = 4[KB];
-                let check_cache =  {file.size(ec_out) > check_size} 
-                                && {file.size(cc_out) > check_size} 
-                                && {file.size(tf_out) > check_size}
+                let check_cache =  (file.size(ec_out) > check_size) 
+                                && (file.size(cc_out) > check_size) 
+                                && (file.size(tf_out) > check_size)
                 ;
 
                 if (check_cache) {
