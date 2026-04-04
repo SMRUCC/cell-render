@@ -10,6 +10,6 @@ const model_accession_id = function(replicons) {
         accession_id <- GenBank::accession_id(rep);
     }
 
-    # all data in this genbank file is plasmid???
+    # all data inside this genbank file is plasmid???
     return(accession_id);
 }
