@@ -69,6 +69,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      diamond = Sys.which("diamond"), 
                                      domain = c("bacteria", "plant", "animal", "fungi"),
                                      builds = c("TRN_network","Metabolic_network"),
+                                     enable_blastp_cache = FALSE,
                                      n_threads = 32) {
 
     let batch_process as boolean = dir.exists(src); 
@@ -89,7 +90,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         # the input source filesystem handle is a directory
         # that contains multiple genbank assembly files
         # run this workflow in batch mode 
-        batch_process = batch_process
+        batch_process = batch_process,
+        enable_blastp_cache = enable_blastp_cache
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
