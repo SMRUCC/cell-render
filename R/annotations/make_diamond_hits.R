@@ -37,16 +37,15 @@
 const make_diamond_hits = function(app, context) {
     let diamond = get_config("diamond");  # diamond path
     let localdb = get_config("localdb");  # reference database dir path
-
-    # get genomics protein fasta sequence data file its file path for
-    # run diamond blastp search
-    let proteins = workfile("make_genbank_proj://proteins.fasta");
+    
+    # run this diamond blastp alignment workflow in batch process mode?
+    let batch_process = as.logical(get_config("batch_process"));
     let n_threads = get_config("n_threads");
     let workdir = getwd();
 
     # a helper wrapper function of the diamond blastp search 
     # commandline calls
-    let diamond_blastp = function(db, output) {
+    let diamond_blastp = function(db, proteins, output) {
         system2(diamond, c("blastp",
             "--db", db, 
             "--query", proteins, 
@@ -55,17 +54,36 @@ const make_diamond_hits = function(app, context) {
         ), shell=TRUE)
         ;
     }
+    let temp_dir = WorkflowRender::workspace(app);
 
     # set current workdir to the temp workspace of 
     # this `make_diamond_hits` workflow module
-    setwd(WorkflowRender::workspace("make_diamond_hits"));
-
+    setwd(temp_dir);
     # make reference database
     make_diamond(localdb, diamond);
-    # then run diamond blastp search against the reference database
-    diamond_blastp("ec_number", "ec_number.m8");
-    diamond_blastp("subcellular", "subcellular.m8");
-    diamond_blastp("transcript_factor","transcript_factor.m8");
+
+    if (batch_process) {
+        for(let model_dir in list.dirs(WorkflowRender::workspace("make_genbank_proj"), recursive = FALSE)) {
+            let proteins = file.path(model_dir, "proteins.fasta");
+            let model_id = basename(model_dir);
+
+            model_dir <- file.path(temp_dir, model_id);
+
+            # then run diamond blastp search against the reference database
+            diamond_blastp("ec_number", proteins, file.path(model_dir, "ec_number.m8"));
+            diamond_blastp("subcellular", proteins, file.path(model_dir, "subcellular.m8"));
+            diamond_blastp("transcript_factor",proteins, file.path(model_dir, "transcript_factor.m8"));
+        }
+    } else {
+        # get genomics protein fasta sequence data file its file path for
+        # run diamond blastp search
+        let proteins = workfile("make_genbank_proj://proteins.fasta");
+
+        # then run diamond blastp search against the reference database
+        diamond_blastp("ec_number", proteins, "ec_number.m8");
+        diamond_blastp("subcellular", proteins, "subcellular.m8");
+        diamond_blastp("transcript_factor",proteins, "transcript_factor.m8");
+    }
 
     # restore the workdir finally.
     setwd(workdir);
