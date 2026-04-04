@@ -1,4 +1,4 @@
-#' build project into the virtual cell model
+#' build the genbank annotation project file into the virtual cell model
 [@app "build_project"]
 const build_project = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
