@@ -81,6 +81,11 @@ Module ProjectBuilder
         End If
     End Function
 
+    <ExportAPI("scientific_name")>
+    Public Function taxonomy_name(proj As GenBankProject) As String
+        Return proj.taxonomy.scientificName
+    End Function
+
     ''' <summary>
     ''' build the genbank project as a virtual cell model 
     ''' </summary>

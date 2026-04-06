@@ -70,6 +70,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      domain = c("bacteria", "plant", "animal", "fungi"),
                                      builds = c("TRN_network","Metabolic_network"),
                                      enable_blastp_cache = FALSE,
+                                     gems_library_mode = TRUE,
                                      n_threads = 32) {
 
     let batch_process as boolean = dir.exists(src); 
@@ -91,7 +92,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         # that contains multiple genbank assembly files
         # run this workflow in batch mode 
         batch_process = batch_process,
-        enable_blastp_cache = enable_blastp_cache
+        enable_blastp_cache = enable_blastp_cache,
+        gems_library_mode = gems_library_mode
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();

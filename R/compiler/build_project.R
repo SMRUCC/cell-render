@@ -28,9 +28,19 @@ const build_project = function(app, context) {
     let registry = open_datapool(dir = get_config("localdb"));
 
     if (batch_process) {
+        let gems_library_mode = as.logical(get_config("gems_library_mode"));
+        let release_dir = get_config("release");
+
         for(let model_dir in list_batch_models()) {
             let proj_file = file.path(model_dir, "builder.gcproj");
             let save_xml = file.path(model_dir, "model.xml");
+
+            if (gems_library_mode) {
+                let tax_name = project::load(proj_file) |> scientific_name();
+                let filename = normalizeFileName(tax_name, FALSE,maxchars = 64);
+
+                save_xml <- file.path(release_dir, "GEMs",`${filename}.xml`);
+            }
 
             message(`run build virtualcell model of '${basename(model_dir)}'!`);
 
