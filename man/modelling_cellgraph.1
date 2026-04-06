@@ -9,6 +9,7 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>domain</i> = 'c'('bacteria', 'plant', 'animal', 'fungi'),
     <i>builds</i> = 'c'('TRN_network', 'Metabolic_network'),
     <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>gems.library.mode</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>n.threads</i> = <span style='color: green;'>32</span>)
 .SH SYNOPSIS
 \fImodelling_cellgraph(src,
@@ -20,6 +21,7 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>domain</i> = 'c'('bacteria', 'plant', 'animal', 'fungi'),
     <i>builds</i> = 'c'('TRN_network', 'Metabolic_network'),
     <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
+    <i>gems.library.mode</i> = <span style='color: blue !important;'>TRUE</span>,
     <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
 .SH DESCRIPTION
 .PP
@@ -68,6 +70,9 @@ annotation modules to build. Supported options are \code{"TRN_network"}
 .PP
 .PP
 \fBenable.blastp.cache\fB \fR\- FALSE. 
+.PP
+.PP
+\fBgems.library.mode\fB \fR\- TRUE. 
 .PP
 .PP
 \fBn.threads\fB \fR\- 32. 

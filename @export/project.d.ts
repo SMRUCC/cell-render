@@ -36,4 +36,7 @@ declare namespace project {
      * @param env default value Is ``null``.
    */
    function save(proj: object, file: any, env?: object): any;
+   /**
+   */
+   function scientific_name(proj: object): string;
 }
