@@ -63,13 +63,13 @@ Public Module ProjectIO
 
     Public Function ParseZip(zip As ZipStream) As GenBankProject
         Dim source_json As String = zip.ReadAllText("/source.json")
-        Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))
+        Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))(throwEx:=False)
         Dim nucl_fasta As Dictionary(Of String, String) = zip.readFasta("/genes.txt")
         Dim prot_fasta As Dictionary(Of String, String) = zip.readFasta("/proteins.txt")
         Dim tss_fasta As Dictionary(Of String, String) = zip.readFasta("/tss_upstream.txt")
         Dim genes As GeneTable() = zip.ReadLines("/genes.jsonl") _
             .SafeQuery _
-            .Select(Function(line) line.LoadJSON(Of GeneTable)) _
+            .Select(Function(line) line.LoadJSON(Of GeneTable)(throwEx:=False)) _
             .Where(Function(line) Not line Is Nothing) _
             .ToArray
 
