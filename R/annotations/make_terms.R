@@ -93,5 +93,11 @@ const make_blastp_term = function(proj_file, model_dir) {
     # tf list term hits for build the gene expression transcription regulation network
     write_proj_session(tf_list, "transcript_factor");
 
+    let enzymes = enzyme_table(proj);
+    let enzyme_file = file.path(dirname(proj_file), "enzymes.csv");
+
+    # export enzyme annotation table file
+    write.csv(enzymes, file = enzyme_file);
+    # save project file
     project::save(proj, file = proj_file);
 }
