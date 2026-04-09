@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>open_datapool</title>
+    <title>get enzyme annotation result table from the project model</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -13,28 +13,30 @@
 
         <table style="width: 100%;">
             <tr>
-                <td>open_datapool {workflow}</td>
+                <td>enzyme_table {workflow}</td>
                 <td style="text-align: right;">R Documentation</td>
             </tr>
         </table>
 
-        <h2>open_datapool</h2>
+        <h2>get enzyme annotation result table from the project model</h2>
 
         <h3>Description</h3>
 
-        open_datapool
+        
 
         <h3>Usage</h3>
 
         <div style="width: 100%; padding-left: 3%; color: black;">
-            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>open_datapool</strong>(<i>dir</i>,
-    <i>enzyme.fuzzy</i> = <span style='color: blue !important;'>FALSE</span>);</code></pre>
+            <pre><code class='language-R' style="color: black; font-weight:normal;"><strong>enzyme_table</strong>(<i>proj</i>);</code></pre>
         </div>
 
         <h3>Arguments</h3>
 
         <table>
             
+<dt>proj</dt>
+<dd><p>[as <a href="/vignettes/clr/CellBuilder/GenBankProject.html">GenBankProject</a>]</p></dd>
+
         </table>
 
 
@@ -48,7 +50,7 @@
 
         <h3>Value</h3>
 
-        this function returns data object of type <a href="/vignettes/clr/CellBuilder/DataRepository.html">DataRepository</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/CellBuilder/DataRepository.html">DataRepository</a></li></ul>
+        this function returns data object of type <a href="/vignettes/clr/CellBuilder/ECNumberAnnotation.html">ECNumberAnnotation[]</a>.<h4>clr value class</h4><ul><li><a href="/vignettes/clr/CellBuilder/ECNumberAnnotation.html">ECNumberAnnotation[]</a></li></ul>
 
         <h3 style="display: none;">Examples</h3>
 

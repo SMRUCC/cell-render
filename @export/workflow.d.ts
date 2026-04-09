@@ -10,8 +10,16 @@
 */
 declare namespace workflow {
    /**
+    * get enzyme annotation result table from the project model
+    * 
+    * 
+     * @param proj -
    */
-   function open_datapool(dir: string): object;
+   function enzyme_table(proj: object): object;
+   /**
+     * @param enzyme_fuzzy default value Is ``false``.
+   */
+   function open_datapool(dir: string, enzyme_fuzzy?: boolean): object;
    /**
     * extract of the protein fasta sequence data to file
     * 
