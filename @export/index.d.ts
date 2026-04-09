@@ -100,8 +100,9 @@ declare namespace CellRender {
      * @param enzyme_fuzzy default value Is ``false``.
      * @param gems_library_mode default value Is ``true``.
      * @param n_threads default value Is ``32``.
+     * @param debug default value Is ``Call "c"()``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, enable_blastp_cache?: any, enzyme_fuzzy?: any, gems_library_mode?: any, n_threads?: any): object;
+   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, enable_blastp_cache?: any, enzyme_fuzzy?: any, gems_library_mode?: any, n_threads?: any, debug?: any): object;
    /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
      * @param n_threads default value Is ``32``.

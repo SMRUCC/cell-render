@@ -11,7 +11,8 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>enzyme.fuzzy</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>gems.library.mode</i> = <span style='color: blue !important;'>TRUE</span>,
-    <i>n.threads</i> = <span style='color: green;'>32</span>)
+    <i>n.threads</i> = <span style='color: green;'>32</span>,
+    <i>debug</i> = 'c'())
 .SH SYNOPSIS
 \fImodelling_cellgraph(src,
     <i>outputdir</i> = <span style='color: blue !important;'>NULL</span>,
@@ -24,7 +25,8 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>enzyme.fuzzy</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>gems.library.mode</i> = <span style='color: blue !important;'>TRUE</span>,
-    <i>n.threads</i> = <span style='color: green;'>32</span>)\fR
+    <i>n.threads</i> = <span style='color: green;'>32</span>,
+    <i>debug</i> = 'c'())\fR
 .SH DESCRIPTION
 .PP
 Executes the end-to-end workflow for constructing a virtual cell graph model
@@ -81,6 +83,9 @@ annotation modules to build. Supported options are \code{"TRN_network"}
 .PP
 .PP
 \fBn.threads\fB \fR\- 32. 
+.PP
+.PP
+\fBdebug\fB \fR\- 'c'(). 
 .PP
 .SH VALUE
 .PP
