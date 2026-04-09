@@ -52,6 +52,20 @@ Module workflow
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' get enzyme annotation result table from the project model
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <returns></returns>
+    <ExportAPI("enzyme_table")>
+    Public Function enzyme_table(proj As GenBankProject) As ECNumberAnnotation()
+        If proj Is Nothing OrElse proj.annotations Is Nothing Then
+            Return Nothing
+        Else
+            Return proj.annotations.ec_numbers.Values.ToArray
+        End If
+    End Function
+
     <ExportAPI("set_blastp_result")>
     Public Function set_blastp_result(<RRawVectorArgument> blastp_hits As Object, proj As GenBankProject, group As String, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of HitCollection)(blastp_hits, env)

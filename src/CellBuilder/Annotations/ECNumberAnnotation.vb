@@ -1,9 +1,10 @@
-﻿Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
+﻿Imports SMRUCC.genomics.ComponentModel.Annotation
+Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 
-Public Class ECNumberAnnotation
+Public Class ECNumberAnnotation : Implements IEnzymeObject
 
     Public Property gene_id As String
-    Public Property EC As String
+    Public Property EC As String Implements IEnzymeObject.ECNumber
     Public Property Score As Double
     Public Property SourceIDs As String()
 
