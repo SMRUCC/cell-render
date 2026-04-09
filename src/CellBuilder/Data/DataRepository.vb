@@ -1,12 +1,13 @@
 ﻿Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
 
 Public Class DataRepository : Implements IDataRegistry
 
 #Region "in-memory cache data"
     ReadOnly cachedOperon As WebJSON.Operon()
-    ReadOnly cachedReactions As Dictionary(Of String, WebJSON.Reaction())
+    ReadOnly cachedReactions As EnzymeQuery(Of EnzymeTag)
     ReadOnly cachedMolecules As Dictionary(Of String, WebJSON.Molecule)
     ReadOnly cachedExpansion As Dictionary(Of String, WebJSON.Reaction())
 #End Region
@@ -35,6 +36,8 @@ Public Class DataRepository : Implements IDataRegistry
         End Get
     End Property
 
+    Dim opt As New QueryOptions
+
     ''' <summary>
     ''' construct a data repository without local cache data
     ''' </summary>
@@ -48,14 +51,7 @@ Public Class DataRepository : Implements IDataRegistry
 
         cachedOperon = $"{cache_dir}/all_operons.json".LoadJsonFile(Of WebJSON.Operon())(throwEx:=False)
         cachedMolecules = $"{cache_dir}/molecules.jsonl".LoadJSONL(Of WebJSON.Molecule).ToDictionary(Function(m) m.id)
-        cachedReactions = (From rxn In network Where Not rxn.law.IsNullOrEmpty) _
-            .Select(Function(r) r.law.Select(Function(ec) (ec.ec_number, r))) _
-            .IteratesALL _
-            .GroupBy(Function(r) r.ec_number) _
-            .ToDictionary(Function(r) r.Key,
-                          Function(r)
-                              Return r.Select(Function(i) i.r).ToArray
-                          End Function)
+        cachedReactions = New EnzymeQuery(Of EnzymeTag)(TagEnzymeString(network))
         cachedExpansion = (From rxn In network Where rxn.law.IsNullOrEmpty) _
             .Select(Function(r)
                         Return r.left.JoinIterates(r.right).Select(Function(c) (c.molecule_id, r))
@@ -71,10 +67,17 @@ Public Class DataRepository : Implements IDataRegistry
 
         Call "load cached database from a given cache dir:".info
         Call $" * {cachedOperon.Length} known operons".info
-        Call $" * {cachedReactions.Count} known enzyme reaction network".info
+        Call $" * {cachedReactions.Size} known enzyme reaction network".info
         Call $" * {cachedExpansion.Count} reaction network expansions".info
         Call $" * {cachedMolecules.Count} associated metabolites".info
     End Sub
+
+    Private Shared Function TagEnzymeString(network As IEnumerable(Of WebJSON.Reaction)) As IEnumerable(Of EnzymeTag)
+        Dim enzymeNetwork = From rxn In network Where Not rxn.law.IsNullOrEmpty
+        Dim tagsData = enzymeNetwork.Select(Function(r) r.law.Select(Function(ec) New EnzymeTag(ec.ec_number, r))).IteratesALL
+
+        Return tagsData
+    End Function
 
     Public Function GetAllKnownOperons() As WebJSON.Operon()
         ' just read cache data for local test
@@ -86,14 +89,16 @@ Public Class DataRepository : Implements IDataRegistry
         Return cachedMolecules.TryGetValue(id.ToString, [default]:=cachedMolecules.TryGetValue("BioCAD" & id.ToString.PadLeft(11, "0"c)))
     End Function
 
-    Public Function GetAssociatedReactions(ec_number As String, Optional simple As Boolean = False) As Dictionary(Of String, WebJSON.Reaction) Implements IDataRegistry.GetAssociatedReactions
-        Dim list = cachedReactions.TryGetValue(ec_number)
+    Public Function GetAssociatedReactions(enzyme As IEnzymeObject, Optional simple As Boolean = False) As Dictionary(Of String, WebJSON.Reaction) Implements IDataRegistry.GetAssociatedReactions
+        Dim list As IEnumerable(Of WebJSON.Reaction) =
+            From tag As EnzymeTag
+            In cachedReactions.Query(enzyme.ECNumber, opt.EnzymeFuzzyMatch)
+            Select tag.Reaction
+            Group By Reaction.guid Into Group
+            Select Group.First
+        Dim asso As Dictionary(Of String, WebJSON.Reaction) = list.ToDictionary(Function(r) r.guid)
 
-        If Not list Is Nothing Then
-            Return list.ToDictionary(Function(r) r.guid)
-        Else
-            Return Nothing
-        End If
+        Return asso
     End Function
 
     ''' <summary>
@@ -109,5 +114,10 @@ Public Class DataRepository : Implements IDataRegistry
         Else
             Return Nothing
         End If
+    End Function
+
+    Public Function SetOptions(opt As QueryOptions) As IDataRegistry Implements IDataRegistry.SetOptions
+        Me.opt = opt
+        Return Me
     End Function
 End Class

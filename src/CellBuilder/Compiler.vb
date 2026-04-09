@@ -173,7 +173,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                                                  In enzymes.Values
                                                  Where e.Score > enzyme_cutoff
             Dim ec_number As String = enzyme.EC
-            Dim list = registry.GetAssociatedReactions(enzyme.EC, simple:=False)
+            Dim list = registry.GetAssociatedReactions(enzyme, simple:=False)
 
             If list Is Nothing Then
                 Call missing_enzyme.Add(ec_number)
