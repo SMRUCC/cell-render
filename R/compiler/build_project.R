@@ -25,7 +25,11 @@
 [@app "build_project"]
 const build_project = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
-    let registry = open_datapool(dir = get_config("localdb"));
+    let enzyme_fuzzy = as.logical(get_config("enzyme_fuzzy"));
+    let registry = workflow::open_datapool(
+        dir = get_config("localdb"), 
+        enzyme_fuzzy = enzyme_fuzzy
+    );
 
     if (batch_process) {
         let gems_library_mode = as.logical(get_config("gems_library_mode"));

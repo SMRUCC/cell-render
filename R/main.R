@@ -70,6 +70,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      domain = c("bacteria", "plant", "animal", "fungi"),
                                      builds = c("TRN_network","Metabolic_network"),
                                      enable_blastp_cache = FALSE,
+                                     enzyme_fuzzy = FALSE,
                                      gems_library_mode = TRUE,
                                      n_threads = 32) {
 
@@ -94,7 +95,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         # run this workflow in batch mode 
         batch_process = batch_process,
         enable_blastp_cache = enable_blastp_cache,
-        gems_library_mode = gems_library_mode
+        gems_library_mode = gems_library_mode,
+        enzyme_fuzzy = enzyme_fuzzy
     ));
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
