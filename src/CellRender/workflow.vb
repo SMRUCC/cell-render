@@ -133,6 +133,6 @@ Module workflow
 
     <ExportAPI("open_datapool")>
     Public Function open_datapool(dir As String, Optional enzyme_fuzzy As Boolean = False) As DataRepository
-        Return New DataRepository(dir).SetOptions(New QueryOptions With {.EnzymeFuzzyMatch = enzyme_fuzzy})
+        Return New DataRepository(dir).SetOptions(New QueryOptions With {.EnzymeFuzzyMatch = enzyme_fuzzy, .EnzymeMaxFuzzyLevel = 4})
     End Function
 End Module

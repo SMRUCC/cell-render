@@ -92,7 +92,7 @@ Public Class DataRepository : Implements IDataRegistry
     Public Function GetAssociatedReactions(enzyme As IEnzymeObject, Optional simple As Boolean = False) As Dictionary(Of String, WebJSON.Reaction) Implements IDataRegistry.GetAssociatedReactions
         Dim list As IEnumerable(Of WebJSON.Reaction) =
             From tag As EnzymeTag
-            In cachedReactions.Query(enzyme.ECNumber, opt.EnzymeFuzzyMatch)
+            In cachedReactions.Query(enzyme.ECNumber, opt.EnzymeFuzzyMatch, opt.EnzymeMaxFuzzyLevel)
             Select tag.Reaction
             Group By Reaction.guid Into Group
             Select Group.First
