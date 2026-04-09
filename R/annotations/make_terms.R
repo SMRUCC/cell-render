@@ -97,7 +97,7 @@ const make_blastp_term = function(proj_file, model_dir) {
     let enzyme_file = file.path(dirname(proj_file), "enzymes.csv");
 
     # export enzyme annotation table file
-    write.csv(enzymes, file = enzyme_file);
+    write.csv(enzymes, file = enzyme_file, silent = TRUE);
     # save project file
     project::save(proj, file = proj_file);
 }
