@@ -16,6 +16,8 @@ const annotation_workflow = function() {
     # steps for create virtual cell model from genbank annotation project file
     WorkflowRender::hook(CellRender::build_project);
 
+    WorkflowRender::summary();
+
     invisible(NULL);
 } 
 

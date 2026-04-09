@@ -104,7 +104,6 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         WorkflowRender::definePipeline(debug);
     }    
 
-    WorkflowRender::summary();
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
 
