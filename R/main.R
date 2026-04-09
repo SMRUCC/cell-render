@@ -72,7 +72,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      enable_blastp_cache = FALSE,
                                      enzyme_fuzzy = FALSE,
                                      gems_library_mode = TRUE,
-                                     n_threads = 32) {
+                                     n_threads = 32, 
+                                     debug = c()) {
 
     let batch_process as boolean = dir.exists(src); 
 
@@ -98,6 +99,12 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         gems_library_mode = gems_library_mode,
         enzyme_fuzzy = enzyme_fuzzy
     ));
+
+    if (length(debug) > 0) {
+        WorkflowRender::definePipeline(debug);
+    }    
+
+    WorkflowRender::summary();
     WorkflowRender::run(registry = CellRender::annotation_workflow);
     WorkflowRender::finalize();
 
