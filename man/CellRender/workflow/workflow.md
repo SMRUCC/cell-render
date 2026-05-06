@@ -8,3 +8,4 @@ annotation workflow
 + [set_blastp_result](workflow/set_blastp_result.1) 
 + [set_tfbs](workflow/set_tfbs.1) 
 + [open_datapool](workflow/open_datapool.1) 
++ [set_kegg_pathways](workflow/set_kegg_pathways.1) 

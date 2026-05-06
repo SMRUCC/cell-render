@@ -38,6 +38,10 @@ declare namespace workflow {
    /**
      * @param env default value Is ``null``.
    */
+   function set_kegg_pathways(repo: object, maps: any, reactions: any, env?: object): any;
+   /**
+     * @param env default value Is ``null``.
+   */
    function set_tfbs(proj: object, tfbs: any, env?: object): any;
    /**
     * extract of the tss upstream location site sequence data

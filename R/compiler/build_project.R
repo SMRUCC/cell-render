@@ -32,7 +32,7 @@ const build_project = function(app, context) {
     );
 
     registry <- set_kegg_pathways(registry, 
-        maps = GCModeller::kegg_maps(), 
+        maps = GCModeller::load_kegg_maps(), 
         reactions = GCModeller::kegg_reactions()
     );
 
