@@ -23,7 +23,7 @@ Public Class GPRWorker
     Sub New(proj As GenBankProject, registry As IDataRegistry)
         Me.proj = proj
         Me.registry = registry
-        Me.worker = New MetabolicAssociator(New GPRParameters, proj.gene_table)
+        Me.worker = New MetabolicAssociator(New GPRParameters, proj.gene_table, registry.GetPathways.ToArray)
     End Sub
 
     Private Iterator Function BuildLaws(reaction As WebJSON.Reaction, enzyme As ECNumberAnnotation, modelProteinId As String) As IEnumerable(Of Catalysis)

@@ -1,6 +1,8 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports SMRUCC.genomics.ComponentModel.Annotation
+Imports SMRUCC.genomics.GCModeller.CompilerServices.GPRLink
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
 
 Public Class DataRepository : Implements IDataRegistry
@@ -10,6 +12,8 @@ Public Class DataRepository : Implements IDataRegistry
     ReadOnly cachedReactions As EnzymeQuery(Of EnzymeTag)
     ReadOnly cachedMolecules As Dictionary(Of String, WebJSON.Molecule)
     ReadOnly cachedExpansion As Dictionary(Of String, WebJSON.Reaction())
+
+    Dim cachedPathways As Pathway()
 #End Region
 
     Public ReadOnly Property HasOperonDataCache As Boolean
@@ -79,12 +83,14 @@ Public Class DataRepository : Implements IDataRegistry
         Return tagsData
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAllKnownOperons() As WebJSON.Operon()
         ' just read cache data for local test
         ' not used cache dir for save web request data
         Return cachedOperon.ToArray
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetMoleculeDataByID(id As UInteger) As WebJSON.Molecule Implements IDataRegistry.GetMoleculeDataByID
         Return cachedMolecules.TryGetValue(id.ToString, [default]:=cachedMolecules.TryGetValue("BioCAD" & id.ToString.PadLeft(11, "0"c)))
     End Function
@@ -119,5 +125,15 @@ Public Class DataRepository : Implements IDataRegistry
     Public Function SetOptions(opt As QueryOptions) As IDataRegistry Implements IDataRegistry.SetOptions
         Me.opt = opt
         Return Me
+    End Function
+
+    Public Function SetPathwayData(pathways As IEnumerable(Of Pathway)) As IDataRegistry
+        Me.cachedPathways = pathways.ToArray
+        Return Me
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetPathways() As IEnumerable(Of Pathway) Implements IDataRegistry.GetPathways
+        Return cachedPathways
     End Function
 End Class

@@ -1,4 +1,5 @@
 ﻿Imports SMRUCC.genomics.ComponentModel.Annotation
+Imports SMRUCC.genomics.GCModeller.CompilerServices.GPRLink
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model.WebJSON
 
 Public Interface IDataRegistry
@@ -14,6 +15,7 @@ Public Interface IDataRegistry
     ''' <param name="registry_id">id of the molecule</param>
     ''' <returns></returns>
     Function ExpandNetworkByCompound(registry_id As String) As Dictionary(Of String, Reaction)
+    Function GetPathways() As IEnumerable(Of Pathway)
 
 End Interface
 

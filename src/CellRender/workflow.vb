@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
+Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
+Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
+Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 Imports SMRUCC.genomics.SequenceModel.FASTA
@@ -134,5 +137,26 @@ Module workflow
     <ExportAPI("open_datapool")>
     Public Function open_datapool(dir As String, Optional enzyme_fuzzy As Boolean = False) As DataRepository
         Return New DataRepository(dir).SetOptions(New QueryOptions With {.EnzymeFuzzyMatch = enzyme_fuzzy, .EnzymeMaxFuzzyLevel = 4})
+    End Function
+
+    <ExportAPI("set_kegg_pathways")>
+    Public Function set_kegg_pathways(repo As DataRepository,
+                                      <RRawVectorArgument(GetType(Map))> maps As Object,
+                                      <RRawVectorArgument(GetType(Reaction))> reactions As Object,
+                                      Optional env As Environment = Nothing) As Object
+
+        Dim pullMaps As pipeline = pipeline.TryCreatePipeline(Of Map)(maps, env)
+        Dim pullReactions As pipeline = pipeline.TryCreatePipeline(Of Reaction)(reactions, env)
+
+        If pullMaps.isError Then
+            Return pullMaps.getError
+        ElseIf pullReactions.isError Then
+            Return pullReactions.getError
+        End If
+
+        Return repo.SetPathwayData(GPRLink.Pathway.FromKEGGPathways(
+            pathways:=pullMaps.populates(Of Map)(env),
+            reactions:=pullReactions.populates(Of Reaction)(env))
+        )
     End Function
 End Module
