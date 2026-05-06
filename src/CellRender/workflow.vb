@@ -8,6 +8,7 @@ Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 Imports SMRUCC.genomics.Assembly.MetaCyc.Schema
+Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
@@ -91,6 +92,13 @@ Module workflow
                     .ToDictionary(Function(a)
                                       Return a.gene_id
                                   End Function)
+                ' 20260506
+                ' update ec numbers of the gene annotation table
+                For Each gene As GeneTable In proj.gene_table
+                    If proj.annotations.ec_numbers.ContainsKey(gene.locus_id) Then
+                        gene.EC_Number = {proj.annotations.ec_numbers(gene.locus_id).EC}
+                    End If
+                Next
 
             Case "subcellular_location"
                 proj.annotations.transporter = protein_hits
