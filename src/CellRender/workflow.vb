@@ -1,11 +1,13 @@
 ﻿Imports System.IO
 Imports CellBuilder
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
+Imports SMRUCC.genomics.Assembly.MetaCyc.Schema
 Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
@@ -154,8 +156,18 @@ Module workflow
             Return pullReactions.getError
         End If
 
+        Static filterMaps As Index(Of String) = {
+            "map01100",  ' Metabolic pathways
+            "map01110",  ' Biosynthesis of secondary metabolites
+            "map01120"   ' Microbial metabolism in diverse environments
+        }
+
+        Dim cleanMaps As IEnumerable(Of Map) = From map As Map
+                                               In pullMaps.populates(Of Map)(env)
+                                               Where Not map.EntryId Like filterMaps
+
         Return repo.SetPathwayData(GPRLink.Pathway.FromKEGGPathways(
-            pathways:=pullMaps.populates(Of Map)(env),
+            pathways:=cleanMaps,
             reactions:=pullReactions.populates(Of Reaction)(env))
         )
     End Function
