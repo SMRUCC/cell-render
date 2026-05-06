@@ -31,6 +31,11 @@ const build_project = function(app, context) {
         enzyme_fuzzy = enzyme_fuzzy
     );
 
+    registry <- set_kegg_pathways(registry, 
+        maps = GCModeller::kegg_maps(), 
+        reactions = GCModeller::kegg_reactions()
+    );
+
     if (batch_process) {
         let gems_library_mode = as.logical(get_config("gems_library_mode"));
         let release_dir = get_config("gem_libout");
