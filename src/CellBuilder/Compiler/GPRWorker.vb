@@ -94,7 +94,7 @@ Public Class GPRWorker
     End Function
 
     Public Function CreateMetabolismNetwork(genes As Dictionary(Of String, gene)) As MetabolismStructure
-        Dim scores As Dictionary(Of String, GeneAssociation) = worker.AssociateGenesToReactions.ToDictionary(Function(gene) gene.GeneId)
+        ' Dim scores As Dictionary(Of String, GeneAssociation) = worker.AssociateGenesToReactions.ToDictionary(Function(gene) gene.GeneId)
         Dim annoSet As AnnotationSet = proj.annotations
         Dim enzymes As Dictionary(Of String, ECNumberAnnotation) = annoSet.ec_numbers
         Dim network As New Dictionary(Of String, WebJSON.Reaction)
@@ -125,17 +125,17 @@ Public Class GPRWorker
                                                  Where e.Score > enzyme_cutoff
             Dim ec_number As String = enzyme.EC
             Dim list = registry.GetAssociatedReactions(enzyme, simple:=False)
-            Dim GPR_set As Index(Of String) = If(scores.ContainsKey(enzyme.gene_id), scores(enzyme.gene_id).TopGPRLinks, New String() {})
+            ' Dim GPR_set As Index(Of String) = If(scores.ContainsKey(enzyme.gene_id), scores(enzyme.gene_id).TopGPRLinks, New String() {})
 
-            If list.IsNullOrEmpty OrElse GPR_set.Count = 0 Then
+            If list.IsNullOrEmpty Then ' OrElse GPR_set.Count = 0 Then
                 Call missing_enzyme.Add(ec_number)
                 Continue For
             Else
-                list = list _
-                    .Where(Function(r)
-                               Return r.Value.db_xrefs.Any(Function(id) id Like GPR_set)
-                           End Function) _
-                    .ToDictionary
+                ' list = list _
+                '    .Where(Function(r)
+                '               Return r.Value.db_xrefs.Any(Function(id) id Like GPR_set)
+                '           End Function) _
+                '    .ToDictionary
 
                 If list.IsNullOrEmpty Then
                     Call missing_enzyme.Add(ec_number)
