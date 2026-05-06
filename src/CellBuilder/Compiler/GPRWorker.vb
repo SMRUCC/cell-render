@@ -23,6 +23,7 @@ Public Class GPRWorker
     Sub New(proj As GenBankProject, registry As IDataRegistry)
         Me.proj = proj
         Me.registry = registry
+        Me.worker = New MetabolicAssociator(New GPRParameters, proj.gene_table)
     End Sub
 
     Private Iterator Function BuildLaws(reaction As WebJSON.Reaction, enzyme As ECNumberAnnotation, modelProteinId As String) As IEnumerable(Of Catalysis)
@@ -90,6 +91,7 @@ Public Class GPRWorker
     End Function
 
     Public Function CreateMetabolismNetwork(genes As Dictionary(Of String, gene)) As MetabolismStructure
+        Dim scores = worker.AssociateGenesToReactions.ToArray
         Dim annoSet As AnnotationSet = proj.annotations
         Dim enzymes As Dictionary(Of String, ECNumberAnnotation) = annoSet.ec_numbers
         Dim network As New Dictionary(Of String, WebJSON.Reaction)
@@ -119,7 +121,7 @@ Public Class GPRWorker
                                                  In enzymes.Values
                                                  Where e.Score > enzyme_cutoff
             Dim ec_number As String = enzyme.EC
-            Dim list = Registry.GetAssociatedReactions(enzyme, simple:=False)
+            Dim list = registry.GetAssociatedReactions(enzyme, simple:=False)
 
             If list Is Nothing Then
                 Call missing_enzyme.Add(ec_number)
