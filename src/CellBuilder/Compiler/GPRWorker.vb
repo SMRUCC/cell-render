@@ -8,6 +8,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
+Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.GCModeller.CompilerServices.GPRLink
 Imports SMRUCC.genomics.GCModeller.ModellingEngine.Model
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
@@ -21,9 +22,11 @@ Public Class GPRWorker
     Public Property enzyme_cutoff As Double = 450
 
     Sub New(proj As GenBankProject, registry As IDataRegistry)
+        Dim pathways As GPRLink.Pathway() = registry.GetPathways.ToArray
+
         Me.proj = proj
         Me.registry = registry
-        Me.worker = New MetabolicAssociator(New GPRParameters, proj.gene_table, registry.GetPathways.ToArray)
+        Me.worker = New MetabolicAssociator(New GPRParameters, proj.gene_table, pathways)
     End Sub
 
     Private Iterator Function BuildLaws(reaction As WebJSON.Reaction, enzyme As ECNumberAnnotation, modelProteinId As String) As IEnumerable(Of Catalysis)
@@ -51,7 +54,7 @@ Public Class GPRWorker
 
     Private Function FormatCompoundId(id As UInteger) As String
         Dim fullid As String = "BioCAD" & id.ToString.PadLeft(11, "0"c)
-        Dim model As WebJSON.Molecule = registry.GetMoleculeDataById(id)
+        Dim model As WebJSON.Molecule = registry.GetMoleculeDataByID(id)
 
         Return If(model.symbol.StringEmpty, fullid, model.symbol)
     End Function
@@ -306,7 +309,7 @@ Public Class GPRWorker
     Private Iterator Function CreateCompoundModel(network As Dictionary(Of String, WebJSON.Reaction), none_enzymatic As Reaction()) As IEnumerable(Of Compound)
         Dim compounds_id As UInteger() = ExtractCompoundModelId(network, none_enzymatic).ToArray
         Dim metadata As WebJSON.Molecule() = compounds_id _
-            .Select(Function(id) registry.GetMoleculeDataById(id)) _
+            .Select(Function(id) registry.GetMoleculeDataByID(id)) _
             .Where(Function(c) Not c Is Nothing) _
             .ToArray
         Dim refs As Index(Of String) = {"BioCyc", "MetaCyc", "KEGG"}
