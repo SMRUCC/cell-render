@@ -126,7 +126,7 @@ Public Class GPRWorker
             Dim ec_number As String = enzyme.EC
             Dim list = registry.GetAssociatedReactions(enzyme, simple:=False)
 
-            If list Is Nothing Then
+            If list.IsNullOrEmpty Then
                 Call missing_enzyme.Add(ec_number)
                 Continue For
             Else
