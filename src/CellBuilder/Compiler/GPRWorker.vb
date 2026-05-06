@@ -94,7 +94,7 @@ Public Class GPRWorker
     End Function
 
     Public Function CreateMetabolismNetwork(genes As Dictionary(Of String, gene)) As MetabolismStructure
-        Dim scores = worker.AssociateGenesToReactions.ToArray
+        Dim scores As GeneAssociation() = worker.AssociateGenesToReactions.ToArray
         Dim annoSet As AnnotationSet = proj.annotations
         Dim enzymes As Dictionary(Of String, ECNumberAnnotation) = annoSet.ec_numbers
         Dim network As New Dictionary(Of String, WebJSON.Reaction)
