@@ -131,30 +131,37 @@ Public Class GPRWorker
                 Call missing_enzyme.Add(ec_number)
                 Continue For
             Else
-                Dim gene As GeneTable = geneIndex(enzyme.gene_id)
-                Dim translate_id As String = If(gene.ProteinId, gene.locus_id & "_translate")
-                Dim modelProteinId As String = "Protein[" & translate_id & "]"
-                Dim model As New Enzyme With {
-                    .ECNumber = enzyme.EC,
-                    .proteinID = modelProteinId,
-                    .catalysis = list.Values _
-                         .Where(Function(r)
-                                    Return r.db_xrefs.Any(Function(id) id Like GPR_set)
-                                End Function) _
-                         .Select(Function(reaction) BuildLaws(reaction, enzyme, modelProteinId)) _
-                         .IteratesALL _
-                         .GroupBy(Function(a) a.GetJson.MD5) _
-                         .Select(Function(a) a.First) _
-                         .ToArray
-                }
+                list = list _
+                    .Where(Function(r)
+                               Return r.Value.db_xrefs.Any(Function(id) id Like GPR_set)
+                           End Function) _
+                    .ToDictionary
 
-                If transporter.ContainsKey(gene.locus_id) Then
-                    Call membraneTransport.Add((enzyme, transporter(gene.locus_id).term, list.Keys.ToArray))
+                If list.IsNullOrEmpty Then
+                    Call missing_enzyme.Add(ec_number)
+                    Continue For
                 End If
-
-                Call enzymeModels.Add(model)
             End If
 
+            Dim gene As GeneTable = geneIndex(enzyme.gene_id)
+            Dim translate_id As String = If(gene.ProteinId, gene.locus_id & "_translate")
+            Dim modelProteinId As String = "Protein[" & translate_id & "]"
+            Dim model As New Enzyme With {
+                .ECNumber = enzyme.EC,
+                .proteinID = modelProteinId,
+                .catalysis = list.Values _
+                     .Select(Function(reaction) BuildLaws(reaction, enzyme, modelProteinId)) _
+                     .IteratesALL _
+                     .GroupBy(Function(a) a.GetJson.MD5) _
+                     .Select(Function(a) a.First) _
+                     .ToArray
+            }
+
+            If transporter.ContainsKey(gene.locus_id) Then
+                Call membraneTransport.Add((enzyme, transporter(gene.locus_id).term, list.Keys.ToArray))
+            End If
+
+            Call enzymeModels.Add(model)
             Call network.AddRange(From r
                                   In list
                                   Where r.Value.left _
