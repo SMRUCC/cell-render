@@ -49,6 +49,7 @@ Public Class ProjectCreator
                       replicon.Origin.SequenceData.Length)
 
         Dim gene_upstreamSet = geneSet _
+            .Where(Function(gene) gene.Location.Normalization.Interval > 1) _
             .Select(Function(gene)
                         Return (gene.locus_id, gene.GetUpstreamSeq(nt, 150))
                     End Function) _
