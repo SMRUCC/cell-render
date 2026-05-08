@@ -57,7 +57,7 @@ const make_genbank_proj = function(app, context) {
 
     if (batch_process) {  
         let genbank_files = list.files(get_config("src"), 
-                                pattern = c("*.gb","*.gbk","*.gbff"));
+                                pattern = c("*.gb","*.gbk","*.gbff"), recursive = TRUE);
 
         message(`Build virtualcell community model based ${length(genbank_files)} genbank source files!`);
 
