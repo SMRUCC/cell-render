@@ -31,7 +31,7 @@ Public Class GPRWorker
 
     Private Iterator Function BuildLaws(reaction As WebJSON.Reaction, enzyme As ECNumberAnnotation, modelProteinId As String) As IEnumerable(Of Catalysis)
         For Each law As WebJSON.LawData In reaction.law.SafeQuery
-            Dim pars = law.params.Keys.ToArray
+            Dim pars As String() = law.params.Keys.ToArray
             Dim args As KineticsParameter() = law.params _
                 .Select(Function(a)
                             Return CreateParameter(a, modelProteinId)
@@ -40,8 +40,7 @@ Public Class GPRWorker
 
             Yield New Catalysis With {
                 .reaction = reaction.guid,
-                .temperature = 36,
-                .PH = 7.0,
+                .characters = law.character,
                 .formula = New FunctionElement With {
                     .lambda = law.lambda,
                     .name = enzyme.EC,
