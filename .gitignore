@@ -382,3 +382,4 @@ data/molecules.csv
 data/molecules.jsonl
 *.meme
 data/subcellular.json
+data/Pfam-A.fas
