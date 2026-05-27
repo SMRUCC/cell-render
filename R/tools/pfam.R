@@ -3,9 +3,10 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
     let ws = getwd();
     let protein_id = basename(proteins);
 
-    workdir = normalizePath(workdir);
-    diamond = unlist(diamond);
-
+    workdir  = normalizePath(workdir);
+    proteins = normalizePath(proteins);
+    diamond  = unlist(diamond);
+    
     dir.create(workdir);
     setwd(workdir);
     system2(diamond, c("makedb","--in",proteins, "--db", protein_id), shell=TRUE);
