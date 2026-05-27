@@ -21,7 +21,7 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
         "--evalue","10",
         "--masking","0",
         "--comp-based-stats","0",
-        "--outfmt","6","qseqid","sseqid","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"));
+        "--outfmt","6","qseqid","sseqid","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"), shell=TRUE);
 
     setwd(ws);
 }
