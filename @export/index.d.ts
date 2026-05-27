@@ -111,6 +111,11 @@ declare namespace CellRender {
    function pangenome_analysis(src: any, result_dir: any, diamond?: any, n_threads?: any, skip_blastp?: any): object;
    /**
      * @param workdir default value Is ``./``.
+     * @param diamond default value Is ``Call "Sys.which"("diamond")``.
+   */
+   function pfam_diamond(proteins: any, workdir?: any, diamond?: any): object;
+   /**
+     * @param workdir default value Is ``./``.
    */
    function singlecells_analysis(embedding_file: any, workdir?: any): object;
    /**
