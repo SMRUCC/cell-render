@@ -69,7 +69,8 @@ const make_diamond_hits = function(app, context) {
         for(let model_dir in list_batch_models()) {
             let model_id = basename(model_dir);
             let proteins = file.path(source_dir, model_id, "proteins.fasta");
-            
+            let protein_pfam = file.path(dirname(proteins), "proteins.tsv");
+
             model_dir <- file.path(temp_dir, model_id);
 
             # create workspace dir for save diamond blastp result
@@ -81,9 +82,15 @@ const make_diamond_hits = function(app, context) {
             let ec_out = file.path(model_dir, "ec_number.m8");
             let cc_out = file.path(model_dir, "subcellular.m8");
             let tf_out = file.path(model_dir, "transcript_factor.m8");
+            let check_size = 4[KB];
+            
+            if (file.size(protein_pfam) < check_size) {
+                # no cache data
+                # run process
+                pfam_diamond(proteins, workdir = dirname(proteins), diamond = diamond);
+            }            
 
-            if (enable_blastp_cache) {
-                let check_size  = 4[KB];
+            if (enable_blastp_cache) {                
                 let check_cache =  (file.size(ec_out) > check_size) 
                                 && (file.size(cc_out) > check_size) 
                                 && (file.size(tf_out) > check_size)
@@ -105,6 +112,9 @@ const make_diamond_hits = function(app, context) {
         # get genomics protein fasta sequence data file its file path for
         # run diamond blastp search
         let proteins = workfile("make_genbank_proj://proteins.fasta");
+        let protein_pfam = file.path(dirname(proteins), "proteins.tsv");
+
+        pfam_diamond(proteins, workdir = dirname(proteins), diamond = diamond);
 
         # then run diamond blastp search against the reference database
         diamond_blastp("ec_number", proteins, "ec_number.m8");
