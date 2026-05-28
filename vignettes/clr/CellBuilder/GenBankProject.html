@@ -31,6 +31,8 @@
 # namespace CellBuilder
 export class GenBankProject {
    annotations: <a href="/vignettes/clr/CellBuilder/AnnotationSet.html">AnnotationSet</a>;
+   # gene enzyme gap filling config, key is the gene locus tag, value is the EC number array
+   gaps_filling: list;
    gene_table: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/Annotation/GeneTable.html">GeneTable[]</a>;
    genes: list;
    nt: list;
@@ -45,6 +47,7 @@ export class GenBankProject {
 
         <ol>
 <li>use by <i>property</i> member <code>annotations</code>: <a href="/vignettes/clr/CellBuilder/AnnotationSet.html">AnnotationSet</a></li>
+<li>use by <i>property</i> member <code>gaps_filling</code>: list</li>
 <li>use by <i>property</i> member <code>gene_table</code>: <a href="/vignettes/clr/SMRUCC/genomics/ComponentModel/Annotation/GeneTable.html">GeneTable</a></li>
 <li>use by <i>property</i> member <code>genes</code>: list</li>
 <li>use by <i>property</i> member <code>nt</code>: list</li>
