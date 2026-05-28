@@ -18,6 +18,7 @@ Public Class GPRWorker
     ReadOnly worker As MetabolicAssociator
     ReadOnly proj As GenBankProject
     ReadOnly registry As IDataRegistry
+    ReadOnly geneIndex As Dictionary(Of String, GeneTable)
 
     Public Property enzyme_cutoff As Double = 450
 
@@ -27,6 +28,12 @@ Public Class GPRWorker
         Me.proj = proj
         Me.registry = registry
         Me.worker = New MetabolicAssociator(New GPRParameters, proj.gene_table, pathways)
+        Me.geneIndex = proj.gene_table _
+            .GroupBy(Function(a) a.locus_id) _
+            .ToDictionary(Function(a) a.Key,
+                          Function(a)
+                              Return a.First
+                          End Function)
     End Sub
 
     Private Iterator Function BuildLaws(reaction As WebJSON.Reaction, enzyme As ECNumberAnnotation, modelProteinId As String) As IEnumerable(Of Catalysis)
@@ -92,6 +99,71 @@ Public Class GPRWorker
         End If
     End Function
 
+    Private Function LinkEnzyme(enzyme As ECNumberAnnotation,
+                                missing_enzyme As List(Of String),
+                                transporter As Dictionary(Of String, RankTerm),
+                                membraneTransport As List(Of (ECNumberAnnotation, String, String())),
+                                network As Dictionary(Of String, WebJSON.Reaction),
+                                ec_numbers As Dictionary(Of String, List(Of String))) As v2.Enzyme
+
+        Dim ec_number As String = enzyme.EC
+        Dim list = registry.GetAssociatedReactions(enzyme, simple:=False)
+        ' Dim GPR_set As Index(Of String) = If(scores.ContainsKey(enzyme.gene_id), scores(enzyme.gene_id).TopGPRLinks, New String() {})
+
+        If list.IsNullOrEmpty Then ' OrElse GPR_set.Count = 0 Then
+            Call missing_enzyme.Add(ec_number)
+            Return Nothing
+        Else
+            ' list = list _
+            '    .Where(Function(r)
+            '               Return r.Value.db_xrefs.Any(Function(id) id Like GPR_set)
+            '           End Function) _
+            '    .ToDictionary
+
+            If list.IsNullOrEmpty Then
+                Call missing_enzyme.Add(ec_number)
+                Return Nothing
+            End If
+        End If
+
+        Dim gene As GeneTable = geneIndex(enzyme.gene_id)
+        Dim translate_id As String = If(gene.ProteinId, gene.locus_id & "_translate")
+        Dim modelProteinId As String = "Protein[" & translate_id & "]"
+        Dim model As New Enzyme With {
+            .ECNumber = enzyme.EC,
+            .proteinID = modelProteinId,
+            .catalysis = list.Values _
+                 .Select(Function(reaction)
+                             ' just use its EC number for build kinetics law, the detailed kinetic parameters will be filled by the enzyme modeler
+                             Return BuildLaws(reaction, enzyme, modelProteinId)
+                         End Function) _
+                 .IteratesALL _
+                 .GroupBy(Function(a) a.GetJson.MD5) _
+                 .Select(Function(a) a.First) _
+                 .ToArray
+        }
+
+        If transporter.ContainsKey(gene.locus_id) Then
+            Call membraneTransport.Add((enzyme, transporter(gene.locus_id).term, list.Keys.ToArray))
+        End If
+
+        Call network.AddRange(From r
+                              In list
+                              Where r.Value.left _
+                                  .JoinIterates(r.Value.right) _
+                                  .All(Function(a) a.molecule_id > 0), replaceDuplicated:=True)
+
+        For Each guid As String In list.Keys
+            If Not ec_numbers.ContainsKey(guid) Then
+                Call ec_numbers.Add(guid, New List(Of String))
+            End If
+
+            ec_numbers(guid).Add(ec_number)
+        Next
+
+        Return model
+    End Function
+
     Public Function CreateMetabolismNetwork(genes As Dictionary(Of String, gene)) As MetabolismStructure
         ' Dim scores As Dictionary(Of String, GeneAssociation) = worker.AssociateGenesToReactions.ToDictionary(Function(gene) gene.GeneId)
         Dim annoSet As AnnotationSet = proj.annotations
@@ -99,12 +171,6 @@ Public Class GPRWorker
         Dim network As New Dictionary(Of String, WebJSON.Reaction)
         Dim ec_numbers As New Dictionary(Of String, List(Of String))
         Dim enzymeModels As New List(Of Enzyme)
-        Dim geneIndex = proj.gene_table _
-            .GroupBy(Function(a) a.locus_id) _
-            .ToDictionary(Function(a) a.Key,
-                          Function(a)
-                              Return a.First
-                          End Function)
 
         Static membranes As Index(Of String) = {"Cell_inner_membrane", "Cell_membrane", "Cell_outer_membrane"}
 
@@ -118,63 +184,28 @@ Public Class GPRWorker
         Call $"processing of {enzymes.Count} enzyme annotations".debug
 
         Dim missing_enzyme As New List(Of String)
+        Dim model As Value(Of v2.Enzyme) = Value(Of v2.Enzyme).Default
 
         For Each enzyme As ECNumberAnnotation In From e As ECNumberAnnotation
                                                  In enzymes.Values
                                                  Where e.Score > enzyme_cutoff
-            Dim ec_number As String = enzyme.EC
-            Dim list = registry.GetAssociatedReactions(enzyme, simple:=False)
-            ' Dim GPR_set As Index(Of String) = If(scores.ContainsKey(enzyme.gene_id), scores(enzyme.gene_id).TopGPRLinks, New String() {})
 
-            If list.IsNullOrEmpty Then ' OrElse GPR_set.Count = 0 Then
-                Call missing_enzyme.Add(ec_number)
-                Continue For
-            Else
-                ' list = list _
-                '    .Where(Function(r)
-                '               Return r.Value.db_xrefs.Any(Function(id) id Like GPR_set)
-                '           End Function) _
-                '    .ToDictionary
-
-                If list.IsNullOrEmpty Then
-                    Call missing_enzyme.Add(ec_number)
-                    Continue For
-                End If
+            If (model = LinkEnzyme(enzyme, missing_enzyme, transporter, membraneTransport, network, ec_numbers)) IsNot Nothing Then
+                Call enzymeModels.Add(model)
             End If
-
-            Dim gene As GeneTable = geneIndex(enzyme.gene_id)
-            Dim translate_id As String = If(gene.ProteinId, gene.locus_id & "_translate")
-            Dim modelProteinId As String = "Protein[" & translate_id & "]"
-            Dim model As New Enzyme With {
-                .ECNumber = enzyme.EC,
-                .proteinID = modelProteinId,
-                .catalysis = list.Values _
-                     .Select(Function(reaction) BuildLaws(reaction, enzyme, modelProteinId)) _
-                     .IteratesALL _
-                     .GroupBy(Function(a) a.GetJson.MD5) _
-                     .Select(Function(a) a.First) _
-                     .ToArray
-            }
-
-            If transporter.ContainsKey(gene.locus_id) Then
-                Call membraneTransport.Add((enzyme, transporter(gene.locus_id).term, list.Keys.ToArray))
-            End If
-
-            Call enzymeModels.Add(model)
-            Call network.AddRange(From r
-                                  In list
-                                  Where r.Value.left _
-                                      .JoinIterates(r.Value.right) _
-                                      .All(Function(a) a.molecule_id > 0), replaceDuplicated:=True)
-
-            For Each guid As String In list.Keys
-                If Not ec_numbers.ContainsKey(guid) Then
-                    Call ec_numbers.Add(guid, New List(Of String))
-                End If
-
-                ec_numbers(guid).Add(ec_number)
-            Next
         Next
+
+        If Not proj.gaps_filling.IsNullOrEmpty Then
+            For Each gap_fill In proj.gaps_filling
+                For Each ec_number As String In gap_fill.Value
+                    Dim enzyme As New ECNumberAnnotation With {.gene_id = gap_fill.Key, .EC = ec_number}
+
+                    If (model = LinkEnzyme(enzyme, missing_enzyme, transporter, membraneTransport, network, ec_numbers)) IsNot Nothing Then
+                        Call enzymeModels.Add(model)
+                    End If
+                Next
+            Next
+        End If
 
         If missing_enzyme.Any Then
             Call $"missing {missing_enzyme.Distinct.Count} metabolic network inside registry which is associated with enzymes: {missing_enzyme.Distinct.JoinBy(", ")}!".warning
