@@ -1,7 +1,11 @@
+imports "annotation.workflow" from "seqtoolkit";
+imports "proteinKit" from "seqtoolkit";
+
 const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("diamond")) {
     let pfam = file.path(@datadir, "Pfam-A.fas");
     let ws = getwd();
     let protein_id = basename(proteins);
+    let m8_file = `${protein_id}.tsv`;
 
     workdir  = normalizePath(workdir);
     proteins = normalizePath(proteins);
@@ -13,7 +17,7 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
     system2(diamond, c("blastp",
         "-d",`${protein_id}.dmnd`,
         "-q", pfam, 
-        "-o",`${protein_id}.tsv`,
+        "-o", m8_file,
         "-p","24",
         "--ultra-sensitive",
         "--matrix","PAM30",
@@ -24,5 +28,10 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
         "--comp-based-stats","0",
         "--outfmt","6","qtitle","sseqid","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"), shell=TRUE);
 
+    pfam = read_m8(m8_file);
+    pfam = proteinKit::analysis_domains(pfam);
+
     setwd(ws);
+
+    write.csv(pfam, file = file.path(dirname(proteins), "Pfam.csv"));
 }

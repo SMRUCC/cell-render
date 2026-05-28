@@ -69,7 +69,7 @@ const make_diamond_hits = function(app, context) {
         for(let model_dir in list_batch_models()) {
             let model_id = basename(model_dir);
             let proteins = file.path(source_dir, model_id, "proteins.fasta");
-            let protein_pfam = file.path(dirname(proteins), "proteins.tsv");
+            let protein_pfam = file.path(dirname(proteins), "Pfam.csv");
 
             model_dir <- file.path(temp_dir, model_id);
 
@@ -116,7 +116,7 @@ const make_diamond_hits = function(app, context) {
         # get genomics protein fasta sequence data file its file path for
         # run diamond blastp search
         let proteins = workfile("make_genbank_proj://proteins.fasta");
-        let protein_pfam = file.path(dirname(proteins), "proteins.tsv");
+        let protein_pfam = file.path(dirname(proteins), "Pfam.csv");
 
         pfam_diamond(
             proteins, 
