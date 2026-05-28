@@ -64,6 +64,7 @@ Public Module ProjectIO
     Public Function ParseZip(zip As ZipStream) As GenBankProject
         Dim source_json As String = zip.ReadAllText("/source.json")
         Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))(throwEx:=False)
+        Dim gaps_filling As Dictionary(Of String, String()) = zip.ReadAllText("/gaps_filling.json").LoadJSON(Of Dictionary(Of String, String()))(throwEx:=False)
         Dim nucl_fasta As Dictionary(Of String, String) = zip.readFasta("/genes.txt")
         Dim prot_fasta As Dictionary(Of String, String) = zip.readFasta("/proteins.txt")
         Dim tss_fasta As Dictionary(Of String, String) = zip.readFasta("/tss_upstream.txt")
@@ -130,7 +131,8 @@ Public Module ProjectIO
             .genes = nucl_fasta,
             .proteins = prot_fasta,
             .tss_upstream = tss_fasta,
-            .annotations = annos
+            .annotations = annos,
+            .gaps_filling = gaps_filling
         }
     End Function
 
@@ -146,6 +148,7 @@ Public Module ProjectIO
 
         Call fs.WriteText(proj.taxonomy.GetJson, "/source.json")
         Call fs.WriteText(proj.nt.GetJson, "/source.txt")
+        Call fs.WriteText(If(proj.gaps_filling, New Dictionary(Of String, String())).GetJson, "/gaps_filling.json")
 
         Call proj.DumpGeneFasta(fs.OpenFile("/genes.txt", access:=FileAccess.Write))
         Call proj.DumpProteinFasta(fs.OpenFile("/proteins.txt", access:=FileAccess.Write))

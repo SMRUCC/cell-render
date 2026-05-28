@@ -17,6 +17,12 @@ Public Class GenBankProject
     Public Property gene_table As GeneTable()
     Public Property annotations As AnnotationSet
 
+    ''' <summary>
+    ''' gene enzyme gap filling config, key is the gene locus tag, value is the EC number array
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property gaps_filling As Dictionary(Of String, String())
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub DumpProteinFasta(s As Stream)
         Call FASTA.StreamWriter.WriteList(proteins, s)
