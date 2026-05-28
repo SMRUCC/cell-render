@@ -25,6 +25,7 @@ Public Class ProjectCreator
         Call replicon _
             .EnumerateGeneFeatures(ORF:=False) _
             .GroupBy(Function(a) a.Query(FeatureQualifiers.locus_tag)) _
+            .Where(Function(a) Not a.Key.StringEmpty(, True)) _
             .ToDictionary(Function(a) a.Key,
                           Function(a)
                               Return a.First.SequenceData
@@ -33,6 +34,7 @@ Public Class ProjectCreator
 
         Call replicon _
             .ExportProteins_Short(True) _
+            .Where(Function(a) Not a.Title.StringEmpty(, True)) _
             .ToDictionary(Function(a) a.Title,
                           Function(a)
                               Return a.SequenceData
@@ -50,6 +52,7 @@ Public Class ProjectCreator
 
         Dim gene_upstreamSet = geneSet _
             .Where(Function(gene) gene.Location.Normalization.Interval > 1) _
+            .Where(Function(gene) Not gene.locus_id.StringEmpty(, True)) _
             .Select(Function(gene)
                         Return (gene.locus_id, gene.GetUpstreamSeq(nt, 150))
                     End Function) _
