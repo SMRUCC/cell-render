@@ -87,7 +87,11 @@ const make_diamond_hits = function(app, context) {
             if (file.size(protein_pfam) < check_size) {
                 # no cache data
                 # run process
-                pfam_diamond(proteins, workdir = dirname(proteins), diamond = diamond);
+                pfam_diamond(
+                    proteins, 
+                    workdir = dirname(proteins), 
+                    diamond = diamond
+                );
             }            
 
             if (enable_blastp_cache) {                
@@ -114,7 +118,11 @@ const make_diamond_hits = function(app, context) {
         let proteins = workfile("make_genbank_proj://proteins.fasta");
         let protein_pfam = file.path(dirname(proteins), "proteins.tsv");
 
-        pfam_diamond(proteins, workdir = dirname(proteins), diamond = diamond);
+        pfam_diamond(
+            proteins, 
+            workdir = dirname(proteins), 
+            diamond = diamond
+        );
 
         # then run diamond blastp search against the reference database
         diamond_blastp("ec_number", proteins, "ec_number.m8");
