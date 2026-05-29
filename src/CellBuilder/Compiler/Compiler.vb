@@ -120,16 +120,21 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                           End Function)
         Dim protein_id As String
         Dim transporter As Dictionary(Of String, RankTerm) = ProteinLocations(annoSet.membrane_proteins)
+        Dim missing_seqs As New List(Of String)
 
         Call $"processing compile of {nt.Count} genes!".debug
 
         For Each gene As GeneTable In proj.gene_table
-            Dim nt_seq As String = nt(gene.locus_id)
+            Dim nt_seq As String = If(nt.TryGetValue(gene.locus_id), "")
             Dim bases As NumericVector = RNAComposition.FromNtSequence(nt_seq, gene.locus_id & "_rna").CreateVector
             Dim residues As NumericVector = Nothing
             Dim gene_type As RNATypes
             Dim translate_id As String = If(gene.ProteinId, gene.locus_id & "_translate")
             Dim isTF As Boolean = tfs.ContainsKey(gene.locus_id)
+
+            If nt_seq = "" Then
+                Call missing_seqs.Add(nt_seq)
+            End If
 
             If Not gene.translation.StringEmpty Then
                 residues = ProteinComposition.FromRefSeq(gene.translation, translate_id).CreateVector
@@ -225,6 +230,10 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         Next
 
         Call $"found {rnas.Count} RNA models!".debug
+
+        If missing_seqs.Any Then
+            Call $"missing {missing_seqs.Count} nucleotide sequences(missing={missing_seqs.JoinBy(", ")})!".warning
+        End If
     End Function
 
     Private Function BuildGenome() As Genome
