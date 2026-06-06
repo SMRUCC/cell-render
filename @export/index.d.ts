@@ -59,6 +59,10 @@ declare namespace CellRender {
    */
    function list_batch_models(): object;
    /**
+     * @param outputdir default value Is ``./``.
+   */
+   function MAGs_model(contigs: any, tax_str: any, outputdir?: any): object;
+   /**
    */
    function make_blastp_term(proj_file: any, model_dir: any): object;
    /**
