@@ -50,7 +50,9 @@ const make_diamond_hits = function(app, context) {
             "--db", db, 
             "--query", proteins, 
             "--out", output, 
-            "--threads", n_threads
+            "--threads", n_threads,
+            "--outfmt","6", 
+            "qseqid","stitle","pident","length","qstart","qend","sstart","send","evalue","bitscore"
         ), shell=TRUE)
         ;
     }
