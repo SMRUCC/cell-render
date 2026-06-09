@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>.onLoad</title>
+    <title>Package Initialization Hook</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,15 @@
             </tr>
         </table>
 
-        <h2>.onLoad</h2>
+        <h2>Package Initialization Hook</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Executed automatically when the CellRender package is loaded via
+\code{library(CellRender)}. It ensures that the core dependency packages
+\pkg{GCModeller} and \pkg{WorkflowRender} are available in the current
+R session, as they provide the foundational workflow engine and rendering
+infrastructure required by all virtual cell modelling pipelines.</p>
 
         <h3>Usage</h3>
 
@@ -34,6 +38,15 @@
 
         <table>
             
+<dt>libname</dt>
+<dd><p><p>Character. The library directory from which the package is
+being loaded. Supplied by the R runtime.</p></p></dd>
+
+
+<dt>pkgname</dt>
+<dd><p><p>Character. The name of the package being loaded. Supplied
+by the R runtime.</p></p></dd>
+
         </table>
 
 
@@ -47,7 +60,8 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>This function returns \code{invisible(NULL)}. It is called
+exclusively for its side effect of loading dependency packages.</p>
 
         <h3 style="display: none;">Examples</h3>
 

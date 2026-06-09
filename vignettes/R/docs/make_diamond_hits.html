@@ -26,7 +26,16 @@
 This function orchestrates the entire process: it configures the environment,
 creates the necessary DIAMOND databases (if not already created), performs
 the sequence alignment against EC numbers, subcellular locations, and
-transcription factors, and manages the working directory state.</p>
+transcription factors, and manages the working directory state.
+The function supports two execution modes based on the \code{batch_process}
+configuration:
+\itemize{
+\item \strong{Batch Mode}: Iterates through all model subdirectories,
+locating each model's protein FASTA file and running DIAMOND searches
+in a model-specific workspace.
+\item \strong{Single Mode}: Processes a single protein FASTA file from
+the \code{make<em>genbank</em>proj} workspace output.
+}</p>
 
         <h3>Usage</h3>
 
@@ -40,7 +49,8 @@ transcription factors, and manages the working directory state.</p>
             
 <dt>app</dt>
 <dd><p><p>The application object passed by the workflow engine.
-Used for workflow context and configuration.</p></p></dd>
+Used for workflow context and configuration resolution via
+\code{get_config()} and \code{workfile()}.</p></p></dd>
 
 
 <dt>context</dt>
@@ -53,16 +63,12 @@ Used for workflow context and configuration.</p></p></dd>
 
         <p>The function performs the following steps:
 \enumerate{
-\item Retrieves configuration for the DIAMOND path, database directory,
-and thread count.
-\item Sets the working directory to the specific workflow workspace.
-\item Calls \code{make_diamond} to build binary databases from FASTA sources.
-\item Runs DIAMOND blastp against three databases:
-\itemize{
-\item \strong{ec_number}: Enzyme Commission numbers.
-\item \strong{subcellular}: Subcellular location predictions.
-\item \strong{transcript_factor}: Transcription factors.
-}
+\item Resolves the DIAMOND executable path from configuration or system PATH.
+\item Creates DIAMOND reference databases from the local data directory
+(EC numbers, subcellular locations, transcription factors) using
+\code{\link{make_diamond}}.
+\item Runs Pfam domain analysis via \code{\link{pfam_diamond}}.
+\item Executes DIAMOND BLASTP searches against each reference database.
 \item Restores the original working directory upon completion.
 }</p>
 
@@ -74,11 +80,22 @@ and thread count.
 
         <p>This function is called for its side effects (creating .m8 output files).
 It does not return a value explicitly to the R session, but generates
-alignment result files in the workflow workspace.</p>
+alignment result files in the DIAMOND workspace directory:
+\itemize{
+\item \code{ec_number.m8} - EC number annotation hits
+\item \code{subcellular.m8} - Subcellular localization hits
+\item \code{transcript_factor.m8} - Transcription factor hits
+\item \code{Pfam.csv} - Pfam domain annotation results
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# This function is typically invoked by the workflow engine:
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

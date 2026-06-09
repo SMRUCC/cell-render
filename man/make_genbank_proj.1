@@ -8,10 +8,19 @@ make_genbank_proj \- make_genbank_proj(app, context)
 
 
 Loads GenBank source files specified in the application configuration,
-initializes a new `project` object via `CellRender`, and saves the
+initializes a new \code{project} object via \code{CellRender}, and saves the
 resulting project state to disk. Additionally, it extracts and exports
 essential FASTA files required for downstream bioinformatics analyses,
 such as motif scanning and homology searches.
+This function serves as the workflow entry point and automatically detects
+the processing mode from the \code{batch_process} configuration parameter:
+\itemize{
+\item \strong{Batch Mode} (\code{batch_process = TRUE}): Scans the source
+directory for all GenBank files (\code{.gb}, \code{.gbk}, \code{.gbff})
+and processes each one individually via \code{\link{make_genbank_proj_file}}.
+\item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
+single GenBank source file specified by the \code{src} configuration key.
+}
 .PP
 .SH OPTIONS
 .PP
@@ -21,44 +30,40 @@ function to resolve working file paths via \code{workfile()}.
 .PP
 \fBcontext\fB \fR\- . A CellRender workflow context object.
 \emph{Note:} Currently unused in this specific function but required
-by the standard workflow execution signature.
+by the standard workflow execution interface.
 .PP
 .SH VALUE
 .PP
-This function is called for its side effects and returns \code{NULL}
-invisibly. Upon execution, it generates the following local files:
+\code{invisible(NULL)}. This function is called for its side effects:
 \itemize{
-\item \strong{Project File:} The serialized project object (path defined
-by \code{get_config("proj_file")}).
-\item \strong{upstream_locis.fasta:} Contains TSS (Transcription Start Site)
-upstream sequences, prepared for downstream motif site scanning.
-\item \strong{proteins.fasta:} Contains genomic protein sequences, prepared
-for enzyme and Transcription Factor (TF) annotation via Diamond BLASTp.
+\item Creates a \code{builder.gcproj} project file in the release directory.
+\item Exports \code{upstream_locis.fasta} (TSS upstream sequences for motif
+scanning) and \code{proteins.fasta} (protein sequences for DIAMOND BLASTP)
+to the working directory.
 }
 .PP
 .SH DETAILS
 .PP
-The function executes a sequential pipeline:
-\enumerate{
-\item \strong{Data Ingestion:} Reads GenBank files from the path
-specified in \code{get_config("src")} using \code{load_genbanks()}.
-\item \strong{Object Creation:} Wraps the raw GenBank data into a
-standardized \code{project} object.
-\item \strong{State Persistence:} Saves the core project object locally
-to avoid redundant parsing in future workflow steps.
-\item \strong{Sequence Export:** Formats and writes specific sequence
-subsets (upstream loci and proteins) into standardized FASTA files
-tailored for specific downstream tools.
-}
+In batch mode, each GenBank file is processed in its own subdirectory
+(named by the model accession ID) within both the release and working
+directories. In single mode, files are written directly to the configured
+paths without subdirectory nesting.
 .PP
 .SH EXAMPLES
 .PP
-# Typically called internally by the CellRender workflow engine:
-# make_genbank_proj(current_app, current_context)
+#\dontrun{
+
+# This function is typically invoked by the workflow engine:
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}
 .PP
+.SH SEE ALSO
+\code{\link{make_genbank_proj_file}} for the core per-file processing
+logic, \code{\link{model_accession_id}} for accession ID extraction.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_genbank_proj at make_genbank_proj.R:line 53
+SMRUCC/R#.declare_function.make_genbank_proj at make_genbank_proj.R:line 55
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

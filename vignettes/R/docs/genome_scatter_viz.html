@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>genome_scatter_viz</title>
+    <title>Generate Scatter Plot Visualization of Genome Embedding Results</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,16 @@
             </tr>
         </table>
 
-        <h2>genome_scatter_viz</h2>
+        <h2>Generate Scatter Plot Visualization of Genome Embedding Results</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Creates a publication-quality scatter plot from genome embedding data,
+coloring points by taxonomic phylum and sizing points inversely proportional
+to the number of genomes in each phylum group. The plot is saved in both
+PNG and SVG formats.
+This function uses native R with \pkg{ggplot2} and \pkg{dplyr} for
+data processing and visualization.</p>
 
         <h3>Usage</h3>
 
@@ -35,12 +40,37 @@
 
         <table>
             
+<dt>data</dt>
+<dd><p><p>A data frame containing the embedding coordinates with at least
+the following columns:
+\describe{
+\item{dimension_1}{Numeric. The first embedding dimension (x-axis).}
+\item{dimension_2}{Numeric. The second embedding dimension (y-axis).}
+\item{phylum}{Character. The taxonomic phylum assignment for each genome.}
+}</p></p></dd>
+
+
+<dt>outputdir</dt>
+<dd><p><p>Character. The directory path where the output plot files
+will be saved. Defaults to \code{"./"}.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The visualization applies the following design choices:
+\itemize{
+\item Points are colored by \code{phylum} using the default ggplot2
+discrete color palette.
+\item Point size is mapped to the subset size of each phylum group,
+with a \strong{reversed} scale so that larger groups (more genomes)
+are rendered with \emph{smaller} points, reducing visual clutter
+from dominant phyla.
+\item A global alpha of 0.3 is applied for transparency to handle
+overlapping points.
+\item The minimal theme is used for a clean, publication-ready appearance.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -48,11 +78,26 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{outputdir}:
+\itemize{
+\item \code{scatter_plot.png} — High-resolution PNG scatter plot
+(600 DPI, 12 x 8 inches).
+\item \code{scatter_plot.svg} — SVG vector scatter plot
+(600 DPI, 12 x 8 inches).
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Assuming 'embedding_data' has columns: dimension_1, dimension_2, phylum
+genome_scatter_viz(
+data = embedding_data,
+outputdir = "results/figures"
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

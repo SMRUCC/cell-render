@@ -30,20 +30,56 @@ files will be written.
 .PP
 .SH VALUE
 .PP
-Returns \code{invisible(NULL)}. Upon execution, it generates the
-following local files:
+\code{invisible(NULL)}. This function is called for its side effects:
 \itemize{
-\item \strong{Project File:} \code{builder.gcproj} containing the
-parsed GenBank project data.
-\item \strong{upstream_locis.fasta:} TSS (Transcription Start Site)
-upstream sequences, prepared for downstream motif site scanning.
-\item \strong{proteins.fasta:} Genomic protein sequences, prepared
-for enzyme and Transcription Factor (TF) annotation via DIAMOND BLASTp.
+\item Creates a \code{builder.gcproj} project file in the release directory
+(under a model-ID subdirectory in batch mode).
+\item Exports \code{upstream_locis.fasta} containing TSS upstream region
+sequences for downstream TFBS motif scanning.
+\item Exports \code{proteins.fasta} containing protein sequences for
+downstream DIAMOND BLASTP annotation searches.
 }
 .PP
+.SH DETAILS
+.PP
+The function performs the following operations:
+\enumerate{
+\item Reads the GenBank source file and creates a \code{project} object.
+\item Extracts the model accession ID (in batch mode) for directory naming.
+\item Saves the project file to the release directory.
+\item Extracts and writes TSS upstream sequences (\code{upstream_locis.fasta})
+for transcription factor binding site motif scanning.
+\item Extracts and writes protein sequences (\code{proteins.fasta}) for
+DIAMOND BLASTP homology annotation.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Process a single GenBank file
+make_genbank_proj_file(
+src = "GCF_000123456.1.gbff",
+release_dir = "release",
+workdir = "workspace/make_genbank_proj",
+batch_process = FALSE
+)
+# Process in batch mode (creates subdirectory by accession ID)
+make_genbank_proj_file(
+src = "GCF_000123456.1.gbff",
+release_dir = "release",
+workdir = "workspace/make_genbank_proj",
+batch_process = TRUE
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_genbank_proj}} which calls this function,
+\code{\link{model_accession_id}} for accession ID extraction.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_genbank_proj_file at make_genbank_proj_file.R:line 31
+SMRUCC/R#.declare_function.make_genbank_proj_file at make_genbank_proj_file.R:line 65
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

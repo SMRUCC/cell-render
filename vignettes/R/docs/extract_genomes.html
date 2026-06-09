@@ -25,7 +25,7 @@
         <p>This function processes multiple GenBank files located in a source directory.
 It extracts protein sequences and gene feature tables from each file and
 exports them to a specified output directory. Specifically, it generates
-FASTA files (`.faa`) for protein sequences and CSV files (`.csv`) for
+FASTA files (\code{.faa}) for protein sequences and CSV files (\code{.csv}) for
 gene annotation tables.</p>
 
         <h3>Usage</h3>
@@ -41,28 +41,27 @@ gene annotation tables.</p>
 <dt>src</dt>
 <dd><p><p>A character string specifying the directory path containing the
 GenBank source files. The function scans for files with extensions
-`.gb`, `.gbk`, or `.gbff`.</p></p></dd>
+\code{.gb}, \code{.gbk}, or \code{.gbff}.</p></p></dd>
 
 
 <dt>outputdir</dt>
 <dd><p><p>A character string specifying the directory path where the
 extracted data files will be saved. If the directory does not exist, it
 should be created beforehand (or the function may fail depending on
-implementation).</p></p></dd>
+the file system permissions).</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The function iterates through all matching GenBank files in the source
-directory. For each file:
-\itemize{
-\item Reads the GenBank record.
-\item Extracts the accession ID to name the output files.
-\item Exports protein sequences in FASTA format, using the gene locus tag
-as the sequence header.
-\item Exports gene features (ORFs) as a tabular CSV file.
+        <p>For each GenBank file found in \code{src}:
+\enumerate{
+\item Reads and parses the GenBank file.
+\item Extracts the GenBank accession ID.
+\item Exports protein sequences with locus-tag-only FASTA headers
+(using the template \code{"<locus_tag>"}).
+\item Exports the gene feature table as a CSV file with ORF annotations.
 }</p>
 
         <h3 style="display: block">Authors</h3>
@@ -71,18 +70,23 @@ as the sequence header.
 
         <h3>Value</h3>
 
-        <p>Invisible `NULL`. This function is called for its side effects
-(writing files to disk) and does not return a value to the console.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files for each GenBank file found:
+\describe{
+\item{\code{<accession_id>.faa}}{Protein FASTA file with locus-tag-only
+headers.}
+\item{\code{<accession_id>.csv}}{Gene feature annotation table in CSV
+format.}
+}</p>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r">#\dontrun{
 
-# Define source and output directories
-source_path <- "path/to/genbank_files"
-output_path <- "path/to/output_data"
-# Run the extraction
-extract_genomes(src = source_path, outputdir = output_path)
+extract_genomes(
+src = "data/genbank_assemblies/",
+outputdir = "results/extracted_proteins/"
+)
 
 #}</code></pre>
 

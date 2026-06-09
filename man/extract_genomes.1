@@ -10,55 +10,61 @@ extract_genomes \- extract_genomes(src, outputdir)
 This function processes multiple GenBank files located in a source directory.
 It extracts protein sequences and gene feature tables from each file and
 exports them to a specified output directory. Specifically, it generates
-FASTA files (`.faa`) for protein sequences and CSV files (`.csv`) for
+FASTA files (\code{.faa}) for protein sequences and CSV files (\code{.csv}) for
 gene annotation tables.
 .PP
 .SH OPTIONS
 .PP
 \fBsrc\fB \fR\- . A character string specifying the directory path containing the
 GenBank source files. The function scans for files with extensions
-`.gb`, `.gbk`, or `.gbff`.
+\code{.gb}, \code{.gbk}, or \code{.gbff}.
 .PP
 .PP
 \fBoutputdir\fB \fR\- . A character string specifying the directory path where the
 extracted data files will be saved. If the directory does not exist, it
 should be created beforehand (or the function may fail depending on
-implementation).
+the file system permissions).
 .PP
 .SH VALUE
 .PP
-Invisible `NULL`. This function is called for its side effects
-(writing files to disk) and does not return a value to the console.
+\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files for each GenBank file found:
+\describe{
+\item{\code{<accession_id>.faa}}{Protein FASTA file with locus-tag-only
+headers.}
+\item{\code{<accession_id>.csv}}{Gene feature annotation table in CSV
+format.}
+}
 .PP
 .SH DETAILS
 .PP
-The function iterates through all matching GenBank files in the source
-directory. For each file:
-\itemize{
-\item Reads the GenBank record.
-\item Extracts the accession ID to name the output files.
-\item Exports protein sequences in FASTA format, using the gene locus tag
-as the sequence header.
-\item Exports gene features (ORFs) as a tabular CSV file.
+For each GenBank file found in \code{src}:
+\enumerate{
+\item Reads and parses the GenBank file.
+\item Extracts the GenBank accession ID.
+\item Exports protein sequences with locus-tag-only FASTA headers
+(using the template \code{"<locus_tag>"}).
+\item Exports the gene feature table as a CSV file with ORF annotations.
 }
 .PP
 .SH EXAMPLES
 .PP
 #\dontrun{
 
-# Define source and output directories
-source_path <- "path/to/genbank_files"
-output_path <- "path/to/output_data"
-# Run the extraction
-extract_genomes(src = source_path, outputdir = output_path)
+extract_genomes(
+src = "data/genbank_assemblies/",
+outputdir = "results/extracted_proteins/"
+)
 
 #}
 .PP
 .SH SEE ALSO
-[read.genbank], [GenBank::accession_id], [write.fasta]
+\code{\link{extract_gbff}} for extracting upstream sequences
+from a single GenBank file, \code{\link{make_genbank_proj}} for the
+full project initialization workflow.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.extract_genomes at extract_genomes.R:line 46
+SMRUCC/R#.declare_function.extract_genomes at extract_genomes.R:line 50
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

@@ -1,20 +1,78 @@
-﻿.TH GENOME_SCATTER_VIZ 1 2026-6月 "" "genome_scatter_viz"
+﻿.TH GENOME_SCATTER_VIZ 1 2026-6月 "" "Generate Scatter Plot Visualization of Genome Embedding Results"
 .SH NAME
 genome_scatter_viz \- genome_scatter_viz(data,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)
 .SH SYNOPSIS
 \fIgenome_scatter_viz(data,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)\fR
+.SH DESCRIPTION
+.PP
+Creates a publication-quality scatter plot from genome embedding data,
+coloring points by taxonomic phylum and sizing points inversely proportional
+to the number of genomes in each phylum group. The plot is saved in both
+PNG and SVG formats.
+This function uses native R with \pkg{ggplot2} and \pkg{dplyr} for
+data processing and visualization.
+.PP
 .SH OPTIONS
 .PP
-\fBdata\fB \fR\- . 
+\fBdata\fB \fR\- . A data frame containing the embedding coordinates with at least
+the following columns:
+\describe{
+\item{dimension_1}{Numeric. The first embedding dimension (x-axis).}
+\item{dimension_2}{Numeric. The second embedding dimension (y-axis).}
+\item{phylum}{Character. The taxonomic phylum assignment for each genome.}
+}
 .PP
 .PP
-\fBoutputdir\fB \fR\- './'. 
+\fBoutputdir\fB \fR\- './'. Character. The directory path where the output plot files
+will be saved. Defaults to \code{"./"}.
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{outputdir}:
+\itemize{
+\item \code{scatter_plot.png} — High-resolution PNG scatter plot
+(600 DPI, 12 x 8 inches).
+\item \code{scatter_plot.svg} — SVG vector scatter plot
+(600 DPI, 12 x 8 inches).
+}
+.PP
+.SH DETAILS
+.PP
+The visualization applies the following design choices:
+\itemize{
+\item Points are colored by \code{phylum} using the default ggplot2
+discrete color palette.
+\item Point size is mapped to the subset size of each phylum group,
+with a \strong{reversed} scale so that larger groups (more genomes)
+are rendered with \emph{smaller} points, reducing visual clutter
+from dominant phyla.
+\item A global alpha of 0.3 is applied for transparency to handle
+overlapping points.
+\item The minimal theme is used for a clean, publication-ready appearance.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Assuming 'embedding_data' has columns: dimension_1, dimension_2, phylum
+genome_scatter_viz(
+data = embedding_data,
+outputdir = "results/figures"
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link[umap]{analysis}} which generates the embedding data
+consumed by this function, \code{\link{singlecells_viz}} for an
+alternative Seurat-based visualization approach.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.genome_scatter_viz at scatter_viz.R:line 3
+SMRUCC/R#.declare_function.genome_scatter_viz at scatter_viz.R:line 58
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

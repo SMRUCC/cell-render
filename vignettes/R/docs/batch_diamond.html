@@ -63,10 +63,13 @@ to DIAMOND. Defaults to 32.</p></p></dd>
         <h3 style="display: block;">Details</h3>
 
         <p>This function temporarily changes the working directory to \code{result_dir}
-to generate the DIAMOND database (\code{ec_number.dmnd}) using an internal
-package reference file (\code{ec_numbers.fasta}). It then iterates through
-all \code{.faa} files in \code{source_dir} and executes a BLASTP search.
-The original working directory is restored upon completion.</p>
+for the DIAMOND database creation and search operations, then restores the
+original working directory upon completion.
+The EC number reference database (\code{ec_numbers.fasta}) is sourced from
+the package's built-in data directory. A DIAMOND database is created
+on-the-fly before running the BLASTP searches.
+For each \code{.faa} file found in \code{source_dir}, a corresponding
+\code{.m8} alignment result file is generated in \code{result_dir}.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -74,12 +77,23 @@ The original working directory is restored upon completion.</p>
 
         <h3>Value</h3>
 
-        <p>Returns \code{invisible(NULL)}. Output \code{.m8} files and the
-DIAMOND database file are written to \code{result_dir}.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of creating DIAMOND database files and BLASTP alignment output files
+(\code{.m8}) in the \code{result_dir}.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Run batch DIAMOND BLASTP on all .faa files
+batch_diamond(
+source_dir = "data/proteins",
+result_dir = "results/diamond",
+diamond = "/usr/bin/diamond",
+n_threads = 16
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

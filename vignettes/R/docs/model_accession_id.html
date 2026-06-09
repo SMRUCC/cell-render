@@ -44,12 +44,12 @@ from a multi-replicon GenBank file).</p></p></dd>
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The function iterates through the provided `replicons`. As soon as it encounters
+        <p>The function iterates through the provided \code{replicons}. As soon as it encounters
 a replicon that is not flagged as a plasmid (typically representing the main
 chromosome), it immediately returns its accession ID.
-If the GenBank file contains <em>only</em> plasmid data, the function falls back to
+If the GenBank file contains \emph{only} plasmid data, the function falls back to
 returning the accession ID of the last plasmid processed.
-If the input list is empty, it returns `NULL`.</p>
+If the input list is empty, it returns \code{NULL}.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -57,7 +57,7 @@ If the input list is empty, it returns `NULL`.</p>
 
         <h3>Value</h3>
 
-        <p>A character string representing the accession ID, or `NULL` if no
+        <p>A character string representing the accession ID, or \code{NULL} if no
 replicons are provided.</p>
 
         <h3 style="display: block;">Examples</h3>

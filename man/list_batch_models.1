@@ -1,11 +1,44 @@
-﻿.TH LIST_BATCH_MODELS 1 2026-6月 "" "list_batch_models"
+﻿.TH LIST_BATCH_MODELS 1 2026-6月 "internal" "List All Batch Model Directories"
 .SH NAME
 list_batch_models \- list_batch_models()
 .SH SYNOPSIS
 \fIlist_batch_models()\fR
+.SH DESCRIPTION
+.PP
+Retrieves the list of model subdirectories from the release directory
+configured in the current workflow session. Each subdirectory represents
+a separate virtual cell model that was created during batch processing.
+.PP
+.SH VALUE
+.PP
+A character vector of directory paths, one per model. Returns an
+empty vector if no model directories exist.
+.PP
+.SH DETAILS
+.PP
+This function reads the \code{release} configuration parameter to
+determine the root directory, then lists all immediate subdirectories.
+Each subdirectory is expected to contain a \code{builder.gcproj} file
+produced by \code{\link{make_genbank_proj_file}}.
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# List all models in the release directory
+models <- list_batch_models()
+print(models)
+# [1] "/path/to/release/GCF_000005845" "/path/to/release/GCF_000006945"
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_genbank_proj}} for the workflow step that
+creates the model directories, \code{\link{build_project}} and
+\code{\link{make_terms}} which iterate over the returned directories.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.list_batch_models at list_batch_models.R:line 1
+SMRUCC/R#.declare_function.list_batch_models at list_batch_models.R:line 30
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

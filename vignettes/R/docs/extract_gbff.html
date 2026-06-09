@@ -46,37 +46,38 @@ files to the specified working directory.</p>
         <table>
             
 <dt>src</dt>
-<dd><p><p>A character string specifying the file path to the input
-GenBank (`.gb`, `.gbff`, or `.gbk`) file.</p></p></dd>
+<dd><p><p>A character string specifying the file path to the GenBank
+source file.</p></p></dd>
 
 
 <dt>workdir</dt>
-<dd><p><p>A character string specifying the directory path where
-all output files will be saved. Defaults to `"./"` (current working directory).</p></p></dd>
+<dd><p><p>A character string specifying the working directory where
+all extracted files will be saved. Defaults to \code{"./"}.</p></p></dd>
 
 
 <dt>upstream.size</dt>
-<dd><p><p>An integer specifying the length of the upstream region
-(in base pairs) to extract relative to the gene TSS. Defaults to `150`.</p></p></dd>
-
-
-<dt>tag.genbank.accid</dt>
-<dd><p><p>A logical value. If `TRUE`, the GenBank accession
-ID is appended as the source tag in the FASTA headers of the extracted
-upstream sequences. If `FALSE` (default), the original sequence headers
-are used as the source tag.</p></p></dd>
+<dd><p><p>An integer specifying the number of base pairs
+upstream of the TSS to extract. Defaults to 300.</p></p></dd>
 
 
 <dt>verbose</dt>
-<dd><p><p>A logical value. If `TRUE` (default), progress messages
-and the titles of the extracted upstream loci are printed to the console.</p></p></dd>
+<dd><p><p>Logical. If \code{TRUE}, prints additional debug
+information including the upstream locus titles. Defaults to \code{FALSE}.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The extraction pipeline:
+\enumerate{
+\item Reads the GenBank file and extracts the full genomic sequence.
+\item Parses gene features and their coordinates.
+\item Calculates the TSS position for each gene based on strand orientation.
+\item Extracts the upstream region of the specified size from each TSS.
+\item Tags each upstream sequence with its corresponding gene locus tag.
+\item Exports all data to the working directory.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -84,12 +85,29 @@ and the titles of the extracted upstream loci are printed to the console.</p></p
 
         <h3>Value</h3>
 
-        <p>Returns `invisible(NULL)`. This function is called primarily for
-its side effects: generating and saving output files to the `workdir`.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{workdir}:
+\describe{
+\item{\code{genes.csv}}{Gene feature annotation table extracted from
+the GenBank file.}
+\item{\code{context.txt}}{PTT-format genomic context tabular file.}
+\item{\code{source.fasta}}{Raw genomic nucleotide FASTA sequences.}
+\item{\code{upstream_locis.fasta}}{TSS upstream region sequences
+with gene locus tag headers.}
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+extract_gbff(
+src = "data/sequence.gbff",
+workdir = "results/extracted",
+upstream_size = 500,
+verbose = TRUE
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

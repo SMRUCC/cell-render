@@ -1,23 +1,73 @@
-﻿.TH MAGS_MODEL 1 2026-6月 "" "Compile the MAGs as virtual cell model"
+﻿.TH MAGS_MODEL 1 2026-6月 "" "Compile a Metagenome-Assembled Genome (MAG) as a Virtual Cell Model"
 .SH NAME
 MAGs_model \- MAGs_model(contigs, tax.str,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)
 .SH SYNOPSIS
 \fIMAGs_model(contigs, tax.str,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)\fR
+.SH DESCRIPTION
+.PP
+Processes a metagenome-assembled genome (MAG) contigs assembly by
+performing gene prediction with Prodigal, then exporting the predicted
+genes and proteins in multiple standard bioinformatics formats for
+downstream analysis and virtual cell model construction.
+.PP
 .SH OPTIONS
 .PP
-\fBcontigs\fB \fR\- . a collection of the MAGs contigs assembly
+\fBcontigs\fB \fR\- . A character string or object representing the MAG contigs
+assembly data. This is typically a FASTA file path or a parsed contigs
+object that can be processed by \code{bifrost::prodigal()}.
 .PP
 .PP
 \fBtax.str\fB \fR\- . 
 .PP
 .PP
-\fBoutputdir\fB \fR\- './'. 
+\fBoutputdir\fB \fR\- './'. Character. The directory path where the output files
+will be saved. Defaults to \code{"./"}.
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{outputdir}:
+\describe{
+\item{\code{gene_predicts.csv}}{Gene prediction results in CSV format.}
+\item{\code{gene_predicts.gff3}}{Gene predictions in GFF3 format.}
+\item{\code{gene_predicts.fna}}{Nucleotide FASTA of predicted gene sequences.}
+\item{\code{protein_predicts.faa}}{Protein FASTA of predicted protein sequences.}
+}
+.PP
+.SH DETAILS
+.PP
+The processing pipeline:
+\enumerate{
+\item Runs \code{bifrost::prodigal()} on the contigs to predict
+open reading frames (ORFs) with a minimum ORF length of 90 bp.
+\item If \code{tax_str} is a character string, parses it into a
+structured taxonomy object.
+\item Exports the gene prediction results in four standard formats:
+CSV (tabular summary), GFF3 (standard annotation format), FASTA
+nucleotide (gene sequences), and FASTA protein (translated sequences).
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+MAGs_model(
+contigs = "data/MAGs/bin_001.fasta",
+tax_str = "d__Bacteria;p__Firmicutes;c__Bacilli;o__Bacillales;f__Bacillaceae;g__Bacillus;s__Bacillus subtilis",
+outputdir = "results/MAGs/bin_001"
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_genbank_proj}} for processing complete GenBank
+assemblies, \code{\link{build_project}} for compiling annotations into
+virtual cell models.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.MAGs_model at MAGs_model.R:line 10
+SMRUCC/R#.declare_function.MAGs_model at MAGs_model.R:line 57
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

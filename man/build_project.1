@@ -7,12 +7,12 @@ build_project \- build_project(app, context)
 .PP
 Acts as the main entry point for building virtual cell models from
 GenBank annotation project files. It automatically detects the processing
-mode based on the "batch_process" configuration parameter:
+mode based on the \code{batch_process} configuration parameter:
 \itemize{
 \item \strong{Batch Mode} (\code{batch_process = TRUE}): Iterates through
-all models returned by \code{list_batch_models()}, reading the
+all models returned by \code{\link{list_batch_models}}, reading the
 \code{builder.gcproj} file in each directory and saving the compiled
-output as \code{model.xml}.
+output as \code{model.xml} (or a taxonomy-name-based XML file).
 \item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
 single project file specified in the configuration, allowing a specific
 virtual cell name (\code{vcell_name}) to be assigned.
@@ -20,20 +20,46 @@ virtual cell name (\code{vcell_name}) to be assigned.
 .PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . The application object or environment.
+\fBapp\fB \fR\- . The application object or environment, used for resolving
+workflow configuration via \code{get_config()}.
 .PP
 .PP
-\fBcontext\fB \fR\- . The execution context for the current application run.
+\fBcontext\fB \fR\- . The execution context object provided by the workflow engine.
 .PP
 .SH VALUE
 .PP
-Returns \code{invisible(NULL)}. This function is called primarily
-for its side effects: generating virtual cell model XML files and logging
-progress messages to the console.
+\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item In batch mode: compiles each model into a GCMarkup XML file
+within its respective release subdirectory.
+\item In single mode: compiles the model into the XML file specified
+by the \code{model_file} configuration parameter.
+}
 .PP
+.SH DETAILS
+.PP
+The function first loads the local data registry (required for constructing
+the virtual cell component network), then dispatches to
+\code{\link{compile_model}} for the actual compilation step.
+In batch mode, the output XML filename is derived from the organism's
+taxonomy name (sanitized via \code{normalizeFileName}) when available,
+falling back to the model directory basename otherwise.
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# This function is typically invoked by the workflow engine:
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{compile_model}} for the core compilation logic,
+\code{\link{list_batch_models}} for batch model directory listing.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.build_project at build_project.R:line 26
+SMRUCC/R#.declare_function.build_project at build_project.R:line 49
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

@@ -1,4 +1,4 @@
-﻿.TH DIAMOND_EMBEDDING 1 2026-6月 "" "diamond_embedding"
+﻿.TH DIAMOND_EMBEDDING 1 2026-6月 "" "Generate Metabolic Embedding from DIAMOND BLASTP Results"
 .SH NAME
 diamond_embedding \- diamond_embedding(diamond.result,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
@@ -7,19 +7,75 @@ diamond_embedding \- diamond_embedding(diamond.result,
 \fIdiamond_embedding(diamond.result,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
     <i>union.contigs</i> = <span style='color: green;'>250</span>)\fR
+.SH DESCRIPTION
+.PP
+Processes DIAMOND BLASTP alignment output to produce a metabolic
+capability embedding for a set of genomes. The pipeline extracts
+EC number annotation terms from BLASTP hits, constructs genome-level
+metabolic feature vectors, applies TF-IDF vectorization with
+hierarchical aggregation, and exports the resulting embedding matrix.
+.PP
 .SH OPTIONS
 .PP
 \fBdiamond.result\fB \fR\- . 
 .PP
 .PP
-\fBworkdir\fB \fR\- './'. 
+\fBworkdir\fB \fR\- './'. Character. The working directory where intermediate and
+final output files will be written. Defaults to \code{"./"}.
 .PP
 .PP
 \fBunion.contigs\fB \fR\- 250. 
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{workdir}:
+\itemize{
+\item \code{ec_terms.csv} — Extracted EC number annotation terms per genome.
+\item \code{genomes_metabolic.jsonl} — Genome metabolic feature vectors
+in JSON Lines format.
+\item \code{metabolic_embedding.csv} — The final TF-IDF embedding matrix.
+}
+.PP
+.SH DETAILS
+.PP
+The embedding generation pipeline:
+\enumerate{
+\item \strong{Term extraction}: Reads the DIAMOND result stream and
+extracts EC number-based metabolic annotation terms via
+\code{m8_metabolic_terms()}.
+\item \strong{Feature vector construction}: Converts the term stream
+into genome-level metabolic feature vectors using
+\code{make_vectors()}.
+\item \strong{JSONL export}: Writes the feature vectors in JSON Lines
+format for interoperability.
+\item \strong{TF-IDF vectorization}: Applies TF-IDF transformation
+with hierarchical aggregation, filtering EC numbers that appear
+in fewer than \code{union_contigs} genomes.
+\item \strong{Embedding export}: Writes the final embedding matrix
+as a CSV file.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+diamond_embedding(
+diamond_result = "results/blastp/ec_number.m8",
+workdir = "results/embedding",
+union_contigs = 100
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{pangenome_analysis}} for the upstream pan-genome
+analysis that produces the DIAMOND results,
+\code{\link[umap]{analysis}} for UMAP dimensionality reduction on
+the embedding.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.diamond_embedding at embedding.R:line 9
+SMRUCC/R#.declare_function.diamond_embedding at embedding.R:line 69
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>list_batch_models</title>
+    <title>List All Batch Model Directories</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,13 @@
             </tr>
         </table>
 
-        <h2>list_batch_models</h2>
+        <h2>List All Batch Model Directories</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Retrieves the list of model subdirectories from the release directory
+configured in the current workflow session. Each subdirectory represents
+a separate virtual cell model that was created during batch processing.</p>
 
         <h3>Usage</h3>
 
@@ -37,9 +39,12 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>This function reads the \code{release} configuration parameter to
+determine the root directory, then lists all immediate subdirectories.
+Each subdirectory is expected to contain a \code{builder.gcproj} file
+produced by \code{\link{make<em>genbank</em>proj_file}}.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -47,11 +52,19 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>A character vector of directory paths, one per model. Returns an
+empty vector if no model directories exist.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# List all models in the release directory
+models <- list_batch_models()
+print(models)
+# [1] "/path/to/release/GCF_000005845" "/path/to/release/GCF_000006945"
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

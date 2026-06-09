@@ -1,11 +1,24 @@
-﻿.TH .ONLOAD 1 2026-6月 "" ".onLoad"
+﻿.TH .ONLOAD 1 2026-6月 "internal" "Package Initialization Hook"
 .SH NAME
 .onLoad \- .onLoad()
 .SH SYNOPSIS
 \fI.onLoad()\fR
+.SH DESCRIPTION
+.PP
+Executed automatically when the CellRender package is loaded via
+\code{library(CellRender)}. It ensures that the core dependency packages
+\pkg{GCModeller} and \pkg{WorkflowRender} are available in the current
+R session, as they provide the foundational workflow engine and rendering
+infrastructure required by all virtual cell modelling pipelines.
+.PP
+.SH VALUE
+.PP
+This function returns \code{invisible(NULL)}. It is called
+exclusively for its side effect of loading dependency packages.
+.PP
 .SH FILES
 .PP
-SMRUCC/R#.declare_function..onLoad at zzz.R:line 4
+SMRUCC/R#.declare_function..onLoad at zzz.R:line 21
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

@@ -1,15 +1,63 @@
-﻿.TH ANNOTATION_WORKFLOW 1 2026-6月 "" "Register the virtual cell network modelling workflows"
+﻿.TH ANNOTATION_WORKFLOW 1 2026-6月 "" "Register the Virtual Cell Network Modelling Workflows"
 .SH NAME
 annotation_workflow \- annotation_workflow()
 .SH SYNOPSIS
 \fIannotation_workflow()\fR
+.SH DESCRIPTION
+.PP
+Defines and registers the sequential annotation and modelling workflow
+steps that constitute the virtual cell graph construction pipeline.
+Each step is hooked into the \pkg{WorkflowRender} engine and will be
+executed in the order they are registered.
+.PP
 .SH VALUE
 .PP
-this function has no return value
+\code{invisible(NULL)}. This function is called for its side effect
+of registering workflow steps with the \pkg{WorkflowRender} engine.
 .PP
+.SH DETAILS
+.PP
+The complete workflow sequence is:
+\enumerate{
+\item \strong{make_genbank_proj} \cr
+Extract protein sequences, TSS upstream regions, genomic context data,
+and taxonomy information from the GenBank source file(s).
+\item \strong{tfbs_motif_scanning} \cr
+Run Transcription Factor Binding Site (TFBS) motif scanning on the
+TSS upstream region sequences extracted in step 1.
+\item \strong{make_diamond_hits} \cr
+Run DIAMOND BLASTP homology search for the protein sequences against
+EC number, subcellular location, and transcription factor reference
+databases.
+\item \strong{make_terms} \cr
+Score the BLASTP results and assign protein ontology terms (EC numbers,
+subcellular localizations, transcription factor annotations).
+\item \strong{make_TRN} \cr
+Construct the Transcription Regulation Network (TRN) by combining the
+TFBS motif scan results with the transcription factor BLASTP hits.
+\item \strong{build_project} \cr
+Compile the TRN and metabolic network annotations into a final virtual
+cell model and export as GCMarkup XML.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Register all workflow steps
+annotation_workflow()
+# Then run the workflow
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_genbank_proj}}, \code{\link{tfbs_motif_scanning}},
+\code{\link{make_diamond_hits}}, \code{\link{make_terms}},
+\code{\link{make_TRN}}, \code{\link{build_project}}
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.annotation_workflow at apps.R:line 5
+SMRUCC/R#.declare_function.annotation_workflow at apps.R:line 50
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

@@ -1,20 +1,92 @@
-﻿.TH SINGLECELLS_VIZ 1 2026-6月 "" "singlecells_viz"
+﻿.TH SINGLECELLS_VIZ 1 2026-6月 "" "Seurat-Based Single-Cell Style Visualization of Genome Metabolic Data"
 .SH NAME
 singlecells_viz \- singlecells_viz(rawdata,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)
 .SH SYNOPSIS
 \fIsinglecells_viz(rawdata,
     <i>outputdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)\fR
+.SH DESCRIPTION
+.PP
+Creates a comprehensive set of Seurat-style visualizations for genome
+metabolic embedding data, treating genomes as "cells" and EC number
+metabolic capabilities as "genes". This function leverages the \pkg{Seurat}
+toolkit to produce dimensionality reduction plots, feature plots, violin
+plots, and heatmaps.
+This function is designed to be called via \code{native_r()} from the
+GCModeller environment, which provides automatic package installation
+for missing dependencies.
+.PP
 .SH OPTIONS
 .PP
-\fBrawdata\fB \fR\- . 
+\fBrawdata\fB \fR\- . A data frame containing the metabolic embedding data.
+Each row represents a genome, and columns represent EC number
+metabolic features. Must contain a \code{taxonomy} column for
+grouping, and optionally \code{Family}, \code{Phylum}, \code{Class},
+\code{Order} columns for metadata.
 .PP
 .PP
-\fBoutputdir\fB \fR\- './'. 
+\fBoutputdir\fB \fR\- './'. Character. The directory path where all output plot
+files will be saved. Defaults to \code{"./"}.
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effects
+of writing the following PNG files to \code{outputdir}:
+\describe{
+\item{\code{SC_01_UMAP.png}}{UMAP dimensionality reduction plot
+colored by taxonomic group.}
+\item{\code{SC_02_FeaturePlot.png}}{Feature plots showing the
+expression distribution of top variable EC numbers on the UMAP.}
+\item{\code{SC_03_DimPlot_split.png}}{Split UMAP panels, one per
+taxonomic group.}
+\item{\code{SC_04_ViolinPlot.png}}{Violin plots of key EC number
+expression across Family-level groups.}
+\item{\code{SC_05_Heatmap.png}}{Heatmap of highly variable EC
+numbers across genomes, grouped by Family.}
+}
+.PP
+.SH DETAILS
+.PP
+The visualization pipeline:
+\enumerate{
+\item \strong{Data preprocessing}: Extracts metadata columns (taxonomy,
+Family, Phylum, etc.) and creates a Seurat object from the EC number
+feature matrix.
+\item \strong{Normalization}: Applies \code{NormalizeData} with
+\code{LogNormalize} to the EC count data.
+\item \strong{Variable feature selection}: Identifies the top 2000
+highly variable EC numbers using variance-stabilizing transformation.
+\item \strong{Dimensionality reduction}: Runs PCA followed by UMAP
+on the variable features.
+\item \strong{Visualization}: Generates five types of plots:
+\itemize{
+\item UMAP colored by taxonomy group
+\item Feature plots for top variable ECs
+\item Split UMAP panels per group
+\item Violin plots of key ECs by Family
+\item Heatmap of variable ECs by Family
+}
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Typically called via native_r() from singlecells_analysis:
+singlecells_viz(
+rawdata = embedding_df,
+outputdir = "results/singlecells/group_phylum"
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{singlecells_analysis}} which calls this function
+for each taxonomic rank, \code{\link{genome_scatter_viz}} for a
+simpler scatter plot alternative.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.singlecells_viz at singlecells_viz.R:line 5
+SMRUCC/R#.declare_function.singlecells_viz at singlecells_viz.R:line 76
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

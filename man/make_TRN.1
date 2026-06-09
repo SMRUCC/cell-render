@@ -1,18 +1,63 @@
-﻿.TH MAKE_TRN 1 2026-6月 "" "make_TRN"
+﻿.TH MAKE_TRN 1 2026-6月 "" "Build the Transcription Regulation Network (TRN)"
 .SH NAME
 make_TRN \- make_TRN(app, context)
 .SH SYNOPSIS
 \fImake_TRN(app, context)\fR
+.SH DESCRIPTION
+.PP
+Constructs the transcription regulation network within the virtual cell
+model by integrating the TFBS motif scanning results into the project
+session. This step is conditionally executed and will only run if the
+\code{TRN_network} module is enabled in the virtual cell build configuration.
+The TRN is built by combining two data sources:
+\enumerate{
+\item \strong{TFBS motif sites} — obtained from the preceding
+\code{\link{tfbs_motif_scanning}} workflow step, which identifies
+potential transcription factor binding sites in gene upstream regions.
+\item \strong{Transcription factor annotations} — obtained from the
+\code{\link{make_terms}} workflow step, which identifies which proteins
+are transcription factors via DIAMOND BLASTP.
+}
+.PP
 .SH OPTIONS
 .PP
-\fBapp\fB \fR\- . 
+\fBapp\fB \fR\- . The application object passed by the workflow engine.
+Used for resolving workflow file paths via \code{workfile()}.
 .PP
 .PP
-\fBcontext\fB \fR\- . 
+\fBcontext\fB \fR\- . The execution context object provided by the workflow engine.
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item Reads the TFBS motif scan results from the workspace.
+\item Injects the TFBS data into the project session via \code{set_tfbs}.
+\item Saves the updated project file to disk.
+}
+.PP
+.SH DETAILS
+.PP
+This function checks whether the \code{TRN_network} build module is enabled
+via \code{\link{check_build_module}}. If not enabled, the function exits
+immediately without performing any operations.
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# This function is typically invoked by the workflow engine:
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{tfbs_motif_scanning}} for the preceding TFBS scanning step,
+\code{\link{make_terms}} for the transcription factor annotation step,
+\code{\link{check_build_module}} for module enablement checking.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_TRN at make_TRN.R:line 5
+SMRUCC/R#.declare_function.make_TRN at make_TRN.R:line 49
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

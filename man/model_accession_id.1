@@ -15,17 +15,17 @@ from a multi-replicon GenBank file).
 .PP
 .SH VALUE
 .PP
-A character string representing the accession ID, or `NULL` if no
+A character string representing the accession ID, or \code{NULL} if no
 replicons are provided.
 .PP
 .SH DETAILS
 .PP
-The function iterates through the provided `replicons`. As soon as it encounters
+The function iterates through the provided \code{replicons}. As soon as it encounters
 a replicon that is not flagged as a plasmid (typically representing the main
 chromosome), it immediately returns its accession ID.
-If the GenBank file contains *only* plasmid data, the function falls back to
+If the GenBank file contains \emph{only} plasmid data, the function falls back to
 returning the accession ID of the last plasmid processed.
-If the input list is empty, it returns `NULL`.
+If the input list is empty, it returns \code{NULL}.
 .PP
 .SH EXAMPLES
 .PP
@@ -39,10 +39,12 @@ print(model_id)
 .PP
 .SH SEE ALSO
 \code{\link[GenBank]{accession_id}} for extracting accession IDs,
-and \code{\link{is.plasmid}} for checking replicon type.
+and \code{\link{is.plasmid}} for checking replicon type,
+\code{\link{make_genbank_proj_file}} which uses this function to
+determine model directory names in batch mode.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.model_accession_id at model_access_id.R:line 31
+SMRUCC/R#.declare_function.model_accession_id at model_access_id.R:line 33
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

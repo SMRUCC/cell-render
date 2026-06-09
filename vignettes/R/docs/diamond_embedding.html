@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>diamond_embedding</title>
+    <title>Generate Metabolic Embedding from DIAMOND BLASTP Results</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,15 @@
             </tr>
         </table>
 
-        <h2>diamond_embedding</h2>
+        <h2>Generate Metabolic Embedding from DIAMOND BLASTP Results</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Processes DIAMOND BLASTP alignment output to produce a metabolic
+capability embedding for a set of genomes. The pipeline extracts
+EC number annotation terms from BLASTP hits, constructs genome-level
+metabolic feature vectors, applies TF-IDF vectorization with
+hierarchical aggregation, and exports the resulting embedding matrix.</p>
 
         <h3>Usage</h3>
 
@@ -36,12 +40,44 @@
 
         <table>
             
+<dt>diamond.result</dt>
+<dd><p><p>Character. The file path to the DIAMOND BLASTP
+result file (in \code{.m8} tabular format) or a directory containing
+multiple \code{.m8} files.</p></p></dd>
+
+
+<dt>workdir</dt>
+<dd><p><p>Character. The working directory where intermediate and
+final output files will be written. Defaults to \code{"./"}.</p></p></dd>
+
+
+<dt>union.contigs</dt>
+<dd><p><p>Integer. The minimum number of genomes in which an
+EC number must appear to be included in the final embedding. This
+parameter controls the feature selection threshold for the TF-IDF
+vectorizer. Defaults to 250.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The embedding generation pipeline:
+\enumerate{
+\item \strong{Term extraction}: Reads the DIAMOND result stream and
+extracts EC number-based metabolic annotation terms via
+\code{m8<em>metabolic</em>terms()}.
+\item \strong{Feature vector construction}: Converts the term stream
+into genome-level metabolic feature vectors using
+\code{make_vectors()}.
+\item \strong{JSONL export}: Writes the feature vectors in JSON Lines
+format for interoperability.
+\item \strong{TF-IDF vectorization}: Applies TF-IDF transformation
+with hierarchical aggregation, filtering EC numbers that appear
+in fewer than \code{union_contigs} genomes.
+\item \strong{Embedding export}: Writes the final embedding matrix
+as a CSV file.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -49,11 +85,26 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{workdir}:
+\itemize{
+\item \code{ec_terms.csv} — Extracted EC number annotation terms per genome.
+\item \code{genomes_metabolic.jsonl} — Genome metabolic feature vectors
+in JSON Lines format.
+\item \code{metabolic_embedding.csv} — The final TF-IDF embedding matrix.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+diamond_embedding(
+diamond_result = "results/blastp/ec_number.m8",
+workdir = "results/embedding",
+union_contigs = 100
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

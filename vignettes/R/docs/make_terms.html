@@ -24,7 +24,7 @@
 
         <p>Executes the workflow step to parse DIAMOND BLASTP results and inject
 the extracted annotation terms into the virtual cell project session files.
-It supports two execution modes based on the "batch_process" configuration:
+It supports two execution modes based on the \code{batch_process} configuration:
 \itemize{
 \item \strong{Batch Mode}: Iterates through all available models, mapping
 each model to its specific DIAMOND output directory to parse terms.
@@ -43,18 +43,27 @@ DIAMOND results in a shared workspace directory.
         <table>
             
 <dt>app</dt>
-<dd><p><p>The application object or environment.</p></p></dd>
+<dd><p><p>The application object or environment, used for resolving
+workflow configuration via \code{get_config()}.</p></p></dd>
 
 
 <dt>context</dt>
-<dd><p><p>The execution context for the current application run.</p></p></dd>
+<dd><p><p>The execution context for the current application run,
+provided by the \pkg{WorkflowRender} engine.</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The parsed annotation terms serve three distinct cellular network
+construction purposes:
+\itemize{
+\item \code{ec_number} terms feed into the \strong{metabolic network}.
+\item \code{subcellular_location} terms feed into the \strong{transmembrane network}.
+\item \code{transcript_factor} terms feed into the \strong{gene expression
+transcription regulation network}.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -62,12 +71,24 @@ DIAMOND results in a shared workspace directory.
 
         <h3>Value</h3>
 
-        <p>Returns \code{invisible(NULL)}. Called for its side effects of
-updating project session files with parsed annotation terms.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item Parses \code{ec_number.m8}, \code{subcellular.m8}, and
+\code{transcript_factor.m8} files from the DIAMOND output directory.
+\item Writes grouped annotation terms into the project session file
+(\code{builder.gcproj}).
+\item Exports an enzyme annotation table as \code{enzymes.csv} in the
+project directory.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# This function is typically invoked by the workflow engine:
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

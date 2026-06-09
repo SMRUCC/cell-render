@@ -62,9 +62,17 @@ in single-project mode.</p></p></dd>
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The compilation process:
+\enumerate{
+\item Loads the project file from \code{proj_file}.
+\item Constructs the virtual cell model via \code{build()}, using the
+provided \code{registry} as a reference data pool and optionally
+setting the virtual cell name.
+\item Serializes the virtual cell model to GCMarkup XML format.
+\item Writes the XML content to the file specified by \code{save_model}.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -75,9 +83,19 @@ in single-project mode.</p></p></dd>
         <p>Writes an XML file to the specified \code{save_model} path and
 returns \code{invisible(NULL)}.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Compile a single project into a virtual cell model
+compile_model(
+proj_file = "release/builder.gcproj",
+save_model = "release/model.xml",
+registry = CellRender::load_registry(),
+vcell_name = "E_coli_K12"
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

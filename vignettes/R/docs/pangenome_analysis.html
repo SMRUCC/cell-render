@@ -52,31 +52,36 @@ all intermediate and final analysis results will be exported.</p></p></dd>
 
 <dt>diamond</dt>
 <dd><p><p>A character string specifying the file path to the DIAMOND
-executable. Defaults to the system PATH via \code{Sys.which("diamond")}.</p></p></dd>
+executable. Defaults to \code{Sys.which("diamond")}.</p></p></dd>
 
 
 <dt>n.threads</dt>
-<dd><p><p>An integer specifying the number of CPU threads to use for
-the DIAMOND BLASTP search. Defaults to 32.</p></p></dd>
+<dd><p><p>An integer specifying the number of CPU threads to use
+for DIAMOND BLASTP searches. Defaults to 32.</p></p></dd>
+
+
+<dt>identities.cut</dt>
+<dd><p><p>An integer specifying the percent identity cutoff
+for filtering DIAMOND BLASTP hits. Hits below this threshold are
+discarded. Defaults to 30.</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The pipeline proceeds through the following steps:
-\itemize{
-\item \strong{Extraction}: Extracts protein FASTA (.faa) and gene annotation
-(.csv) files into a \code{source} subdirectory.
-\item \strong{Annotation}: Runs DIAMOND BLASTP against an internal EC number
-reference database using \code{\link{batch_diamond}}.
-\item \strong{Orthology Assignment}: Reads BLASTP results (.m8), assigns terms
-(keeping only the top best hit with >30\% identity, filtering unknowns), and
-constructs orthology groups.
-\item \strong{Pan-genome Construction}: Builds the pangenome context and
-executes the core/accessory analysis using the defined ortholog sets.
-\item \strong{Export}: Saves an interactive HTML report, an SV result table
-(CSV), and a PAV result table (CSV) to \code{result_dir}.
+        <p>The pan-genome analysis pipeline consists of the following steps:
+\enumerate{
+\item \strong{Genome extraction}: Reads each GenBank file and exports
+protein sequences (\code{.faa}) and gene annotation tables (\code{.csv}).
+\item \strong{DIAMOND BLASTP}: Runs batch DIAMOND BLASTP against the
+EC number reference database for all extracted protein sets.
+\item \strong{Orthology assignment}: Parses BLASTP results and assigns
+orthology group links based on the identity cutoff.
+\item \strong{Pan-genome analysis}: Constructs a pan-genome context from
+the gene tables and runs the analysis using the orthology links.
+\item \strong{Report generation}: Exports the analysis results as an
+HTML report and CSV tables.
 }</p>
 
         <h3 style="display: block">Authors</h3>
@@ -85,12 +90,28 @@ executes the core/accessory analysis using the defined ortholog sets.
 
         <h3>Value</h3>
 
-        <p>Returns \code{invisible(NULL)}. All results are written directly to
-the \code{result_dir} as side effects.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item Creates an HTML analysis report (\code{analysis_report.html}).
+\item Exports a Structural Variation table (\code{SV_result.csv}).
+\item Exports a Presence/Absence Variation table (\code{PAV_result.csv}).
+\item Writes intermediate protein FASTA and gene annotation CSV files
+for each input genome.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+pangenome_analysis(
+src = "data/genbank_assemblies",
+result_dir = "results/pangenome",
+diamond = "/usr/bin/diamond",
+n_threads = 16,
+identities_cut = 30
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

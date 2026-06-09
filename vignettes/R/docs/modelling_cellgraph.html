@@ -51,54 +51,50 @@ generates the corresponding project files and reports.</p>
             
 <dt>src</dt>
 <dd><p><p>\code{character}. The file path to the NCBI GenBank assembly
-source file.</p></p></dd>
+source file. In batch mode, this can be a directory containing multiple
+GenBank files.</p></p></dd>
 
 
 <dt>outputdir</dt>
-<dd><p><p>\code{character}. The directory path for storing result
-files and temporary workspace. Defaults to \code{NULL}, which will use
-the parent directory of the \code{src} file.</p></p></dd>
+<dd><p><p>\code{character}. The directory path for storing
+result files. Defaults to a temporary directory created by
+\code{tempdir()} if not specified.</p></p></dd>
 
 
 <dt>name</dt>
-<dd><p><p>\code{character}. An optional custom name for the virtual cell
-model. If \code{NULL}, a default name may be assigned by the rendering engine.</p></p></dd>
+<dd><p><p>\code{character}. The name to assign to the virtual cell model.
+Only used in single-project mode. Defaults to \code{"virtual_cell"}.</p></p></dd>
 
 
-<dt>up.len</dt>
-<dd><p><p>\code{integer}. The length (in base pairs) of the upstream
-region from the Transcription Start Site (TSS) to be extracted.
-Defaults to 150.</p></p></dd>
+<dt>batch.process</dt>
+<dd><p><p>\code{logical}. If \code{TRUE}, treats \code{src} as
+a directory and processes all GenBank files within it. If \code{FALSE},
+processes a single GenBank file. Defaults to \code{FALSE}.</p></p></dd>
 
 
-<dt>localdb</dt>
-<dd><p><p>\code{character}. The file path to a local annotation
-database. Defaults to \code{NULL}, which falls back to the internal
-package data directory.</p></p></dd>
+<dt>debug</dt>
+<dd><p><p>\code{character vector}. Optional vector of workflow step names
+to enable for debugging. When provided, only the specified steps will be
+executed via \code{WorkflowRender::definePipeline()}. Defaults to an
+empty vector (all steps run).</p></p></dd>
 
 
-<dt>diamond</dt>
-<dd><p><p>\code{character}. The file path to the DIAMOND executable
-(used for fast sequence alignment). Defaults to the system path found
-via \code{Sys.which("diamond")}.</p></p></dd>
+<dt>enable.blastp.cache</dt>
+<dd><p><p>\code{logical}. If \code{TRUE}, enables caching
+of BLASTP search results to avoid redundant computations on re-runs.
+Defaults to \code{FALSE}.</p></p></dd>
 
 
-<dt>domain</dt>
-<dd><p><p>\code{character}. The biological domain of the input organism.
-Must be one of \code{"bacteria"}, \code{"plant"}, \code{"animal"}, or
-\code{"fungi"}. Note: If multiple values are provided, only the first
-element will be used.</p></p></dd>
+<dt>gems.library.mode</dt>
+<dd><p><p>\code{logical}. If \code{TRUE}, runs in GEMs
+library mode, which adjusts the model compilation for genome-scale
+metabolic model library generation. Defaults to \code{FALSE}.</p></p></dd>
 
 
-<dt>builds</dt>
-<dd><p><p>\code{character}. A character vector specifying which
-annotation modules to build. Supported options are \code{"TRN_network"}
-(Transcriptional Regulatory Network) and \code{"Metabolic_network"}.</p></p></dd>
-
-
-<dt>n.threads</dt>
-<dd><p><p>\code{integer}. The number of CPU threads to allocate
-for parallel processing. Defaults to 32.</p></p></dd>
+<dt>enzyme.fuzzy</dt>
+<dd><p><p>\code{logical}. If \code{TRUE}, enables fuzzy matching
+for enzyme annotation, allowing more permissive EC number assignments.
+Defaults to \code{FALSE}.</p></p></dd>
 
         </table>
 
@@ -108,7 +104,22 @@ for parallel processing. Defaults to 32.</p></p></dd>
         <p>This function acts as a high-level wrapper around the \code{WorkflowRender}
 and \code{CellRender} engines. It sets up a temporary workspace (if not
 provided), resolves dependencies (like the DIAMOND executable), and triggers
-the specific annotation modules requested by the user.</p>
+the specific annotation modules requested by the user.
+The complete workflow pipeline includes:
+\enumerate{
+\item \strong{make<em>genbank</em>proj}: Extract protein sequences, TSS upstream
+regions, genomic context, and taxonomy from GenBank source file(s).
+\item \strong{tfbs<em>motif</em>scanning}: Scan for transcription factor binding
+site motifs in upstream regions (conditional on TRN_network module).
+\item \strong{make<em>diamond</em>hits}: Run DIAMOND BLASTP against EC number,
+subcellular location, and transcription factor reference databases.
+\item \strong{make_terms}: Parse BLASTP results and assign annotation terms
+for metabolic, transmembrane, and transcription regulation networks.
+\item \strong{make_TRN}: Build the transcription regulation network from
+TFBS scan results and TF annotations (conditional on TRN_network module).
+\item \strong{build_project}: Compile all networks into a virtual cell
+model and export as GCMarkup XML.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -116,30 +127,22 @@ the specific annotation modules requested by the user.</p>
 
         <h3>Value</h3>
 
-        <p>This function returns \code{invisible(NULL)}. However, as a side
-effect, it generates a \code{release} subdirectory within the
-\code{outputdir} containing:
-\itemize{
-\item \code{builder.gcproj}: The project configuration file.
-\item \code{model.xml}: The core virtual cell graph model file.
-}
-Additionally, an HTML or PDF report summarizing the virtual cell
-modeling results is typically generated in the output directory by
-the workflow renderer.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of creating project files, annotation data, and compiled virtual cell
+model XML files in the output directory.</p>
 
         <h3 style="display: block;">Examples</h3>
 
         <pre><code id="example_r">#\dontrun{
 
-# Run the workflow for a bacterial genome
-modelling_cellgraph(
-src = "path/to/bacteria_genome.gb",
-outputdir = "path/to/output_workspace",
-name = "E_coli_Model",
-domain = "bacteria",
-builds = c("TRN_network", "Metabolic_network"),
-n_threads = 16
-)
+# Single GenBank file mode
+run(src = "data/GCF_000005845.2_ASM584v2_genomic.gbff",
+name = "E_coli_K12",
+outputdir = "results/E_coli")
+# Batch mode for multiple GenBank files
+run(src = "data/genbank_assemblies/",
+batch_process = TRUE,
+outputdir = "results/batch")
 
 #}</code></pre>
 

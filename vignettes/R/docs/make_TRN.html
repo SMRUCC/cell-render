@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>make_TRN</title>
+    <title>Build the Transcription Regulation Network (TRN)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,23 @@
             </tr>
         </table>
 
-        <h2>make_TRN</h2>
+        <h2>Build the Transcription Regulation Network (TRN)</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Constructs the transcription regulation network within the virtual cell
+model by integrating the TFBS motif scanning results into the project
+session. This step is conditionally executed and will only run if the
+\code{TRN_network} module is enabled in the virtual cell build configuration.
+The TRN is built by combining two data sources:
+\enumerate{
+\item \strong{TFBS motif sites} — obtained from the preceding
+\code{\link{tfbs<em>motif</em>scanning}} workflow step, which identifies
+potential transcription factor binding sites in gene upstream regions.
+\item \strong{Transcription factor annotations} — obtained from the
+\code{\link{make_terms}} workflow step, which identifies which proteins
+are transcription factors via DIAMOND BLASTP.
+}</p>
 
         <h3>Usage</h3>
 
@@ -34,12 +46,22 @@
 
         <table>
             
+<dt>app</dt>
+<dd><p><p>The application object passed by the workflow engine.
+Used for resolving workflow file paths via \code{workfile()}.</p></p></dd>
+
+
+<dt>context</dt>
+<dd><p><p>The execution context object provided by the workflow engine.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>This function checks whether the \code{TRN_network} build module is enabled
+via \code{\link{check<em>build</em>module}}. If not enabled, the function exits
+immediately without performing any operations.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -47,11 +69,21 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item Reads the TFBS motif scan results from the workspace.
+\item Injects the TFBS data into the project session via \code{set_tfbs}.
+\item Saves the updated project file to disk.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# This function is typically invoked by the workflow engine:
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

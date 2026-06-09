@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>analysis</title>
+    <title>UMAP Dimensionality Reduction and Taxonomy-Enriched Visualization</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,18 @@
             </tr>
         </table>
 
-        <h2>analysis</h2>
+        <h2>UMAP Dimensionality Reduction and Taxonomy-Enriched Visualization</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Performs UMAP (Uniform Manifold Approximation and Projection) dimensionality
+reduction on metabolic embedding data, appends full taxonomic annotations
+to the result, and generates a scatter plot visualization via
+\code{\link{genome<em>scatter</em>viz}}.
+The function uses Cosine distance as the similarity metric and produces
+a 3-dimensional UMAP embedding. The first seven EC number hierarchy levels
+(EC1 through EC7) are preserved as additional columns in the output for
+downstream analysis.</p>
 
         <h3>Usage</h3>
 
@@ -36,12 +43,44 @@
 
         <table>
             
+<dt>embedding.file</dt>
+<dd><p><p>Character. The file path to the metabolic embedding
+CSV file. The file must contain a \code{taxonomy} column with standard
+BIOM-format taxonomy strings, and EC number columns including at least
+\code{1.-.-.-} through \code{7.-.-.-} for the top-level EC hierarchy.</p></p></dd>
+
+
+<dt>knn</dt>
+<dd><p><p>Integer. The number of nearest neighbors to use for UMAP
+graph construction. Larger values produce more global structure,
+while smaller values preserve local structure. Defaults to 200.</p></p></dd>
+
+
+<dt>workdir</dt>
+<dd><p><p>Character. The directory path where output files will be
+saved. Defaults to \code{"./"}. If not provided, the directory of
+\code{embedding_file} is used.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The analysis pipeline:
+\enumerate{
+\item Reads the embedding CSV and parses the taxonomy strings.
+\item Removes the \code{taxonomy} column before running UMAP
+(to avoid passing non-numeric data to the algorithm).
+\item Runs UMAP with 3 dimensions, Cosine distance metric, and the
+specified \code{knn} nearest neighbors.
+\item Appends the following taxonomic columns to the result:
+\code{scientific_name}, \code{kingdom}, \code{phylum}, \code{class},
+\code{order}, \code{family}, \code{genus}, \code{species}.
+\item Preserves the top-level EC hierarchy columns
+(\code{1.-.-.-} through \code{7.-.-.-}).
+\item Exports the enriched result as CSV.
+\item Generates a scatter plot via \code{\link{genome<em>scatter</em>viz}}.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -49,11 +88,27 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{workdir}:
+\itemize{
+\item \code{umap.csv} — The UMAP embedding result with appended
+taxonomic annotations and EC hierarchy columns.
+\item \code{scatter_plot.png} — Scatter plot of the UMAP embedding
+(via \code{\link{genome<em>scatter</em>viz}}).
+\item \code{scatter_plot.svg} — SVG version of the scatter plot.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+analysis(
+embedding_file = "results/embedding/metabolic_embedding.csv",
+knn = 150,
+workdir = "results/umap"
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

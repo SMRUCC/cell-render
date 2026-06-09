@@ -1,20 +1,78 @@
-﻿.TH SINGLECELLS_ANALYSIS 1 2026-6月 "" "singlecells_analysis"
+﻿.TH SINGLECELLS_ANALYSIS 1 2026-6月 "" "Single-Cell Style Analysis of Genome Metabolic Embeddings"
 .SH NAME
 singlecells_analysis \- singlecells_analysis(embedding.file,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)
 .SH SYNOPSIS
 \fIsinglecells_analysis(embedding.file,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>)\fR
+.SH DESCRIPTION
+.PP
+Performs a single-cell analysis-inspired grouping and visualization of
+genome metabolic embedding data. The function iterates over three
+taxonomic ranks (Phylum, Class, Order), assigns each genome to its
+group at that rank, and delegates to \code{\link{singlecells_viz}} for
+Seurat-based visualization at each level.
+This approach treats each genome as a "cell" and each EC number
+metabolic capability as a "gene", enabling the use of single-cell
+RNA-seq analysis tools for exploring metabolic diversity patterns
+across microbial communities.
+.PP
 .SH OPTIONS
 .PP
 \fBembedding.file\fB \fR\- . 
 .PP
 .PP
-\fBworkdir\fB \fR\- './'. 
+\fBworkdir\fB \fR\- './'. Character. The working directory where the grouped analysis
+results and visualizations will be saved. Defaults to \code{"./"}.
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effects
+of creating the following directory structure under \code{workdir}:
+\itemize{
+\item \code{singlecells/group_phylum/} — Phylum-level analysis and plots.
+\item \code{singlecells/group_class/} — Class-level analysis and plots.
+\item \code{singlecells/group_order/} — Order-level analysis and plots.
+}
+Each subdirectory contains:
+\itemize{
+\item \code{group_data.csv} — The embedding data with taxonomy column
+replaced by the group label at the corresponding rank.
+\item Seurat-based visualization PNG files (see \code{\link{singlecells_viz}}).
+}
+.PP
+.SH DETAILS
+.PP
+The analysis pipeline for each taxonomic rank:
+\enumerate{
+\item Reads the embedding CSV file and parses the taxonomy strings.
+\item Replaces the \code{taxonomy} column with the taxonomic name at
+the current rank (e.g., for rank = "Phylum", replaces with the
+phylum-level name).
+\item Creates a rank-specific output directory.
+\item Delegates to \code{\link{singlecells_viz}} for Seurat-based
+clustering and visualization.
+\item Exports the grouped data as a CSV file.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+singlecells_analysis(
+embedding_file = "results/embedding/umap.csv",
+workdir = "results/singlecells"
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{singlecells_viz}} for the Seurat-based visualization
+function, \code{\link{diamond_embedding}} for generating the input
+embedding data, \code{\link[umap]{analysis}} for UMAP-based embedding.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.singlecells_analysis at singlecells.R:line 1
+SMRUCC/R#.declare_function.singlecells_analysis at singlecells.R:line 61
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

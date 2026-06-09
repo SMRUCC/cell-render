@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Register the virtual cell network modelling workflows</title>
+    <title>Register the Virtual Cell Network Modelling Workflows</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,14 @@
             </tr>
         </table>
 
-        <h2>Register the virtual cell network modelling workflows</h2>
+        <h2>Register the Virtual Cell Network Modelling Workflows</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Defines and registers the sequential annotation and modelling workflow
+steps that constitute the virtual cell graph construction pipeline.
+Each step is hooked into the \pkg{WorkflowRender} engine and will be
+executed in the order they are registered.</p>
 
         <h3>Usage</h3>
 
@@ -37,9 +40,30 @@
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The complete workflow sequence is:
+\enumerate{
+\item \strong{make<em>genbank</em>proj} \cr
+Extract protein sequences, TSS upstream regions, genomic context data,
+and taxonomy information from the GenBank source file(s).
+\item \strong{tfbs<em>motif</em>scanning} \cr
+Run Transcription Factor Binding Site (TFBS) motif scanning on the
+TSS upstream region sequences extracted in step 1.
+\item \strong{make<em>diamond</em>hits} \cr
+Run DIAMOND BLASTP homology search for the protein sequences against
+EC number, subcellular location, and transcription factor reference
+databases.
+\item \strong{make_terms} \cr
+Score the BLASTP results and assign protein ontology terms (EC numbers,
+subcellular localizations, transcription factor annotations).
+\item \strong{make_TRN} \cr
+Construct the Transcription Regulation Network (TRN) by combining the
+TFBS motif scan results with the transcription factor BLASTP hits.
+\item \strong{build_project} \cr
+Compile the TRN and metabolic network annotations into a final virtual
+cell model and export as GCMarkup XML.
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -47,11 +71,19 @@
 
         <h3>Value</h3>
 
-        <p>this function has no return value</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effect
+of registering workflow steps with the \pkg{WorkflowRender} engine.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Register all workflow steps
+annotation_workflow()
+# Then run the workflow
+WorkflowRender::run(registry = CellRender::annotation_workflow)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

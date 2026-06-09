@@ -28,12 +28,39 @@ building the \strong{gene expression transcription regulation network}.
 .PP
 .SH VALUE
 .PP
-Returns \code{invisible(NULL)}. The project file specified by
-\code{proj_file} is modified and saved with the new annotation terms.
+\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item Injects grouped annotation terms into the project session.
+\item Exports an enzyme annotation table as \code{enzymes.csv} in the
+same directory as \code{proj_file}.
+\item Saves the updated project file to disk.
+}
 .PP
+.SH DETAILS
+.PP
+The function loads the project file, reads each m8 file, groups the hits
+via \code{diamond_hitgroups}, and stores them using \code{set_blastp_result}.
+After all three annotation types are processed, it generates an enzyme
+summary table and persists the updated project.
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Parse BLASTP results for a single model
+make_blastp_term(
+proj_file = "release/GCF_000123/builder.gcproj",
+model_dir = "workspace/make_diamond_hits/GCF_000123"
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_terms}} which calls this function,
+\code{\link{make_diamond_hits}} which produces the input m8 files.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_blastp_term at make_blastp_term.R:line 28
+SMRUCC/R#.declare_function.make_blastp_term at make_blastp_term.R:line 52
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

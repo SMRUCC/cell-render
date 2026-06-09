@@ -1,4 +1,4 @@
-﻿.TH EXPORT_TREE 1 2026-6月 "" "export_tree"
+﻿.TH EXPORT_TREE 1 2026-6月 "" "Export Metabolic Tree Network Visualization"
 .SH NAME
 export_tree \- export_tree(embedding.file,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
@@ -7,19 +7,60 @@ export_tree \- export_tree(embedding.file,
 \fIexport_tree(embedding.file,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
     <i>node.equals</i> = <span style='color: green;'>0.999</span>)\fR
+.SH DESCRIPTION
+.PP
+Constructs a tree graph from metabolic embedding data and exports it
+as a network visualization file. The tree graph is built from an
+OTU-style table using imputation for missing values and a configurable
+node equality threshold for branch merging.
+.PP
 .SH OPTIONS
 .PP
 \fBembedding.file\fB \fR\- . 
 .PP
 .PP
-\fBworkdir\fB \fR\- './'. 
+\fBworkdir\fB \fR\- './'. Character. The directory path where the exported network
+file will be saved. Defaults to \code{"./"}.
 .PP
 .PP
 \fBnode.equals\fB \fR\- 0.999. 
 .PP
+.SH VALUE
+.PP
+\code{invisible(NULL)}. This function is called for its side effect
+of writing a network file named \code{metabolic_tree} to \code{workdir}.
+The file format is determined by \code{igraph::save.network()}.
+.PP
+.SH DETAILS
+.PP
+The tree construction pipeline:
+\enumerate{
+\item Reads the embedding data as an OTU table.
+\item Imputes missing values in the OTU table.
+\item Constructs a tree graph using \code{OTU_table::makeTreeGraph()},
+with nodes colored by the \code{Class} taxonomic rank.
+\item Saves the resulting network graph to disk.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+export_tree(
+embedding_file = "results/embedding/metabolic_embedding.csv",
+workdir = "results/tree_viz",
+node_equals = 0.995
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{diamond_embedding}} for generating the input
+embedding data, \code{\link[umap]{analysis}} for UMAP-based
+alternative visualization.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.export_tree at tree_viz.R:line 1
+SMRUCC/R#.declare_function.export_tree at tree_viz.R:line 46
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

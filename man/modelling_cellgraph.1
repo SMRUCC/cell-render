@@ -37,40 +37,32 @@ generates the corresponding project files and reports.
 .SH OPTIONS
 .PP
 \fBsrc\fB \fR\- . \code{character}. The file path to the NCBI GenBank assembly
-source file.
+source file. In batch mode, this can be a directory containing multiple
+GenBank files.
 .PP
 .PP
-\fBoutputdir\fB \fR\- NULL. \code{character}. The directory path for storing result
-files and temporary workspace. Defaults to \code{NULL}, which will use
-the parent directory of the \code{src} file.
+\fBoutputdir\fB \fR\- NULL. \code{character}. The directory path for storing
+result files. Defaults to a temporary directory created by
+\code{tempdir()} if not specified.
 .PP
 .PP
-\fBname\fB \fR\- NULL. \code{character}. An optional custom name for the virtual cell
-model. If \code{NULL}, a default name may be assigned by the rendering engine.
+\fBname\fB \fR\- NULL. \code{character}. The name to assign to the virtual cell model.
+Only used in single-project mode. Defaults to \code{"virtual_cell"}.
 .PP
 .PP
 \fBup.len\fB \fR\- 150. 
 .PP
 .PP
-\fBlocaldb\fB \fR\- NULL. \code{character}. The file path to a local annotation
-database. Defaults to \code{NULL}, which falls back to the internal
-package data directory.
+\fBlocaldb\fB \fR\- NULL. 
 .PP
 .PP
-\fBdiamond\fB \fR\- 'Sys.which'('diamond'). \code{character}. The file path to the DIAMOND executable
-(used for fast sequence alignment). Defaults to the system path found
-via \code{Sys.which("diamond")}.
+\fBdiamond\fB \fR\- 'Sys.which'('diamond'). 
 .PP
 .PP
-\fBdomain\fB \fR\- 'c'('bacteria', 'plant', 'animal', 'fungi'). \code{character}. The biological domain of the input organism.
-Must be one of \code{"bacteria"}, \code{"plant"}, \code{"animal"}, or
-\code{"fungi"}. Note: If multiple values are provided, only the first
-element will be used.
+\fBdomain\fB \fR\- 'c'('bacteria', 'plant', 'animal', 'fungi'). 
 .PP
 .PP
-\fBbuilds\fB \fR\- 'c'('TRN_network', 'Metabolic_network'). \code{character}. A character vector specifying which
-annotation modules to build. Supported options are \code{"TRN_network"}
-(Transcriptional Regulatory Network) and \code{"Metabolic_network"}.
+\fBbuilds\fB \fR\- 'c'('TRN_network', 'Metabolic_network'). 
 .PP
 .PP
 \fBenable.blastp.cache\fB \fR\- FALSE. 
@@ -85,20 +77,16 @@ annotation modules to build. Supported options are \code{"TRN_network"}
 \fBn.threads\fB \fR\- 32. 
 .PP
 .PP
-\fBdebug\fB \fR\- 'c'(). 
+\fBdebug\fB \fR\- 'c'(). \code{character vector}. Optional vector of workflow step names
+to enable for debugging. When provided, only the specified steps will be
+executed via \code{WorkflowRender::definePipeline()}. Defaults to an
+empty vector (all steps run).
 .PP
 .SH VALUE
 .PP
-This function returns \code{invisible(NULL)}. However, as a side
-effect, it generates a \code{release} subdirectory within the
-\code{outputdir} containing:
-\itemize{
-\item \code{builder.gcproj}: The project configuration file.
-\item \code{model.xml}: The core virtual cell graph model file.
-}
-Additionally, an HTML or PDF report summarizing the virtual cell
-modeling results is typically generated in the output directory by
-the workflow renderer.
+\code{invisible(NULL)}. This function is called for its side effects
+of creating project files, annotation data, and compiled virtual cell
+model XML files in the output directory.
 .PP
 .SH DETAILS
 .PP
@@ -106,26 +94,45 @@ This function acts as a high-level wrapper around the \code{WorkflowRender}
 and \code{CellRender} engines. It sets up a temporary workspace (if not
 provided), resolves dependencies (like the DIAMOND executable), and triggers
 the specific annotation modules requested by the user.
+The complete workflow pipeline includes:
+\enumerate{
+\item \strong{make_genbank_proj}: Extract protein sequences, TSS upstream
+regions, genomic context, and taxonomy from GenBank source file(s).
+\item \strong{tfbs_motif_scanning}: Scan for transcription factor binding
+site motifs in upstream regions (conditional on TRN_network module).
+\item \strong{make_diamond_hits}: Run DIAMOND BLASTP against EC number,
+subcellular location, and transcription factor reference databases.
+\item \strong{make_terms}: Parse BLASTP results and assign annotation terms
+for metabolic, transmembrane, and transcription regulation networks.
+\item \strong{make_TRN}: Build the transcription regulation network from
+TFBS scan results and TF annotations (conditional on TRN_network module).
+\item \strong{build_project}: Compile all networks into a virtual cell
+model and export as GCMarkup XML.
+}
 .PP
 .SH EXAMPLES
 .PP
 #\dontrun{
 
-# Run the workflow for a bacterial genome
-modelling_cellgraph(
-src = "path/to/bacteria_genome.gb",
-outputdir = "path/to/output_workspace",
-name = "E_coli_Model",
-domain = "bacteria",
-builds = c("TRN_network", "Metabolic_network"),
-n_threads = 16
-)
+# Single GenBank file mode
+run(src = "data/GCF_000005845.2_ASM584v2_genomic.gbff",
+name = "E_coli_K12",
+outputdir = "results/E_coli")
+# Batch mode for multiple GenBank files
+run(src = "data/genbank_assemblies/",
+batch_process = TRUE,
+outputdir = "results/batch")
 
 #}
 .PP
+.SH SEE ALSO
+\code{\link{annotation_workflow}} for the workflow registration
+function, \code{\link{make_genbank_proj}}, \code{\link{make_diamond_hits}},
+\code{\link{make_terms}}, \code{\link{make_TRN}}, \code{\link{build_project}}
+for individual workflow steps.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.modelling_cellgraph at main.R:line 65
+SMRUCC/R#.declare_function.modelling_cellgraph at main.R:line 78
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

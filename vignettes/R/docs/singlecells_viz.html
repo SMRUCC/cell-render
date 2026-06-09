@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>singlecells_viz</title>
+    <title>Seurat-Based Single-Cell Style Visualization of Genome Metabolic Data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,18 @@
             </tr>
         </table>
 
-        <h2>singlecells_viz</h2>
+        <h2>Seurat-Based Single-Cell Style Visualization of Genome Metabolic Data</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Creates a comprehensive set of Seurat-style visualizations for genome
+metabolic embedding data, treating genomes as "cells" and EC number
+metabolic capabilities as "genes". This function leverages the \pkg{Seurat}
+toolkit to produce dimensionality reduction plots, feature plots, violin
+plots, and heatmaps.
+This function is designed to be called via \code{native_r()} from the
+GCModeller environment, which provides automatic package installation
+for missing dependencies.</p>
 
         <h3>Usage</h3>
 
@@ -35,12 +42,43 @@
 
         <table>
             
+<dt>rawdata</dt>
+<dd><p><p>A data frame containing the metabolic embedding data.
+Each row represents a genome, and columns represent EC number
+metabolic features. Must contain a \code{taxonomy} column for
+grouping, and optionally \code{Family}, \code{Phylum}, \code{Class},
+\code{Order} columns for metadata.</p></p></dd>
+
+
+<dt>outputdir</dt>
+<dd><p><p>Character. The directory path where all output plot
+files will be saved. Defaults to \code{"./"}.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The visualization pipeline:
+\enumerate{
+\item \strong{Data preprocessing}: Extracts metadata columns (taxonomy,
+Family, Phylum, etc.) and creates a Seurat object from the EC number
+feature matrix.
+\item \strong{Normalization}: Applies \code{NormalizeData} with
+\code{LogNormalize} to the EC count data.
+\item \strong{Variable feature selection}: Identifies the top 2000
+highly variable EC numbers using variance-stabilizing transformation.
+\item \strong{Dimensionality reduction}: Runs PCA followed by UMAP
+on the variable features.
+\item \strong{Visualization}: Generates five types of plots:
+\itemize{
+\item UMAP colored by taxonomy group
+\item Feature plots for top variable ECs
+\item Split UMAP panels per group
+\item Violin plots of key ECs by Family
+\item Heatmap of variable ECs by Family
+}
+}</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -48,11 +86,32 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>\code{invisible(NULL)}. This function is called for its side effects
+of writing the following PNG files to \code{outputdir}:
+\describe{
+\item{\code{SC<em>01</em>UMAP.png}}{UMAP dimensionality reduction plot
+colored by taxonomic group.}
+\item{\code{SC<em>02</em>FeaturePlot.png}}{Feature plots showing the
+expression distribution of top variable EC numbers on the UMAP.}
+\item{\code{SC<em>03</em>DimPlot_split.png}}{Split UMAP panels, one per
+taxonomic group.}
+\item{\code{SC<em>04</em>ViolinPlot.png}}{Violin plots of key EC number
+expression across Family-level groups.}
+\item{\code{SC<em>05</em>Heatmap.png}}{Heatmap of highly variable EC
+numbers across genomes, grouped by Family.}
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Typically called via native_r() from singlecells_analysis:
+singlecells_viz(
+rawdata = embedding_df,
+outputdir = "results/singlecells/group_phylum"
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

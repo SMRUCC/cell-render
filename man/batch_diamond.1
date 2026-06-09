@@ -1,4 +1,4 @@
-﻿.TH BATCH_DIAMOND 1 2026-6月 "" "Batch DIAMOND BLASTP Search Against Enzyme Database"
+﻿.TH BATCH_DIAMOND 1 2026-6月 "internal" "Batch DIAMOND BLASTP Search Against Enzyme Database"
 .SH NAME
 batch_diamond \- batch_diamond(source.dir, result.dir,
     <i>diamond</i> = 'Sys.which'('diamond'),
@@ -29,20 +29,41 @@ executable. Defaults to \code{Sys.which("diamond")}.
 .PP
 .SH VALUE
 .PP
-Returns \code{invisible(NULL)}. Output \code{.m8} files and the
-DIAMOND database file are written to \code{result_dir}.
+\code{invisible(NULL)}. This function is called for its side effects
+of creating DIAMOND database files and BLASTP alignment output files
+(\code{.m8}) in the \code{result_dir}.
 .PP
 .SH DETAILS
 .PP
 This function temporarily changes the working directory to \code{result_dir}
-to generate the DIAMOND database (\code{ec_number.dmnd}) using an internal
-package reference file (\code{ec_numbers.fasta}). It then iterates through
-all \code{.faa} files in \code{source_dir} and executes a BLASTP search.
-The original working directory is restored upon completion.
+for the DIAMOND database creation and search operations, then restores the
+original working directory upon completion.
+The EC number reference database (\code{ec_numbers.fasta}) is sourced from
+the package's built-in data directory. A DIAMOND database is created
+on-the-fly before running the BLASTP searches.
+For each \code{.faa} file found in \code{source_dir}, a corresponding
+\code{.m8} alignment result file is generated in \code{result_dir}.
 .PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Run batch DIAMOND BLASTP on all .faa files
+batch_diamond(
+source_dir = "data/proteins",
+result_dir = "results/diamond",
+diamond = "/usr/bin/diamond",
+n_threads = 16
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_diamond_hits}} for the main DIAMOND workflow step,
+\code{\link{make_diamond}} for building individual reference databases.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.batch_diamond at batch_diamond.R:line 27
+SMRUCC/R#.declare_function.batch_diamond at batch_diamond.R:line 48
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

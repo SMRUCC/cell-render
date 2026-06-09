@@ -24,12 +24,12 @@ files to the specified working directory.
 .PP
 .SH OPTIONS
 .PP
-\fBsrc\fB \fR\- . A character string specifying the file path to the input
-GenBank (`.gb`, `.gbff`, or `.gbk`) file.
+\fBsrc\fB \fR\- . A character string specifying the file path to the GenBank
+source file.
 .PP
 .PP
-\fBworkdir\fB \fR\- './'. A character string specifying the directory path where
-all output files will be saved. Defaults to `"./"` (current working directory).
+\fBworkdir\fB \fR\- './'. A character string specifying the working directory where
+all extracted files will be saved. Defaults to \code{"./"}.
 .PP
 .PP
 \fBupstream.size\fB \fR\- 150. 
@@ -38,17 +38,54 @@ all output files will be saved. Defaults to `"./"` (current working directory).
 \fBtag.genbank.accid\fB \fR\- FALSE. 
 .PP
 .PP
-\fBverbose\fB \fR\- TRUE. A logical value. If `TRUE` (default), progress messages
-and the titles of the extracted upstream loci are printed to the console.
+\fBverbose\fB \fR\- TRUE. Logical. If \code{TRUE}, prints additional debug
+information including the upstream locus titles. Defaults to \code{FALSE}.
 .PP
 .SH VALUE
 .PP
-Returns `invisible(NULL)`. This function is called primarily for
-its side effects: generating and saving output files to the `workdir`.
+\code{invisible(NULL)}. This function is called for its side effects
+of writing the following files to \code{workdir}:
+\describe{
+\item{\code{genes.csv}}{Gene feature annotation table extracted from
+the GenBank file.}
+\item{\code{context.txt}}{PTT-format genomic context tabular file.}
+\item{\code{source.fasta}}{Raw genomic nucleotide FASTA sequences.}
+\item{\code{upstream_locis.fasta}}{TSS upstream region sequences
+with gene locus tag headers.}
+}
 .PP
+.SH DETAILS
+.PP
+The extraction pipeline:
+\enumerate{
+\item Reads the GenBank file and extracts the full genomic sequence.
+\item Parses gene features and their coordinates.
+\item Calculates the TSS position for each gene based on strand orientation.
+\item Extracts the upstream region of the specified size from each TSS.
+\item Tags each upstream sequence with its corresponding gene locus tag.
+\item Exports all data to the working directory.
+}
+.PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+extract_gbff(
+src = "data/sequence.gbff",
+workdir = "results/extracted",
+upstream_size = 500,
+verbose = TRUE
+)
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_genbank_proj}} for the higher-level workflow
+that calls this function, \code{\link{tfbs_motif_scanning}} which
+consumes the \code{upstream_locis.fasta} output.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.extract_gbff at extract_gbff.R:line 47
+SMRUCC/R#.declare_function.extract_gbff at extract_gbff.R:line 63
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026

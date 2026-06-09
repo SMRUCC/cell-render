@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>check_build_module</title>
+    <title>Check Whether a Build Module is Enabled</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
     <link rel="stylesheet" type="text/css" href="../../_assets/page.css">
@@ -18,11 +18,13 @@
             </tr>
         </table>
 
-        <h2>check_build_module</h2>
+        <h2>Check Whether a Build Module is Enabled</h2>
 
         <h3>Description</h3>
 
-        
+        <p>Checks if a specific virtual cell build module is enabled in the
+current workflow configuration. This is used to conditionally execute
+workflow steps based on user-specified build targets.</p>
 
         <h3>Usage</h3>
 
@@ -34,12 +36,19 @@
 
         <table>
             
+<dt>flag</dt>
+<dd><p><p>Character. The name of the build module to check
+(e.g., \code{"TRN<em>network"}, \code{"metabolic</em>network"}).
+The comparison is case-insensitive.</p></p></dd>
+
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The function reads the \code{builds} configuration parameter (a character
+vector of enabled module names) and performs a case-insensitive match
+against the provided \code{flag}.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -47,11 +56,19 @@
 
         <h3>Value</h3>
 
-        This function has no value returns.
+        <p>Logical. \code{TRUE} if the specified module is present in the
+\code{builds} configuration, \code{FALSE} otherwise.</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Check if the TRN network module should be built
+if (check_build_module("TRN_network")) {
+message("TRN network module is enabled")
+}
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

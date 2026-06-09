@@ -47,20 +47,24 @@ building the \strong{gene expression transcription regulation network}.
         <table>
             
 <dt>proj.file</dt>
-<dd><p><p>Character. The file path to the GenBank annotation
-project file (\code{.gcproj}) to be updated.</p></p></dd>
+<dd><p><p>Character. The file path to the GenBank annotation project
+file (\code{.gcproj}) into which the parsed terms will be written.</p></p></dd>
 
 
 <dt>model.dir</dt>
-<dd><p><p>Character. The file path to the temporary workspace
-directory containing the DIAMOND BLASTP \code{.m8} result files.</p></p></dd>
+<dd><p><p>Character. The directory path containing the DIAMOND BLASTP
+output files (\code{ec_number.m8}, \code{subcellular.m8},
+\code{transcript_factor.m8}).</p></p></dd>
 
         </table>
 
 
-        <h3 style="display: none;">Details</h3>
+        <h3 style="display: block;">Details</h3>
 
-        
+        <p>The function loads the project file, reads each m8 file, groups the hits
+via \code{diamond<em>hitgroups}, and stores them using \code{set</em>blastp_result}.
+After all three annotation types are processed, it generates an enzyme
+summary table and persists the updated project.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -68,12 +72,25 @@ directory containing the DIAMOND BLASTP \code{.m8} result files.</p></p></dd>
 
         <h3>Value</h3>
 
-        <p>Returns \code{invisible(NULL)}. The project file specified by
-\code{proj_file} is modified and saved with the new annotation terms.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects:
+\itemize{
+\item Injects grouped annotation terms into the project session.
+\item Exports an enzyme annotation table as \code{enzymes.csv} in the
+same directory as \code{proj_file}.
+\item Saves the updated project file to disk.
+}</p>
 
-        <h3 style="display: none;">Examples</h3>
+        <h3 style="display: block;">Examples</h3>
 
-        
+        <pre><code id="example_r">#\dontrun{
+
+# Parse BLASTP results for a single model
+make_blastp_term(
+proj_file = "release/GCF_000123/builder.gcproj",
+model_dir = "workspace/make_diamond_hits/GCF_000123"
+)
+
+#}</code></pre>
 
         <hr />
         <div style="text-align: center;">[Package <em>CellRender</em> version 1.0.148 <a

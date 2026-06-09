@@ -1,4 +1,4 @@
-﻿.TH MAKE_DIAMOND 1 2026-6月 "" "make_diamond"
+﻿.TH MAKE_DIAMOND 1 2026-6月 "internal" "make_diamond"
 .SH NAME
 make_diamond \- make_diamond(local.db,
     <i>diamond</i> = 'Sys.which'('diamond'))
@@ -9,7 +9,7 @@ make_diamond \- make_diamond(local.db,
 .PP
 
 
-Generates DIAMOND binary databases (`.dmnd`) from source FASTA files.
+Generates DIAMOND binary databases (\code{.dmnd}) from source FASTA files.
 This utility function constructs three specific databases required for
 the annotation workflow: Enzyme Commission (EC) numbers, Subcellular
 locations, and Transcription Factors.
@@ -38,9 +38,21 @@ This function expects the following source files to exist in \code{local_db}:
 }
 It utilizes \code{system2} to invoke the \code{diamond makedb} command.
 .PP
+.SH EXAMPLES
+.PP
+#\dontrun{
+
+# Build databases from a local data directory
+make_diamond(local_db = "/path/to/reference/fasta/files")
+
+#}
+.PP
+.SH SEE ALSO
+\code{\link{make_diamond_hits}} which calls this function
+to ensure databases exist before running BLASTP searches.
 .SH FILES
 .PP
-SMRUCC/R#.declare_function.make_diamond at make_diamond.R:line 28
+SMRUCC/R#.declare_function.make_diamond at make_diamond.R:line 39
 .PP
 .SH COPYRIGHT
 Copyright © xieguigang <xie.guigang@gcmodeller.org>, MIT License Licensed 2026
