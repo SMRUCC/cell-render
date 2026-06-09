@@ -7,6 +7,7 @@ Public Class ECNumberAnnotation : Implements IEnzymeObject
     Public Property EC As String Implements IEnzymeObject.ECNumber
     Public Property Score As Double
     Public Property SourceIDs As String()
+    Public Property proteinName As String
 
     Public Shared Iterator Function MakeEnzymeTerms(blastp As IEnumerable(Of HitCollection)) As IEnumerable(Of ECNumberAnnotation)
         For Each protein As HitCollection In blastp
