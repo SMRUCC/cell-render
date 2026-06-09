@@ -1,5 +1,60 @@
-#' native R function for make scatter plot of the genome embedding result.
-#' 
+#' Generate Scatter Plot Visualization of Genome Embedding Results
+#'
+#' Creates a publication-quality scatter plot from genome embedding data,
+#' coloring points by taxonomic phylum and sizing points inversely proportional
+#' to the number of genomes in each phylum group. The plot is saved in both
+#' PNG and SVG formats.
+#'
+#' This function uses native R with \pkg{ggplot2} and \pkg{dplyr} for
+#' data processing and visualization.
+#'
+#' @param data A data frame containing the embedding coordinates with at least
+#'   the following columns:
+#'   \describe{
+#'     \item{dimension_1}{Numeric. The first embedding dimension (x-axis).}
+#'     \item{dimension_2}{Numeric. The second embedding dimension (y-axis).}
+#'     \item{phylum}{Character. The taxonomic phylum assignment for each genome.}
+#'   }
+#' @param outputdir Character. The directory path where the output plot files
+#'   will be saved. Defaults to \code{"./"}.
+#'
+#' @return \code{invisible(NULL)}. This function is called for its side effects
+#'   of writing the following files to \code{outputdir}:
+#'   \itemize{
+#'     \item \code{scatter_plot.png} — High-resolution PNG scatter plot
+#'       (600 DPI, 12 x 8 inches).
+#'     \item \code{scatter_plot.svg} — SVG vector scatter plot
+#'       (600 DPI, 12 x 8 inches).
+#'   }
+#'
+#' @details
+#' The visualization applies the following design choices:
+#' \itemize{
+#'   \item Points are colored by \code{phylum} using the default ggplot2
+#'     discrete color palette.
+#'   \item Point size is mapped to the subset size of each phylum group,
+#'     with a \strong{reversed} scale so that larger groups (more genomes)
+#'     are rendered with \emph{smaller} points, reducing visual clutter
+#'     from dominant phyla.
+#'   \item A global alpha of 0.3 is applied for transparency to handle
+#'     overlapping points.
+#'   \item The minimal theme is used for a clean, publication-ready appearance.
+#' }
+#'
+#' @seealso \code{\link[umap]{analysis}} which generates the embedding data
+#'   consumed by this function, \code{\link{singlecells_viz}} for an
+#'   alternative Seurat-based visualization approach.
+#'
+#' @examples
+#' \dontrun{
+#' # Assuming 'embedding_data' has columns: dimension_1, dimension_2, phylum
+#' genome_scatter_viz(
+#'   data = embedding_data,
+#'   outputdir = "results/figures"
+#' )
+#' }
+#'
+#' @export
 let genome_scatter_viz = function(data, outputdir = "./") {
   require(ggplot2);
   require(dplyr);

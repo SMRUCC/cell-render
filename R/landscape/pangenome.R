@@ -4,38 +4,60 @@ imports "annotation.terms" from "seqtoolkit";
 
 #' Pan-genome Analysis of a Microbial Community
 #'
-#' This function orchestrates a complete pan-genome analysis pipeline for a 
-#' set of microbial genomes. It extracts genomic data from GenBank files, 
-#' performs protein annotation via DIAMOND BLASTP, assigns orthology groups, 
+#' This function orchestrates a complete pan-genome analysis pipeline for a
+#' set of microbial genomes. It extracts genomic data from GenBank files,
+#' performs protein annotation via DIAMOND BLASTP, assigns orthology groups,
 #' and calculates both Structural Variation (SV) and Presence/Absence Variation (PAV).
 #'
-#' @param src A character string specifying the directory path containing the 
+#' @param src A character string specifying the directory path containing the
 #'   input NCBI GenBank assembly files.
-#' @param result_dir A character string specifying the directory path where 
+#' @param result_dir A character string specifying the directory path where
 #'   all intermediate and final analysis results will be exported.
-#' @param diamond A character string specifying the file path to the DIAMOND 
-#'   executable. Defaults to the system PATH via \code{Sys.which("diamond")}.
-#' @param n_threads An integer specifying the number of CPU threads to use for 
-#'   the DIAMOND BLASTP search. Defaults to 32.
+#' @param diamond A character string specifying the file path to the DIAMOND
+#'   executable. Defaults to \code{Sys.which("diamond")}.
+#' @param n_threads An integer specifying the number of CPU threads to use
+#'   for DIAMOND BLASTP searches. Defaults to 32.
+#' @param identities_cut An integer specifying the percent identity cutoff
+#'   for filtering DIAMOND BLASTP hits. Hits below this threshold are
+#'   discarded. Defaults to 30.
 #'
-#' @details 
-#' The pipeline proceeds through the following steps:
-#' \itemize{
-#'   \item \strong{Extraction}: Extracts protein FASTA (.faa) and gene annotation 
-#'     (.csv) files into a \code{source} subdirectory.
-#'   \item \strong{Annotation}: Runs DIAMOND BLASTP against an internal EC number 
-#'     reference database using \code{\link{batch_diamond}}.
-#'   \item \strong{Orthology Assignment}: Reads BLASTP results (.m8), assigns terms 
-#'     (keeping only the top best hit with >30\% identity, filtering unknowns), and 
-#'     constructs orthology groups.
-#'   \item \strong{Pan-genome Construction}: Builds the pangenome context and 
-#'     executes the core/accessory analysis using the defined ortholog sets.
-#'   \item \strong{Export}: Saves an interactive HTML report, an SV result table 
-#'     (CSV), and a PAV result table (CSV) to \code{result_dir}.
+#' @return \code{invisible(NULL)}. This function is called for its side effects:
+#'   \itemize{
+#'     \item Creates an HTML analysis report (\code{analysis_report.html}).
+#'     \item Exports a Structural Variation table (\code{SV_result.csv}).
+#'     \item Exports a Presence/Absence Variation table (\code{PAV_result.csv}).
+#'     \item Writes intermediate protein FASTA and gene annotation CSV files
+#'       for each input genome.
+#'   }
+#'
+#' @details
+#' The pan-genome analysis pipeline consists of the following steps:
+#' \enumerate{
+#'   \item \strong{Genome extraction}: Reads each GenBank file and exports
+#'     protein sequences (\code{.faa}) and gene annotation tables (\code{.csv}).
+#'   \item \strong{DIAMOND BLASTP}: Runs batch DIAMOND BLASTP against the
+#'     EC number reference database for all extracted protein sets.
+#'   \item \strong{Orthology assignment}: Parses BLASTP results and assigns
+#'     orthology group links based on the identity cutoff.
+#'   \item \strong{Pan-genome analysis}: Constructs a pan-genome context from
+#'     the gene tables and runs the analysis using the orthology links.
+#'   \item \strong{Report generation}: Exports the analysis results as an
+#'     HTML report and CSV tables.
 #' }
 #'
-#' @return Returns \code{invisible(NULL)}. All results are written directly to 
-#'   the \code{result_dir} as side effects.
+#' @seealso \code{\link{extract_genomes}} for genome data extraction,
+#'   \code{\link{batch_diamond}} for batch DIAMOND BLASTP execution.
+#'
+#' @examples
+#' \dontrun{
+#' pangenome_analysis(
+#'   src = "data/genbank_assemblies",
+#'   result_dir = "results/pangenome",
+#'   diamond = "/usr/bin/diamond",
+#'   n_threads = 16,
+#'   identities_cut = 30
+#' )
+#' }
 #'
 #' @export
 const pangenome_analysis = function(src, result_dir, 

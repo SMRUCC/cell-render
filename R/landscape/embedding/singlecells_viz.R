@@ -1,7 +1,78 @@
-# ==============================================================================
-# 1. 环境准备与数据读取
-# ==============================================================================
-
+#' Seurat-Based Single-Cell Style Visualization of Genome Metabolic Data
+#'
+#' Creates a comprehensive set of Seurat-style visualizations for genome
+#' metabolic embedding data, treating genomes as "cells" and EC number
+#' metabolic capabilities as "genes". This function leverages the \pkg{Seurat}
+#' toolkit to produce dimensionality reduction plots, feature plots, violin
+#' plots, and heatmaps.
+#'
+#' This function is designed to be called via \code{native_r()} from the
+#' GCModeller environment, which provides automatic package installation
+#' for missing dependencies.
+#'
+#' @param rawdata A data frame containing the metabolic embedding data.
+#'   Each row represents a genome, and columns represent EC number
+#'   metabolic features. Must contain a \code{taxonomy} column for
+#'   grouping, and optionally \code{Family}, \code{Phylum}, \code{Class},
+#'   \code{Order} columns for metadata.
+#' @param outputdir Character. The directory path where all output plot
+#'   files will be saved. Defaults to \code{"./"}.
+#'
+#' @return \code{invisible(NULL)}. This function is called for its side effects
+#'   of writing the following PNG files to \code{outputdir}:
+#'   \describe{
+#'     \item{\code{SC_01_UMAP.png}}{UMAP dimensionality reduction plot
+#'       colored by taxonomic group.}
+#'     \item{\code{SC_02_FeaturePlot.png}}{Feature plots showing the
+#'       expression distribution of top variable EC numbers on the UMAP.}
+#'     \item{\code{SC_03_DimPlot_split.png}}{Split UMAP panels, one per
+#'       taxonomic group.}
+#'     \item{\code{SC_04_ViolinPlot.png}}{Violin plots of key EC number
+#'       expression across Family-level groups.}
+#'     \item{\code{SC_05_Heatmap.png}}{Heatmap of highly variable EC
+#'       numbers across genomes, grouped by Family.}
+#'   }
+#'
+#' @details
+#' The visualization pipeline:
+#' \enumerate{
+#'   \item \strong{Data preprocessing}: Extracts metadata columns (taxonomy,
+#'     Family, Phylum, etc.) and creates a Seurat object from the EC number
+#'     feature matrix.
+#'   \item \strong{Normalization}: Applies \code{NormalizeData} with
+#'     \code{LogNormalize} to the EC count data.
+#'   \item \strong{Variable feature selection}: Identifies the top 2000
+#'     highly variable EC numbers using variance-stabilizing transformation.
+#'   \item \strong{Dimensionality reduction}: Runs PCA followed by UMAP
+#'     on the variable features.
+#'   \item \strong{Visualization}: Generates five types of plots:
+#'     \itemize{
+#'       \item UMAP colored by taxonomy group
+#'       \item Feature plots for top variable ECs
+#'       \item Split UMAP panels per group
+#'       \item Violin plots of key ECs by Family
+#'       \item Heatmap of variable ECs by Family
+#'     }
+#' }
+#'
+#' @note This function requires the following R packages: \pkg{Seurat},
+#'   \pkg{ggplot2}, \pkg{dplyr}, \pkg{cowplot}, \pkg{RColorBrewer},
+#'   \pkg{patchwork}. Missing packages will be automatically installed.
+#'
+#' @seealso \code{\link{singlecells_analysis}} which calls this function
+#'   for each taxonomic rank, \code{\link{genome_scatter_viz}} for a
+#'   simpler scatter plot alternative.
+#'
+#' @examples
+#' \dontrun{
+#' # Typically called via native_r() from singlecells_analysis:
+#' singlecells_viz(
+#'   rawdata = embedding_df,
+#'   outputdir = "results/singlecells/group_phylum"
+#' )
+#' }
+#'
+#' @export
 let singlecells_viz = function(rawdata, outputdir = "./") {
     # 加载必要的包
     let required_packages <- c("Seurat", "ggplot2", "dplyr", "cowplot", "RColorBrewer", "patchwork");
@@ -26,7 +97,7 @@ let singlecells_viz = function(rawdata, outputdir = "./") {
       Family = raw_data[, 1]     # 分组信息
     );
 
-    # --- 【关键修改】处理缺失值 (NA) ---
+    # --- 处理缺失值 (NA) ---
     # 检查 Family 列是否有 NA，并将 NA 替换为 "Unclassified"
     # 这样 DimPlot 就不会报错了
     meta_data$Family[is.na(meta_data$Family)] <- "Unclassified";
