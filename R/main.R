@@ -11,54 +11,67 @@
 #' provided), resolves dependencies (like the DIAMOND executable), and triggers 
 #' the specific annotation modules requested by the user.
 #'
-#' @param src \code{character}. The file path to the NCBI GenBank assembly 
-#'   source file.
-#' @param outputdir \code{character}. The directory path for storing result 
-#'   files and temporary workspace. Defaults to \code{NULL}, which will use 
-#'   the parent directory of the \code{src} file.
-#' @param name \code{character}. An optional custom name for the virtual cell 
-#'   model. If \code{NULL}, a default name may be assigned by the rendering engine.
-#' @param up_len \code{integer}. The length (in base pairs) of the upstream 
-#'   region from the Transcription Start Site (TSS) to be extracted. 
-#'   Defaults to 150.
-#' @param localdb \code{character}. The file path to a local annotation 
-#'   database. Defaults to \code{NULL}, which falls back to the internal 
-#'   package data directory.
-#' @param diamond \code{character}. The file path to the DIAMOND executable 
-#'   (used for fast sequence alignment). Defaults to the system path found 
-#'   via \code{Sys.which("diamond")}.
-#' @param domain \code{character}. The biological domain of the input organism. 
-#'   Must be one of \code{"bacteria"}, \code{"plant"}, \code{"animal"}, or 
-#'   \code{"fungi"}. Note: If multiple values are provided, only the first 
-#'   element will be used.
-#' @param builds \code{character}. A character vector specifying which 
-#'   annotation modules to build. Supported options are \code{"TRN_network"} 
-#'   (Transcriptional Regulatory Network) and \code{"Metabolic_network"}.
-#' @param n_threads \code{integer}. The number of CPU threads to allocate 
-#'   for parallel processing. Defaults to 32.
+#' The complete workflow pipeline includes:
+#' \enumerate{
+#'   \item \strong{make_genbank_proj}: Extract protein sequences, TSS upstream
+#'     regions, genomic context, and taxonomy from GenBank source file(s).
+#'   \item \strong{tfbs_motif_scanning}: Scan for transcription factor binding
+#'     site motifs in upstream regions (conditional on TRN_network module).
+#'   \item \strong{make_diamond_hits}: Run DIAMOND BLASTP against EC number,
+#'     subcellular location, and transcription factor reference databases.
+#'   \item \strong{make_terms}: Parse BLASTP results and assign annotation terms
+#'     for metabolic, transmembrane, and transcription regulation networks.
+#'   \item \strong{make_TRN}: Build the transcription regulation network from
+#'     TFBS scan results and TF annotations (conditional on TRN_network module).
+#'   \item \strong{build_project}: Compile all networks into a virtual cell
+#'     model and export as GCMarkup XML.
+#' }
 #'
-#' @return This function returns \code{invisible(NULL)}. However, as a side 
-#'   effect, it generates a \code{release} subdirectory within the 
-#'   \code{outputdir} containing:
-#'   \itemize{
-#'     \item \code{builder.gcproj}: The project configuration file.
-#'     \item \code{model.xml}: The core virtual cell graph model file.
-#'   }
-#'   Additionally, an HTML or PDF report summarizing the virtual cell 
-#'   modeling results is typically generated in the output directory by 
-#'   the workflow renderer.
+#' @param src \code{character}. The file path to the NCBI GenBank assembly 
+#'   source file. In batch mode, this can be a directory containing multiple
+#'   GenBank files.
+#' @param outputdir \code{character}. The directory path for storing 
+#'   result files. Defaults to a temporary directory created by
+#'   \code{tempdir()} if not specified.
+#' @param name \code{character}. The name to assign to the virtual cell model.
+#'   Only used in single-project mode. Defaults to \code{"virtual_cell"}.
+#' @param batch_process \code{logical}. If \code{TRUE}, treats \code{src} as
+#'   a directory and processes all GenBank files within it. If \code{FALSE},
+#'   processes a single GenBank file. Defaults to \code{FALSE}.
+#' @param debug \code{character vector}. Optional vector of workflow step names
+#'   to enable for debugging. When provided, only the specified steps will be
+#'   executed via \code{WorkflowRender::definePipeline()}. Defaults to an
+#'   empty vector (all steps run).
+#' @param enable_blastp_cache \code{logical}. If \code{TRUE}, enables caching
+#'   of BLASTP search results to avoid redundant computations on re-runs.
+#'   Defaults to \code{FALSE}.
+#' @param gems_library_mode \code{logical}. If \code{TRUE}, runs in GEMs
+#'   library mode, which adjusts the model compilation for genome-scale
+#'   metabolic model library generation. Defaults to \code{FALSE}.
+#' @param enzyme_fuzzy \code{logical}. If \code{TRUE}, enables fuzzy matching
+#'   for enzyme annotation, allowing more permissive EC number assignments.
+#'   Defaults to \code{FALSE}.
+#'
+#' @return \code{invisible(NULL)}. This function is called for its side effects
+#'   of creating project files, annotation data, and compiled virtual cell
+#'   model XML files in the output directory.
+#'
+#' @seealso \code{\link{annotation_workflow}} for the workflow registration
+#'   function, \code{\link{make_genbank_proj}}, \code{\link{make_diamond_hits}},
+#'   \code{\link{make_terms}}, \code{\link{make_TRN}}, \code{\link{build_project}}
+#'   for individual workflow steps.
 #'
 #' @examples
 #' \dontrun{
-#' # Run the workflow for a bacterial genome
-#' modelling_cellgraph(
-#'   src = "path/to/bacteria_genome.gb",
-#'   outputdir = "path/to/output_workspace",
-#'   name = "E_coli_Model",
-#'   domain = "bacteria",
-#'   builds = c("TRN_network", "Metabolic_network"),
-#'   n_threads = 16
-#' )
+#' # Single GenBank file mode
+#' run(src = "data/GCF_000005845.2_ASM584v2_genomic.gbff",
+#'     name = "E_coli_K12",
+#'     outputdir = "results/E_coli")
+#'
+#' # Batch mode for multiple GenBank files
+#' run(src = "data/genbank_assemblies/",
+#'     batch_process = TRUE,
+#'     outputdir = "results/batch")
 #' }
 #'
 #' @export

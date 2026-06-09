@@ -4,45 +4,61 @@ imports "annotation.genomics" from "seqtoolkit";
 
 #' Extract Upstream Sequences and Annotations from a GenBank File
 #'
-#' This is a helper function that parses a GenBank assembly file to extract 
-#' genomic sequences, gene features, and the upstream regions relative to the 
-#' Transcription Start Sites (TSS). It is designed to prepare data for 
+#' This is a helper function that parses a GenBank assembly file to extract
+#' genomic sequences, gene features, and the upstream regions relative to the
+#' Transcription Start Sites (TSS). It is designed to prepare data for
 #' downstream transcript regulation network analysis.
 #'
-#' The function performs extensive file I/O operations. It extracts the raw 
-#' genomic FASTA, calculates the TSS upstream loci for each gene, cuts these 
-#' loci from the genome, and exports both the sequences and tabular context 
+#' The function performs extensive file I/O operations. It extracts the raw
+#' genomic FASTA, calculates the TSS upstream loci for each gene, cuts these
+#' loci from the genome, and exports both the sequences and tabular context
 #' files to the specified working directory.
 #'
-#' @param src A character string specifying the file path to the input 
-#'   GenBank (`.gb`, `.gbff`, or `.gbk`) file.
-#' @param workdir A character string specifying the directory path where 
-#'   all output files will be saved. Defaults to `"./"` (current working directory).
-#' @param upstream_size An integer specifying the length of the upstream region 
-#'   (in base pairs) to extract relative to the gene TSS. Defaults to `150`.
-#' @param tag_genbank_accid A logical value. If `TRUE`, the GenBank accession 
-#'   ID is appended as the source tag in the FASTA headers of the extracted 
-#'   upstream sequences. If `FALSE` (default), the original sequence headers 
-#'   are used as the source tag.
-#' @param verbose A logical value. If `TRUE` (default), progress messages 
-#'   and the titles of the extracted upstream loci are printed to the console.
+#' @param src A character string specifying the file path to the GenBank
+#'   source file.
+#' @param workdir A character string specifying the working directory where
+#'   all extracted files will be saved. Defaults to \code{"./"}.
+#' @param upstream_size An integer specifying the number of base pairs
+#'   upstream of the TSS to extract. Defaults to 300.
+#' @param verbose Logical. If \code{TRUE}, prints additional debug
+#'   information including the upstream locus titles. Defaults to \code{FALSE}.
 #'
-#' @return Returns `invisible(NULL)`. This function is called primarily for 
-#'   its side effects: generating and saving output files to the `workdir`.
+#' @return \code{invisible(NULL)}. This function is called for its side effects
+#'   of writing the following files to \code{workdir}:
+#'   \describe{
+#'     \item{\code{genes.csv}}{Gene feature annotation table extracted from
+#'       the GenBank file.}
+#'     \item{\code{context.txt}}{PTT-format genomic context tabular file.}
+#'     \item{\code{source.fasta}}{Raw genomic nucleotide FASTA sequences.}
+#'     \item{\code{upstream_locis.fasta}}{TSS upstream region sequences
+#'       with gene locus tag headers.}
+#'   }
 #'
-#' @section Output Files:
-#' The function generates the following files in the `workdir`:
-#' \itemize{
-#'   \item{\code{genes.csv}: }{A CSV file containing the extracted gene feature table.}
-#'   \item{\code{context.txt}: }{A PTT (Protein Table) format file containing the genomic context.}
-#'   \item{\code{source.fasta}: }{A FASTA file of the complete raw genomic sequence.}
-#'   \item{\code{upstream_locis.fasta}: }{A FASTA file containing the extracted upstream 
-#'     sequences. Headers are formatted as `[Gene_ID] [Source_Tag]`.}
+#' @details
+#' The extraction pipeline:
+#' \enumerate{
+#'   \item Reads the GenBank file and extracts the full genomic sequence.
+#'   \item Parses gene features and their coordinates.
+#'   \item Calculates the TSS position for each gene based on strand orientation.
+#'   \item Extracts the upstream region of the specified size from each TSS.
+#'   \item Tags each upstream sequence with its corresponding gene locus tag.
+#'   \item Exports all data to the working directory.
 #' }
 #'
-#' @importFrom seqtoolkit GenBank
-#' @importFrom seqtoolkit bioseq.fasta
-#' @importFrom seqtoolkit annotation.genomics
+#' @seealso \code{\link{make_genbank_proj}} for the higher-level workflow
+#'   that calls this function, \code{\link{tfbs_motif_scanning}} which
+#'   consumes the \code{upstream_locis.fasta} output.
+#'
+#' @examples
+#' \dontrun{
+#' extract_gbff(
+#'   src = "data/sequence.gbff",
+#'   workdir = "results/extracted",
+#'   upstream_size = 500,
+#'   verbose = TRUE
+#' )
+#' }
+#'
 #' @export
 const extract_gbff = function(src, workdir = "./", 
                               upstream_size = 150, 
