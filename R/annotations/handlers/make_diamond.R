@@ -1,7 +1,7 @@
 #' @title Build DIAMOND Reference Databases
 #'
 #' @description
-#' Generates DIAMOND binary databases (`.dmnd`) from source FASTA files.
+#' Generates DIAMOND binary databases (\code{.dmnd}) from source FASTA files.
 #' This utility function constructs three specific databases required for
 #' the annotation workflow: Enzyme Commission (EC) numbers, Subcellular
 #' locations, and Transcription Factors.
@@ -24,7 +24,18 @@
 #' }
 #' It utilizes \code{system2} to invoke the \code{diamond makedb} command.
 #'
+#' @seealso \code{\link{make_diamond_hits}} which calls this function
+#'   to ensure databases exist before running BLASTP searches.
+#'
+#' @examples
+#' \dontrun{
+#' # Build databases from a local data directory
+#' make_diamond(local_db = "/path/to/reference/fasta/files")
+#' }
+#'
 #' @importFrom base unlist
+#' @keywords internal
+#' @export
 const make_diamond = function(local_db, diamond = Sys.which("diamond")) {
     let enzyme_db = file.path(local_db,"ec_numbers.fasta");
     let cc_location = file.path(local_db, "subcellular.fasta");

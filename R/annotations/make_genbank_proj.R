@@ -5,50 +5,52 @@ imports "workflow" from "CellRender";
 #'
 #' @description
 #' Loads GenBank source files specified in the application configuration,
-#' initializes a new `project` object via `CellRender`, and saves the 
-#' resulting project state to disk. Additionally, it extracts and exports 
+#' initializes a new \code{project} object via \code{CellRender}, and saves the
+#' resulting project state to disk. Additionally, it extracts and exports
 #' essential FASTA files required for downstream bioinformatics analyses,
 #' such as motif scanning and homology searches.
 #'
-#' @param app A CellRender workflow app object. Primarily used in this 
-#'   function to resolve working file paths via \code{workfile()}.
-#' @param context A CellRender workflow context object. 
-#'   \emph{Note:} Currently unused in this specific function but required 
-#'   by the standard workflow execution signature.
-#'
-#' @return 
-#' This function is called for its side effects and returns \code{NULL} 
-#' invisibly. Upon execution, it generates the following local files:
+#' This function serves as the workflow entry point and automatically detects
+#' the processing mode from the \code{batch_process} configuration parameter:
 #' \itemize{
-#'   \item \strong{Project File:} The serialized project object (path defined 
-#'     by \code{get_config("proj_file")}).
-#'   \item \strong{upstream_locis.fasta:} Contains TSS (Transcription Start Site) 
-#'     upstream sequences, prepared for downstream motif site scanning.
-#'   \item \strong{proteins.fasta:} Contains genomic protein sequences, prepared 
-#'     for enzyme and Transcription Factor (TF) annotation via Diamond BLASTp.
+#'   \item \strong{Batch Mode} (\code{batch_process = TRUE}): Scans the source
+#'     directory for all GenBank files (\code{.gb}, \code{.gbk}, \code{.gbff})
+#'     and processes each one individually via \code{\link{make_genbank_proj_file}}.
+#'   \item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
+#'     single GenBank source file specified by the \code{src} configuration key.
 #' }
+#'
+#' @param app A CellRender workflow app object. Primarily used in this
+#'   function to resolve working file paths via \code{workfile()}.
+#' @param context A CellRender workflow context object.
+#'   \emph{Note:} Currently unused in this specific function but required
+#'   by the standard workflow execution interface.
+#'
+#' @return \code{invisible(NULL)}. This function is called for its side effects:
+#'   \itemize{
+#'     \item Creates a \code{builder.gcproj} project file in the release directory.
+#'     \item Exports \code{upstream_locis.fasta} (TSS upstream sequences for motif
+#'       scanning) and \code{proteins.fasta} (protein sequences for DIAMOND BLASTP)
+#'       to the working directory.
+#'   }
 #'
 #' @details
-#' The function executes a sequential pipeline:
-#' \enumerate{
-#'   \item \strong{Data Ingestion:} Reads GenBank files from the path 
-#'     specified in \code{get_config("src")} using \code{load_genbanks()}.
-#'   \item \strong{Object Creation:} Wraps the raw GenBank data into a 
-#'     standardized \code{project} object.
-#'   \item \strong{State Persistence:} Saves the core project object locally 
-#'     to avoid redundant parsing in future workflow steps.
-#'   \item \strong{Sequence Export:** Formats and writes specific sequence 
-#'     subsets (upstream loci and proteins) into standardized FASTA files 
-#'     tailored for specific downstream tools.
-#' }
+#' In batch mode, each GenBank file is processed in its own subdirectory
+#' (named by the model accession ID) within both the release and working
+#' directories. In single mode, files are written directly to the configured
+#' paths without subdirectory nesting.
 #'
-#' @importFrom CellRender project
-#' @importFrom CellRender workflow
+#' @seealso \code{\link{make_genbank_proj_file}} for the core per-file processing
+#'   logic, \code{\link{model_accession_id}} for accession ID extraction.
 #'
 #' @examples
-#' # Typically called internally by the CellRender workflow engine:
-#' # make_genbank_proj(current_app, current_context)
+#' \dontrun{
+#' # This function is typically invoked by the workflow engine:
+#' WorkflowRender::run(registry = CellRender::annotation_workflow)
+#' }
 #'
+#' @app make_genbank_proj
+#' @export
 [@app "make_genbank_proj"]
 const make_genbank_proj = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));

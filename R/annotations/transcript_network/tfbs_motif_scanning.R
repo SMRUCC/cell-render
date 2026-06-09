@@ -3,53 +3,55 @@ imports "bioseq.patterns" from "seqtoolkit";
 
 #' Scan for Transcription Factor Binding Sites (TFBS) Motifs
 #' 
-#' @description Performs motif scanning on gene upstream sequences to identify 
-#'   Transcription Factor Binding Sites (TFBS). This function is conditionally 
-#'   executed and will only run if the \code{TRN_network} module is enabled in 
+#' @description Performs motif scanning on gene upstream sequences to identify
+#'   Transcription Factor Binding Sites (TFBS). This function is conditionally
+#'   executed and will only run if the \code{TRN_network} module is enabled in
 #'   the virtual cell build configuration.
 #'
-#' @param app The application environment or object, used to determine the 
+#' @param app The application environment or object, used to determine the
 #'   output working directory via \code{workfile()}.
 #' @param context The execution context passed by the GCModeller framework.
 #'
-#' @details The function executes a specific workflow for regulatory network 
+#' @details The function executes a specific workflow for regulatory network
 #'   construction:
 #'   \enumerate{
-#'     \item \strong{Input Retrieval}: Reads the TSS upstream region sequences 
-#'       (generated from \code{make_genbank_proj}) as a FASTA file.
-#'     \item \strong{Database Query}: Constructs the path to the local MEME 
-#'       motif database using the \code{localdb} and \code{domain} configurations.
-#'     \item \strong{Scanning}: Calls \code{GCModeller::scan_motifs} to scan 
-#'       the upstream sequences against the motif database. The search uses 
-#'       a strict identity cutoff of \code{0.9} and utilizes multithreading 
-#'       based on the \code{n_threads} configuration.
-#'     \item \strong{Output}: Parses the motif seeds and their associated 
-#'       Transcription Factors (TFs) and writes the result to \code{tfbs_motifs.csv}.
+#'     \item \strong{Input Retrieval}: Reads the TSS upstream sequence FASTA
+#'       file produced by \code{\link{make_genbank_proj}}.
+#'     \item \strong{Module Check}: Verifies that the \code{TRN_network} build
+#'       module is enabled via \code{\link{check_build_module}}. If not, the
+#'       function exits early.
+#'     \item \strong{Motif Scanning}: Loads the TFBS motif database from the
+#'       package data directory and runs \code{GCModeller::scan_motifs} with
+#'       a 90\% identity cutoff.
+#'     \item \strong{Result Export}: Writes the motif scan results as a CSV file
+#'       (\code{tfbs_motifs.csv}) for downstream TRN construction by
+#'       \code{\link{make_TRN}}.
 #'   }
 #'
-#'   The output CSV file contains structured string representations of the 
-#'   identified motifs and TFs. The parsed text formats are as follows:
+#'   The output CSV contains motif hit records with the following structure:
 #'   \itemize{
-#'     \item \strong{Motif Seeds}: Formatted as 
-#'       \code{"{motif.id} {motif.family} [{motif.name}]"}
-#'       (e.g., \code{"AsnC; MOTIF 557 AsnC [YwrC - Bacillales] Motif_1"}).
-#'     \item \strong{Transcription Factors}: Mapped via TF name and protein model, 
-#'       formatted as \code{">{TF.name} {motif.id} Protein:{protein_model}"}
-#'       (e.g., \code{">jk0144 1269 Protein:144-jk0144"}).
+#'     \item \code{motif.id} — The motif identifier from the reference database.
+#'     \item \code{family} — The transcription factor family classification.
+#'     \item \code{name} — The descriptive name of the motif/TF.
+#'     \item \code{TF.name} — The gene locus tag of the matched transcription factor.
+#'     \item \code{protein_model} — The protein model identifier.
 #'   }
 #'
-#' @return This function does not return an object to the R environment. 
-#'   Its primary purpose is the side effect of generating the 
-#'   \code{tfbs_motifs.csv} file in the application working directory.
+#' @return \code{invisible(NULL)}. This function is called for its side effect
+#'   of writing the \code{tfbs_motifs.csv} file to the workflow workspace.
 #'
-#' @importFrom seqtoolkit bioseq.fasta bioseq.patterns
-#' 
+#' @seealso \code{\link{make_genbank_proj}} for upstream sequence extraction,
+#'   \code{\link{make_TRN}} for the downstream TRN construction step,
+#'   \code{\link{check_build_module}} for module enablement checking.
+#'
 #' @examples
-#' # This function is typically executed internally by the GCModeller 
-#' # virtual cell framework based on the [@app] decorator, rather than 
-#' # called directly by the user.
-#' # Example of manual configuration checks:
-#' # check_build_module("TRN_network")
+#' \dontrun{
+#' # This function is typically invoked by the workflow engine:
+#' WorkflowRender::run(registry = CellRender::annotation_workflow)
+#' }
+#'
+#' @app tfbs_motif_scanning
+#' @export
 [@app "tfbs_motif_scanning"]
 const tfbs_motif_scanning = function(app, context) {    
     # run motif site scanning if the TRN_network module build in virtual cell is enabled

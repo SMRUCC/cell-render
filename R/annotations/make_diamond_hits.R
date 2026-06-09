@@ -7,32 +7,55 @@
 #' the sequence alignment against EC numbers, subcellular locations, and
 #' transcription factors, and manages the working directory state.
 #'
-#' @param app The application object passed by the workflow engine. 
-#'   Used for workflow context and configuration.
+#' The function supports two execution modes based on the \code{batch_process}
+#' configuration:
+#' \itemize{
+#'   \item \strong{Batch Mode}: Iterates through all model subdirectories,
+#'     locating each model's protein FASTA file and running DIAMOND searches
+#'     in a model-specific workspace.
+#'   \item \strong{Single Mode}: Processes a single protein FASTA file from
+#'     the \code{make_genbank_proj} workspace output.
+#' }
+#'
+#' @param app The application object passed by the workflow engine.
+#'   Used for workflow context and configuration resolution via
+#'   \code{get_config()} and \code{workfile()}.
 #' @param context The execution context object provided by the workflow engine.
 #'
 #' @return This function is called for its side effects (creating .m8 output files).
 #'   It does not return a value explicitly to the R session, but generates
-#'   alignment result files in the workflow workspace.
+#'   alignment result files in the DIAMOND workspace directory:
+#'   \itemize{
+#'     \item \code{ec_number.m8} - EC number annotation hits
+#'     \item \code{subcellular.m8} - Subcellular localization hits
+#'     \item \code{transcript_factor.m8} - Transcription factor hits
+#'     \item \code{Pfam.csv} - Pfam domain annotation results
+#'   }
 #'
 #' @details
 #' The function performs the following steps:
 #' \enumerate{
-#'   \item Retrieves configuration for the DIAMOND path, database directory,
-#'         and thread count.
-#'   \item Sets the working directory to the specific workflow workspace.
-#'   \item Calls \code{make_diamond} to build binary databases from FASTA sources.
-#'   \item Runs DIAMOND blastp against three databases: 
-#'         \itemize{
-#'           \item \strong{ec_number}: Enzyme Commission numbers.
-#'           \item \strong{subcellular}: Subcellular location predictions.
-#'           \item \strong{transcript_factor}: Transcription factors.
-#'         }
+#'   \item Resolves the DIAMOND executable path from configuration or system PATH.
+#'   \item Creates DIAMOND reference databases from the local data directory
+#'     (EC numbers, subcellular locations, transcription factors) using
+#'     \code{\link{make_diamond}}.
+#'   \item Runs Pfam domain analysis via \code{\link{pfam_diamond}}.
+#'   \item Executes DIAMOND BLASTP searches against each reference database.
 #'   \item Restores the original working directory upon completion.
 #' }
 #'
-#' @seealso \code{\link{make_diamond}} for the database creation logic.
+#' @seealso \code{\link{make_diamond}} for database construction,
+#'   \code{\link{pfam_diamond}} for Pfam domain analysis,
+#'   \code{\link{make_terms}} for the downstream term-parsing step.
 #'
+#' @examples
+#' \dontrun{
+#' # This function is typically invoked by the workflow engine:
+#' WorkflowRender::run(registry = CellRender::annotation_workflow)
+#' }
+#'
+#' @app make_diamond_hits
+#' @export
 [@app "make_diamond_hits"]
 const make_diamond_hits = function(app, context) {
     let diamond = get_config("diamond");  # diamond path

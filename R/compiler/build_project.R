@@ -2,23 +2,46 @@
 #'
 #' Acts as the main entry point for building virtual cell models from
 #' GenBank annotation project files. It automatically detects the processing
-#' mode based on the "batch_process" configuration parameter:
+#' mode based on the \code{batch_process} configuration parameter:
 #' \itemize{
-#'   \item \strong{Batch Mode} (\code{batch_process = TRUE}): Iterates through 
-#'     all models returned by \code{list_batch_models()}, reading the 
-#'     \code{builder.gcproj} file in each directory and saving the compiled 
-#'     output as \code{model.xml}.
-#'   \item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a 
+#'   \item \strong{Batch Mode} (\code{batch_process = TRUE}): Iterates through
+#'     all models returned by \code{\link{list_batch_models}}, reading the
+#'     \code{builder.gcproj} file in each directory and saving the compiled
+#'     output as \code{model.xml} (or a taxonomy-name-based XML file).
+#'   \item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
 #'     single project file specified in the configuration, allowing a specific
 #'     virtual cell name (\code{vcell_name}) to be assigned.
 #' }
 #'
-#' @param app The application object or environment.
-#' @param context The execution context for the current application run.
+#' @param app The application object or environment, used for resolving
+#'   workflow configuration via \code{get_config()}.
+#' @param context The execution context object provided by the workflow engine.
 #'
-#' @return Returns \code{invisible(NULL)}. This function is called primarily 
-#'   for its side effects: generating virtual cell model XML files and logging 
-#'   progress messages to the console.
+#' @return \code{invisible(NULL)}. This function is called for its side effects:
+#'   \itemize{
+#'     \item In batch mode: compiles each model into a GCMarkup XML file
+#'       within its respective release subdirectory.
+#'     \item In single mode: compiles the model into the XML file specified
+#'       by the \code{model_file} configuration parameter.
+#'   }
+#'
+#' @details
+#' The function first loads the local data registry (required for constructing
+#' the virtual cell component network), then dispatches to
+#' \code{\link{compile_model}} for the actual compilation step.
+#'
+#' In batch mode, the output XML filename is derived from the organism's
+#' taxonomy name (sanitized via \code{normalizeFileName}) when available,
+#' falling back to the model directory basename otherwise.
+#'
+#' @seealso \code{\link{compile_model}} for the core compilation logic,
+#'   \code{\link{list_batch_models}} for batch model directory listing.
+#'
+#' @examples
+#' \dontrun{
+#' # This function is typically invoked by the workflow engine:
+#' WorkflowRender::run(registry = CellRender::annotation_workflow)
+#' }
 #'
 #' @app build_project
 #' @export
