@@ -121,6 +121,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         Dim protein_id As String
         Dim transporter As Dictionary(Of String, RankTerm) = ProteinLocations(annoSet.membrane_proteins)
         Dim missing_seqs As New List(Of String)
+        Dim ec_numbers = annoSet.ec_numbers
 
         Call $"processing compile of {nt.Count} genes!".debug
 
@@ -131,6 +132,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
             Dim gene_type As RNATypes
             Dim translate_id As String = If(gene.ProteinId, gene.locus_id & "_translate")
             Dim isTF As Boolean = tfs.ContainsKey(gene.locus_id)
+            Dim ec As ECNumberAnnotation = ec_numbers.TryGetValue(gene.locus_id)
 
             If nt_seq = "" Then
                 Call missing_seqs.Add(nt_seq)
@@ -146,7 +148,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                 End If
 
                 Call proteins.Add(New protein With {
-                    .name = protein_id,
+                    .name = If(ec?.proteinName, protein_id),
                     .peptide_chains = {translate_id},
                     .protein_id = protein_id,
                     .cellular_location = If(transporter.ContainsKey(gene.locus_id), transporter(gene.locus_id).term, "Cytoplasm")
@@ -165,7 +167,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                         End If
 
                         Call proteins.Add(New protein With {
-                            .name = protein_id,
+                            .name = If(ec?.proteinName, protein_id),
                             .peptide_chains = {translate_id},
                             .protein_id = protein_id,
                             .cellular_location = If(transporter.ContainsKey(gene.locus_id), transporter(gene.locus_id).term, "Cytoplasm")

@@ -97,6 +97,7 @@ Module workflow
                 For Each gene As GeneTable In proj.gene_table
                     If proj.annotations.ec_numbers.ContainsKey(gene.locus_id) Then
                         gene.EC_Number = {proj.annotations.ec_numbers(gene.locus_id).EC}
+                        gene.COG = proj.annotations.ec_numbers(gene.locus_id).proteinName
                     End If
                 Next
 
