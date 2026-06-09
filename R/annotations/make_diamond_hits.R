@@ -75,7 +75,7 @@ const make_diamond_hits = function(app, context) {
             "--out", output, 
             "--threads", n_threads,
             "--outfmt","6", 
-            "qseqid","stitle","pident","length","qstart","qend","sstart","send","evalue","bitscore"
+            "qseqid","stitle","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"
         ), shell=TRUE)
         ;
     }
