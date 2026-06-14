@@ -3350,8 +3350,8 @@ Global
 		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Release|x86.Build.0 = Release|Any CPU
 		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
-		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|x64.ActiveCfg = Release|x64
-		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|x64.Build.0 = Release|x64
+		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|x86.ActiveCfg = Release|Any CPU
 		{2B907A51-D330-476D-929A-9FE1A5F3FEE6}.Rsharp_app_release|x86.Build.0 = Release|Any CPU
 		{34E801C2-C03D-1C1C-7C22-EFA8CE7782A3}.CFD_win32|Any CPU.ActiveCfg = CFD_win32|Any CPU
