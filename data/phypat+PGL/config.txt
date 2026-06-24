@@ -1,0 +1,4 @@
+	value
+archive_name	phypat+PGL
+hmm_name	pfam
+hmm_f	Pfam-A.hmm

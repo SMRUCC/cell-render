@@ -1,0 +1,68 @@
+	accession	category
+8556	Alkaline phosphatase	Enzyme
+8557	Beta hemolysis	Enzyme
+8567	Coagulase production	Enzyme
+8532	Lipase	Enzyme
+8495	Nitrate to nitrite	Enzyme
+8535	Nitrite to gas	Enzyme
+8531	Pyrrolidonyl-beta-naphthylamide	Enzyme
+8501	Bile-susceptible	Growth
+8490	Colistin-Polymyxin susceptible	Growth
+8494	DNase	Growth
+8549	Growth at 42°C	Growth
+8548	Growth in 6.5% NaCl	Growth
+8558	Growth in KCN	Growth
+8525	Growth on MacConkey agar	Growth
+8489	Growth on ordinary blood agar	Growth
+8519	Mucate utilization	Growth
+8536	Arginine dihydrolase	Growth: Amino acid
+8520	Indole	Growth: Amino acid
+8484	Lysine decarboxylase	Growth: Amino acid
+8505	Ornithine decarboxylase	Growth: Amino acid
+8537	Acetate utilization	Growth: Carboxylic acid
+8526	Citrate	Growth: Carboxylic acid
+8540	Malonate	Growth: Carboxylic acid
+8511	Tartrate utilization	Growth: Carboxylic acid
+8508	Gas from glucose	Growth: Glucose
+8550	Glucose fermenter	Growth: Glucose
+8503	Glucose oxidizer	Growth: Glucose
+8545	Methyl red	Growth: Glucose
+8530	Voges Proskauer	Growth: Glucose
+8514	Cellobiose	Growth: Sugar
+8533	D-Mannitol	Growth: Sugar
+8547	D-Mannose	Growth: Sugar
+8566	D-Sorbitol	Growth: Sugar
+8523	D-Xylose	Growth: Sugar
+8563	Esculin hydrolysis	Growth: Sugar
+8529	Glycerol	Growth: Sugar
+8510	Lactose	Growth: Sugar
+8506	L-Arabinose	Growth: Sugar
+8516	L-Rhamnose	Growth: Sugar
+8488	Maltose	Growth: Sugar
+8491	Melibiose	Growth: Sugar
+8544	myo-Inositol	Growth: Sugar
+8546	ONPG (beta galactosidase)	Growth: Sugar
+8512	Raffinose	Growth: Sugar
+8477	Salicin	Growth: Sugar
+8524	Starch hydrolysis	Growth: Sugar
+8564	Sucrose	Growth: Sugar
+8534	Trehalose	Growth: Sugar
+8527	Urea hydrolysis	Growth: Sugar
+8517	Bacillus or coccobacillus	Morphology
+8482	Coccus	Morphology
+8553	Coccus - clusters or groups predominate	Morphology
+8487	Coccus - pairs or chains predominate	Morphology
+8504	Gram negative	Morphology
+8498	Gram positive	Morphology
+8486	Motile	Morphology
+8492	Spore formation	Morphology
+8493	Yellow pigment	Morphology
+8552	Aerobe	Oxygen
+8499	Anaerobe	Oxygen
+8554	Capnophilic	Oxygen
+8562	Facultative	Oxygen
+8478	Catalase	Oxygen:Enzyme
+8555	Oxidase	Oxygen:Enzyme
+8559	Hydrogen sulfide	Product
+8507	Casein hydrolysis	Proteolysis
+8479	Gelatin hydrolysis	Proteolysis
