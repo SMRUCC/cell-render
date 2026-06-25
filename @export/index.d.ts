@@ -88,6 +88,9 @@ declare namespace CellRender {
    function make_TRN(app: any, context: any): object;
    /**
    */
+   function metaTraits(diamond: any): object;
+   /**
+   */
    function model_accession_id(replicons: any): object;
    /**
      * @param outputdir default value Is ``null``.
