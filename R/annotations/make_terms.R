@@ -53,15 +53,20 @@ imports "annotation.workflow" from "seqtoolkit";
 const make_terms = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
     let diamond_workdir = WorkflowRender::workspace("make_diamond_hits");
+    let release_dir = get_config("release");
 
     if (batch_process) {
         for(let model_dir in tqdm(list_batch_models())) {
             let proj_file = file.path(model_dir, "builder.gcproj");
-            let blastp_dir = file.path(diamond_workdir, basename(model_dir));
+            let model_id = basename(model_dir);
+            let blastp_dir = file.path(diamond_workdir, model_id );
+            let traits = metaTraits(workfile(`make_genbank_proj://${model_id}/proteins.tsv`));
 
             proj_file |> make_blastp_term(
                 model_dir = blastp_dir
             );
+
+            write.csv(as.data.frame(traits ), file = file.path(release_dir, model_id, "metaTraits.csv"));
         }
     } else {
         get_config("proj_file") |> make_blastp_term(

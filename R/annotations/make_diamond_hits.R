@@ -117,8 +117,9 @@ const make_diamond_hits = function(app, context) {
                     workdir = dirname(proteins), 
                     diamond = diamond
                 );
-            }            
-
+                
+            }        
+            
             if (enable_blastp_cache) {                
                 let check_cache =  (file.size(ec_out) > check_size) 
                                 && (file.size(cc_out) > check_size) 
