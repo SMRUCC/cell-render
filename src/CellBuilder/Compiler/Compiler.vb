@@ -71,7 +71,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         m_compiledModel.traits = New Traits With {
             .phenotype = proj.annotations.traits _
                 .Where(Function(p) p.predict = PredictionResults.TRUE) _
-                .Select(Function(p) p.accession) _
+                .Select(Function(p) p.phenotypeId & ":" & p.accession) _
                 .ToArray
         }
 
