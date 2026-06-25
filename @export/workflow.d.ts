@@ -44,6 +44,16 @@ declare namespace workflow {
    */
    function set_tfbs(proj: object, tfbs: any, env?: object): any;
    /**
+    * 
+    * 
+     * @param proj -
+     * @param traits the phenotype annotation @``T:SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar.ReportJSON`` result data.
+     * @param env -
+     * 
+     * + default value Is ``null``.
+   */
+   function set_traits(proj: object, traits: any, env?: object): any;
+   /**
     * extract of the tss upstream location site sequence data
     * 
     * 
