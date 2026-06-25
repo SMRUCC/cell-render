@@ -43,7 +43,13 @@ const make_diamond = function(local_db, diamond = Sys.which("diamond")) {
 
     diamond <- unlist(diamond);
 
-    system2(diamond, c("makedb","--in",enzyme_db, "--db", "ec_number"), shell=TRUE);
-    system2(diamond, c("makedb","--in",cc_location, "--db", "subcellular"), shell=TRUE);
-    system2(diamond, c("makedb","--in",tf_db, "--db", "transcript_factor"), shell=TRUE);
+    if ((Sys.info()[['sysname']]) != "Win32NT") {
+        # run production on linux
+        system2(diamond, c("makedb","--in",enzyme_db, "--db", "ec_number"), shell=TRUE);
+        system2(diamond, c("makedb","--in",cc_location, "--db", "subcellular"), shell=TRUE);
+        system2(diamond, c("makedb","--in",tf_db, "--db", "transcript_factor"), shell=TRUE);
+    } else {
+        # run debug on windows
+        message("[windows_debug] Skip of make diamond database...");
+    }
 }
