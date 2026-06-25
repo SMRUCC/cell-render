@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
@@ -67,6 +68,12 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
     Protected Overrides Function CompileImpl(args As CommandLine) As Integer
         m_compiledModel.genome = BuildGenome()
         m_compiledModel.metabolismStructure = CreateMetabolismNetwork(m_compiledModel.genome)
+        m_compiledModel.traits = New Traits With {
+            .phenotype = proj.annotations.traits _
+                .Where(Function(p) p.predict = PredictionResults.TRUE) _
+                .Select(Function(p) p.accession) _
+                .ToArray
+        }
 
         Call "link the cellular component success!".info
         Call "compile virtual cell model job done!".info
