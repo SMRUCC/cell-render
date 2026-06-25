@@ -63,6 +63,7 @@ const make_terms = function(app, context) {
             let traits = metaTraits(workfile(`make_genbank_proj://${model_id}/proteins.tsv`));
 
             proj_file |> make_blastp_term(
+                traits = traits,
                 model_dir = blastp_dir
             );
 

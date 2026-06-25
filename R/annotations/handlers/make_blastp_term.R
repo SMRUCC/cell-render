@@ -49,7 +49,7 @@
 #'
 #' @keywords internal
 #' @export
-const make_blastp_term = function(proj_file, model_dir) {
+const make_blastp_term = function(proj_file, traits, model_dir) {
     # read the diamond blastp result files from the model worker dir
     let ec_number = read_m8(file.path(model_dir, "ec_number.m8"));
     let subcellular = read_m8(file.path(model_dir, "subcellular.m8"));
@@ -64,6 +64,8 @@ const make_blastp_term = function(proj_file, model_dir) {
         |> set_blastp_result(proj, key)
         ;
     }
+
+    proj |> set_traits(traits);
 
     # ec number terms for build the metabolic network
     write_proj_session(ec_number, "ec_number");
