@@ -70,7 +70,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         m_compiledModel.metabolismStructure = CreateMetabolismNetwork(m_compiledModel.genome)
         m_compiledModel.traits = New Traits With {
             .phenotype = proj.annotations.traits _
-                .Where(Function(p) p.predict = PredictionResults.TRUE) _
+                .Where(Function(p) p.predict = PredictionResults.TRUE AndAlso p.confidence >= 0.85) _
                 .Select(Function(p) p.phenotypeId & ":" & p.accession) _
                 .ToArray
         }
