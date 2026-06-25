@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.LocalBLAST.Application.BBH
@@ -23,17 +24,22 @@ Public Module ProjectIO
     End Function
 
     <Extension>
-    Private Iterator Function LoadHitCollection(zip As ZipStream, file As String) As IEnumerable(Of HitCollection)
+    Private Function LoadHitCollection(zip As ZipStream, file As String) As IEnumerable(Of HitCollection)
+        Return loadJSONL(Of HitCollection)(zip, file)
+    End Function
+
+    <Extension>
+    Private Iterator Function loadJSONL(Of T)(zip As ZipStream, file As String) As IEnumerable(Of T)
         Dim lines As IEnumerable(Of String) = zip.ReadLines(file)
 
         If lines Is Nothing Then
             Return
         Else
-            Dim hit As HitCollection
+            Dim hit As T
 
             For Each line As String In lines
                 If Not line.StringEmpty(, True) Then
-                    hit = line.LoadJSON(Of HitCollection)(throwEx:=False)
+                    hit = line.LoadJSON(Of T)(throwEx:=False)
 
                     If Not hit Is Nothing Then
                         Yield hit
@@ -78,6 +84,7 @@ Public Module ProjectIO
         Dim operon_hits As HitCollection() = zip.LoadHitCollection("/localblast/operon_hits.jsonl").ToArray
         Dim tf_hits As HitCollection() = zip.LoadHitCollection("/localblast/tf_hits.jsonl").ToArray
         Dim transport_blast As HitCollection() = zip.LoadHitCollection("/localblast/transporter.jsonl").ToArray
+        Dim traits As ReportJSON() = zip.loadJSONL(Of ReportJSON)("/traits.jsonl").ToArray
 
         Dim operons As AnnotatedOperon() = zip.ReadLines("/localblast/operons.jsonl") _
             .SafeQuery _
@@ -121,7 +128,8 @@ Public Module ProjectIO
             .tf_hits = tf_hits,
             .transcript_factors = tfset,
             .transporter = transport_blast,
-            .membrane_proteins = membranes
+            .membrane_proteins = membranes,
+            .traits = traits
         }
 
         Return New GenBankProject With {
@@ -162,6 +170,7 @@ Public Module ProjectIO
         Call fs.WriteLines(annos.transcript_factors.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transcript_factors.jsonl")
         Call fs.WriteLines(annos.operons.SafeQuery.Select(Function(e) e.GetJson), "/localblast/operons.jsonl")
         Call fs.WriteLines(annos.tfbs_hits.SafeQuery.Values.IteratesALL.Select(Function(e) e.GetJson), "/tfbs.jsonl")
+        Call fs.WriteLines(annos.traits.SafeQuery.Select(Function(r) r.GetJson), "/traits.jsonl")
 
         Call fs.WriteLines(annos.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
         Call fs.WriteLines(annos.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
