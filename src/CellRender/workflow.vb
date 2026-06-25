@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
@@ -122,6 +123,28 @@ Module workflow
         End Select
 
         Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <param name="traits">the phenotype annotation <see cref="ReportJSON"/> result data.</param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
+    <ExportAPI("set_traits")>
+    Public Function set_traits(proj As GenBankProject, <RRawVectorArgument> traits As Object, Optional env As Environment = Nothing) As Object
+        Dim phenotypes As PipeIterator(Of ReportJSON) = pipeline.Stream(Of ReportJSON)(traits, env)
+
+        If phenotypes.isError Then
+            Return phenotypes.getError
+        ElseIf proj.annotations Is Nothing Then
+            proj.annotations = New AnnotationSet
+        End If
+
+        proj.annotations.traits = phenotypes.getData
+
+        Return proj
     End Function
 
     <ExportAPI("set_tfbs")>
