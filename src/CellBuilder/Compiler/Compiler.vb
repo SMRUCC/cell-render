@@ -323,7 +323,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                 For Each site As MotifMatch In motifSites(hit.HitName)
                     Yield New transcription With {
                         .regulator = regulator,
-                        .targets = {site.title},
+                        .operonId = site.title,
                         .motif = New Motif With {
                             .left = site.start,
                             .right = site.ends,
