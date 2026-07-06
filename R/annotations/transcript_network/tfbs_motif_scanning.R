@@ -64,11 +64,13 @@ const tfbs_motif_scanning = function(app, context) {
     if (check_build_module("TRN_network")) {
         if (batch_process) {
             let source_dir = WorkflowRender::workspace("make_genbank_proj");
+            let workdir = WorkflowRender::workspace("tfbs_motif_scanning");
 
             for(let model_dir in list_batch_models()) {
                 # set the TSS upstream region site fasta file
-                let upstream_seq = file.path(model_dir, "upstream_locis.fasta");
-                let outfile = file.path(model_dir, "tfbs_motifs.csv");
+                let model_id = basename(model_dir);
+                let upstream_seq = file.path(source_dir, model_id, "upstream_locis.fasta");
+                let outfile = file.path(workdir, model_id, "tfbs_motifs.csv");
                 # make TFBS site scanning on the TSS upstream region sites
                 # search site against the reference motif search.
                 let motifs = GCModeller::scan_motifs(
