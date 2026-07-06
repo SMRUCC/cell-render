@@ -57,6 +57,8 @@ const tfbs_motif_scanning = function(app, context) {
     # run this diamond blastp alignment workflow in batch process mode?
     let batch_process = as.logical(get_config("batch_process"));
     let n_threads = get_config("n_threads");
+    # get the motif database directory that contains multiple meme motif model files
+    let motifs_db = file.path(get_config("localdb"), "motifs", get_config("domain"));
 
     # run motif site scanning if the TRN_network module build in virtual cell is enabled
     if (check_build_module("TRN_network")) {
@@ -64,13 +66,25 @@ const tfbs_motif_scanning = function(app, context) {
             let source_dir = WorkflowRender::workspace("make_genbank_proj");
 
             for(let model_dir in list_batch_models()) {
-                stop(model_dir);
+                # set the TSS upstream region site fasta file
+                let upstream_seq = file.path(model_dir, "upstream_locis.fasta");
+                let outfile = file.path(model_dir, "tfbs_motifs.csv");
+                # make TFBS site scanning on the TSS upstream region sites
+                # search site against the reference motif search.
+                let motifs = GCModeller::scan_motifs(
+                    db = motifs_db, 
+                    seqs = upstream_seq, 
+                    workdir = model_dir, 
+                    n_threads = n_threads,
+                    identities_cutoff = 0.9
+                );
+
+                write.csv(motifs, file = outfile, row.names = FALSE);
             }
         } else {
             # set the TSS upstream region site fasta file
             let upstream_seq = workfile("make_genbank_proj://upstream_locis.fasta");
-            # get the motif database directory that contains multiple meme motif model files
-            let motifs_db = file.path(get_config("localdb"), "motifs", get_config("domain"));
+            
             # make TFBS site scanning on the TSS upstream region sites
             # search site against the reference motif search.
             let motifs = GCModeller::scan_motifs(
