@@ -81,6 +81,8 @@ const tfbs_motif_scanning = function(app, context) {
                     identities_cutoff = 0.9
                 );
 
+                message(`motif site scan success for ${model_id}, found ${nrow(motifs)} motif site matches!`);
+
                 write.csv(motifs, file = outfile, row.names = FALSE);
             }
         } else {
