@@ -76,7 +76,7 @@ const tfbs_motif_scanning = function(app, context) {
                 let motifs = GCModeller::scan_motifs(
                     db = motifs_db, 
                     seqs = upstream_seq, 
-                    workdir = model_dir, 
+                    workdir = dirname(outfile), 
                     n_threads = n_threads,
                     identities_cutoff = 0.9
                 );
