@@ -59,7 +59,7 @@ const tfbs_motif_scanning = function(app, context) {
     let n_threads = get_config("n_threads");
     # get the motif database directory that contains multiple meme motif model files
     let motifs_db = file.path(get_config("localdb"), "motifs", get_config("domain"));
-    let motif_pvalcut = 1e-5;
+    let motif_pvalcut = 1e-6;
 
     # run motif site scanning if the TRN_network module build in virtual cell is enabled
     if (check_build_module("TRN_network")) {
@@ -79,7 +79,8 @@ const tfbs_motif_scanning = function(app, context) {
                     seqs = upstream_seq, 
                     workdir = dirname(outfile), 
                     n_threads = n_threads,
-                    pval_cutoff = motif_pvalcut
+                    pval_cutoff = motif_pvalcut,
+                    scan_reverse = FALSE
                 );
 
                 message(`motif site scan success for ${model_id}, found ${nrow(motifs)} motif site matches!`);
@@ -97,7 +98,8 @@ const tfbs_motif_scanning = function(app, context) {
                 seqs = upstream_seq, 
                 workdir = workfile(app, "tfbs_sites"), 
                 n_threads = get_config("n_threads"),
-                pval_cutoff = motif_pvalcut
+                pval_cutoff = motif_pvalcut,
+                scan_reverse = FALSE
             );
             let outfile = workfile(app, "tfbs_motifs.csv");
 
