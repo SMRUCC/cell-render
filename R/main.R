@@ -90,6 +90,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      debug = c()) {
 
     let batch_process as boolean = dir.exists(src); 
+    let workdir_root = outputdir || dirname(src);
     let args = list(
         src        = normalizePath(src),
         localdb    = localdb || normalizePath(@datadir),
@@ -98,10 +99,10 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         n_threads  = n_threads,
         domain     = .Internal::first(domain),
         builds     = builds,
-        release    = file.path(workdir_root(), "release"),
-        gem_libout = file.path(workdir_root(), "GEMs"),
-        proj_file  = file.path(workdir_root(), "release", "builder.gcproj"),
-        model_file = file.path(workdir_root(), "release", "model.xml"),
+        release    = file.path(workdir_root, "release"),
+        gem_libout = file.path(workdir_root, "GEMs"),
+        proj_file  = file.path(workdir_root, "release", "builder.gcproj"),
+        model_file = file.path(workdir_root, "release", "model.xml"),
         vcell_name = name,
         # the input source filesystem handle is a directory
         # that contains multiple genbank assembly files
@@ -113,12 +114,12 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         batch_mode = batch_mode
     );
 
-    WorkflowRender::init_context(outputdir || dirname(src));
+    WorkflowRender::init_context(workdir_root );
     WorkflowRender::set_config(args);
 
     if (batch_mode == "sequential") {
         sequential_batch(src, 
-            outputdir = outputdir || dirname(src), 
+            outputdir = workdir_root , 
             args = args);
     } else {
         if (length(debug) > 0) {
