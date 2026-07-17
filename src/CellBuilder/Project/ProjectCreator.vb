@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Linq
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank.GBFF.Keywords.FEATURES
 Imports SMRUCC.genomics.ComponentModel.Annotation
@@ -69,9 +70,22 @@ Public Class ProjectCreator
                     End Sub)
     End Sub
 
-    Public Function FromGenBank(replicons As IEnumerable(Of GBFF.File)) As GenBankProject
+    Public Function FromGenBank(replicons As IEnumerable(Of GBFF.File), Optional strict As Boolean = True) As GenBankProject
         For Each replicon As GBFF.File In replicons
-            Call ScanReplicon(replicon)
+            Try
+                Call ScanReplicon(replicon)
+            Catch ex As Exception
+                Dim message As String = $"invalid genbank source model: {replicon.Accession.ToString}!"
+
+                If strict Then
+                    Throw New InvalidDataException(message)
+                Else
+                    Call message.warning
+
+                    Call App.LogException(message)
+                    Call App.LogException(ex)
+                End If
+            End Try
         Next
 
         Dim proj As New GenBankProject With {

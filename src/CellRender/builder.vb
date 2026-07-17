@@ -32,13 +32,13 @@ Module ProjectBuilder
     <ExportAPI("new")>
     <RApiReturn(GetType(GenBankProject))>
     Public Function create(<RRawVectorArgument> replicons As Object, Optional env As Environment = Nothing) As Object
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of GBFF.File)(replicons, env)
+        Dim pull As PipeIterator(Of GBFF.File) = pipeline.Stream(Of GBFF.File)(replicons, env)
 
         If pull.isError Then
             Return pull.getError
         End If
 
-        Return New ProjectCreator().FromGenBank(pull.populates(Of GBFF.File)(env))
+        Return New ProjectCreator().FromGenBank(pull)
     End Function
 
     <ExportAPI("save")>
