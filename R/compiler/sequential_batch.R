@@ -34,7 +34,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
             batch_process = TRUE
         );
         let model_id = basename(model_proj );
-        let proteins = file.path(model_proj , "proteins.fasta");
+        let proteins = file.path(workdir,model_id , "proteins.fasta");
         let protein_pfam = file.path(dirname(proteins), "Pfam.csv");
 
         model_dir <- file.path(workdir, model_id);
