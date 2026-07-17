@@ -67,7 +67,7 @@ const singlecells_analysis = function(embedding_file, workdir = "./") {
         data[, "taxonomy"] <- taxonomy_name(taxon, rank = rank) ;
         group_dir = file.path(workdir, "singlecells", `group_${tolower(rank)}`);
 
-        dir.create(group_dir);
+        dir.create(group_dir, showWarnings=FALSE);
         native_r(singlecells_viz, list(
             rawdata = data, 
             outputdir = group_dir

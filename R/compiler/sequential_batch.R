@@ -43,7 +43,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
         model_dir <- file.path(workdir, model_id);
 
         # create workspace dir for save diamond blastp result
-        dir.create(model_dir);
+        dir.create(model_dir, showWarnings=FALSE);
 
         message(`make search for: ${proteins}`);
         message(`diamond blastp export to: ${model_dir}`);

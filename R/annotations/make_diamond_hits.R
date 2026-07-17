@@ -86,7 +86,7 @@ const make_diamond_hits = function(app, context) {
             model_dir <- file.path(temp_dir, model_id);
 
             # create workspace dir for save diamond blastp result
-            dir.create(model_dir);
+            dir.create(model_dir, showWarnings=FALSE);
 
             message(`make search for: ${proteins}`);
             message(`diamond blastp export to: ${model_dir}`);

@@ -71,7 +71,7 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
     proteins = normalizePath(proteins);
     diamond  = unlist(diamond);
     
-    dir.create(workdir);
+    dir.create(workdir, showWarnings=FALSE);
     setwd(workdir);
     system2(diamond, c("makedb","--in",proteins, "--db", protein_id), shell=TRUE);
     system2(diamond, c("blastp",

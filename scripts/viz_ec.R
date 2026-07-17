@@ -358,8 +358,8 @@ visualize_ec_level1 <- function(file_path,
   
   # 创建输出目录
   if (!dir.exists(output_dir)) {
-    dir.create(output_dir, recursive = TRUE)
-    cat(sprintf("\nCreated output directory: %s\n", output_dir))
+    dir.create(output_dir, recursive = TRUE, showWarnings=FALSE);
+    cat(sprintf("\nCreated output directory: %s\n", output_dir));
   }
   
   # 读取数据
