@@ -37,6 +37,9 @@ declare namespace CellRender {
    */
    function diamond_embedding(diamond_result: any, workdir?: any, union_contigs?: any): object;
    /**
+   */
+   function diamond_interop(): object;
+   /**
      * @param workdir default value Is ``./``.
      * @param node_equals default value Is ``0.999``.
    */
@@ -106,10 +109,11 @@ declare namespace CellRender {
      * @param enable_blastp_cache default value Is ``false``.
      * @param enzyme_fuzzy default value Is ``false``.
      * @param gems_library_mode default value Is ``true``.
+     * @param batch_mode default value Is ``Call "c"("batch", "sequential")``.
      * @param n_threads default value Is ``32``.
      * @param debug default value Is ``Call "c"()``.
    */
-   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, enable_blastp_cache?: any, enzyme_fuzzy?: any, gems_library_mode?: any, n_threads?: any, debug?: any): object;
+   function modelling_cellgraph(src: any, outputdir?: any, name?: any, up_len?: any, localdb?: any, diamond?: any, domain?: any, builds?: any, enable_blastp_cache?: any, enzyme_fuzzy?: any, gems_library_mode?: any, batch_mode?: any, n_threads?: any, debug?: any): object;
    /**
    */
    function pairwise_builder(proj_dir: any): object;
@@ -124,6 +128,11 @@ declare namespace CellRender {
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
    */
    function pfam_diamond(proteins: any, workdir?: any, diamond?: any): object;
+   /**
+     * @param outputdir default value Is ``./``.
+     * @param args default value Is ``Call "list"()``.
+   */
+   function sequential_batch(src: any, outputdir?: any, args?: any): object;
    /**
      * @param workdir default value Is ``./``.
    */

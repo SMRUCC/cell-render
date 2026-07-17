@@ -11,6 +11,7 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>enzyme.fuzzy</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>gems.library.mode</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>batch.mode</i> = 'c'('batch', 'sequential'),
     <i>n.threads</i> = <span style='color: green;'>32</span>,
     <i>debug</i> = 'c'())
 .SH SYNOPSIS
@@ -25,6 +26,7 @@ modelling_cellgraph \- modelling_cellgraph(src,
     <i>enable.blastp.cache</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>enzyme.fuzzy</i> = <span style='color: blue !important;'>FALSE</span>,
     <i>gems.library.mode</i> = <span style='color: blue !important;'>TRUE</span>,
+    <i>batch.mode</i> = 'c'('batch', 'sequential'),
     <i>n.threads</i> = <span style='color: green;'>32</span>,
     <i>debug</i> = 'c'())\fR
 .SH DESCRIPTION
@@ -72,6 +74,9 @@ Only used in single-project mode. Defaults to \code{"virtual_cell"}.
 .PP
 .PP
 \fBgems.library.mode\fB \fR\- TRUE. 
+.PP
+.PP
+\fBbatch.mode\fB \fR\- 'c'('batch', 'sequential'). 
 .PP
 .PP
 \fBn.threads\fB \fR\- 32. 
