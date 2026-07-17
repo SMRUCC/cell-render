@@ -83,7 +83,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
         message(`[${model_id}] diamond blastp search job done!`);
 
         let proj_file = file.path(model_proj , "builder.gcproj");
-        let traits = metaTraits(file.path(model_proj , "proteins.tsv"));
+        let traits = metaTraits(file.path(model_dir, "proteins.tsv"));
 
         message("save blastp terms into model project!");
         proj_file |> make_blastp_term(
@@ -91,7 +91,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
             model_dir = model_dir
         );
 
-        write.csv(as.data.frame(traits ), file = file.path(model_dir, "metaTraits.csv"));
+        write.csv(as.data.frame(traits ), file = file.path(model_proj, "metaTraits.csv"));
 
         let save_xml = file.path(model_dir, "model.xml");
 
