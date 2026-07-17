@@ -27,11 +27,13 @@ declare namespace project {
     * 
     * 
      * @param replicons a vector of the ncbi genbank object of the genome replicons
+     * @param strict 
+     * + default value Is ``true``.
      * @param env -
      * 
      * + default value Is ``null``.
    */
-   function new(replicons: any, env?: object): object;
+   function new(replicons: any, strict?: boolean, env?: object): object;
    /**
      * @param env default value Is ``null``.
    */

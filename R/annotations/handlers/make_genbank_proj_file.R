@@ -67,7 +67,7 @@ const make_genbank_proj_file = function(src, release_dir,
                                         batch_process = FALSE) {
 
     let gb_src = load_genbanks(src) |> as.vector();
-    let proj = project::new(gb_src);
+    let proj = project::new(gb_src, strict = FALSE);
     let model_id = ifelse(batch_process, model_accession_id(gb_src), ""); 
     let proj_file = file.path(release_dir, model_id, "builder.gcproj");
 
