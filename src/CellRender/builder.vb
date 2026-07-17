@@ -31,14 +31,17 @@ Module ProjectBuilder
     ''' <returns></returns>
     <ExportAPI("new")>
     <RApiReturn(GetType(GenBankProject))>
-    Public Function create(<RRawVectorArgument> replicons As Object, Optional env As Environment = Nothing) As Object
+    Public Function create(<RRawVectorArgument> replicons As Object,
+                           Optional strict As Boolean = True,
+                           Optional env As Environment = Nothing) As Object
+
         Dim pull As PipeIterator(Of GBFF.File) = pipeline.Stream(Of GBFF.File)(replicons, env)
 
         If pull.isError Then
             Return pull.getError
         End If
 
-        Return New ProjectCreator().FromGenBank(pull)
+        Return New ProjectCreator().FromGenBank(pull, strict:=strict)
     End Function
 
     <ExportAPI("save")>
