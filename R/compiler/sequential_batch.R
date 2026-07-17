@@ -79,7 +79,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
         message(`[${model_id}] diamond blastp search job done!`);
 
         let proj_file = file.path(model_proj , "builder.gcproj");
-        let traits = metaTraits(file.path(model_dir, "proteins.tsv"));
+        let traits = metaTraits(file.path(model_proj , "proteins.tsv"));
 
         proj_file |> make_blastp_term(
             traits = traits,
