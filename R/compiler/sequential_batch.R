@@ -9,6 +9,18 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
     # reference database dir path
     let localdb = get_config("localdb");  
     let diamond_blastp = diamond_interop(); 
+    let gems_library_mode = as.logical(get_config("gems_library_mode"));
+    let gemlib_dir = get_config("gem_libout");
+    let enzyme_fuzzy = as.logical(get_config("enzyme_fuzzy"));
+    let registry = workflow::open_datapool(
+        dir = get_config("localdb"), 
+        enzyme_fuzzy = enzyme_fuzzy
+    );
+
+    registry <- set_kegg_pathways(registry, 
+        maps = GCModeller::load_kegg_maps(), 
+        reactions = GCModeller::kegg_reactions()
+    );
 
     message(`Build virtualcell community model based ${length(genbank_files)} genbank source files!`);
     setwd(workdir);
@@ -66,6 +78,28 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
 
         message(`[${model_id}] diamond blastp search job done!`);
 
-        
+        let proj_file = file.path(model_dir, "builder.gcproj");
+        let traits = metaTraits(file.path(model_dir, "proteins.tsv"));
+
+        proj_file |> make_blastp_term(
+            traits = traits,
+            model_dir = model_dir
+        );
+
+        write.csv(as.data.frame(traits ), file = file.path(model_dir, "metaTraits.csv"));
+
+        let save_xml = file.path(model_dir, "model.xml");
+
+        if (gems_library_mode) {
+            let tax_name = project::load(proj_file) |> scientific_name();
+            let filename = normalizeFileName(tax_name, FALSE,maxchars = 64);
+
+            save_xml <- file.path(gemlib_dir, `${filename}.xml`);
+        }
+
+        message(`run build virtualcell model of '${basename(model_dir)}'!`);
+
+        proj_file |> compile_model(
+            save_model = save_xml, registry = registry);
     }
 }
