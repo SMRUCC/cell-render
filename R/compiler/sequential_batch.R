@@ -28,6 +28,9 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
     make_diamond(localdb, diamond);
 
     for(let file in genbank_files) {
+        message("start to run modelling of:");
+        message(file);
+
         let model_proj = file |> make_genbank_proj_file(
             release_dir = release_dir,
             workdir = workdir,
@@ -68,8 +71,9 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
 
         check_cache <- enable_blastp_cache && check_cache;
 
+        if (!check_cache ) {    
+            message("run diamond blastp search!");
 
-        if (!check_cache ) {                
             # then run diamond blastp search against the reference database
             diamond_blastp("ec_number", proteins, output = ec_out);
             diamond_blastp("subcellular", proteins, output = cc_out);
@@ -81,6 +85,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
         let proj_file = file.path(model_proj , "builder.gcproj");
         let traits = metaTraits(file.path(model_proj , "proteins.tsv"));
 
+        message("save blastp terms into model project!");
         proj_file |> make_blastp_term(
             traits = traits,
             model_dir = model_dir
@@ -101,5 +106,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
 
         proj_file |> compile_model(
             save_model = save_xml, registry = registry);
+
+        message("~ single model job done!");
     }
 }
