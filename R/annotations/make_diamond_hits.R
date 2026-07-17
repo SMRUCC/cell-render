@@ -65,20 +65,7 @@ const make_diamond_hits = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
     let n_threads = get_config("n_threads");
     let workdir = getwd();
-
-    # a helper wrapper function of the diamond blastp search 
-    # commandline calls
-    let diamond_blastp = function(db, proteins, output) {
-        system2(diamond, c("blastp",
-            "--db", db, 
-            "--query", proteins, 
-            "--out", output, 
-            "--threads", n_threads,
-            "--outfmt","6", 
-            "qseqid","stitle","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"
-        ), shell=TRUE)
-        ;
-    }
+    let diamond_blastp = diamond_interop(); 
     let temp_dir = WorkflowRender::workspace(app);
 
     # set current workdir to the temp workspace of 

@@ -83,4 +83,6 @@ const make_genbank_proj_file = function(src, release_dir,
     # search
     write.fasta(tss_upstream(proj), file = file.path(workdir, "upstream_locis.fasta")); 
     workflow::save_proteins(proj, file = file.path(workdir,"proteins.fasta"));
+
+    return(dirname(proj_file));
 }
