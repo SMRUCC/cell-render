@@ -90,9 +90,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      debug = c()) {
 
     let batch_process as boolean = dir.exists(src); 
-
-    WorkflowRender::init_context(outputdir || dirname(src));
-    WorkflowRender::set_config(list(
+    let args = list(
         src        = normalizePath(src),
         localdb    = localdb || normalizePath(@datadir),
         up_len     = up_len,
@@ -113,15 +111,24 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         gems_library_mode = gems_library_mode,
         enzyme_fuzzy = enzyme_fuzzy,
         batch_mode = batch_mode
-    ));
+    );
 
-    if (length(debug) > 0) {
-        WorkflowRender::definePipeline(debug);
-    }    
+    WorkflowRender::init_context(outputdir || dirname(src));
+    WorkflowRender::set_config(args);
 
-    # config run workflow
-    WorkflowRender::run(registry = CellRender::annotation_workflow);
-    WorkflowRender::finalize();
+    if (batch_mode == "sequential") {
+        sequential_batch(src, 
+            outputdir = outputdir || dirname(src), 
+            args = args);
+    } else {
+        if (length(debug) > 0) {
+            WorkflowRender::definePipeline(debug);
+        }    
+
+        # config run workflow
+        WorkflowRender::run(registry = CellRender::annotation_workflow);
+        WorkflowRender::finalize();
+    }
 
     invisible(NULL);
 }
