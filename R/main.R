@@ -85,6 +85,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
                                      enable_blastp_cache = FALSE,
                                      enzyme_fuzzy = FALSE,
                                      gems_library_mode = TRUE,
+                                     batch_mode = c("batch","sequential"),
                                      n_threads = 32, 
                                      debug = c()) {
 
@@ -110,7 +111,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         batch_process = batch_process,
         enable_blastp_cache = enable_blastp_cache,
         gems_library_mode = gems_library_mode,
-        enzyme_fuzzy = enzyme_fuzzy
+        enzyme_fuzzy = enzyme_fuzzy,
+        batch_mode = batch_mode
     ));
 
     if (length(debug) > 0) {
