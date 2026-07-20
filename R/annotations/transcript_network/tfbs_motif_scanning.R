@@ -64,34 +64,7 @@ const tfbs_motif_scanning = function(app, context) {
     # run motif site scanning if the TRN_network module build in virtual cell is enabled
     if (check_build_module("TRN_network")) {
         if (batch_process) {
-            let source_dir = WorkflowRender::workspace("make_genbank_proj");
-            let workdir = WorkflowRender::workspace("tfbs_motif_scanning");
-
-            for(let model_dir in list_batch_models()) {
-                # set the TSS upstream region site fasta file
-                let model_id = basename(model_dir);
-                let upstream_seq = file.path(source_dir, model_id, "upstream_locis.fasta");
-                let outfile = file.path(workdir, model_id, "tfbs_motifs.csv");
-
-                if (!file.exists(outfile)) {
-                    # make TFBS site scanning on the TSS upstream region sites
-                    # search site against the reference motif search.
-                    let motifs = GCModeller::scan_motifs(
-                        db = motifs_db, 
-                        seqs = upstream_seq, 
-                        workdir = dirname(outfile), 
-                        n_threads = n_threads,
-                        pval_cutoff = motif_pvalcut,
-                        scan_reverse = FALSE
-                    );
-
-                    message(
-                        `motif site scan success for ${model_id}, found ${nrow(motifs)} motif site matches!`
-                    );
-
-                    write.csv(motifs, file = outfile, row.names = FALSE);
-                }
-            }
+            scan_tfbs_batch(motifs_db, n_threads = n_threads, motif_pvalcut = motif_pvalcut);
         } else {
             # set the TSS upstream region site fasta file
             let upstream_seq = workfile("make_genbank_proj://upstream_locis.fasta");
@@ -102,7 +75,7 @@ const tfbs_motif_scanning = function(app, context) {
                 db = motifs_db, 
                 seqs = upstream_seq, 
                 workdir = workfile(app, "tfbs_sites"), 
-                n_threads = get_config("n_threads"),
+                n_threads = n_threads,
                 pval_cutoff = motif_pvalcut,
                 scan_reverse = FALSE
             );
@@ -126,3 +99,33 @@ const tfbs_motif_scanning = function(app, context) {
     }
 }
 
+const scan_tfbs_batch = function(motifs_db, n_threads = 8, motif_pvalcut = 1e-6) {
+    let source_dir = WorkflowRender::workspace("make_genbank_proj");
+    let workdir = WorkflowRender::workspace("tfbs_motif_scanning");
+
+    for(let model_dir in list_batch_models()) {
+        # set the TSS upstream region site fasta file
+        let model_id = basename(model_dir);
+        let upstream_seq = file.path(source_dir, model_id, "upstream_locis.fasta");
+        let outfile = file.path(workdir, model_id, "tfbs_motifs.csv");
+
+        if (!file.exists(outfile)) {
+            # make TFBS site scanning on the TSS upstream region sites
+            # search site against the reference motif search.
+            let motifs = GCModeller::scan_motifs(
+                db = motifs_db, 
+                seqs = upstream_seq, 
+                workdir = dirname(outfile), 
+                n_threads = n_threads,
+                pval_cutoff = motif_pvalcut,
+                scan_reverse = FALSE
+            );
+
+            message(
+                `motif site scan success for ${model_id}, found ${nrow(motifs)} motif site matches!`
+            );
+
+            write.csv(motifs, file = outfile, row.names = FALSE);
+        }
+    }
+}
