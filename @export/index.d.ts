@@ -32,6 +32,9 @@ declare namespace CellRender {
    */
    function compile_model(proj_file: any, save_model: any, registry: any, vcell_name?: any): object;
    /**
+   */
+   function diamond_batch(diamond_blastp: any, diamond: any, temp_dir: any): object;
+   /**
      * @param workdir default value Is ``./``.
      * @param union_contigs default value Is ``250``.
    */
@@ -128,6 +131,11 @@ declare namespace CellRender {
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
    */
    function pfam_diamond(proteins: any, workdir?: any, diamond?: any): object;
+   /**
+     * @param n_threads default value Is ``8``.
+     * @param motif_pvalcut default value Is ``1E-06``.
+   */
+   function scan_tfbs_batch(motifs_db: any, n_threads?: any, motif_pvalcut?: any): object;
    /**
      * @param outputdir default value Is ``./``.
      * @param args default value Is ``Call "list"()``.

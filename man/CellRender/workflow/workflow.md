@@ -7,6 +7,6 @@ annotation workflow
 + [enzyme_table](workflow/enzyme_table.1) get enzyme annotation result table from the project model
 + [set_blastp_result](workflow/set_blastp_result.1) 
 + [set_traits](workflow/set_traits.1) 
-+ [set_tfbs](workflow/set_tfbs.1) 
++ [set_tfbs](workflow/set_tfbs.1) set TFBS site scan match data
 + [open_datapool](workflow/open_datapool.1) 
 + [set_kegg_pathways](workflow/set_kegg_pathways.1) 

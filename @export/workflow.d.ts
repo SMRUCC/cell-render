@@ -40,7 +40,14 @@ declare namespace workflow {
    */
    function set_kegg_pathways(repo: object, maps: any, reactions: any, env?: object): any;
    /**
-     * @param env default value Is ``null``.
+    * set TFBS site scan match data
+    * 
+    * 
+     * @param proj -
+     * @param tfbs -
+     * @param env -
+     * 
+     * + default value Is ``null``.
    */
    function set_tfbs(proj: object, tfbs: any, env?: object): any;
    /**
