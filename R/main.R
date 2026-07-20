@@ -70,7 +70,7 @@
 #'
 #' # Batch mode for multiple GenBank files
 #' run(src = "data/genbank_assemblies/",
-#'     batch_process = TRUE,
+#'     batch_mode = "batch",
 #'     outputdir = "results/batch")
 #' }
 #'
