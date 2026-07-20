@@ -75,56 +75,7 @@ const make_diamond_hits = function(app, context) {
     make_diamond(localdb, diamond);
 
     if (batch_process) {
-        let source_dir = WorkflowRender::workspace("make_genbank_proj");
-        let enable_blastp_cache = as.logical(get_config("enable_blastp_cache"));
-
-        for(let model_dir in list_batch_models()) {
-            let model_id = basename(model_dir);
-            let proteins = file.path(source_dir, model_id, "proteins.fasta");
-            let protein_pfam = file.path(dirname(proteins), "Pfam.csv");
-
-            model_dir <- file.path(temp_dir, model_id);
-
-            # create workspace dir for save diamond blastp result
-            dir.create(model_dir, showWarnings=FALSE);
-
-            message(`make search for: ${proteins}`);
-            message(`diamond blastp export to: ${model_dir}`);
-
-            let ec_out = file.path(model_dir, "ec_number.m8");
-            let cc_out = file.path(model_dir, "subcellular.m8");
-            let tf_out = file.path(model_dir, "transcript_factor.m8");
-            let check_size = 4[KB];
-            
-            if (file.size(protein_pfam) < check_size) {
-                # no cache data
-                # run process
-                pfam_diamond(
-                    proteins, 
-                    workdir = dirname(proteins), 
-                    diamond = diamond
-                );
-                
-            }        
-            
-            if (enable_blastp_cache) {                
-                let check_cache =  (file.size(ec_out) > check_size) 
-                                && (file.size(cc_out) > check_size) 
-                                && (file.size(tf_out) > check_size)
-                ;
-
-                if (check_cache) {
-                    next;
-                }
-            }
-
-            # then run diamond blastp search against the reference database
-            diamond_blastp("ec_number", proteins, output = ec_out);
-            diamond_blastp("subcellular", proteins, output = cc_out);
-            diamond_blastp("transcript_factor",proteins, output = tf_out);
-
-            message(`[${model_id}] diamond blastp search job done!`);
-        }
+        diamond_batch(diamond_blastp, diamond, temp_dir);
     } else {
         # get genomics protein fasta sequence data file its file path for
         # run diamond blastp search
@@ -147,3 +98,56 @@ const make_diamond_hits = function(app, context) {
     setwd(workdir);
 }
 
+const diamond_batch = function(diamond_blastp, diamond, temp_dir) {
+    let source_dir = WorkflowRender::workspace("make_genbank_proj");
+    let enable_blastp_cache = as.logical(get_config("enable_blastp_cache"));
+
+    const check_size = 4[KB];
+
+    for(let model_dir in list_batch_models()) {
+        let model_id = basename(model_dir);
+        let proteins = file.path(source_dir, model_id, "proteins.fasta");
+        let protein_pfam = file.path(dirname(proteins), "Pfam.csv");
+
+        model_dir <- file.path(temp_dir, model_id);
+
+        # create workspace dir for save diamond blastp result
+        dir.create(model_dir, showWarnings=FALSE);
+
+        message(`make search for: ${proteins}`);
+        message(`diamond blastp export to: ${model_dir}`);
+
+        let ec_out = file.path(model_dir, "ec_number.m8");
+        let cc_out = file.path(model_dir, "subcellular.m8");
+        let tf_out = file.path(model_dir, "transcript_factor.m8");
+                
+        if (file.size(protein_pfam) < check_size) {
+            # no cache data
+            # run process
+            pfam_diamond(
+                proteins, 
+                workdir = dirname(proteins), 
+                diamond = diamond
+            );
+            
+        }        
+        
+        if (enable_blastp_cache) {                
+            let check_cache =  (file.size(ec_out) > check_size) 
+                            && (file.size(cc_out) > check_size) 
+                            && (file.size(tf_out) > check_size)
+            ;
+
+            if (check_cache) {
+                next;
+            }
+        }
+
+        # then run diamond blastp search against the reference database
+        diamond_blastp("ec_number", proteins, output = ec_out);
+        diamond_blastp("subcellular", proteins, output = cc_out);
+        diamond_blastp("transcript_factor",proteins, output = tf_out);
+
+        message(`[${model_id}] diamond blastp search job done!`);
+    }
+}
