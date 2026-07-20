@@ -47,13 +47,29 @@ imports "bioseq.patterns" from "seqtoolkit";
 #' @export
 [@app "make_TRN"]
 const make_TRN = function(app, context) {
+    let batch_process = as.logical(get_config("batch_process"));
+
     if (check_build_module("TRN_network")) {
-        let tfbs = workfile("tfbs_motif_scanning://tfbs_motifs.csv");
-        let proj = project::load(get_config("proj_file"));
+        if (batch_process) {
+            for(let model_dir in list_batch_models()) {
+                let model_id = basename(model_dir);
+                let proj_file = file.path(model_dir, "builder.gcproj");
+                let proj = project::load(proj_file);
+                let tfbs = workfile(`tfbs_motif_scanning://${model_id }/tfbs_motifs.csv`);
 
-        tfbs = read.scans(tfbs);
-        proj = proj |> set_tfbs(tfbs);
+                tfbs = read.scans(tfbs);
+                proj = proj |> set_tfbs(tfbs);
 
-        project::save(proj, file = get_config("proj_file"));
+                project::save(proj, file = proj_file);
+            }
+        } else {
+            let tfbs = workfile("tfbs_motif_scanning://tfbs_motifs.csv");
+            let proj = project::load(get_config("proj_file"));
+
+            tfbs = read.scans(tfbs);
+            proj = proj |> set_tfbs(tfbs);
+
+            project::save(proj, file = get_config("proj_file"));
+        }
     }
 }

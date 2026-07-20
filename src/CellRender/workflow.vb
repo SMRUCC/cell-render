@@ -8,7 +8,6 @@ Imports SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
-Imports SMRUCC.genomics.Assembly.MetaCyc.Schema
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
@@ -147,6 +146,13 @@ Module workflow
         Return proj
     End Function
 
+    ''' <summary>
+    ''' set TFBS site scan match data
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <param name="tfbs"></param>
+    ''' <param name="env"></param>
+    ''' <returns></returns>
     <ExportAPI("set_tfbs")>
     Public Function set_tfbs(proj As GenBankProject, <RRawVectorArgument> tfbs As Object, Optional env As Environment = Nothing) As Object
         Dim pull As pipeline = pipeline.TryCreatePipeline(Of MotifMatch)(tfbs, env)
