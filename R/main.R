@@ -122,12 +122,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
             outputdir = workdir_root , 
             args = args);
     } else {
-        if (length(debug) > 0) {
-            WorkflowRender::definePipeline(debug);
-        }    
-
         # config run workflow
-        WorkflowRender::run(registry = CellRender::annotation_workflow);
+        WorkflowRender::run(registry = any -> CellRender::annotation_workflow(debug));
         WorkflowRender::finalize();
     }
 

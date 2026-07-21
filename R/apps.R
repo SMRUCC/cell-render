@@ -47,7 +47,7 @@
 #'
 #' @app annotation_workflow
 #' @export
-const annotation_workflow = function() {
+const annotation_workflow = function(debug) {
     print("Config the cellular graph network annotation & modelling workflow...");
 
     # [@app "xxx"] defines the workflow module, and "xxx" is the workflow module name
@@ -72,6 +72,10 @@ const annotation_workflow = function() {
     WorkflowRender::hook(CellRender::build_project);
 
     WorkflowRender::summary();
+
+    if (length(debug) > 0) {
+        WorkflowRender::definePipeline(debug);
+    }    
 
     invisible(NULL);
 } 

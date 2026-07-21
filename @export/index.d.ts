@@ -15,7 +15,7 @@ declare namespace CellRender {
    function analysis(embedding_file: any, knn?: any, workdir?: any): object;
    /**
    */
-   function annotation_workflow(): object;
+   function annotation_workflow(debug: any): object;
    /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
      * @param n_threads default value Is ``32``.
