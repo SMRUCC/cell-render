@@ -53,11 +53,13 @@ const make_TRN = function(app, context) {
 
     if (check_build_module("TRN_network")) {
         if (batch_process) {
-            for(let model_dir in tqdm(list_batch_models())) {
+            let scan_dir = WorkflowRender::workspace("tfbs_motif_scanning");
+
+            for(let model_dir in tqdm(list_batch_models(tqdm_list = TRUE))) {
                 let model_id = basename(model_dir);
                 let proj_file = file.path(model_dir, "builder.gcproj");
                 let proj = project::load(proj_file);
-                let tfbs = workfile(`tfbs_motif_scanning://${model_id }/tfbs_motifs.csv`);
+                let tfbs = file.path(scan_dir, `${model_id }/tfbs_motifs.csv`);
 
                 tfbs = read.scans(tfbs);
                 proj = proj |> set_tfbs(tfbs);

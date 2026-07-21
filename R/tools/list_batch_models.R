@@ -27,6 +27,12 @@
 #'
 #' @keywords internal
 #' @export
-const list_batch_models = function() {
-    list.dirs(get_config("release"), recursive = FALSE);
+const list_batch_models = function(tqdm_list = FALSE) {
+    let dirs = list.dirs(get_config("release"), recursive = FALSE);
+
+    if (tqdm_list) {
+        as.list(dirs, names = basename(dirs));
+    } else {
+        dirs;
+    }
 }
