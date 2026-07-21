@@ -49,9 +49,11 @@ imports "bioseq.patterns" from "seqtoolkit";
 const make_TRN = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
 
+    message("save TFBS site scan match result into model projects.");
+
     if (check_build_module("TRN_network")) {
         if (batch_process) {
-            for(let model_dir in list_batch_models()) {
+            for(let model_dir in tqdm(list_batch_models())) {
                 let model_id = basename(model_dir);
                 let proj_file = file.path(model_dir, "builder.gcproj");
                 let proj = project::load(proj_file);
