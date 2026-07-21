@@ -33,14 +33,20 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         Me.registry = registry
         Me.motifSites = annoSet.tfbs_hits.Values _
             .IteratesALL _
-            .Where(Function(a) a.identities > 0.97) _
-            .GroupBy(Function(a) a.seeds(0)) _
+            .Where(Function(a) a.pvalue < 0.05) _
+            .GroupBy(Function(a) ParsePWMID(a)) _
             .ToDictionary(Function(a) a.Key,
                           Function(a)
                               Return a.ToArray
                           End Function)
         Me.proj = proj
     End Sub
+
+    Private Shared Function ParsePWMID(tfbs As MotifMatch) As String
+        Dim id As String() = tfbs.seeds(0).Split
+        Dim pwm_id As String = id(1)
+        Return pwm_id
+    End Function
 
     Protected Overrides Function PreCompile(args As CommandLine) As Integer
         Dim name As String = args("--name") Or defaultName
@@ -319,8 +325,10 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
 
     Private Iterator Function RegulationNetwork(regulator$, gene_id$, annotation As BestHit()) As IEnumerable(Of transcription)
         For Each hit As BestHit In annotation
-            If motifSites.ContainsKey(hit.HitName) Then
-                For Each site As MotifMatch In motifSites(hit.HitName)
+            Dim pwm_id As String = hit.HitName.Split("|"c).Last
+
+            If motifSites.ContainsKey(pwm_id) Then
+                For Each site As MotifMatch In motifSites(pwm_id)
                     Yield New transcription With {
                         .regulator = regulator,
                         .operonId = site.title,
