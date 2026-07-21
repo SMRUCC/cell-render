@@ -123,7 +123,7 @@ const modelling_cellgraph = function(src, outputdir = NULL,
             args = args);
     } else {
         # config run workflow
-        WorkflowRender::run(registry = any -> CellRender::annotation_workflow(debug));
+        WorkflowRender::run(registry = CellRender::annotation_workflow, debug = debug);
         WorkflowRender::finalize();
     }
 
