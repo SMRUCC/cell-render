@@ -1,13 +1,19 @@
 ﻿.TH LIST_BATCH_MODELS 1 2026-7月 "internal" "List All Batch Model Directories"
 .SH NAME
-list_batch_models \- list_batch_models()
+list_batch_models \- list_batch_models(
+    <i>tqdm.list</i> = <span style='color: blue !important;'>FALSE</span>)
 .SH SYNOPSIS
-\fIlist_batch_models()\fR
+\fIlist_batch_models(
+    <i>tqdm.list</i> = <span style='color: blue !important;'>FALSE</span>)\fR
 .SH DESCRIPTION
 .PP
 Retrieves the list of model subdirectories from the release directory
 configured in the current workflow session. Each subdirectory represents
 a separate virtual cell model that was created during batch processing.
+.PP
+.SH OPTIONS
+.PP
+\fBtqdm.list\fB \fR\- FALSE. 
 .PP
 .SH VALUE
 .PP

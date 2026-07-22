@@ -15,7 +15,7 @@ declare namespace CellRender {
    function analysis(embedding_file: any, knn?: any, workdir?: any): object;
    /**
    */
-   function annotation_workflow(debug: any): object;
+   function annotation_workflow(): object;
    /**
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
      * @param n_threads default value Is ``32``.
@@ -62,8 +62,9 @@ declare namespace CellRender {
    */
    function genome_scatter_viz(data: any, outputdir?: any): object;
    /**
+     * @param tqdm_list default value Is ``false``.
    */
-   function list_batch_models(): object;
+   function list_batch_models(tqdm_list?: any): object;
    /**
      * @param outputdir default value Is ``./``.
    */
