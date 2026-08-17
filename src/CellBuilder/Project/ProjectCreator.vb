@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank
 Imports SMRUCC.genomics.Assembly.NCBI.GenBank.GBFF.Keywords.FEATURES
 Imports SMRUCC.genomics.ComponentModel.Annotation
+Imports SMRUCC.genomics.ContextModel
 Imports SMRUCC.genomics.ContextModel.Promoter
 Imports SMRUCC.genomics.Metagenomics
 Imports SMRUCC.genomics.SequenceModel.FASTA
@@ -51,11 +52,12 @@ Public Class ProjectCreator
         Call size.Add(replicon.Locus.AccessionID,
                       replicon.Origin.SequenceData.Length)
 
+        Dim context As New GenomeContext(Of GeneTable)(geneSet)
         Dim gene_upstreamSet = geneSet _
             .Where(Function(gene) gene.Location.Normalization.Interval > 1) _
             .Where(Function(gene) Not gene.locus_id.StringEmpty(, True)) _
             .Select(Function(gene)
-                        Return (gene.locus_id, gene.GetUpstreamSeq(nt, 150))
+                        Return (gene.locus_id, gene.GetUpstreamSeq(context, nt, 150))
                     End Function) _
             .ToArray
 
