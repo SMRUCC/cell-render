@@ -22,20 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Loads GenBank source files specified in the application configuration,
-initializes a new \code{project} object via \code{CellRender}, and saves the
-resulting project state to disk. Additionally, it extracts and exports
-essential FASTA files required for downstream bioinformatics analyses,
-such as motif scanning and homology searches.
-This function serves as the workflow entry point and automatically detects
-the processing mode from the \code{batch_process} configuration parameter:
-\itemize{
-\item \strong{Batch Mode} (\code{batch_process = TRUE}): Scans the source
-directory for all GenBank files (\code{.gb}, \code{.gbk}, \code{.gbff})
-and processes each one individually via \code{\link{make<em>genbank</em>proj_file}}.
-\item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a
-single GenBank source file specified by the \code{src} configuration key.
-}</p>
+        <p>Loads GenBank source files specified in the application configuration, initializes a new \code{project} object via \code{CellRender}, and saves the resulting project state to disk. Additionally, it extracts and exports essential FASTA files required for downstream bioinformatics analyses, such as motif scanning and homology searches. This function serves as the workflow entry point and automatically detects the processing mode from the \code{batch_process} configuration parameter: \itemize{ \item \strong{Batch Mode} (\code{batch_process = TRUE}): Scans the source directory for all GenBank files (\code{.gb}, \code{.gbk}, \code{.gbff}) and processes each one individually via \code{\link{make_genbank_proj_file}}. \item \strong{Single Mode} (\code{batch_process = FALSE}): Processes a single GenBank source file specified by the \code{src} configuration key. }
 
         <h3>Usage</h3>
 
@@ -48,24 +35,18 @@ single GenBank source file specified by the \code{src} configuration key.
         <table>
             
 <dt>app</dt>
-<dd><p><p>A CellRender workflow app object. Primarily used in this
-function to resolve working file paths via \code{workfile()}.</p></p></dd>
+<dd><p><p>A CellRender workflow app object. Primarily used in this function to resolve working file paths via \code{workfile()}.</p></dd>
 
 
 <dt>context</dt>
-<dd><p><p>A CellRender workflow context object.
-\emph{Note:} Currently unused in this specific function but required
-by the standard workflow execution interface.</p></p></dd>
+<dd><p><p>A CellRender workflow context object. \emph{Note:} Currently unused in this specific function but required by the standard workflow execution interface.</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>In batch mode, each GenBank file is processed in its own subdirectory
-(named by the model accession ID) within both the release and working
-directories. In single mode, files are written directly to the configured
-paths without subdirectory nesting.</p>
+        <p>In batch mode, each GenBank file is processed in its own subdirectory (named by the model accession ID) within both the release and working directories. In single mode, files are written directly to the configured paths without subdirectory nesting.
 
         <h3 style="display: block">Authors</h3>
 
@@ -73,13 +54,7 @@ paths without subdirectory nesting.</p>
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects:
-\itemize{
-\item Creates a \code{builder.gcproj} project file in the release directory.
-\item Exports \code{upstream_locis.fasta} (TSS upstream sequences for motif
-scanning) and \code{proteins.fasta} (protein sequences for DIAMOND BLASTP)
-to the working directory.
-}</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Creates a \code{builder.gcproj} project file in the release directory. \item Exports \code{upstream_locis.fasta} (TSS upstream sequences for motif scanning) and \code{proteins.fasta} (protein sequences for DIAMOND BLASTP) to the working directory. }
 
         <h3 style="display: block;">Examples</h3>
 

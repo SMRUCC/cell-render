@@ -22,10 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>This function orchestrates a complete pan-genome analysis pipeline for a
-set of microbial genomes. It extracts genomic data from GenBank files,
-performs protein annotation via DIAMOND BLASTP, assigns orthology groups,
-and calculates both Structural Variation (SV) and Presence/Absence Variation (PAV).</p>
+        <p>This function orchestrates a complete pan-genome analysis pipeline for a set of microbial genomes. It extracts genomic data from GenBank files, performs protein annotation via DIAMOND BLASTP, assigns orthology groups, and calculates both Structural Variation (SV) and Presence/Absence Variation (PAV).
 
         <h3>Usage</h3>
 
@@ -41,48 +38,30 @@ and calculates both Structural Variation (SV) and Presence/Absence Variation (PA
         <table>
             
 <dt>src</dt>
-<dd><p><p>A character string specifying the directory path containing the
-input NCBI GenBank assembly files.</p></p></dd>
+<dd><p><p>A character string specifying the directory path containing the input NCBI GenBank assembly files.</p></dd>
 
 
 <dt>result.dir</dt>
-<dd><p><p>A character string specifying the directory path where
-all intermediate and final analysis results will be exported.</p></p></dd>
+<dd><p><p>A character string specifying the directory path where all intermediate and final analysis results will be exported.</p></dd>
 
 
 <dt>diamond</dt>
-<dd><p><p>A character string specifying the file path to the DIAMOND
-executable. Defaults to \code{Sys.which("diamond")}.</p></p></dd>
+<dd><p><p>A character string specifying the file path to the DIAMOND executable. Defaults to \code{Sys.which("diamond")}.</p></dd>
 
 
 <dt>n.threads</dt>
-<dd><p><p>An integer specifying the number of CPU threads to use
-for DIAMOND BLASTP searches. Defaults to 32.</p></p></dd>
+<dd><p><p>An integer specifying the number of CPU threads to use for DIAMOND BLASTP searches. Defaults to 32.</p></dd>
 
 
 <dt>identities.cut</dt>
-<dd><p><p>An integer specifying the percent identity cutoff
-for filtering DIAMOND BLASTP hits. Hits below this threshold are
-discarded. Defaults to 30.</p></p></dd>
+<dd><p><p>An integer specifying the percent identity cutoff for filtering DIAMOND BLASTP hits. Hits below this threshold are discarded. Defaults to 30.</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The pan-genome analysis pipeline consists of the following steps:
-\enumerate{
-\item \strong{Genome extraction}: Reads each GenBank file and exports
-protein sequences (\code{.faa}) and gene annotation tables (\code{.csv}).
-\item \strong{DIAMOND BLASTP}: Runs batch DIAMOND BLASTP against the
-EC number reference database for all extracted protein sets.
-\item \strong{Orthology assignment}: Parses BLASTP results and assigns
-orthology group links based on the identity cutoff.
-\item \strong{Pan-genome analysis}: Constructs a pan-genome context from
-the gene tables and runs the analysis using the orthology links.
-\item \strong{Report generation}: Exports the analysis results as an
-HTML report and CSV tables.
-}</p>
+        <p>The pan-genome analysis pipeline consists of the following steps: \enumerate{ \item \strong{Genome extraction}: Reads each GenBank file and exports protein sequences (\code{.faa}) and gene annotation tables (\code{.csv}). \item \strong{DIAMOND BLASTP}: Runs batch DIAMOND BLASTP against the EC number reference database for all extracted protein sets. \item \strong{Orthology assignment}: Parses BLASTP results and assigns orthology group links based on the identity cutoff. \item \strong{Pan-genome analysis}: Constructs a pan-genome context from the gene tables and runs the analysis using the orthology links. \item \strong{Report generation}: Exports the analysis results as an HTML report and CSV tables. }
 
         <h3 style="display: block">Authors</h3>
 
@@ -90,14 +69,7 @@ HTML report and CSV tables.
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects:
-\itemize{
-\item Creates an HTML analysis report (\code{analysis_report.html}).
-\item Exports a Structural Variation table (\code{SV_result.csv}).
-\item Exports a Presence/Absence Variation table (\code{PAV_result.csv}).
-\item Writes intermediate protein FASTA and gene annotation CSV files
-for each input genome.
-}</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Creates an HTML analysis report (\code{analysis_report.html}). \item Exports a Structural Variation table (\code{SV_result.csv}). \item Exports a Presence/Absence Variation table (\code{PAV_result.csv}). \item Writes intermediate protein FASTA and gene annotation CSV files for each input genome. }
 
         <h3 style="display: block;">Examples</h3>
 

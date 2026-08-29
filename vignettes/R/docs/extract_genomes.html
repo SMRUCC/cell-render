@@ -22,11 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>This function processes multiple GenBank files located in a source directory.
-It extracts protein sequences and gene feature tables from each file and
-exports them to a specified output directory. Specifically, it generates
-FASTA files (\code{.faa}) for protein sequences and CSV files (\code{.csv}) for
-gene annotation tables.</p>
+        <p>This function processes multiple GenBank files located in a source directory. It extracts protein sequences and gene feature tables from each file and exports them to a specified output directory. Specifically, it generates FASTA files (\code{.faa}) for protein sequences and CSV files (\code{.csv}) for gene annotation tables.
 
         <h3>Usage</h3>
 
@@ -39,30 +35,18 @@ gene annotation tables.</p>
         <table>
             
 <dt>src</dt>
-<dd><p><p>A character string specifying the directory path containing the
-GenBank source files. The function scans for files with extensions
-\code{.gb}, \code{.gbk}, or \code{.gbff}.</p></p></dd>
+<dd><p><p>A character string specifying the directory path containing the GenBank source files. The function scans for files with extensions \code{.gb}, \code{.gbk}, or \code{.gbff}.</p></dd>
 
 
 <dt>outputdir</dt>
-<dd><p><p>A character string specifying the directory path where the
-extracted data files will be saved. If the directory does not exist, it
-should be created beforehand (or the function may fail depending on
-the file system permissions).</p></p></dd>
+<dd><p><p>A character string specifying the directory path where the extracted data files will be saved. If the directory does not exist, it should be created beforehand (or the function may fail depending on the file system permissions).</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>For each GenBank file found in \code{src}:
-\enumerate{
-\item Reads and parses the GenBank file.
-\item Extracts the GenBank accession ID.
-\item Exports protein sequences with locus-tag-only FASTA headers
-(using the template \code{"<locus_tag>"}).
-\item Exports the gene feature table as a CSV file with ORF annotations.
-}</p>
+        <p>For each GenBank file found in \code{src}: \enumerate{ \item Reads and parses the GenBank file. \item Extracts the GenBank accession ID. \item Exports protein sequences with locus-tag-only FASTA headers (using the template \code{"&lt;locus_tag&gt;"}). \item Exports the gene feature table as a CSV file with ORF annotations. }
 
         <h3 style="display: block">Authors</h3>
 
@@ -70,14 +54,7 @@ the file system permissions).</p></p></dd>
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects
-of writing the following files for each GenBank file found:
-\describe{
-\item{\code{<accession_id>.faa}}{Protein FASTA file with locus-tag-only
-headers.}
-\item{\code{<accession_id>.csv}}{Gene feature annotation table in CSV
-format.}
-}</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects of writing the following files for each GenBank file found: \describe{ \item{\code{&lt;accession_id&gt;.faa}}{Protein FASTA file with locus-tag-only headers.} \item{\code{&lt;accession_id&gt;.csv}}{Gene feature annotation table in CSV format.} }
 
         <h3 style="display: block;">Examples</h3>
 

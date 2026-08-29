@@ -22,10 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Constructs a tree graph from metabolic embedding data and exports it
-as a network visualization file. The tree graph is built from an
-OTU-style table using imputation for missing values and a configurable
-node equality threshold for branch merging.</p>
+        <p>Constructs a tree graph from metabolic embedding data and exports it as a network visualization file. The tree graph is built from an OTU-style table using imputation for missing values and a configurable node equality threshold for branch merging.
 
         <h3>Usage</h3>
 
@@ -40,35 +37,22 @@ node equality threshold for branch merging.</p>
         <table>
             
 <dt>embedding.file</dt>
-<dd><p><p>Character. The file path to the metabolic embedding
-data file (OTU table format) containing the feature matrix for tree
-construction.</p></p></dd>
+<dd><p><p>Character. The file path to the metabolic embedding data file (OTU table format) containing the feature matrix for tree construction.</p></dd>
 
 
 <dt>workdir</dt>
-<dd><p><p>Character. The directory path where the exported network
-file will be saved. Defaults to \code{"./"}.</p></p></dd>
+<dd><p><p>Character. The directory path where the exported network file will be saved. Defaults to \code{"./"}.</p></dd>
 
 
 <dt>node.equals</dt>
-<dd><p><p>Numeric. The similarity threshold for merging tree
-nodes. Nodes with similarity above this value will be merged into
-a single branch. Values closer to 1.0 produce more granular trees,
-while lower values produce more collapsed trees. Defaults to 0.999.</p></p></dd>
+<dd><p><p>Numeric. The similarity threshold for merging tree nodes. Nodes with similarity above this value will be merged into a single branch. Values closer to 1.0 produce more granular trees, while lower values produce more collapsed trees. Defaults to 0.999.</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The tree construction pipeline:
-\enumerate{
-\item Reads the embedding data as an OTU table.
-\item Imputes missing values in the OTU table.
-\item Constructs a tree graph using \code{OTU_table::makeTreeGraph()},
-with nodes colored by the \code{Class} taxonomic rank.
-\item Saves the resulting network graph to disk.
-}</p>
+        <p>The tree construction pipeline: \enumerate{ \item Reads the embedding data as an OTU table. \item Imputes missing values in the OTU table. \item Constructs a tree graph using \code{OTU_table::makeTreeGraph()}, with nodes colored by the \code{Class} taxonomic rank. \item Saves the resulting network graph to disk. }
 
         <h3 style="display: block">Authors</h3>
 
@@ -76,9 +60,7 @@ with nodes colored by the \code{Class} taxonomic rank.
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effect
-of writing a network file named \code{metabolic_tree} to \code{workdir}.
-The file format is determined by \code{igraph::save.network()}.</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effect of writing a network file named \code{metabolic_tree} to \code{workdir}. The file format is determined by \code{igraph::save.network()}.
 
         <h3 style="display: block;">Examples</h3>
 

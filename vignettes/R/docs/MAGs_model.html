@@ -22,10 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Processes a metagenome-assembled genome (MAG) contigs assembly by
-performing gene prediction with Prodigal, then exporting the predicted
-genes and proteins in multiple standard bioinformatics formats for
-downstream analysis and virtual cell model construction.</p>
+        <p>Processes a metagenome-assembled genome (MAG) contigs assembly by performing gene prediction with Prodigal, then exporting the predicted genes and proteins in multiple standard bioinformatics formats for downstream analysis and virtual cell model construction.
 
         <h3>Usage</h3>
 
@@ -39,38 +36,22 @@ downstream analysis and virtual cell model construction.</p>
         <table>
             
 <dt>contigs</dt>
-<dd><p><p>A character string or object representing the MAG contigs
-assembly data. This is typically a FASTA file path or a parsed contigs
-object that can be processed by \code{bifrost::prodigal()}.</p></p></dd>
+<dd><p><p>A character string or object representing the MAG contigs assembly data. This is typically a FASTA file path or a parsed contigs object that can be processed by \code{bifrost::prodigal()}.</p></dd>
 
 
 <dt>tax.str</dt>
-<dd><p><p>A character string specifying the taxonomy of this MAG
-contigs assembly in GTDB-style format, e.g.:
-\code{"d<strong>Archaea;p<em></em>Halobacteriota;c<em></em>Methanosarcinia;o<em></em>Methanosarcinales;f<em></em>Methanosarcinaceae;g<em></em>Methanosarcina;s</strong>Methanosarcina sp001714685"}.
-If a character string is provided, it will be parsed into a structured
-taxonomy object via \code{biom_string.parse()}.</p></p></dd>
+<dd><p><p>A character string specifying the taxonomy of this MAG contigs assembly in GTDB-style format, e.g.: \code{"d<strong>Archaea;p</strong>Halobacteriota;c<strong>Methanosarcinia;o</strong>Methanosarcinales;f<strong>Methanosarcinaceae;g</strong>Methanosarcina;s__Methanosarcina sp001714685"}. If a character string is provided, it will be parsed into a structured taxonomy object via \code{biom_string.parse()}.</p></dd>
 
 
 <dt>outputdir</dt>
-<dd><p><p>Character. The directory path where the output files
-will be saved. Defaults to \code{"./"}.</p></p></dd>
+<dd><p><p>Character. The directory path where the output files will be saved. Defaults to \code{"./"}.</p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The processing pipeline:
-\enumerate{
-\item Runs \code{bifrost::prodigal()} on the contigs to predict
-open reading frames (ORFs) with a minimum ORF length of 90 bp.
-\item If \code{tax_str} is a character string, parses it into a
-structured taxonomy object.
-\item Exports the gene prediction results in four standard formats:
-CSV (tabular summary), GFF3 (standard annotation format), FASTA
-nucleotide (gene sequences), and FASTA protein (translated sequences).
-}</p>
+        <p>The processing pipeline: \enumerate{ \item Runs \code{bifrost::prodigal()} on the contigs to predict open reading frames (ORFs) with a minimum ORF length of 90 bp. \item If \code{tax_str} is a character string, parses it into a structured taxonomy object. \item Exports the gene prediction results in four standard formats: CSV (tabular summary), GFF3 (standard annotation format), FASTA nucleotide (gene sequences), and FASTA protein (translated sequences). }
 
         <h3 style="display: block">Authors</h3>
 
@@ -78,14 +59,7 @@ nucleotide (gene sequences), and FASTA protein (translated sequences).
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects
-of writing the following files to \code{outputdir}:
-\describe{
-\item{\code{gene_predicts.csv}}{Gene prediction results in CSV format.}
-\item{\code{gene_predicts.gff3}}{Gene predictions in GFF3 format.}
-\item{\code{gene_predicts.fna}}{Nucleotide FASTA of predicted gene sequences.}
-\item{\code{protein_predicts.faa}}{Protein FASTA of predicted protein sequences.}
-}</p>
+        <p>\code{invisible(NULL)}. This function is called for its side effects of writing the following files to \code{outputdir}: \describe{ \item{\code{gene_predicts.csv}}{Gene prediction results in CSV format.} \item{\code{gene_predicts.gff3}}{Gene predictions in GFF3 format.} \item{\code{gene_predicts.fna}}{Nucleotide FASTA of predicted gene sequences.} \item{\code{protein_predicts.faa}}{Protein FASTA of predicted protein sequences.} }
 
         <h3 style="display: block;">Examples</h3>
 
