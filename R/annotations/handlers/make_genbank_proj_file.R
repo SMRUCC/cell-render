@@ -73,7 +73,9 @@ const make_genbank_proj_file = function(src, release_dir,
 
     # save the ncbi genbank project data as local file
     project::save(proj, file = proj_file);
-    write.csv(gene_table(proj), file = file.path(release_dir, model_id, "gene_table.csv"));
+    write.csv(gene_table(proj), 
+        file = file.path(release_dir, model_id, "gene_table.csv"), 
+        silent = TRUE);
 
     # export work files into corresponding model dir
     workdir <- file.path(workdir, model_id);

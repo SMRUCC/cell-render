@@ -17,6 +17,13 @@ declare namespace workflow {
    */
    function enzyme_table(proj: object): object;
    /**
+    * extract the gene table from the project model.
+    * 
+    * 
+     * @param proj -
+   */
+   function gene_table(proj: object): object;
+   /**
      * @param enzyme_fuzzy default value Is ``false``.
    */
    function open_datapool(dir: string, enzyme_fuzzy?: boolean): object;
