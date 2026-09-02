@@ -26,6 +26,16 @@ Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
 Module workflow
 
     ''' <summary>
+    ''' extract the gene table from the project model.
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <returns></returns>
+    <ExportAPI("gene_table")>
+    Public Function gene_table(proj As GenBankProject) As GeneTable()
+        Return proj.gene_table
+    End Function
+
+    ''' <summary>
     ''' extract of the tss upstream location site sequence data
     ''' </summary>
     ''' <param name="proj"></param>
