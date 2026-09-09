@@ -283,8 +283,14 @@ Public Class GPRWorker
             Dim hash_id As String = reaction.guid
             Dim left = MakeSubstrates(reaction.left).ToArray
             Dim right = MakeSubstrates(reaction.right).ToArray
+            Dim lr As Double() = {0, 5}
+
+            If reaction.reversible Then
+                lr = {5, 5}
+            End If
+
             Dim model As New Reaction With {
-                .bounds = {5, 5},
+                .bounds = lr,
                 .compartment = Nothing,
                 .ec_number = Nothing,
                 .ID = hash_id,
@@ -292,7 +298,8 @@ Public Class GPRWorker
                 .name = reaction.name,
                 .note = reaction.reaction,
                 .substrate = left,
-                .product = right
+                .product = right,
+                .gibbs = reaction.gibbs
             }
 
             Yield model
@@ -314,16 +321,22 @@ Public Class GPRWorker
             Dim hash_id As String = a.guid
             Dim left = MakeSubstrates(a.left).ToArray
             Dim right = MakeSubstrates(a.right).ToArray
+            Dim lr As Double() = {0, 5}
+
+            If a.reversible Then
+                lr = {5, 5}
+            End If
 
             Yield New Reaction With {
                 .ID = hash_id,
                 .ec_number = ec_numbers(a.guid).Distinct.ToArray,
-                .bounds = {5, 5},
+                .bounds = lr,
                 .is_enzymatic = True,
                 .name = a.name,
                 .note = a.reaction,
                 .substrate = left,
-                .product = right
+                .product = right,
+                .gibbs = a.gibbs
             }
         Next
 
@@ -374,7 +387,8 @@ Public Class GPRWorker
                 .referenceIds = biocyc_id _
                     .Select(Function(xi) xi.xref_id) _
                     .ToArray,
-                .formula = c.formula
+                .formula = c.formula,
+                .smiles = c.smiles
             }
         Next
     End Function
