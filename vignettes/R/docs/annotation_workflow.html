@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Defines and registers the sequential annotation and modelling workflow steps that constitute the virtual cell graph construction pipeline. Each step is hooked into the \pkg{WorkflowRender} engine and will be executed in the order they are registered.
+        <p>Defines and registers the sequential annotation and modelling workflow steps that constitute the virtual cell graph construction pipeline. Each step is hooked into the \pkg{WorkflowRender} engine and will be executed in the order they are registered.</p>
 
         <h3>Usage</h3>
 
@@ -39,7 +39,7 @@
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The complete workflow sequence is: \enumerate{ \item \strong{make_genbank_proj} \cr Extract protein sequences, TSS upstream regions, genomic context data, and taxonomy information from the GenBank source file(s). \item \strong{tfbs_motif_scanning} \cr Run Transcription Factor Binding Site (TFBS) motif scanning on the TSS upstream region sequences extracted in step 1. \item \strong{make_diamond_hits} \cr Run DIAMOND BLASTP homology search for the protein sequences against EC number, subcellular location, and transcription factor reference databases. \item \strong{make_terms} \cr Score the BLASTP results and assign protein ontology terms (EC numbers, subcellular localizations, transcription factor annotations). \item \strong{make_TRN} \cr Construct the Transcription Regulation Network (TRN) by combining the TFBS motif scan results with the transcription factor BLASTP hits. \item \strong{build_project} \cr Compile the TRN and metabolic network annotations into a final virtual cell model and export as GCMarkup XML. }
+        <p>The complete workflow sequence is: \enumerate{ \item \strong{make_genbank_proj} \cr Extract protein sequences, TSS upstream regions, genomic context data, and taxonomy information from the GenBank source file(s). \item \strong{tfbs_motif_scanning} \cr Run Transcription Factor Binding Site (TFBS) motif scanning on the TSS upstream region sequences extracted in step 1. \item \strong{make_diamond_hits} \cr Run DIAMOND BLASTP homology search for the protein sequences against EC number, subcellular location, and transcription factor reference databases. \item \strong{make_terms} \cr Score the BLASTP results and assign protein ontology terms (EC numbers, subcellular localizations, transcription factor annotations). \item \strong{make_TRN} \cr Construct the Transcription Regulation Network (TRN) by combining the TFBS motif scan results with the transcription factor BLASTP hits. \item \strong{build_project} \cr Compile the TRN and metabolic network annotations into a final virtual cell model and export as GCMarkup XML. }</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -47,7 +47,7 @@
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effect of registering workflow steps with the \pkg{WorkflowRender} engine.
+        <p>\code{invisible(NULL)}. This function is called for its side effect of registering workflow steps with the \pkg{WorkflowRender} engine.</p>
 
         <h3 style="display: block;">Examples</h3>
 

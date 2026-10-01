@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Executes the workflow step to parse DIAMOND BLASTP results and inject the extracted annotation terms into the virtual cell project session files. It supports two execution modes based on the \code{batch_process} configuration: \itemize{ \item \strong{Batch Mode}: Iterates through all available models, mapping each model to its specific DIAMOND output directory to parse terms. \item \strong{Single Mode}: Processes a single project file, looking for DIAMOND results in a shared workspace directory. }
+        <p>Executes the workflow step to parse DIAMOND BLASTP results and inject the extracted annotation terms into the virtual cell project session files. It supports two execution modes based on the \code{batch_process} configuration: \itemize{ \item \strong{Batch Mode}: Iterates through all available models, mapping each model to its specific DIAMOND output directory to parse terms. \item \strong{Single Mode}: Processes a single project file, looking for DIAMOND results in a shared workspace directory. }</p>
 
         <h3>Usage</h3>
 
@@ -35,18 +35,18 @@
         <table>
             
 <dt>app</dt>
-<dd><p><p>The application object or environment, used for resolving workflow configuration via \code{get_config()}.</p></dd>
+<dd><p><p>The application object or environment, used for resolving workflow configuration via \code{get_config()}.</p></p></dd>
 
 
 <dt>context</dt>
-<dd><p><p>The execution context for the current application run, provided by the \pkg{WorkflowRender} engine.</p></dd>
+<dd><p><p>The execution context for the current application run, provided by the \pkg{WorkflowRender} engine.</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The parsed annotation terms serve three distinct cellular network construction purposes: \itemize{ \item \code{ec_number} terms feed into the \strong{metabolic network}. \item \code{subcellular_location} terms feed into the \strong{transmembrane network}. \item \code{transcript_factor} terms feed into the \strong{gene expression transcription regulation network}. }
+        <p>The parsed annotation terms serve three distinct cellular network construction purposes: \itemize{ \item \code{ec_number} terms feed into the \strong{metabolic network}. \item \code{subcellular_location} terms feed into the \strong{transmembrane network}. \item \code{transcript_factor} terms feed into the \strong{gene expression transcription regulation network}. }</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -54,7 +54,7 @@
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Parses \code{ec_number.m8}, \code{subcellular.m8}, and \code{transcript_factor.m8} files from the DIAMOND output directory. \item Writes grouped annotation terms into the project session file (\code{builder.gcproj}). \item Exports an enzyme annotation table as \code{enzymes.csv} in the project directory. }
+        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Parses \code{ec_number.m8}, \code{subcellular.m8}, and \code{transcript_factor.m8} files from the DIAMOND output directory. \item Writes grouped annotation terms into the project session file (\code{builder.gcproj}). \item Exports an enzyme annotation table as \code{enzymes.csv} in the project directory. }</p>
 
         <h3 style="display: block;">Examples</h3>
 

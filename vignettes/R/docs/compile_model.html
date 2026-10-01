@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Core processing function that loads a GenBank annotation project, constructs the virtual cell component network using a local data registry, and exports the resulting model as a GCMarkup XML file.
+        <p>Core processing function that loads a GenBank annotation project, constructs the virtual cell component network using a local data registry, and exports the resulting model as a GCMarkup XML file.</p>
 
         <h3>Usage</h3>
 
@@ -36,26 +36,26 @@
         <table>
             
 <dt>proj.file</dt>
-<dd><p><p>Character. The file path to the GenBank annotation project file (e.g., \code{.gcproj}).</p></dd>
+<dd><p><p>Character. The file path to the GenBank annotation project file (e.g., \code{.gcproj}).</p></p></dd>
 
 
 <dt>save.model</dt>
-<dd><p><p>Character. The destination file path where the generated virtual cell model will be saved. The model is saved in GCMarkup XML format.</p></dd>
+<dd><p><p>Character. The destination file path where the generated virtual cell model will be saved. The model is saved in GCMarkup XML format.</p></p></dd>
 
 
 <dt>registry</dt>
-<dd><p><p>A local data repository (data pool object) containing the necessary reference data required to construct the virtual cell component network.</p></dd>
+<dd><p><p>A local data repository (data pool object) containing the necessary reference data required to construct the virtual cell component network.</p></p></dd>
 
 
 <dt>vcell.name</dt>
-<dd><p><p>Character, optional. The specific name to assign to the generated virtual cell. If \code{NULL} (default), the naming defaults to the project's internal settings. This parameter is typically utilized only in single-project mode.</p></dd>
+<dd><p><p>Character, optional. The specific name to assign to the generated virtual cell. If \code{NULL} (default), the naming defaults to the project's internal settings. This parameter is typically utilized only in single-project mode.</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The compilation process: \enumerate{ \item Loads the project file from \code{proj_file}. \item Constructs the virtual cell model via \code{build()}, using the provided \code{registry} as a reference data pool and optionally setting the virtual cell name. \item Serializes the virtual cell model to GCMarkup XML format. \item Writes the XML content to the file specified by \code{save_model}. }
+        <p>The compilation process: \enumerate{ \item Loads the project file from \code{proj_file}. \item Constructs the virtual cell model via \code{build()}, using the provided \code{registry} as a reference data pool and optionally setting the virtual cell name. \item Serializes the virtual cell model to GCMarkup XML format. \item Writes the XML content to the file specified by \code{save_model}. }</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -63,7 +63,7 @@
 
         <h3>Value</h3>
 
-        <p>Writes an XML file to the specified \code{save_model} path and returns \code{invisible(NULL)}.
+        <p>Writes an XML file to the specified \code{save_model} path and returns \code{invisible(NULL)}.</p>
 
         <h3 style="display: block;">Examples</h3>
 

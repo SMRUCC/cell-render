@@ -130,8 +130,10 @@ declare namespace CellRender {
    /**
      * @param workdir default value Is ``./``.
      * @param diamond default value Is ``Call "Sys.which"("diamond")``.
+     * @param n_threads default value Is ``24``.
+     * @param subj default value Is ``Call "c"("sseqid", "stitle")``.
    */
-   function pfam_diamond(proteins: any, workdir?: any, diamond?: any): object;
+   function pfam_diamond(proteins: any, workdir?: any, diamond?: any, n_threads?: any, subj?: any): object;
    /**
      * @param n_threads default value Is ``8``.
      * @param motif_pvalcut default value Is ``1E-06``.

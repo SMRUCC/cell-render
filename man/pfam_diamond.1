@@ -1,12 +1,16 @@
-﻿.TH PFAM_DIAMOND 1 2026-9月 "internal" "Run Pfam Domain Analysis Using DIAMOND BLASTP"
+﻿.TH PFAM_DIAMOND 1 2026-10月 "internal" "Run Pfam Domain Analysis Using DIAMOND BLASTP"
 .SH NAME
 pfam_diamond \- pfam_diamond(proteins,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
-    <i>diamond</i> = 'Sys.which'('diamond'))
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>24</span>,
+    <i>subj</i> = 'c'('sseqid', 'stitle'))
 .SH SYNOPSIS
 \fIpfam_diamond(proteins,
     <i>workdir</i> = <span style='color: brown;'><strong>'./'</strong></span>,
-    <i>diamond</i> = 'Sys.which'('diamond'))\fR
+    <i>diamond</i> = 'Sys.which'('diamond'),
+    <i>n.threads</i> = <span style='color: green;'>24</span>,
+    <i>subj</i> = 'c'('sseqid', 'stitle'))\fR
 .SH DESCRIPTION
 .PP
 Performs protein domain annotation by running DIAMOND BLASTP search
@@ -31,6 +35,12 @@ intermediate files will be created. Defaults to \code{"./"}.
 \fBdiamond\fB \fR\- 'Sys.which'('diamond'). Character. The file path to the DIAMOND executable.
 Defaults to \code{Sys.which("diamond")}.
 .PP
+.PP
+\fBn.threads\fB \fR\- 24. 
+.PP
+.PP
+\fBsubj\fB \fR\- 'c'('sseqid', 'stitle'). 
+.PP
 .SH VALUE
 .PP
 \code{invisible(NULL)}. This function is called for its side effects
@@ -48,8 +58,8 @@ The analysis pipeline:
 \item Changes the working directory to \code{workdir}.
 \item Creates a DIAMOND database from the input protein sequences.
 \item Runs DIAMOND BLASTP with the Pfam-A reference as query against
-the protein database, using ultra-sensitive mode with PAM30 matrix
-and relaxed e-value threshold (10) for domain detection.
+the protein database, using ultra-sensitive mode with BLOSUM62 matrix
+and relaxed e-value threshold (1e-3) for domain detection.
 \item Parses the BLASTP output in m8 format.
 \item Analyzes domain architecture using \code{proteinKit::analysis_domains()}.
 \item Restores the original working directory.

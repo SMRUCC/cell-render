@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Reads standard DIAMOND BLASTP tabular output (m8 format) from a specified working directory, groups the hits, and writes them as annotation terms into a virtual cell modeling project session file. These terms are essential for constructing distinct cellular networks in later steps. Specifically, it parses three files and maps them to the following networks: \itemize{ \item \code{ec_number.m8}: Extracts EC numbers for building the \strong{metabolic network}. \item \code{subcellular.m8}: Extracts subcellular localization terms for building the \strong{transmembrane network}. \item \code{transcript_factor.m8}: Extracts transcription factor hits for building the \strong{gene expression transcription regulation network}. }
+        <p>Reads standard DIAMOND BLASTP tabular output (m8 format) from a specified working directory, groups the hits, and writes them as annotation terms into a virtual cell modeling project session file. These terms are essential for constructing distinct cellular networks in later steps. Specifically, it parses three files and maps them to the following networks: \itemize{ \item \code{ec_number.m8}: Extracts EC numbers for building the \strong{metabolic network}. \item \code{subcellular.m8}: Extracts subcellular localization terms for building the \strong{transmembrane network}. \item \code{transcript_factor.m8}: Extracts transcription factor hits for building the \strong{gene expression transcription regulation network}. }</p>
 
         <h3>Usage</h3>
 
@@ -35,18 +35,18 @@
         <table>
             
 <dt>proj.file</dt>
-<dd><p><p>Character. The file path to the GenBank annotation project file (\code{.gcproj}) into which the parsed terms will be written.</p></dd>
+<dd><p><p>Character. The file path to the GenBank annotation project file (\code{.gcproj}) into which the parsed terms will be written.</p></p></dd>
 
 
 <dt>model.dir</dt>
-<dd><p><p>Character. The directory path containing the DIAMOND BLASTP output files (\code{ec_number.m8}, \code{subcellular.m8}, \code{transcript_factor.m8}).</p></dd>
+<dd><p><p>Character. The directory path containing the DIAMOND BLASTP output files (\code{ec_number.m8}, \code{subcellular.m8}, \code{transcript_factor.m8}).</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The function loads the project file, reads each m8 file, groups the hits via \code{diamond_hitgroups}, and stores them using \code{set_blastp_result}. After all three annotation types are processed, it generates an enzyme summary table and persists the updated project.
+        <p>The function loads the project file, reads each m8 file, groups the hits via \code{diamond_hitgroups}, and stores them using \code{set_blastp_result}. After all three annotation types are processed, it generates an enzyme summary table and persists the updated project.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -54,7 +54,7 @@
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Injects grouped annotation terms into the project session. \item Exports an enzyme annotation table as \code{enzymes.csv} in the same directory as \code{proj_file}. \item Saves the updated project file to disk. }
+        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Injects grouped annotation terms into the project session. \item Exports an enzyme annotation table as \code{enzymes.csv} in the same directory as \code{proj_file}. \item Saves the updated project file to disk. }</p>
 
         <h3 style="display: block;">Examples</h3>
 

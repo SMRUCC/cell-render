@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Core processing function that ingests a GenBank file, wraps it into a standardized \code{project} object via \code{CellRender}, saves the project state to disk, and extracts essential FASTA files required for downstream bioinformatics analyses (motif scanning and homology searches).
+        <p>Core processing function that ingests a GenBank file, wraps it into a standardized \code{project} object via \code{CellRender}, saves the project state to disk, and extracts essential FASTA files required for downstream bioinformatics analyses (motif scanning and homology searches).</p>
 
         <h3>Usage</h3>
 
@@ -37,26 +37,26 @@
         <table>
             
 <dt>src</dt>
-<dd><p><p>Character. The file path to a single GenBank source file.</p></dd>
+<dd><p><p>Character. The file path to a single GenBank source file.</p></p></dd>
 
 
 <dt>release.dir</dt>
-<dd><p><p>Character. The root directory where the generated \code{builder.gcproj} file will be saved.</p></dd>
+<dd><p><p>Character. The root directory where the generated \code{builder.gcproj} file will be saved.</p></p></dd>
 
 
 <dt>workdir</dt>
-<dd><p><p>Character. The working directory where extracted FASTA files will be written.</p></dd>
+<dd><p><p>Character. The working directory where extracted FASTA files will be written.</p></p></dd>
 
 
 <dt>batch.process</dt>
-<dd><p><p>Logical. If \code{TRUE}, the function extracts the model accession ID to create a specific subdirectory inside \code{release_dir} for organizing multiple models. If \code{FALSE}, files are written directly to the provided directories without subdirectory nesting.</p></dd>
+<dd><p><p>Logical. If \code{TRUE}, the function extracts the model accession ID to create a specific subdirectory inside \code{release_dir} for organizing multiple models. If \code{FALSE}, files are written directly to the provided directories without subdirectory nesting.</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The function performs the following operations: \enumerate{ \item Reads the GenBank source file and creates a \code{project} object. \item Extracts the model accession ID (in batch mode) for directory naming. \item Saves the project file to the release directory. \item Extracts and writes TSS upstream sequences (\code{upstream_locis.fasta}) for transcription factor binding site motif scanning. \item Extracts and writes protein sequences (\code{proteins.fasta}) for DIAMOND BLASTP homology annotation. }
+        <p>The function performs the following operations: \enumerate{ \item Reads the GenBank source file and creates a \code{project} object. \item Extracts the model accession ID (in batch mode) for directory naming. \item Saves the project file to the release directory. \item Extracts and writes TSS upstream sequences (\code{upstream_locis.fasta}) for transcription factor binding site motif scanning. \item Extracts and writes protein sequences (\code{proteins.fasta}) for DIAMOND BLASTP homology annotation. }</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -64,7 +64,7 @@
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Creates a \code{builder.gcproj} project file in the release directory (under a model-ID subdirectory in batch mode). \item Exports \code{upstream_locis.fasta} containing TSS upstream region sequences for downstream TFBS motif scanning. \item Exports \code{proteins.fasta} containing protein sequences for downstream DIAMOND BLASTP annotation searches. }
+        <p>\code{invisible(NULL)}. This function is called for its side effects: \itemize{ \item Creates a \code{builder.gcproj} project file in the release directory (under a model-ID subdirectory in batch mode). \item Exports \code{upstream_locis.fasta} containing TSS upstream region sequences for downstream TFBS motif scanning. \item Exports \code{proteins.fasta} containing protein sequences for downstream DIAMOND BLASTP annotation searches. }</p>
 
         <h3 style="display: block;">Examples</h3>
 

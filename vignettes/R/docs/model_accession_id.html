@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Retrieves the primary genomic accession ID from a list of GenBank replicons. It prioritizes the chromosomal sequence (non-plasmid) over plasmid sequences.
+        <p>Retrieves the primary genomic accession ID from a list of GenBank replicons. It prioritizes the chromosomal sequence (non-plasmid) over plasmid sequences.</p>
 
         <h3>Usage</h3>
 
@@ -35,14 +35,14 @@
         <table>
             
 <dt>replicons</dt>
-<dd><p><p>A list or vector of GenBank replicon objects (e.g., parsed from a multi-replicon GenBank file).</p></dd>
+<dd><p><p>A list or vector of GenBank replicon objects (e.g., parsed from a multi-replicon GenBank file).</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>The function iterates through the provided \code{replicons}. As soon as it encounters a replicon that is not flagged as a plasmid (typically representing the main chromosome), it immediately returns its accession ID. If the GenBank file contains \emph{only} plasmid data, the function falls back to returning the accession ID of the last plasmid processed. If the input list is empty, it returns \code{NULL}.
+        <p>The function iterates through the provided \code{replicons}. As soon as it encounters a replicon that is not flagged as a plasmid (typically representing the main chromosome), it immediately returns its accession ID. If the GenBank file contains \emph{only} plasmid data, the function falls back to returning the accession ID of the last plasmid processed. If the input list is empty, it returns \code{NULL}.</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -50,7 +50,7 @@
 
         <h3>Value</h3>
 
-        <p>A character string representing the accession ID, or \code{NULL} if no replicons are provided.
+        <p>A character string representing the accession ID, or \code{NULL} if no replicons are provided.</p>
 
         <h3 style="display: block;">Examples</h3>
 

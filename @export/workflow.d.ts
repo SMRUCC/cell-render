@@ -61,7 +61,7 @@ declare namespace workflow {
     * 
     * 
      * @param proj -
-     * @param traits the phenotype annotation @``T:SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar.ReportJSON`` result data.
+     * @param traits the phenotype annotation [ReportJSON](cref:T:SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar.ReportJSON) result data.
      * @param env -
      * 
      * + default value Is ``null``.

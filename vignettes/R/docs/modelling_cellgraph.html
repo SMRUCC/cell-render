@@ -22,7 +22,7 @@
 
         <h3>Description</h3>
 
-        <p>Executes the end-to-end workflow for constructing a virtual cell graph model from an NCBI GenBank assembly source file. This function initializes the environment, configures parameters, runs the annotation workflow, and generates the corresponding project files and reports.
+        <p>Executes the end-to-end workflow for constructing a virtual cell graph model from an NCBI GenBank assembly source file. This function initializes the environment, configures parameters, runs the annotation workflow, and generates the corresponding project files and reports.</p>
 
         <h3>Usage</h3>
 
@@ -48,42 +48,42 @@
         <table>
             
 <dt>src</dt>
-<dd><p><p>\code{character}. The file path to the NCBI GenBank assembly source file. In batch mode, this can be a directory containing multiple GenBank files.</p></dd>
+<dd><p><p>\code{character}. The file path to the NCBI GenBank assembly source file. In batch mode, this can be a directory containing multiple GenBank files.</p></p></dd>
 
 
 <dt>outputdir</dt>
-<dd><p><p>\code{character}. The directory path for storing result files. Defaults to a temporary directory created by \code{tempdir()} if not specified.</p></dd>
+<dd><p><p>\code{character}. The directory path for storing result files. Defaults to a temporary directory created by \code{tempdir()} if not specified.</p></p></dd>
 
 
 <dt>name</dt>
-<dd><p><p>\code{character}. The name to assign to the virtual cell model. Only used in single-project mode. Defaults to \code{"virtual_cell"}.</p></dd>
+<dd><p><p>\code{character}. The name to assign to the virtual cell model. Only used in single-project mode. Defaults to \code{"virtual_cell"}.</p></p></dd>
 
 
 <dt>batch.process</dt>
-<dd><p><p>\code{logical}. If \code{TRUE}, treats \code{src} as a directory and processes all GenBank files within it. If \code{FALSE}, processes a single GenBank file. Defaults to \code{FALSE}.</p></dd>
+<dd><p><p>\code{logical}. If \code{TRUE}, treats \code{src} as a directory and processes all GenBank files within it. If \code{FALSE}, processes a single GenBank file. Defaults to \code{FALSE}.</p></p></dd>
 
 
 <dt>debug</dt>
-<dd><p><p>\code{character vector}. Optional vector of workflow step names to enable for debugging. When provided, only the specified steps will be executed via \code{WorkflowRender::definePipeline()}. Defaults to an empty vector (all steps run).</p></dd>
+<dd><p><p>\code{character vector}. Optional vector of workflow step names to enable for debugging. When provided, only the specified steps will be executed via \code{WorkflowRender::definePipeline()}. Defaults to an empty vector (all steps run).</p></p></dd>
 
 
 <dt>enable.blastp.cache</dt>
-<dd><p><p>\code{logical}. If \code{TRUE}, enables caching of BLASTP search results to avoid redundant computations on re-runs. Defaults to \code{FALSE}.</p></dd>
+<dd><p><p>\code{logical}. If \code{TRUE}, enables caching of BLASTP search results to avoid redundant computations on re-runs. Defaults to \code{FALSE}.</p></p></dd>
 
 
 <dt>gems.library.mode</dt>
-<dd><p><p>\code{logical}. If \code{TRUE}, runs in GEMs library mode, which adjusts the model compilation for genome-scale metabolic model library generation. Defaults to \code{FALSE}.</p></dd>
+<dd><p><p>\code{logical}. If \code{TRUE}, runs in GEMs library mode, which adjusts the model compilation for genome-scale metabolic model library generation. Defaults to \code{FALSE}.</p></p></dd>
 
 
 <dt>enzyme.fuzzy</dt>
-<dd><p><p>\code{logical}. If \code{TRUE}, enables fuzzy matching for enzyme annotation, allowing more permissive EC number assignments. Defaults to \code{FALSE}.</p></dd>
+<dd><p><p>\code{logical}. If \code{TRUE}, enables fuzzy matching for enzyme annotation, allowing more permissive EC number assignments. Defaults to \code{FALSE}.</p></p></dd>
 
         </table>
 
 
         <h3 style="display: block;">Details</h3>
 
-        <p>This function acts as a high-level wrapper around the \code{WorkflowRender} and \code{CellRender} engines. It sets up a temporary workspace (if not provided), resolves dependencies (like the DIAMOND executable), and triggers the specific annotation modules requested by the user. The complete workflow pipeline includes: \enumerate{ \item \strong{make_genbank_proj}: Extract protein sequences, TSS upstream regions, genomic context, and taxonomy from GenBank source file(s). \item \strong{tfbs_motif_scanning}: Scan for transcription factor binding site motifs in upstream regions (conditional on TRN_network module). \item \strong{make_diamond_hits}: Run DIAMOND BLASTP against EC number, subcellular location, and transcription factor reference databases. \item \strong{make_terms}: Parse BLASTP results and assign annotation terms for metabolic, transmembrane, and transcription regulation networks. \item \strong{make_TRN}: Build the transcription regulation network from TFBS scan results and TF annotations (conditional on TRN_network module). \item \strong{build_project}: Compile all networks into a virtual cell model and export as GCMarkup XML. }
+        <p>This function acts as a high-level wrapper around the \code{WorkflowRender} and \code{CellRender} engines. It sets up a temporary workspace (if not provided), resolves dependencies (like the DIAMOND executable), and triggers the specific annotation modules requested by the user. The complete workflow pipeline includes: \enumerate{ \item \strong{make_genbank_proj}: Extract protein sequences, TSS upstream regions, genomic context, and taxonomy from GenBank source file(s). \item \strong{tfbs_motif_scanning}: Scan for transcription factor binding site motifs in upstream regions (conditional on TRN_network module). \item \strong{make_diamond_hits}: Run DIAMOND BLASTP against EC number, subcellular location, and transcription factor reference databases. \item \strong{make_terms}: Parse BLASTP results and assign annotation terms for metabolic, transmembrane, and transcription regulation networks. \item \strong{make_TRN}: Build the transcription regulation network from TFBS scan results and TF annotations (conditional on TRN_network module). \item \strong{build_project}: Compile all networks into a virtual cell model and export as GCMarkup XML. }</p>
 
         <h3 style="display: block">Authors</h3>
 
@@ -91,7 +91,7 @@
 
         <h3>Value</h3>
 
-        <p>\code{invisible(NULL)}. This function is called for its side effects of creating project files, annotation data, and compiled virtual cell model XML files in the output directory.
+        <p>\code{invisible(NULL)}. This function is called for its side effects of creating project files, annotation data, and compiled virtual cell model XML files in the output directory.</p>
 
         <h3 style="display: block;">Examples</h3>
 
