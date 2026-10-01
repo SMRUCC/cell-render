@@ -85,15 +85,18 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
         "-p", n_threads,
         "--ultra-sensitive",
         "--matrix","BLOSUM62",        
-        "--evalue","1e-3",
+        "--evalue","1e-5",
         "--masking","0",
         "--comp-based-stats","0",
+        "--max-target-seqs", "0",
+        "--max-hsps", "0",
         "--outfmt","6","qtitle",subj,"pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"), shell=TRUE);
 
-    pfam = read_m8(m8_file);
-    pfam = proteinKit::analysis_domains(pfam);
+    pfam <- read_m8(m8_file);
+    pfam <- proteinKit::analysis_domains(pfam);
 
     setwd(ws);
 
     write.csv(pfam, file = file.path(dirname(proteins), "Pfam.csv"));
+    write.csv(pfam, file = file.path(workdir, "Pfam.csv"));
 }
