@@ -34,8 +34,8 @@ imports "proteinKit" from "seqtoolkit";
 #'   \item Changes the working directory to \code{workdir}.
 #'   \item Creates a DIAMOND database from the input protein sequences.
 #'   \item Runs DIAMOND BLASTP with the Pfam-A reference as query against
-#'     the protein database, using ultra-sensitive mode with PAM30 matrix
-#'     and relaxed e-value threshold (10) for domain detection.
+#'     the protein database, using ultra-sensitive mode with BLOSUM62 matrix
+#'     and relaxed e-value threshold (1e-3) for domain detection.
 #'   \item Parses the BLASTP output in m8 format.
 #'   \item Analyzes domain architecture using \code{proteinKit::analysis_domains()}.
 #'   \item Restores the original working directory.
@@ -61,7 +61,10 @@ imports "proteinKit" from "seqtoolkit";
 #'
 #' @keywords internal
 #' @export
-const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("diamond")) {
+const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("diamond"), 
+                                n_threads = 24, 
+                                subj = c("sseqid","stitle")) {
+
     let pfam = file.path(@datadir, "Pfam-A.fas");
     let ws = getwd();
     let protein_id = basename(proteins);
@@ -70,7 +73,8 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
     workdir  = normalizePath(workdir);
     proteins = normalizePath(proteins);
     diamond  = unlist(diamond);
-    
+    subj     = .Internal::first(subj) || "sseqid";
+
     dir.create(workdir, showWarnings=FALSE);
     setwd(workdir);
     system2(diamond, c("makedb","--in",proteins, "--db", protein_id), shell=TRUE);
@@ -78,15 +82,13 @@ const pfam_diamond = function(proteins, workdir = "./", diamond = Sys.which("dia
         "-d",`${protein_id}.dmnd`,
         "-q", pfam, 
         "-o", m8_file,
-        "-p","24",
+        "-p", n_threads,
         "--ultra-sensitive",
-        "--matrix","PAM30",
-        "--gapopen","9",
-        "--gapextend","1",
-        "--evalue","10",
+        "--matrix","BLOSUM62",        
+        "--evalue","1e-3",
         "--masking","0",
         "--comp-based-stats","0",
-        "--outfmt","6","qtitle","sseqid","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"), shell=TRUE);
+        "--outfmt","6","qtitle",subj,"pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"), shell=TRUE);
 
     pfam = read_m8(m8_file);
     pfam = proteinKit::analysis_domains(pfam);
