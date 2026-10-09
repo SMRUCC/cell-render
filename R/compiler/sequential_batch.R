@@ -91,6 +91,7 @@ const sequential_batch = function(src, outputdir = "./", args = list()) {
             model_dir = model_dir
         );
 
+        writeLines(jsonlite::toJSON(traits ), con = file.path( model_proj,"metaTraits.json" ));
         write.csv(as.data.frame(traits ), file = file.path(model_proj, "metaTraits.csv"));
 
         let save_xml = file.path(model_dir, "model.xml");
