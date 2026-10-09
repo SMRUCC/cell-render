@@ -1,4 +1,4 @@
-﻿Imports SMRUCC.genomics.Analysis.Metagenome.MetaFunction.metaTraits.Traitar
+﻿Imports SMRUCC.genomics.Analysis.metaTraits.Traitar
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.LocalBLAST.Application.BBH
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
