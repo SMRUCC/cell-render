@@ -79,7 +79,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
                                 .confidence = p.confidence,
                                 .cvScore = p.cvScore,
                                 .data_type = p.data_type,
-                                .result = p.result,
+                                .result = p.predict,
                                 .score = p.score,
                                 .unit = p.unit
                             }
