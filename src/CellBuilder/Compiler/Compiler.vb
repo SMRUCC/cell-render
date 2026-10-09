@@ -73,16 +73,7 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
             .phenotype = proj.annotations.traits _
                 .Where(Function(p) p.status = "trained" AndAlso p.confidence >= 0.85) _
                 .Select(Function(p)
-                            Return New v2.PhenotypeTrait With {
-                                .category = p.category,
-                                .accession = p.accession,
-                                .confidence = p.confidence,
-                                .cvScore = p.cvScore,
-                                .data_type = p.data_type,
-                                .result = p.predict,
-                                .score = p.score,
-                                .unit = p.unit
-                            }
+                            Return p.ToPhenotype
                         End Function) _
                 .ToArray
         }
