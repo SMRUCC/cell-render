@@ -1,4 +1,4 @@
-imports "metaTraits" from "metagenomics_kit";
+imports "metaTraits" from "annotationKit";
 
 #' run workflow of metaTraits for make phenotype traits annotation
 #' 
