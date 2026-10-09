@@ -67,6 +67,7 @@ const make_terms = function(app, context) {
                 model_dir = blastp_dir
             );
 
+            writeLines(jsonlite::toJSON(traits ), con = file.path( release_dir, model_id,"metaTraits.json" ));
             write.csv(as.data.frame(traits ), file = file.path(release_dir, model_id, "metaTraits.csv"));
         }
     } else {
