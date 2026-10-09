@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports SMRUCC.genomics.Analysis.metaTraits.Traitar
 Imports SMRUCC.genomics.Analysis.SequenceTools.SequencePatterns
+Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage
 Imports SMRUCC.genomics.GCModeller.Assembly.GCMarkupLanguage.v2
 Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
@@ -70,8 +71,19 @@ Public Class Compiler : Inherits Compiler(Of VirtualCell)
         m_compiledModel.metabolismStructure = CreateMetabolismNetwork(m_compiledModel.genome)
         m_compiledModel.traits = New Traits With {
             .phenotype = proj.annotations.traits _
-                .Where(Function(p) p.predict = PredictionResults.TRUE AndAlso p.confidence >= 0.85) _
-                .Select(Function(p) p.phenotypeId & ":" & p.accession) _
+                .Where(Function(p) p.status = "trained" AndAlso p.confidence >= 0.85) _
+                .Select(Function(p)
+                            Return New v2.PhenotypeTrait With {
+                                .category = p.category,
+                                .accession = p.accession,
+                                .confidence = p.confidence,
+                                .cvScore = p.cvScore,
+                                .data_type = p.data_type,
+                                .result = p.result,
+                                .score = p.score,
+                                .unit = p.unit
+                            }
+                        End Function) _
                 .ToArray
         }
 
