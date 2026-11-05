@@ -28,6 +28,9 @@ declare namespace CellRender {
    */
    function check_build_module(flag: any): object;
    /**
+   */
+   function clr_diamond(q: any, s: any): object;
+   /**
      * @param vcell_name default value Is ``null``.
    */
    function compile_model(proj_file: any, save_model: any, registry: any, vcell_name?: any): object;
