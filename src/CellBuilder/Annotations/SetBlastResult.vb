@@ -78,7 +78,17 @@ Public Module SetBlastResult
     Public Sub SetKEGG(proj As GenBankProject, protein_hits As HitCollection())
         proj.annotations.ko_hits = protein_hits
         proj.annotations.ko = protein_hits _
-            .Select(Function(hits) RankTerm.RankTopTerm(hits, makeTerm:=Function(a) a.hitName.Split("|"c)(1))) _
+            .Select(Function(hits)
+                        Return RankTerm.RankTopTerm(hits, makeTerm:=Function(a)
+                                                                        Dim t = a.hitName.Split("|"c)
+
+                                                                        If t.Length > 1 Then
+                                                                            Return t(1)
+                                                                        Else
+                                                                            Return ""
+                                                                        End If
+                                                                    End Function)
+                    End Function) _
             .IteratesALL _
             .ToArray
 
