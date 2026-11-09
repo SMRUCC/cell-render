@@ -111,7 +111,8 @@ const modelling_cellgraph = function(src, outputdir = NULL,
         enable_blastp_cache = enable_blastp_cache,
         gems_library_mode = gems_library_mode,
         enzyme_fuzzy = enzyme_fuzzy,
-        batch_mode = batch_mode
+        batch_mode = batch_mode,
+        workdir_root = workdir_root
     );
 
     WorkflowRender::init_context(workdir_root );

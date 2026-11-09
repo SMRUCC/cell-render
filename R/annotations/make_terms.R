@@ -54,6 +54,7 @@ const make_terms = function(app, context) {
     let batch_process = as.logical(get_config("batch_process"));
     let diamond_workdir = WorkflowRender::workspace("make_diamond_hits");
     let release_dir = get_config("release");
+    let workdir_root = get_config("workdir_root");
 
     if (batch_process) {
         for(let model_dir in tqdm(list_batch_models())) {
@@ -67,8 +68,12 @@ const make_terms = function(app, context) {
                 model_dir = blastp_dir
             );
 
+            let tax_name = project::load(proj_file) |> scientific_name();
+            let filename = normalizeFileName(tax_name, FALSE,maxchars = 64);
+
             writeLines(jsonlite::toJSON(traits ), con = file.path( release_dir, model_id,"metaTraits.json" ));
             write.csv(as.data.frame(traits ), file = file.path(release_dir, model_id, "metaTraits.csv"));
+            write.csv(as.data.frame(traits ), file = file.path(workdir_root, "metaTraits", `${filename }.csv`));
         }
     } else {
         get_config("proj_file") |> make_blastp_term(
