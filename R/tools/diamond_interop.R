@@ -16,6 +16,8 @@ const diamond_interop = function() {
 
         message(`make alignment of ${proteins} with database ${db} job done,`);
         message(`  => ${output}`);
+
+        invisible(NULL);
     }
 
     return(diamond_blastp );
