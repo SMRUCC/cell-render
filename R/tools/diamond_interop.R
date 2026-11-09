@@ -13,6 +13,9 @@ const diamond_interop = function() {
             "qseqid","stitle","pident","length","mismatch","gapopen","qstart","qend","sstart","send","evalue","bitscore"
         ), shell=TRUE)
         ;
+
+        message(`make alignment of ${proteins} with database ${db} job done,`);
+        message(`  => ${output}`);
     }
 
     return(diamond_blastp );
