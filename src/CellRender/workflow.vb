@@ -15,6 +15,7 @@ Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 Imports SMRUCC.genomics.SequenceModel.FASTA
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
+Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
@@ -118,6 +119,14 @@ Module workflow
                     .IteratesALL _
                     .ToArray
 
+                Dim ccIndex = proj.annotations.membrane_proteins.ToDictionary(Function(a) a.queryName)
+
+                For Each gene As GeneTable In proj.gene_table
+                    If ccIndex.ContainsKey(gene.locus_id) Then
+                        gene.subcellular_location = ccIndex(gene.locus_id).term
+                    End If
+                Next
+
             Case "transcript_factor"
                 proj.annotations.tf_hits = protein_hits
                 proj.annotations.transcript_factors = proj.annotations.tf_hits _
@@ -126,6 +135,29 @@ Module workflow
                             End Function) _
                     .Where(Function(ec) Not ec Is Nothing) _
                     .ToArray
+
+                Dim tfIndex = proj.annotations.transcript_factors.ToDictionary(Function(a) a.QueryName)
+
+                For Each gene As GeneTable In proj.gene_table
+                    If tfIndex.ContainsKey(gene.locus_id) Then
+                        gene.TF = tfIndex(gene.locus_id).HitName
+                    End If
+                Next
+
+            Case "ko"
+                proj.annotations.ko_hits = protein_hits
+                proj.annotations.ko = protein_hits _
+                    .Select(Function(hits) RankTerm.RankTopTerm(hits)) _
+                    .IteratesALL _
+                    .ToArray
+
+                Dim koIndex = proj.annotations.ko.ToDictionary(Function(a) a.queryName)
+
+                For Each gene As GeneTable In proj.gene_table
+                    If koIndex.ContainsKey(gene.locus_id) Then
+                        gene.KO = koIndex(gene.locus_id).term
+                    End If
+                Next
 
             Case Else
                 Return RInternal.debug.stop($"unknown annotation group of '{group}'", env)
