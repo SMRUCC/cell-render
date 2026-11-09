@@ -11,7 +11,6 @@ Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.CompilerServices
 Imports SMRUCC.genomics.Interops.NCBI.Extensions
-Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 Imports SMRUCC.genomics.SequenceModel.FASTA
 Imports SMRUCC.Rsharp.Runtime
@@ -85,7 +84,7 @@ Module workflow
 
     <ExportAPI("set_blastp_result")>
     Public Function set_blastp_result(<RRawVectorArgument> blastp_hits As Object, proj As GenBankProject, group As String, Optional env As Environment = Nothing) As Object
-        Dim pull As pipeline = pipeline.TryCreatePipeline(Of HitCollection)(blastp_hits, env)
+        Dim pull As PipeIterator(Of HitCollection) = pipeline.Stream(Of HitCollection)(blastp_hits, env)
 
         If pull.isError Then
             Return pull.getError
@@ -93,86 +92,13 @@ Module workflow
             proj.annotations = New AnnotationSet
         End If
 
-        Dim protein_hits As HitCollection() = pull.populates(Of HitCollection)(env).ToArray
+        Dim protein_hits As HitCollection() = pull.getData
 
         Select Case Strings.LCase(group)
-            Case "ec_number"
-                proj.annotations.enzyme_hits = protein_hits
-                proj.annotations.ec_numbers = ECNumberAnnotation _
-                    .MakeEnzymeTerms(proj.annotations.enzyme_hits) _
-                    .ToDictionary(Function(a)
-                                      Return a.gene_id
-                                  End Function)
-                ' 20260506
-                ' update ec numbers of the gene annotation table
-                For Each gene As GeneTable In proj.gene_table
-                    If proj.annotations.ec_numbers.ContainsKey(gene.locus_id) Then
-                        gene.EC_Number = {proj.annotations.ec_numbers(gene.locus_id).EC}
-                        gene.COG = proj.annotations.ec_numbers(gene.locus_id).proteinName
-                    End If
-                Next
-
-            Case "subcellular_location"
-                proj.annotations.transporter = protein_hits
-                proj.annotations.membrane_proteins = proj.annotations.transporter _
-                    .Select(Function(hits) RankTerm.RankTopTerm(hits)) _
-                    .IteratesALL _
-                    .ToArray
-
-                Dim ccIndex = proj.annotations.membrane_proteins _
-                    .TopTerms _
-                    .ToDictionary(Function(a)
-                                      Return a.queryName
-                                  End Function)
-
-                For Each gene As GeneTable In proj.gene_table
-                    If ccIndex.ContainsKey(gene.locus_id) Then
-                        gene.subcellular_location = ccIndex(gene.locus_id).term
-                    End If
-                Next
-
-            Case "transcript_factor"
-                proj.annotations.tf_hits = protein_hits
-                proj.annotations.transcript_factors = proj.annotations.tf_hits _
-                    .Select(Function(hits)
-                                Return hits.AssignTFFamilyHit()
-                            End Function) _
-                    .Where(Function(ec) Not ec Is Nothing) _
-                    .ToArray
-
-                Dim tfIndex = proj.annotations.transcript_factors _
-                    .GroupBy(Function(a) a.QueryName) _
-                    .ToDictionary(Function(a) a.Key,
-                                  Function(a)
-                                      Return a _
-                                          .OrderByDescending(Function(i) i.identities) _
-                                          .First
-                                  End Function)
-
-                For Each gene As GeneTable In proj.gene_table
-                    If tfIndex.ContainsKey(gene.locus_id) Then
-                        gene.TF = tfIndex(gene.locus_id).HitName
-                    End If
-                Next
-
-            Case "ko"
-                proj.annotations.ko_hits = protein_hits
-                proj.annotations.ko = protein_hits _
-                    .Select(Function(hits) RankTerm.RankTopTerm(hits, makeTerm:=Function(a) a.hitName.Split("|"c)(1))) _
-                    .IteratesALL _
-                    .ToArray
-
-                Dim koIndex = proj.annotations.ko _
-                    .TopTerms _
-                    .ToDictionary(Function(a)
-                                      Return a.queryName
-                                  End Function)
-
-                For Each gene As GeneTable In proj.gene_table
-                    If koIndex.ContainsKey(gene.locus_id) Then
-                        gene.KO = koIndex(gene.locus_id).term
-                    End If
-                Next
+            Case "ec_number" : Call proj.SetECNumber(protein_hits)
+            Case "subcellular_location" : Call proj.SetSubcellularLocation(protein_hits)
+            Case "transcript_factor" : Call proj.SetTranscriptFactors(protein_hits)
+            Case "ko" : Call proj.SetKEGG(protein_hits)
 
             Case Else
                 Return RInternal.debug.stop($"unknown annotation group of '{group}'", env)
