@@ -20,6 +20,7 @@ Public Class AnnotationSet
     Public Property operon_hits As HitCollection()
     Public Property transporter As HitCollection()
     Public Property tf_hits As HitCollection()
+    Public Property ko_hits As HitCollection()
 #End Region
 
     Public Property operons As AnnotatedOperon()
@@ -32,6 +33,8 @@ Public Class AnnotationSet
     Public Property tfbs_hits As Dictionary(Of String, MotifMatch())
     Public Property transcript_factors As BestHit()
     Public Property membrane_proteins As RankTerm()
+
+    Public Property ko As RankTerm()
 
     Public Property traits As ReportJSON()
 

@@ -67,6 +67,11 @@ Public Module ProjectIO
         End Using
     End Function
 
+    <Extension>
+    Private Function readObjects(Of T)(zip As ZipStream, file As String) As IEnumerable(Of T)
+        Return zip.loadJSONL(Of T)(file)
+    End Function
+
     Public Function ParseZip(zip As ZipStream) As GenBankProject
         Dim source_json As String = zip.ReadAllText("/source.json")
         Dim source_nt As Dictionary(Of String, Integer) = zip.ReadAllText("/source.txt").LoadJSON(Of Dictionary(Of String, Integer))(throwEx:=False)
@@ -84,33 +89,16 @@ Public Module ProjectIO
         Dim operon_hits As HitCollection() = zip.LoadHitCollection("/localblast/operon_hits.jsonl").ToArray
         Dim tf_hits As HitCollection() = zip.LoadHitCollection("/localblast/tf_hits.jsonl").ToArray
         Dim transport_blast As HitCollection() = zip.LoadHitCollection("/localblast/transporter.jsonl").ToArray
+        Dim ko_blast As HitCollection() = zip.LoadHitCollection("/localblast/ko_blast.jsonl").ToArray
         Dim traits As ReportJSON() = zip.loadJSONL(Of ReportJSON)("/traits.jsonl").ToArray
 
-        Dim operons As AnnotatedOperon() = zip.ReadLines("/localblast/operons.jsonl") _
-            .SafeQuery _
-            .Select(Function(line) line.LoadJSON(Of AnnotatedOperon)(throwEx:=False)) _
-            .Where(Function(line) Not line Is Nothing) _
-            .ToArray
-        Dim ec_numbers As Dictionary(Of String, ECNumberAnnotation) = zip.ReadLines("/localblast/ec_numbers.jsonl") _
-            .SafeQuery _
-            .Select(Function(line) line.LoadJSON(Of ECNumberAnnotation)(throwEx:=False)) _
-            .Where(Function(line) Not line Is Nothing) _
-            .ToDictionary(Function(e) e.gene_id)
-        Dim tfbs As MotifMatch() = zip.ReadLines("/tfbs.jsonl") _
-            .SafeQuery _
-            .Select(Function(line) line.LoadJSON(Of MotifMatch)(throwEx:=False)) _
-            .Where(Function(line) Not line Is Nothing) _
-            .ToArray
-        Dim tfset As BestHit() = zip.ReadLines("/localblast/transcript_factors.jsonl") _
-            .SafeQuery _
-            .Select(Function(line) line.LoadJSON(Of BestHit)(throwEx:=False)) _
-            .Where(Function(line) Not line Is Nothing) _
-            .ToArray
-        Dim membranes As RankTerm() = zip.ReadLines("/localblast/membrane_factors.jsonl") _
-            .SafeQuery _
-            .Select(Function(line) line.LoadJSON(Of RankTerm)(throwEx:=False)) _
-            .Where(Function(line) Not line Is Nothing) _
-            .ToArray
+        Dim operons As AnnotatedOperon() = zip.readObjects(Of AnnotatedOperon)("/localblast/operons.jsonl").ToArray
+        Dim ec_numbers As Dictionary(Of String, ECNumberAnnotation) = zip.readObjects(Of ECNumberAnnotation)("/localblast/ec_numbers.jsonl").ToDictionary(Function(e) e.gene_id)
+        Dim tfbs As MotifMatch() = zip.readObjects(Of MotifMatch)("/tfbs.jsonl").ToArray
+        Dim tfset As BestHit() = zip.readObjects(Of BestHit)("/localblast/transcript_factors.jsonl").ToArray
+        Dim membranes As RankTerm() = zip.readObjects(Of RankTerm)("/localblast/membrane_factors.jsonl").ToArray
+        Dim ko As RankTerm() = zip.readObjects(Of RankTerm)("/localblast/ko.jsonl").ToArray
+
         Dim tfbs_groups = tfbs _
             .Where(Function(a) Not a.title Is Nothing) _
             .GroupBy(Function(a) a.title) _
@@ -129,7 +117,9 @@ Public Module ProjectIO
             .transcript_factors = tfset,
             .transporter = transport_blast,
             .membrane_proteins = membranes,
-            .traits = traits
+            .traits = traits,
+            .ko = ko,
+            .ko_hits = ko_blast
         }
 
         Return New GenBankProject With {
@@ -166,6 +156,8 @@ Public Module ProjectIO
         Call fs.WriteLines(annos.enzyme_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/enzyme_hits.jsonl")
         Call fs.WriteLines(annos.operon_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/operon_hits.jsonl")
         Call fs.WriteLines(annos.tf_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/tf_hits.jsonl")
+        Call fs.WriteLines(annos.ko_hits.SafeQuery.Select(Function(q) q.GetJson), "/localblast/ko_blast.jsonl")
+
         Call fs.WriteLines(annos.ec_numbers.SafeQuery.Select(Function(e) e.Value.GetJson), "/localblast/ec_numbers.jsonl")
         Call fs.WriteLines(annos.transcript_factors.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transcript_factors.jsonl")
         Call fs.WriteLines(annos.operons.SafeQuery.Select(Function(e) e.GetJson), "/localblast/operons.jsonl")
@@ -174,6 +166,7 @@ Public Module ProjectIO
 
         Call fs.WriteLines(annos.transporter.SafeQuery.Select(Function(e) e.GetJson), "/localblast/transporter.jsonl")
         Call fs.WriteLines(annos.membrane_proteins.SafeQuery.Select(Function(e) e.GetJson), "/localblast/membrane_factors.jsonl")
+        Call fs.WriteLines(annos.ko.SafeQuery.Select(Function(e) e.GetJson), "/localblast/ko.jsonl")
 
         Return True
     End Function
