@@ -74,6 +74,7 @@ const make_blastp_term = function(proj_file, traits, model_dir) {
     write_proj_session(subcellular, "subcellular_location");
     # tf list term hits for build the gene expression transcription regulation network
     write_proj_session(tf_list, "transcript_factor");
+    write_proj_session(ko_list, "ko");
 
     let enzymes = enzyme_table(proj);
     let enzyme_file = file.path(dirname(proj_file), "enzymes.csv");
