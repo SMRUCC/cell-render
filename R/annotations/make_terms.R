@@ -74,6 +74,10 @@ const make_terms = function(app, context) {
             writeLines(jsonlite::toJSON(traits ), con = file.path( release_dir, model_id,"metaTraits.json" ));
             write.csv(as.data.frame(traits ), file = file.path(release_dir, model_id, "metaTraits.csv"));
             write.csv(as.data.frame(traits ), file = file.path(workdir_root, "metaTraits", `${filename }.csv`));
+
+            write.csv(gene_table(project::load(proj_file)), 
+                file = file.path(model_dir, "gene_table.csv"), 
+                silent = TRUE);
         }
     } else {
         get_config("proj_file") |> make_blastp_term(
