@@ -40,6 +40,7 @@ const make_diamond = function(local_db, diamond = Sys.which("diamond")) {
     let enzyme_db = file.path(local_db,"ec_numbers.fasta");
     let cc_location = file.path(local_db, "subcellular.fasta");
     let tf_db = file.path(local_db, "TF.fasta");
+    let ko_db = file.path(local_db, "KO.fasta");
 
     diamond <- unlist(diamond);
 
@@ -48,6 +49,7 @@ const make_diamond = function(local_db, diamond = Sys.which("diamond")) {
         system2(diamond, c("makedb","--in",enzyme_db, "--db", "ec_number"), shell=TRUE);
         system2(diamond, c("makedb","--in",cc_location, "--db", "subcellular"), shell=TRUE);
         system2(diamond, c("makedb","--in",tf_db, "--db", "transcript_factor"), shell=TRUE);
+        system2(diamond, c("makedb","--in",ko_db, "--db", "ko"), shell=TRUE);
     } else {
         # run debug on windows
         message("[windows_debug] Skip of make diamond database...");

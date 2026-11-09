@@ -92,6 +92,7 @@ const make_diamond_hits = function(app, context) {
         diamond_blastp("ec_number", proteins, "ec_number.m8");
         diamond_blastp("subcellular", proteins, "subcellular.m8");
         diamond_blastp("transcript_factor",proteins, "transcript_factor.m8");
+        diamond_blastp("ko",proteins, "ko.m8");
     }
 
     # restore the workdir finally.
@@ -120,7 +121,8 @@ const diamond_batch = function(diamond_blastp, diamond, temp_dir) {
         let ec_out = file.path(model_dir, "ec_number.m8");
         let cc_out = file.path(model_dir, "subcellular.m8");
         let tf_out = file.path(model_dir, "transcript_factor.m8");
-                
+        let ko_out = file.path(model_dir, "ko.m8");
+
         if (file.size(protein_pfam) < check_size) {
             # no cache data
             # run process
@@ -135,7 +137,8 @@ const diamond_batch = function(diamond_blastp, diamond, temp_dir) {
         if (enable_blastp_cache) {                
             let check_cache =  (file.size(ec_out) > check_size) 
                             && (file.size(cc_out) > check_size) 
-                            && (file.size(tf_out) > check_size)
+                            && (file.size(tf_out) > check_size) 
+                            && (file.size(ko_out) > check_size)
             ;
 
             if (check_cache) {
@@ -147,6 +150,7 @@ const diamond_batch = function(diamond_blastp, diamond, temp_dir) {
         diamond_blastp("ec_number", proteins, output = ec_out);
         diamond_blastp("subcellular", proteins, output = cc_out);
         diamond_blastp("transcript_factor",proteins, output = tf_out);
+        diamond_blastp("ko",proteins, output = ko_out);
 
         message(`[${model_id}] diamond blastp search job done!`);
     }

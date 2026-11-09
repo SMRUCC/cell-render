@@ -54,6 +54,7 @@ const make_blastp_term = function(proj_file, traits, model_dir) {
     let ec_number = read_m8(file.path(model_dir, "ec_number.m8"));
     let subcellular = read_m8(file.path(model_dir, "subcellular.m8"));
     let tf_list = read_m8(file.path(model_dir, "transcript_factor.m8"));
+    let ko_list = read_m8(file.path(model_dir, "ko.m8"));
     let proj = project::load(proj_file);
 
     let write_proj_session = function(blastp_result, key) {
