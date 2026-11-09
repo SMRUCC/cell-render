@@ -147,7 +147,7 @@ Module workflow
             Case "ko"
                 proj.annotations.ko_hits = protein_hits
                 proj.annotations.ko = protein_hits _
-                    .Select(Function(hits) RankTerm.RankTopTerm(hits)) _
+                    .Select(Function(hits) RankTerm.RankTopTerm(hits, makeTerm:=Function(a) a.hitName.Split("|"c)(1))) _
                     .IteratesALL _
                     .ToArray
 
