@@ -10,12 +10,12 @@ Imports SMRUCC.genomics.Assembly.KEGG.DBGET.bGetObject
 Imports SMRUCC.genomics.Assembly.KEGG.WebServices.XML
 Imports SMRUCC.genomics.ComponentModel.Annotation
 Imports SMRUCC.genomics.GCModeller.CompilerServices
+Imports SMRUCC.genomics.Interops.NCBI.Extensions
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Pipeline
 Imports SMRUCC.genomics.Interops.NCBI.Extensions.Tasks.Models
 Imports SMRUCC.genomics.SequenceModel.FASTA
 Imports SMRUCC.Rsharp.Runtime
 Imports SMRUCC.Rsharp.Runtime.Components
-Imports SMRUCC.Rsharp.Runtime.Components.[Interface]
 Imports SMRUCC.Rsharp.Runtime.Internal.[Object]
 Imports SMRUCC.Rsharp.Runtime.Interop
 Imports RInternal = SMRUCC.Rsharp.Runtime.Internal
@@ -119,7 +119,11 @@ Module workflow
                     .IteratesALL _
                     .ToArray
 
-                Dim ccIndex = proj.annotations.membrane_proteins.ToDictionary(Function(a) a.queryName)
+                Dim ccIndex = proj.annotations.membrane_proteins _
+                    .TopTerms _
+                    .ToDictionary(Function(a)
+                                      Return a.queryName
+                                  End Function)
 
                 For Each gene As GeneTable In proj.gene_table
                     If ccIndex.ContainsKey(gene.locus_id) Then
@@ -136,7 +140,14 @@ Module workflow
                     .Where(Function(ec) Not ec Is Nothing) _
                     .ToArray
 
-                Dim tfIndex = proj.annotations.transcript_factors.ToDictionary(Function(a) a.QueryName)
+                Dim tfIndex = proj.annotations.transcript_factors _
+                    .GroupBy(Function(a) a.QueryName) _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return a _
+                                          .OrderByDescending(Function(i) i.identities) _
+                                          .First
+                                  End Function)
 
                 For Each gene As GeneTable In proj.gene_table
                     If tfIndex.ContainsKey(gene.locus_id) Then
@@ -151,7 +162,11 @@ Module workflow
                     .IteratesALL _
                     .ToArray
 
-                Dim koIndex = proj.annotations.ko.ToDictionary(Function(a) a.queryName)
+                Dim koIndex = proj.annotations.ko _
+                    .TopTerms _
+                    .ToDictionary(Function(a)
+                                      Return a.queryName
+                                  End Function)
 
                 For Each gene As GeneTable In proj.gene_table
                     If koIndex.ContainsKey(gene.locus_id) Then
